@@ -1,0 +1,9 @@
+
+Metadata Orm Test Citation Proposal Module
+**************************************************************
+
+
+.. automodule:: metadata.orm.test.citation_proposal
+   :members:
+   :private-members:
+

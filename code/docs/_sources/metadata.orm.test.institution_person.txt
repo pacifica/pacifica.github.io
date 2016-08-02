@@ -1,0 +1,9 @@
+
+Metadata Orm Test Institution Person Module
+**************************************************************
+
+
+.. automodule:: metadata.orm.test.institution_person
+   :members:
+   :private-members:
+

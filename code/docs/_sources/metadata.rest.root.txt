@@ -1,0 +1,9 @@
+
+Metadata Rest Root Module
+**************************************************************
+
+
+.. automodule:: metadata.rest.root
+   :members:
+   :private-members:
+

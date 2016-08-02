@@ -1,0 +1,9 @@
+
+Metadata Orm Test Journals Module
+**************************************************************
+
+
+.. automodule:: metadata.orm.test.journals
+   :members:
+   :private-members:
+

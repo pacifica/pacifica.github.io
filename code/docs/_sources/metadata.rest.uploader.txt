@@ -1,0 +1,9 @@
+
+Metadata Rest Uploader Module
+**************************************************************
+
+
+.. automodule:: metadata.rest.uploader
+   :members:
+   :private-members:
+

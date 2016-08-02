@@ -1,0 +1,9 @@
+
+Metadata Orm Test Proposals Module
+**************************************************************
+
+
+.. automodule:: metadata.orm.test.proposals
+   :members:
+   :private-members:
+

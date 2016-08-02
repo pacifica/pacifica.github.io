@@ -1,0 +1,9 @@
+
+Metadata Orm Instrument Group Module
+**************************************************************
+
+
+.. automodule:: metadata.orm.instrument_group
+   :members:
+   :private-members:
+
