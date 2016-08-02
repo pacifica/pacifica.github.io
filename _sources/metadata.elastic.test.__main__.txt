@@ -1,0 +1,9 @@
+
+Metadata Elastic Test __main__ Module
+**************************************************************
+
+
+.. automodule:: metadata.elastic.test.__main__
+   :members:
+   :private-members:
+

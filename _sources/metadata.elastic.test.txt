@@ -1,0 +1,17 @@
+
+Metadata Elastic Test Module
+**************************************************************
+
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+   metadata.elastic.test.elastic
+   metadata.elastic.test.__main__
+
+.. automodule:: metadata.elastic.test
+   :members:
+   :private-members:
+

@@ -1,0 +1,41 @@
+
+Metadata Orm Test Module
+**************************************************************
+
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+   metadata.orm.test.citation_contributor
+   metadata.orm.test.contributors
+   metadata.orm.test.instruments
+   metadata.orm.test.__main__
+   metadata.orm.test.instrument_custodian
+   metadata.orm.test.trans_key_value
+   metadata.orm.test.keywords
+   metadata.orm.test.citation_proposal
+   metadata.orm.test.institution_person
+   metadata.orm.test.citations
+   metadata.orm.test.files
+   metadata.orm.test.proposal_instrument
+   metadata.orm.test.users
+   metadata.orm.test.transactions
+   metadata.orm.test.keys
+   metadata.orm.test.instrument_group
+   metadata.orm.test.proposal_participant
+   metadata.orm.test.base
+   metadata.orm.test.groups
+   metadata.orm.test.user_group
+   metadata.orm.test.file_key_value
+   metadata.orm.test.journals
+   metadata.orm.test.proposals
+   metadata.orm.test.values
+   metadata.orm.test.dbdates
+   metadata.orm.test.institutions
+
+.. automodule:: metadata.orm.test
+   :members:
+   :private-members:
+

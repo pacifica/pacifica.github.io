@@ -1,0 +1,9 @@
+
+Metadata Orm Test __main__ Module
+**************************************************************
+
+
+.. automodule:: metadata.orm.test.__main__
+   :members:
+   :private-members:
+

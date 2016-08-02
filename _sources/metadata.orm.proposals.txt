@@ -1,0 +1,9 @@
+
+Metadata Orm Proposals Module
+**************************************************************
+
+
+.. automodule:: metadata.orm.proposals
+   :members:
+   :private-members:
+

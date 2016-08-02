@@ -1,0 +1,9 @@
+
+Metadata Orm Instrument Custodian Module
+**************************************************************
+
+
+.. automodule:: metadata.orm.instrument_custodian
+   :members:
+   :private-members:
+

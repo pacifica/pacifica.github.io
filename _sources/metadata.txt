@@ -1,0 +1,18 @@
+
+Metadata Module
+**************************************************************
+
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+   metadata.orm
+   metadata.elastic
+   metadata.rest
+
+.. automodule:: metadata
+   :members:
+   :private-members:
+

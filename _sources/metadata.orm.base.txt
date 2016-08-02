@@ -1,0 +1,9 @@
+
+Metadata Orm Base Module
+**************************************************************
+
+
+.. automodule:: metadata.orm.base
+   :members:
+   :private-members:
+
