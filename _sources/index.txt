@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    metadata
+   cart
 
 Indices and tables
 ==================

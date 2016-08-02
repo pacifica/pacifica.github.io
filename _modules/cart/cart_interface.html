@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cart.cart_interface &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../metadata.html">Metadata Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cart.html">Cart Module</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>cart.cart_interface</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for cart.cart_interface</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;Class for the cart interface.  Allows API to file interactions&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">stderr</span>
+<span class="kn">from</span> <span class="nn">tarfile</span> <span class="k">import</span> <span class="n">TarFile</span>
+<span class="kn">import</span> <span class="nn">doctest</span>
+<span class="kn">import</span> <span class="nn">cart.cart_interface_responses</span> <span class="k">as</span> <span class="nn">cart_interface_responses</span>
+<span class="kn">from</span> <span class="nn">cart.tasks</span> <span class="k">import</span> <span class="n">stage_files</span>
+<span class="kn">from</span> <span class="nn">cart.cart_utils</span> <span class="k">import</span> <span class="n">Cartutils</span>
+
+
+<span class="n">BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">20</span>
+
+<div class="viewcode-block" id="CartInterfaceError"><a class="viewcode-back" href="../../cart.cart_interface.html#cart.cart_interface.CartInterfaceError">[docs]</a><span class="k">class</span> <span class="nc">CartInterfaceError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CartInterfaceError - basic exception class for this module.</span>
+<span class="sd">    Will be used to throw exceptions up to the top level of the application</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="fix_cart_uid"><a class="viewcode-back" href="../../cart.cart_interface.html#cart.cart_interface.fix_cart_uid">[docs]</a><span class="k">def</span> <span class="nf">fix_cart_uid</span><span class="p">(</span><span class="n">uid</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Removes / from front of cart_uid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">uid</span><span class="p">):</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">uid</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">return</span> <span class="n">uid</span></div>
+
+<div class="viewcode-block" id="is_valid_uid"><a class="viewcode-back" href="../../cart.cart_interface.html#cart.cart_interface.is_valid_uid">[docs]</a><span class="k">def</span> <span class="nf">is_valid_uid</span><span class="p">(</span><span class="n">uid</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;checks to see if the uid is valid before using it</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">uid</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">uid</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="CartGenerator"><a class="viewcode-back" href="../../cart.cart_interface.html#cart.cart_interface.CartGenerator">[docs]</a><span class="k">class</span> <span class="nc">CartGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Defines the methods that can be used for cart request types</span>
+<span class="sd">    doctest for the cart generator class</span>
+<span class="sd">    HPSS Doc Tests</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="CartGenerator.get"><a class="viewcode-back" href="../../cart.cart_interface.html#cart.cart_interface.CartGenerator.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Download the tar file created by the cart&quot;&quot;&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">cart_interface_responses</span><span class="o">.</span><span class="n">Responses</span><span class="p">()</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">fix_cart_uid</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">])</span>
+        <span class="n">is_valid</span> <span class="o">=</span> <span class="n">is_valid_uid</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">invalid_uid_error_response</span><span class="p">(</span>
+                <span class="n">start_response</span><span class="p">,</span> <span class="n">uid</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span>
+        <span class="c1">#get the bundle path if available</span>
+        <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+        <span class="n">cart_path</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">available_cart</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cart_path</span><span class="p">:</span>
+            <span class="c1">#cart not ready</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">unready_cart</span><span class="p">(</span><span class="n">start_response</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">cart_path</span><span class="p">):</span>
+                <span class="c1">#give back bundle here</span>
+                <span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="c1">#want to stream the tar file out</span>
+                    <span class="p">(</span><span class="n">rpipe</span><span class="p">,</span> <span class="n">wpipe</span><span class="p">)</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">pipe</span><span class="p">()</span>
+                    <span class="n">cpid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">cpid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="c1"># we are the child process</span>
+                        <span class="c1">#write the data to the pipe</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">rpipe</span><span class="p">)</span>
+                        <span class="n">wfd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fdopen</span><span class="p">(</span><span class="n">wpipe</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+                        <span class="n">mytar</span> <span class="o">=</span> <span class="n">TarFile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">wfd</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w|&#39;</span><span class="p">)</span>
+                        <span class="n">mytar</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">cart_path</span><span class="p">,</span> <span class="n">arcname</span><span class="o">=</span><span class="n">uid</span><span class="p">)</span>
+                        <span class="n">mytar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                        <span class="c1">#to exit from the fork child without killing the parent</span>
+                        <span class="c1">#we need to use_exit.  Disabling the pylint for this</span>
+                        <span class="c1">#so that it doesnt throw an error</span>
+                        <span class="c1"># pylint: disable=protected-access</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="c1"># pylint: enable=protected-access</span>
+                    <span class="c1"># we are the parent</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">wpipe</span><span class="p">)</span>
+                    <span class="c1">#open the pipe as a file</span>
+                    <span class="n">rfd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fdopen</span><span class="p">(</span><span class="n">rpipe</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span>
+                    <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span>
+                                               <span class="s1">&#39;application/octet-stream&#39;</span><span class="p">)])</span>
+                    <span class="k">if</span> <span class="s1">&#39;wsgi.file_wrapper&#39;</span> <span class="ow">in</span> <span class="n">env</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;wsgi.file_wrapper&#39;</span><span class="p">](</span><span class="n">rfd</span><span class="p">,</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">rfd</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">bundle_doesnt_exist</span><span class="p">(</span><span class="n">start_response</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">bundle_doesnt_exist</span><span class="p">(</span><span class="n">start_response</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span>
+
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CartGenerator.status"><a class="viewcode-back" href="../../cart.cart_interface.html#cart.cart_interface.CartGenerator.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the status of a carts tar file&quot;&quot;&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">cart_interface_responses</span><span class="o">.</span><span class="n">Responses</span><span class="p">()</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">fix_cart_uid</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">])</span>
+        <span class="n">is_valid</span> <span class="o">=</span> <span class="n">is_valid_uid</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">invalid_uid_error_response</span><span class="p">(</span>
+                <span class="n">start_response</span><span class="p">,</span> <span class="n">uid</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span>
+
+        <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">cart_status</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">cart_status_response</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CartGenerator.stage"><a class="viewcode-back" href="../../cart.cart_interface.html#cart.cart_interface.CartGenerator.stage">[docs]</a>    <span class="k">def</span> <span class="nf">stage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get all the files locally and bundled&quot;&quot;&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">cart_interface_responses</span><span class="o">.</span><span class="n">Responses</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">request_body_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;CONTENT_LENGTH&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">request_body_size</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">request_body</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;wsgi.input&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">request_body_size</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">request_body</span><span class="p">)</span>
+            <span class="n">file_ids</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;fileids&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="c1"># is exception is probably from the read()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json_stage_error_response</span><span class="p">(</span><span class="n">start_response</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json_stage_error_response</span><span class="p">(</span><span class="n">start_response</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span>
+
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">fix_cart_uid</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">])</span>
+        <span class="n">is_valid</span> <span class="o">=</span> <span class="n">is_valid_uid</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">invalid_uid_error_response</span><span class="p">(</span>
+                <span class="n">start_response</span><span class="p">,</span> <span class="n">uid</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span>
+
+        <span class="n">stage_files</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="n">file_ids</span><span class="p">,</span> <span class="n">uid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">cart_proccessing_response</span><span class="p">(</span><span class="n">start_response</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CartGenerator.delete_cart"><a class="viewcode-back" href="../../cart.cart_interface.html#cart.cart_interface.CartGenerator.delete_cart">[docs]</a>    <span class="k">def</span> <span class="nf">delete_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete a cart that has been created&quot;&quot;&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">cart_interface_responses</span><span class="o">.</span><span class="n">Responses</span><span class="p">()</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="n">fix_cart_uid</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">])</span>
+        <span class="n">is_valid</span> <span class="o">=</span> <span class="n">is_valid_uid</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">invalid_uid_error_response</span><span class="p">(</span>
+                <span class="n">start_response</span><span class="p">,</span> <span class="n">uid</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span>
+
+        <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">remove_cart</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">cart_delete_response</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CartGenerator.return_response"><a class="viewcode-back" href="../../cart.cart_interface.html#cart.cart_interface.CartGenerator.return_response">[docs]</a>    <span class="k">def</span> <span class="nf">return_response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Prints all responses in a nice fashion&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_response</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CartGenerator.pacifica_cartinterface"><a class="viewcode-back" href="../../cart.cart_interface.html#cart.cart_interface.CartGenerator.pacifica_cartinterface">[docs]</a>    <span class="k">def</span> <span class="nf">pacifica_cartinterface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parses request method type&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stage</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delete_cart</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="n">cart_interface_responses</span><span class="o">.</span><span class="n">Responses</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">unknown_request</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span>
+                                                      <span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">CartInterfaceError</span><span class="p">:</span>
+            <span class="c1">#catching application errors</span>
+            <span class="c1">#all exceptions set the return response</span>
+            <span class="c1">#if the response is not set, set it as unknown</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="n">cart_interface_responses</span><span class="o">.</span><span class="n">Responses</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">unknown_exception</span><span class="p">(</span><span class="n">start_response</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span></div></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
