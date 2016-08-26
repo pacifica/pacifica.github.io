@@ -131,6 +131,7 @@
             
   <h1>Source code for metadata.orm.test.groups</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Test the groups ORM object</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -142,7 +143,15 @@
 <span class="n">SAMPLE_GROUP_HASH</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
     <span class="s2">&quot;group_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Custodians&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;is_admin&quot;</span><span class="p">:</span> <span class="kc">True</span>
+    <span class="s2">&quot;is_admin&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;UTF8&quot;</span>
+<span class="p">}</span>
+
+<span class="n">SAMPLE_UNICODE_GROUP_HASH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="s2">&quot;group_name&quot;</span><span class="p">:</span> <span class="s2">u&quot;Bléh&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;is_admin&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;UTF8&quot;</span>
 <span class="p">}</span>
 
 <div class="viewcode-block" id="TestGroups"><a class="viewcode-back" href="../../../../metadata.orm.test.groups.html#metadata.orm.test.groups.TestGroups">[docs]</a><span class="k">class</span> <span class="nc">TestGroups</span><span class="p">(</span><span class="n">TestBase</span><span class="p">):</span>
@@ -165,6 +174,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_GROUP_HASH</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TestGroups.test_unicode_group_hash"><a class="viewcode-back" href="../../../../metadata.orm.test.groups.html#metadata.orm.test.groups.TestGroups.test_unicode_group_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_group_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the unicode hash using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_GROUP_HASH</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TestGroups.test_group_json"><a class="viewcode-back" href="../../../../metadata.orm.test.groups.html#metadata.orm.test.groups.TestGroups.test_group_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_group_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
@@ -175,7 +190,13 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_GROUP_HASH</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_GROUP_HASH</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGroups.test_unicode_group_where"><a class="viewcode-back" href="../../../../metadata.orm.test.groups.html#metadata.orm.test.groups.TestGroups.test_unicode_group_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_group_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the hash portion using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_GROUP_HASH</span><span class="p">)</span></div></div>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>

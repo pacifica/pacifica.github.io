@@ -136,11 +136,12 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">ForeignKeyField</span><span class="p">,</span> <span class="n">CompositeKey</span><span class="p">,</span> <span class="n">Expression</span><span class="p">,</span> <span class="n">OP</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.utils</span> <span class="k">import</span> <span class="n">index_hash</span>
-<span class="kn">from</span> <span class="nn">metadata.orm.base</span> <span class="k">import</span> <span class="n">DB</span><span class="p">,</span> <span class="n">PacificaModel</span>
+<span class="kn">from</span> <span class="nn">metadata.orm.base</span> <span class="k">import</span> <span class="n">DB</span>
+<span class="kn">from</span> <span class="nn">metadata.rest.orm</span> <span class="k">import</span> <span class="n">CherryPyAPI</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.groups</span> <span class="k">import</span> <span class="n">Groups</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.instruments</span> <span class="k">import</span> <span class="n">Instruments</span>
 
-<div class="viewcode-block" id="InstrumentGroup"><a class="viewcode-back" href="../../../metadata.orm.instrument_group.html#metadata.orm.instrument_group.InstrumentGroup">[docs]</a><span class="k">class</span> <span class="nc">InstrumentGroup</span><span class="p">(</span><span class="n">PacificaModel</span><span class="p">):</span>
+<div class="viewcode-block" id="InstrumentGroup"><a class="viewcode-back" href="../../../metadata.orm.instrument_group.html#metadata.orm.instrument_group.InstrumentGroup">[docs]</a><span class="k">class</span> <span class="nc">InstrumentGroup</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    InstrumentGroup attributes are foreign keys.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

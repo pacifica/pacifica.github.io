@@ -131,6 +131,7 @@
             
   <h1>Source code for metadata.orm.test.citations</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Test the citations ORM object</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -156,6 +157,27 @@
     <span class="s2">&quot;xml_text&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
 <span class="s2">&lt;article&gt;</span>
 <span class="s2">  &lt;abstract&gt;blah blah blah&lt;/abstract&gt;</span>
+<span class="s2">&lt;/article&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;release_authorization_id&quot;</span><span class="p">:</span> <span class="s2">&quot;Released&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;doi_reference&quot;</span><span class="p">:</span> <span class="s2">&quot;doi:10.1037/rmh0000008&quot;</span>
+<span class="p">}</span>
+
+<span class="n">SAMPLE_UNICODE_CITATION_HASH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">43</span><span class="p">,</span>
+    <span class="s2">&quot;article_title&quot;</span><span class="p">:</span> <span class="s1">u&#39;abcdé&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;journal_id&quot;</span><span class="p">:</span> <span class="n">SAMPLE_JOURNAL_HASH</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;journal_volume&quot;</span><span class="p">:</span> <span class="mi">43</span><span class="p">,</span>
+    <span class="s2">&quot;journal_issue&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="s2">&quot;page_range&quot;</span><span class="p">:</span> <span class="s2">&quot;34-45&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;abstract_text&quot;</span><span class="p">:</span> <span class="s2">u&quot;&quot;&quot;</span>
+<span class="s2">This is a very long abstract about the uniqué applications of Dove-</span>
+<span class="s2">Tail joints during a recent construction of a wonderful log cabin in</span>
+<span class="s2">northern Yukon.</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;xml_text&quot;</span><span class="p">:</span> <span class="s2">u&quot;&quot;&quot;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="s2">&lt;article&gt;</span>
+<span class="s2">  &lt;abstract&gt;bléh bléh bléh&lt;/abstract&gt;</span>
 <span class="s2">&lt;/article&gt;</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;release_authorization_id&quot;</span><span class="p">:</span> <span class="s2">&quot;Released&quot;</span><span class="p">,</span>
@@ -192,6 +214,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_CITATION_HASH</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TestCitations.test_unicode_citations_hash"><a class="viewcode-back" href="../../../../metadata.orm.test.citations.html#metadata.orm.test.citations.TestCitations.test_unicode_citations_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_citations_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the unicode hash base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_CITATION_HASH</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TestCitations.test_citations_json"><a class="viewcode-back" href="../../../../metadata.orm.test.citations.html#metadata.orm.test.citations.TestCitations.test_citations_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_citations_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
@@ -202,7 +230,13 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_CITATION_HASH</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_CITATION_HASH</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCitations.test_unicode_citations_where"><a class="viewcode-back" href="../../../../metadata.orm.test.citations.html#metadata.orm.test.citations.TestCitations.test_unicode_citations_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_citations_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the hash portion using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_CITATION_HASH</span><span class="p">)</span></div></div>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>

@@ -131,6 +131,7 @@
             
   <h1>Source code for metadata.orm.test.files</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Test the files ORM object</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -151,7 +152,20 @@
     <span class="s2">&quot;mtime&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span>
     <span class="s2">&quot;ctime&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span>
     <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
-    <span class="s2">&quot;transaction_id&quot;</span><span class="p">:</span> <span class="n">SAMPLE_TRANSACTION_HASH</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span>
+    <span class="s2">&quot;transaction_id&quot;</span><span class="p">:</span> <span class="n">SAMPLE_TRANSACTION_HASH</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;UTF8&quot;</span>
+<span class="p">}</span>
+
+<span class="n">SAMPLE_UNICODE_FILE_HASH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">127</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s1">u&#39;abcdé.txt&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;subdir&quot;</span><span class="p">:</span> <span class="s1">u&#39;abcdé/b&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;mimetype&quot;</span><span class="p">:</span> <span class="s2">&quot;text/plain&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mtime&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span>
+    <span class="s2">&quot;ctime&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span>
+    <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
+    <span class="s2">&quot;transaction_id&quot;</span><span class="p">:</span> <span class="n">SAMPLE_TRANSACTION_HASH</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;UTF8&quot;</span>
 <span class="p">}</span>
 
 <div class="viewcode-block" id="TestFiles"><a class="viewcode-back" href="../../../../metadata.orm.test.files.html#metadata.orm.test.files.TestFiles">[docs]</a><span class="k">class</span> <span class="nc">TestFiles</span><span class="p">(</span><span class="n">TestBase</span><span class="p">):</span>
@@ -178,6 +192,12 @@
         <span class="n">trans</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">SAMPLE_TRANSACTION_HASH</span><span class="p">)</span>
         <span class="n">trans</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TestFiles.test_unicode_files_hash"><a class="viewcode-back" href="../../../../metadata.orm.test.files.html#metadata.orm.test.files.TestFiles.test_unicode_files_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_files_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the unicode hash using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_FILE_HASH</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TestFiles.test_files_hash"><a class="viewcode-back" href="../../../../metadata.orm.test.files.html#metadata.orm.test.files.TestFiles.test_files_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_files_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
@@ -194,7 +214,13 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_FILE_HASH</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_FILE_HASH</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestFiles.test_unicode_files_where"><a class="viewcode-back" href="../../../../metadata.orm.test.files.html#metadata.orm.test.files.TestFiles.test_unicode_files_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_files_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the hash portion using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_FILE_HASH</span><span class="p">)</span></div></div>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>

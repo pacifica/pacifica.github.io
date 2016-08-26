@@ -136,7 +136,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">StringIO</span> <span class="k">import</span> <span class="n">StringIO</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span>
-<span class="kn">from</span> <span class="nn">pycurl</span> <span class="k">import</span> <span class="n">Curl</span><span class="p">,</span> <span class="n">URL</span><span class="p">,</span> <span class="n">READFUNCTION</span><span class="p">,</span> <span class="n">UPLOAD</span><span class="p">,</span> <span class="n">CUSTOMREQUEST</span>
+<span class="kn">from</span> <span class="nn">pycurl</span> <span class="k">import</span> <span class="n">Curl</span><span class="p">,</span> <span class="n">URL</span><span class="p">,</span> <span class="n">READFUNCTION</span><span class="p">,</span> <span class="n">UPLOAD</span><span class="p">,</span> <span class="n">CUSTOMREQUEST</span><span class="p">,</span> <span class="n">WRITEFUNCTION</span>
 <span class="kn">from</span> <span class="nn">pycurl</span> <span class="k">import</span> <span class="n">INFILESIZE_LARGE</span><span class="p">,</span> <span class="n">HTTP_CODE</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">PUT</span>
 
 <span class="kn">from</span> <span class="nn">metadata.elastic</span> <span class="k">import</span> <span class="n">ES_INDEX_URL</span>
@@ -146,11 +146,12 @@
 <span class="sd">    Elastic search conversion and interface methods.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="ElasticAPI.elastic_delete"><a class="viewcode-back" href="../../../metadata.elastic.orm.html#metadata.elastic.orm.ElasticAPI.elastic_delete">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_delete</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj_id</span><span class="p">):</span>
+<div class="viewcode-block" id="ElasticAPI.elastic_delete"><a class="viewcode-back" href="../../../metadata.elastic.orm.html#metadata.elastic.orm.ElasticAPI.elastic_delete">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_delete</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        delete the object for the class in elastic search.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">class_name</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="n">obj_id</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">id</span>
         <span class="n">es_obj_url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ES_INDEX_URL</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj_id</span><span class="p">))</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">curl</span> <span class="o">=</span> <span class="n">Curl</span><span class="p">()</span>
@@ -168,18 +169,22 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        upload the object for the class to elastic search.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
         <span class="n">obj_id</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span>
         <span class="k">del</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span>
         <span class="n">obj_str</span> <span class="o">=</span> <span class="n">dumps</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="n">obj_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj_str</span><span class="p">)</span>
         <span class="n">obj_io</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">obj_str</span><span class="p">)</span>
-        <span class="n">class_name</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span>
         <span class="n">es_obj_url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ES_INDEX_URL</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj_id</span><span class="p">))</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">curl</span> <span class="o">=</span> <span class="n">Curl</span><span class="p">()</span>
             <span class="n">curl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">es_obj_url</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
             <span class="n">curl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">PUT</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">curl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">UPLOAD</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># pylint: disable=unnecessary-lambda</span>
+            <span class="n">curl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">WRITEFUNCTION</span><span class="p">,</span> <span class="k">lambda</span> <span class="nb">bytes</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="nb">bytes</span><span class="p">))</span>
+            <span class="c1"># pylint: enable=unnecessary-lambda</span>
             <span class="n">curl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">READFUNCTION</span><span class="p">,</span> <span class="n">obj_io</span><span class="o">.</span><span class="n">read</span><span class="p">)</span>
             <span class="n">curl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">INFILESIZE_LARGE</span><span class="p">,</span> <span class="n">obj_len</span><span class="p">)</span>
             <span class="n">curl</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
@@ -222,7 +227,7 @@
 <span class="sd">        Build elastic mapping properties hash from object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="o">=</span> \
-        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;epoch_second&#39;</span><span class="p">}</span></div>
+        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s2">&quot;yyyy-mm-dd&#39;T&#39;HH:mm:ss&quot;</span><span class="p">}</span></div>
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="ElasticAPI.elastic_mapping"><a class="viewcode-back" href="../../../metadata.elastic.orm.html#metadata.elastic.orm.ElasticAPI.elastic_mapping">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>

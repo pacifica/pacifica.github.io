@@ -14,9 +14,9 @@ Contents:
    cart.celery
    cart.cart_env_globals
    cart.cart_utils
-   cart.cart_interface_responses
-   cart.cart_unit_tests
    cart.archive_requests
+   cart.cart_unit_tests
+   cart.cart_interface_responses
 
 .. automodule:: cart
    :members:

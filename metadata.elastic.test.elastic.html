@@ -32,7 +32,7 @@
   
     <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
         <link rel="up" title="Metadata Elastic Test Module" href="metadata.elastic.test.html"/>
-        <link rel="next" title="Metadata Elastic Test __main__ Module" href="metadata.elastic.test.__main__.html"/>
+        <link rel="next" title="Metadata Elastic Orm Module" href="metadata.elastic.orm.html"/>
         <link rel="prev" title="Metadata Elastic Test Module" href="metadata.elastic.test.html"/> 
 
   
@@ -85,16 +85,17 @@
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="metadata.html">Metadata Module</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="metadata.orm.html">Metadata Orm Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.test_client.html">Metadata Test Client Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.rest.html">Metadata Rest Module</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="metadata.elastic.html">Metadata Elastic Module</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="metadata.elastic.test.html">Metadata Elastic Test Module</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Metadata Elastic Test Elastic Module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="metadata.elastic.test.__main__.html">Metadata Elastic Test __main__ Module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="metadata.elastic.orm.html">Metadata Elastic Orm Module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.rest.html">Metadata Rest Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.client.html">Metadata Client Module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="cart.html">Cart Module</a></li>
@@ -198,6 +199,13 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_groups">
+<code class="descname">test_elastic_mapping_groups</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.groups.Groups'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the elasticsearch mapping method.</p>
+<p>check to see all types are valid both content and python types.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_institutionperson">
 <code class="descname">test_elastic_mapping_institutionperson</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.institution_person.InstitutionPerson'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_institutionperson" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test the elasticsearch mapping method.</p>
@@ -207,6 +215,13 @@
 <dl class="method">
 <dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_institutions">
 <code class="descname">test_elastic_mapping_institutions</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.institutions.Institutions'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_institutions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the elasticsearch mapping method.</p>
+<p>check to see all types are valid both content and python types.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_instrumentgroup">
+<code class="descname">test_elastic_mapping_instrumentgroup</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.instrument_group.InstrumentGroup'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_instrumentgroup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test the elasticsearch mapping method.</p>
 <p>check to see all types are valid both content and python types.</p>
 </dd></dl>
@@ -275,6 +290,13 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_usergroup">
+<code class="descname">test_elastic_mapping_usergroup</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.user_group.UserGroup'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_usergroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the elasticsearch mapping method.</p>
+<p>check to see all types are valid both content and python types.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_users">
 <code class="descname">test_elastic_mapping_users</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.users.Users'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_users" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test the elasticsearch mapping method.</p>
@@ -292,7 +314,7 @@
 
 <dl class="function">
 <dt id="metadata.elastic.test.elastic.test_elastic_mapping">
-<code class="descclassname">metadata.elastic.test.elastic.</code><code class="descname">test_elastic_mapping</code><span class="sig-paren">(</span><em>self</em>, <em>orm_cls=&lt;class 'metadata.orm.trans_key_value.TransactionKeyValue'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/elastic.html#test_elastic_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.elastic.test_elastic_mapping" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">metadata.elastic.test.elastic.</code><code class="descname">test_elastic_mapping</code><span class="sig-paren">(</span><em>self</em>, <em>orm_cls=&lt;class 'metadata.orm.instrument_group.InstrumentGroup'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/elastic.html#test_elastic_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.elastic.test_elastic_mapping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test the elasticsearch mapping method.</p>
 <p>check to see all types are valid both content and python types.</p>
 </dd></dl>
@@ -306,7 +328,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="metadata.elastic.test.__main__.html" class="btn btn-neutral float-right" title="Metadata Elastic Test __main__ Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="metadata.elastic.orm.html" class="btn btn-neutral float-right" title="Metadata Elastic Orm Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="metadata.elastic.test.html" class="btn btn-neutral" title="Metadata Elastic Test Module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -113,8 +113,10 @@
 <li class="toctree-l3"><a class="reference internal" href="metadata.orm.institutions.html">Metadata Orm Institutions Module</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.elastic.html">Metadata Elastic Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.test_client.html">Metadata Test Client Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metadata.rest.html">Metadata Rest Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.elastic.html">Metadata Elastic Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.client.html">Metadata Client Module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="cart.html">Cart Module</a></li>
@@ -169,6 +171,48 @@
   <div class="section" id="module-metadata.orm.utils">
 <span id="metadata-orm-utils-module"></span><h1>Metadata Orm Utils Module<a class="headerlink" href="#module-metadata.orm.utils" title="Permalink to this headline">¶</a></h1>
 <p>Utilities for common metadata tools.</p>
+<dl class="class">
+<dt id="metadata.orm.utils.ExtendDateField">
+<em class="property">class </em><code class="descclassname">metadata.orm.utils.</code><code class="descname">ExtendDateField</code><span class="sig-paren">(</span><em>formats=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#ExtendDateField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.ExtendDateField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends to the DateField to add isoformatted date</p>
+<dl class="method">
+<dt id="metadata.orm.utils.ExtendDateField.isoformat">
+<code class="descname">isoformat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#ExtendDateField.isoformat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.ExtendDateField.isoformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the isoformat date field</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="metadata.orm.utils.ExtendDateTimeField">
+<em class="property">class </em><code class="descclassname">metadata.orm.utils.</code><code class="descname">ExtendDateTimeField</code><span class="sig-paren">(</span><em>formats=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#ExtendDateTimeField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.ExtendDateTimeField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends to the DateTimeField to add isoformat from datetime object</p>
+<dl class="method">
+<dt id="metadata.orm.utils.ExtendDateTimeField.isoformat">
+<code class="descname">isoformat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#ExtendDateTimeField.isoformat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.ExtendDateTimeField.isoformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the isoformat datetime field</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="metadata.orm.utils.date_converts">
+<code class="descclassname">metadata.orm.utils.</code><code class="descname">date_converts</code><span class="sig-paren">(</span><em>date_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#date_converts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.date_converts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standardize on converting to date objects</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="metadata.orm.utils.datetime_converts">
+<code class="descclassname">metadata.orm.utils.</code><code class="descname">datetime_converts</code><span class="sig-paren">(</span><em>time_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#datetime_converts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.datetime_converts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standardize on converting to datetime objects</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="metadata.orm.utils.datetime_now_nomicrosecond">
+<code class="descclassname">metadata.orm.utils.</code><code class="descname">datetime_now_nomicrosecond</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#datetime_now_nomicrosecond"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.datetime_now_nomicrosecond" title="Permalink to this definition">¶</a></dt>
+<dd><p>return now with no microseconds</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="metadata.orm.utils.index_hash">
 <code class="descclassname">metadata.orm.utils.</code><code class="descname">index_hash</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#index_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.index_hash" title="Permalink to this definition">¶</a></dt>

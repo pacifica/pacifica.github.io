@@ -134,7 +134,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Describes an institution and its attributes.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">IntegerField</span><span class="p">,</span> <span class="n">TextField</span><span class="p">,</span> <span class="n">CharField</span><span class="p">,</span> <span class="n">Expression</span><span class="p">,</span> <span class="n">OP</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">BooleanField</span><span class="p">,</span> <span class="n">TextField</span><span class="p">,</span> <span class="n">CharField</span><span class="p">,</span> <span class="n">Expression</span><span class="p">,</span> <span class="n">OP</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.orm</span> <span class="k">import</span> <span class="n">CherryPyAPI</span>
 
 <div class="viewcode-block" id="Institutions"><a class="viewcode-back" href="../../../metadata.orm.institutions.html#metadata.orm.institutions.Institutions">[docs]</a><span class="k">class</span> <span class="nc">Institutions</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
@@ -143,7 +143,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">institution_name</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="n">association_cd</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;UNK&quot;</span><span class="p">)</span>
-    <span class="n">is_foreign</span> <span class="o">=</span> <span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">is_foreign</span> <span class="o">=</span> <span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;UTF8&quot;</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="Institutions.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.orm.institutions.html#metadata.orm.institutions.Institutions.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
@@ -151,7 +152,8 @@
 <span class="sd">        Build the elasticsearch mapping bits</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Institutions</span><span class="p">,</span> <span class="n">Institutions</span><span class="p">)</span><span class="o">.</span><span class="n">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;institution_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;association_cd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">}</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;institution_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;association_cd&#39;</span><span class="p">]</span> <span class="o">=</span> \
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">}</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;is_foreign&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;boolean&#39;</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="Institutions.to_hash"><a class="viewcode-back" href="../../../metadata.orm.institutions.html#metadata.orm.institutions.Institutions.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -160,9 +162,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Institutions</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;institution_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">institution_name</span><span class="p">)</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;institution_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">institution_name</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;association_cd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">association_cd</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;is_foreign&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_foreign</span><span class="p">)</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">obj</span></div>
 
 <div class="viewcode-block" id="Institutions.from_hash"><a class="viewcode-back" href="../../../metadata.orm.institutions.html#metadata.orm.institutions.Institutions.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
@@ -170,16 +173,18 @@
 <span class="sd">        Convert the hash into the object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Institutions</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="c1"># pylint: disable=invalid-name</span>
         <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="c1"># pylint: disable=invalid-name</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">])</span>
-            <span class="c1"># pylint: enable=invalid-name</span>
+        <span class="c1"># pylint: enable=invalid-name</span>
         <span class="k">if</span> <span class="s1">&#39;institution_name&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">institution_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;institution_name&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">institution_name</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;institution_name&#39;</span><span class="p">])</span>
         <span class="k">if</span> <span class="s1">&#39;association_cd&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">association_cd</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;association_cd&#39;</span><span class="p">])</span>
         <span class="k">if</span> <span class="s1">&#39;is_foreign&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">is_foreign</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;is_foreign&#39;</span><span class="p">])</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_foreign</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;is_foreign&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s1">&#39;encoding&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="Institutions.where_clause"><a class="viewcode-back" href="../../../metadata.orm.institutions.html#metadata.orm.institutions.Institutions.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -188,7 +193,7 @@
         <span class="n">where_clause</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Institutions</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="n">Institutions</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;institution_name&#39;</span><span class="p">,</span> <span class="s1">&#39;is_foreign&#39;</span><span class="p">,</span> <span class="s1">&#39;association_cd&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;institution_name&#39;</span><span class="p">,</span> <span class="s1">&#39;is_foreign&#39;</span><span class="p">,</span> <span class="s1">&#39;association_cd&#39;</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
                 <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">Institutions</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">where_clause</span></div></div>

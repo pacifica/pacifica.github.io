@@ -156,6 +156,9 @@
 <span class="kn">from</span> <span class="nn">metadata.orm.transactions</span> <span class="k">import</span> <span class="n">Transactions</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.file_key_value</span> <span class="k">import</span> <span class="n">FileKeyValue</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.trans_key_value</span> <span class="k">import</span> <span class="n">TransactionKeyValue</span>
+<span class="kn">from</span> <span class="nn">metadata.orm.groups</span> <span class="k">import</span> <span class="n">Groups</span>
+<span class="kn">from</span> <span class="nn">metadata.orm.user_group</span> <span class="k">import</span> <span class="n">UserGroup</span>
+<span class="kn">from</span> <span class="nn">metadata.orm.instrument_group</span> <span class="k">import</span> <span class="n">InstrumentGroup</span>
 <span class="kn">from</span> <span class="nn">metadata.elastic</span> <span class="k">import</span> <span class="n">create_elastic_index</span><span class="p">,</span> <span class="n">try_es_connect</span>
 
 <span class="n">DATABASE_CONNECT_ATTEMPTS</span> <span class="o">=</span> <span class="mi">10</span>
@@ -180,7 +183,10 @@
     <span class="n">Keys</span><span class="p">,</span>
     <span class="n">Values</span><span class="p">,</span>
     <span class="n">FileKeyValue</span><span class="p">,</span>
-    <span class="n">TransactionKeyValue</span>
+    <span class="n">TransactionKeyValue</span><span class="p">,</span>
+    <span class="n">Groups</span><span class="p">,</span>
+    <span class="n">UserGroup</span><span class="p">,</span>
+    <span class="n">InstrumentGroup</span>
 <span class="p">]</span>
 
 <div class="viewcode-block" id="try_db_connect"><a class="viewcode-back" href="../../metadata.orm.html#metadata.orm.try_db_connect">[docs]</a><span class="k">def</span> <span class="nf">try_db_connect</span><span class="p">(</span><span class="n">attempts</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>

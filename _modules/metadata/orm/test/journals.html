@@ -131,6 +131,7 @@
             
   <h1>Source code for metadata.orm.test.journals</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Test the journals ORM object</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -142,6 +143,13 @@
 <span class="n">SAMPLE_JOURNAL_HASH</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">45</span><span class="p">,</span>
     <span class="s2">&quot;journal_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Northern Yukon Master Workworking&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;impact_factor&quot;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
+    <span class="s2">&quot;website_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://www.ehwoodworkers.ca&quot;</span>
+<span class="p">}</span>
+
+<span class="n">SAMPLE_UNICODE_JOURNAL_HASH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">45</span><span class="p">,</span>
+    <span class="s2">&quot;journal_name&quot;</span><span class="p">:</span> <span class="s2">u&quot;Northern Yukon Mastér Workworking&quot;</span><span class="p">,</span>
     <span class="s2">&quot;impact_factor&quot;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span>
     <span class="s2">&quot;website_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://www.ehwoodworkers.ca&quot;</span>
 <span class="p">}</span>
@@ -166,6 +174,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_JOURNAL_HASH</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TestJournals.test_unicode_journal_hash"><a class="viewcode-back" href="../../../../metadata.orm.test.journals.html#metadata.orm.test.journals.TestJournals.test_unicode_journal_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_journal_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the hash portion using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_JOURNAL_HASH</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TestJournals.test_journal_json"><a class="viewcode-back" href="../../../../metadata.orm.test.journals.html#metadata.orm.test.journals.TestJournals.test_journal_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_journal_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
@@ -176,7 +190,13 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_JOURNAL_HASH</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_JOURNAL_HASH</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestJournals.test_unicode_journal_where"><a class="viewcode-back" href="../../../../metadata.orm.test.journals.html#metadata.orm.test.journals.TestJournals.test_unicode_journal_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_journal_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the hash portion using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_JOURNAL_HASH</span><span class="p">)</span></div></div>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>

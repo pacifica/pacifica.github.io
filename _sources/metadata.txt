@@ -9,8 +9,10 @@ Contents:
    :maxdepth: 2
 
    metadata.orm
-   metadata.elastic
+   metadata.test_client
    metadata.rest
+   metadata.elastic
+   metadata.client
 
 .. automodule:: metadata
    :members:

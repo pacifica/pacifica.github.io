@@ -131,6 +131,7 @@
             
   <h1>Source code for metadata.orm.test.contributors</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Test the contributors ORM object</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -151,6 +152,17 @@
     <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span>
     <span class="s2">&quot;dept_code&quot;</span><span class="p">:</span> <span class="s2">&quot;Ecology&quot;</span><span class="p">,</span>
     <span class="s2">&quot;institution_id&quot;</span><span class="p">:</span> <span class="n">SAMPLE_INSTITUTION_HASH</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">SAMPLE_UNICODE_CONTRIBUTOR_HASH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">195</span><span class="p">,</span>
+    <span class="s2">&quot;person_id&quot;</span><span class="p">:</span> <span class="n">SAMPLE_USER_HASH</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="s1">u&#39;Jéhn&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;middle_initial&quot;</span><span class="p">:</span> <span class="s2">u&quot;Fé&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;last_name&quot;</span><span class="p">:</span> <span class="s2">u&quot;Doé&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dept_code&quot;</span><span class="p">:</span> <span class="s2">u&quot;Ecologéy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;institution_id&quot;</span><span class="p">:</span> <span class="n">SAMPLE_INSTITUTION_HASH</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;UTF8&quot;</span>
 <span class="p">}</span>
 
 <div class="viewcode-block" id="TestContributors"><a class="viewcode-back" href="../../../../metadata.orm.test.contributors.html#metadata.orm.test.contributors.TestContributors">[docs]</a><span class="k">class</span> <span class="nc">TestContributors</span><span class="p">(</span><span class="n">TestBase</span><span class="p">):</span>
@@ -190,6 +202,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_CONTRIBUTOR_HASH</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TestContributors.test_unicode_contributors_hash"><a class="viewcode-back" href="../../../../metadata.orm.test.contributors.html#metadata.orm.test.contributors.TestContributors.test_unicode_contributors_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_contributors_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the unicode hash using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_CONTRIBUTOR_HASH</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TestContributors.test_contributors_json"><a class="viewcode-back" href="../../../../metadata.orm.test.contributors.html#metadata.orm.test.contributors.TestContributors.test_contributors_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_contributors_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
@@ -200,7 +218,13 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_CONTRIBUTOR_HASH</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_CONTRIBUTOR_HASH</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestContributors.test_unicode_contributors_where"><a class="viewcode-back" href="../../../../metadata.orm.test.contributors.html#metadata.orm.test.contributors.TestContributors.test_unicode_contributors_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_contributors_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the unicode hash using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_CONTRIBUTOR_HASH</span><span class="p">)</span></div></div>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>

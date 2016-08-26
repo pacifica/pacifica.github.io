@@ -11,7 +11,7 @@ Contents:
    metadata.orm.test.citation_contributor
    metadata.orm.test.contributors
    metadata.orm.test.instruments
-   metadata.orm.test.__main__
+   metadata.orm.test.utils
    metadata.orm.test.instrument_custodian
    metadata.orm.test.trans_key_value
    metadata.orm.test.keywords

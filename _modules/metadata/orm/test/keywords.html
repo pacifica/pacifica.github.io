@@ -131,6 +131,7 @@
             
   <h1>Source code for metadata.orm.test.keywords</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Test the file_key_values ORM object</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -144,7 +145,15 @@
 <span class="n">SAMPLE_KEYWORD_HASH</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">142</span><span class="p">,</span>
     <span class="s2">&quot;citation_id&quot;</span><span class="p">:</span> <span class="n">SAMPLE_CITATION_HASH</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">],</span>
-    <span class="s2">&quot;keyword&quot;</span><span class="p">:</span> <span class="s2">&quot;halitosis&quot;</span>
+    <span class="s2">&quot;keyword&quot;</span><span class="p">:</span> <span class="s2">&quot;halitosis&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;UTF8&#39;</span>
+<span class="p">}</span>
+
+<span class="n">SAMPLE_UNICODE_KEYWORD_HASH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">143</span><span class="p">,</span>
+    <span class="s2">&quot;citation_id&quot;</span><span class="p">:</span> <span class="n">SAMPLE_CITATION_HASH</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">],</span>
+    <span class="s2">&quot;keyword&quot;</span><span class="p">:</span> <span class="s2">u&quot;blargééééé&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;UTF8&#39;</span>
 <span class="p">}</span>
 
 <div class="viewcode-block" id="TestKeywords"><a class="viewcode-back" href="../../../../metadata.orm.test.keywords.html#metadata.orm.test.keywords.TestKeywords">[docs]</a><span class="k">class</span> <span class="nc">TestKeywords</span><span class="p">(</span><span class="n">TestBase</span><span class="p">):</span>
@@ -177,6 +186,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_KEYWORD_HASH</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TestKeywords.test_unicode_keywords_hash"><a class="viewcode-back" href="../../../../metadata.orm.test.keywords.html#metadata.orm.test.keywords.TestKeywords.test_unicode_keywords_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_keywords_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the hash portion using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_KEYWORD_HASH</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TestKeywords.test_keywords_json"><a class="viewcode-back" href="../../../../metadata.orm.test.keywords.html#metadata.orm.test.keywords.TestKeywords.test_keywords_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_keywords_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
@@ -187,7 +202,13 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_KEYWORD_HASH</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_KEYWORD_HASH</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestKeywords.test_unicode_keywords_where"><a class="viewcode-back" href="../../../../metadata.orm.test.keywords.html#metadata.orm.test.keywords.TestKeywords.test_unicode_keywords_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_keywords_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the hash portion using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_KEYWORD_HASH</span><span class="p">)</span></div></div>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>

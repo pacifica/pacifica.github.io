@@ -141,20 +141,25 @@
 <span class="kn">from</span> <span class="nn">metadata.orm.base</span> <span class="k">import</span> <span class="n">PacificaModel</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.test.base</span> <span class="k">import</span> <span class="n">TestBase</span>
 
+<span class="n">SAMPLE_ZERO_ISO_HASH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;created&#39;</span><span class="p">:</span> <span class="s1">&#39;1969-12-31T16:00:00&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;updated&#39;</span><span class="p">:</span> <span class="s1">&#39;1969-12-31T16:00:00&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;deleted&#39;</span><span class="p">:</span> <span class="s1">&#39;1969-12-31T16:00:00&#39;</span>
+<span class="p">}</span>
 <span class="n">SAMPLE_ZERO_HASH</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;created&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
     <span class="s1">&#39;updated&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
     <span class="s1">&#39;deleted&#39;</span><span class="p">:</span> <span class="mi">0</span>
 <span class="p">}</span>
 <span class="n">SAMPLE_REP_HASH</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;created&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span>
-    <span class="s1">&#39;updated&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span>
-    <span class="s1">&#39;deleted&#39;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="s1">&#39;created&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+    <span class="s1">&#39;updated&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+    <span class="s1">&#39;deleted&#39;</span><span class="p">:</span> <span class="s1">&#39;1969-12-31T16:00:00&#39;</span>
 <span class="p">}</span>
 <span class="n">SAMPLE_BAD_HASH</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;created&#39;</span><span class="p">:</span> <span class="s1">&#39;blarg&#39;</span><span class="p">,</span>
     <span class="s1">&#39;updated&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span>
-    <span class="s1">&#39;deleted&#39;</span><span class="p">:</span> <span class="mi">0</span>
+    <span class="s1">&#39;deleted&#39;</span><span class="p">:</span> <span class="kc">None</span>
 <span class="p">}</span>
 
 <div class="viewcode-block" id="TestDBDates"><a class="viewcode-back" href="../../../../metadata.orm.test.dbdates.html#metadata.orm.test.dbdates.TestDBDates">[docs]</a><span class="k">class</span> <span class="nc">TestDBDates</span><span class="p">(</span><span class="n">TestBase</span><span class="p">):</span>
@@ -177,7 +182,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test method to check the hash against zero dates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">exception_str</span> <span class="o">=</span> <span class="s2">&quot;invalid literal for int() with base 10: &#39;blarg&#39;&quot;</span>
+        <span class="n">exception_str</span> <span class="o">=</span> <span class="s2">&quot;Unknown string format&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_BAD_HASH</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
@@ -187,19 +192,19 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test method to check the hash against zero dates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_ZERO_HASH</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_ZERO_ISO_HASH</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestDBDates.test_zero_dates_from_json"><a class="viewcode-back" href="../../../../metadata.orm.test.dbdates.html#metadata.orm.test.dbdates.TestDBDates.test_zero_dates_from_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_zero_dates_from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test method to check the json against zero dates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_ZERO_HASH</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_ZERO_ISO_HASH</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="TestDBDates.test_zero_dates_from_where"><a class="viewcode-back" href="../../../../metadata.orm.test.dbdates.html#metadata.orm.test.dbdates.TestDBDates.test_zero_dates_from_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_zero_dates_from_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test method to check the where clause against zero dates.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_ZERO_HASH</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_ZERO_ISO_HASH</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestDBDates.test_now_dates_from_hash"><a class="viewcode-back" href="../../../../metadata.orm.test.dbdates.html#metadata.orm.test.dbdates.TestDBDates.test_now_dates_from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_now_dates_from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

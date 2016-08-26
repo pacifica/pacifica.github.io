@@ -131,28 +131,46 @@
             
   <h1>Source code for metadata.orm.test.proposals</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Test the proposals ORM object</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">mktime</span>
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">main</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.test.base</span> <span class="k">import</span> <span class="n">TestBase</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.proposals</span> <span class="k">import</span> <span class="n">Proposals</span>
 
 <span class="n">SAMPLE_PROPOSAL_HASH</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span>
+    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">&quot;17a&quot;</span><span class="p">,</span>
     <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;My Proposal Title&quot;</span><span class="p">,</span>
     <span class="s2">&quot;abstract&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">This is my proposal that&#39;s really cool and you should accept it. ;)</span>
 <span class="s2">&quot;&quot;&quot;</span><span class="p">,</span>
     <span class="s2">&quot;science_theme&quot;</span><span class="p">:</span> <span class="s2">&quot;Nobel Prize Winners&quot;</span><span class="p">,</span>
     <span class="s2">&quot;proposal_type&quot;</span><span class="p">:</span> <span class="s2">&quot;Blarg!&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;submitted_date&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span>
-    <span class="s2">&quot;accepted_date&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span>
-    <span class="s2">&quot;actual_start_date&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())),</span>
-    <span class="s2">&quot;actual_end_date&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
+    <span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;UTF8&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;submitted_date&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+    <span class="s2">&quot;accepted_date&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+    <span class="s2">&quot;actual_start_date&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+    <span class="s2">&quot;actual_end_date&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+    <span class="s2">&quot;closed_date&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="n">SAMPLE_UNICODE_PROPOSAL_HASH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">u&quot;17é&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">u&quot;My Proposal Titlé&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;abstract&quot;</span><span class="p">:</span> <span class="s2">u&quot;&quot;&quot;</span>
+<span class="s2">This is my proposal that&#39;s réally cool and you should accept it. ;)</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;science_theme&quot;</span><span class="p">:</span> <span class="s2">u&quot;Nobél Prize Winners&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;proposal_type&quot;</span><span class="p">:</span> <span class="s2">u&quot;Blarg!é&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;UTF8&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;submitted_date&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+    <span class="s2">&quot;accepted_date&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+    <span class="s2">&quot;actual_start_date&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+    <span class="s2">&quot;actual_end_date&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+    <span class="s2">&quot;closed_date&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
 <span class="p">}</span>
 
 <div class="viewcode-block" id="TestProposals"><a class="viewcode-back" href="../../../../metadata.orm.test.proposals.html#metadata.orm.test.proposals.TestProposals">[docs]</a><span class="k">class</span> <span class="nc">TestProposals</span><span class="p">(</span><span class="n">TestBase</span><span class="p">):</span>
@@ -175,6 +193,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_PROPOSAL_HASH</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="TestProposals.test_unicode_proposals_hash"><a class="viewcode-back" href="../../../../metadata.orm.test.proposals.html#metadata.orm.test.proposals.TestProposals.test_unicode_proposals_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_proposals_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the hash portion using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_PROPOSAL_HASH</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TestProposals.test_proposals_json"><a class="viewcode-back" href="../../../../metadata.orm.test.proposals.html#metadata.orm.test.proposals.TestProposals.test_proposals_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_proposals_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
@@ -185,7 +209,13 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_PROPOSAL_HASH</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_PROPOSAL_HASH</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestProposals.test_unicode_proposals_where"><a class="viewcode-back" href="../../../../metadata.orm.test.proposals.html#metadata.orm.test.proposals.TestProposals.test_unicode_proposals_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_proposals_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the hash portion using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_PROPOSAL_HASH</span><span class="p">)</span></div></div>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
