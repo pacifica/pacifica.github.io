@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
-        <link rel="up" title="metadata.orm" href="../../orm.html"/> 
+        <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -115,8 +116,6 @@
       
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
       
-          <li><a href="../../orm.html">metadata.orm</a> &raquo;</li>
-      
     <li>metadata.orm.test.keys</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -131,6 +130,7 @@
             
   <h1>Source code for metadata.orm.test.keys</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Test the keys ORM object</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -141,10 +141,17 @@
 
 <span class="n">SAMPLE_KEY_HASH</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">127</span><span class="p">,</span>
-    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;proposal&quot;</span>
+    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;proposal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;UTF8&quot;</span>
 <span class="p">}</span>
 
-<div class="viewcode-block" id="TestKeys"><a class="viewcode-back" href="../../../../metadata.orm.test.keys.html#metadata.orm.test.keys.TestKeys">[docs]</a><span class="k">class</span> <span class="nc">TestKeys</span><span class="p">(</span><span class="n">TestBase</span><span class="p">):</span>
+<span class="n">SAMPLE_UNICODE_KEY_HASH</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="mi">127</span><span class="p">,</span>
+    <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">u&quot;proposalé&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;encoding&quot;</span><span class="p">:</span> <span class="s2">&quot;UTF8&quot;</span>
+<span class="p">}</span>
+
+<div class="viewcode-block" id="TestKeys"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.keys.TestKeys">[docs]</a><span class="k">class</span> <span class="nc">TestKeys</span><span class="p">(</span><span class="n">TestBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test the Keys ORM object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -152,29 +159,41 @@
     <span class="n">obj_id</span> <span class="o">=</span> <span class="n">Keys</span><span class="o">.</span><span class="n">id</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="TestKeys.dependent_cls"><a class="viewcode-back" href="../../../../metadata.orm.test.keys.html#metadata.orm.test.keys.TestKeys.dependent_cls">[docs]</a>    <span class="k">def</span> <span class="nf">dependent_cls</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="TestKeys.dependent_cls"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.keys.TestKeys.dependent_cls">[docs]</a>    <span class="k">def</span> <span class="nf">dependent_cls</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return dependent classes for the Keys object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">Keys</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="TestKeys.test_keys_hash"><a class="viewcode-back" href="../../../../metadata.orm.test.keys.html#metadata.orm.test.keys.TestKeys.test_keys_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_keys_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestKeys.test_keys_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.keys.TestKeys.test_keys_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_keys_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_KEY_HASH</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TestKeys.test_keys_json"><a class="viewcode-back" href="../../../../metadata.orm.test.keys.html#metadata.orm.test.keys.TestKeys.test_keys_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_keys_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestKeys.test_unicode_keys_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.keys.TestKeys.test_unicode_keys_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_keys_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the hash portion using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_KEY_HASH</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestKeys.test_keys_json"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.keys.TestKeys.test_keys_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_keys_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_KEY_HASH</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="TestKeys.test_keys_where"><a class="viewcode-back" href="../../../../metadata.orm.test.keys.html#metadata.orm.test.keys.TestKeys.test_keys_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_keys_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestKeys.test_keys_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.keys.TestKeys.test_keys_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_keys_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_KEY_HASH</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_KEY_HASH</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestKeys.test_unicode_keys_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.keys.TestKeys.test_unicode_keys_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_keys_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test the hash portion using base object method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_KEY_HASH</span><span class="p">)</span></div></div>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>

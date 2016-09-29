@@ -1,0 +1,617 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Cart Module &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
+        <link rel="up" title="Cartd Project" href="cartd.html"/>
+        <link rel="next" title="Archiveinterface Project" href="archiveinterface.html"/>
+        <link rel="prev" title="Cartd Project" href="cartd.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="cartd.html">Cartd Project</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Cart Module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
+      
+          <li><a href="cartd.html">Cartd Project</a> &raquo;</li>
+      
+    <li>Cart Module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/cartd.cart.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-cart.archive_requests">
+<span id="cart-module"></span><h1>Cart Module<a class="headerlink" href="#module-cart.archive_requests" title="Permalink to this headline">¶</a></h1>
+<p>Module that is used by the cart to send requests to the
+archive interface</p>
+<dl class="class">
+<dt id="cart.archive_requests.ArchiveRequests">
+<em class="property">class </em><code class="descclassname">cart.archive_requests.</code><code class="descname">ArchiveRequests</code><a class="reference internal" href="_modules/cart/archive_requests.html#ArchiveRequests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.archive_requests.ArchiveRequests" title="Permalink to this definition">¶</a></dt>
+<dd><p>class that supports all the requests to the archive
+interface</p>
+<dl class="method">
+<dt id="cart.archive_requests.ArchiveRequests.pull_file">
+<code class="descname">pull_file</code><span class="sig-paren">(</span><em>archive_filename</em>, <em>cart_filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/archive_requests.html#ArchiveRequests.pull_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.archive_requests.ArchiveRequests.pull_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a curl that will attempt to write
+the contents of a file from the archive interface
+to the specified cart filepath</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.archive_requests.ArchiveRequests.stage_file">
+<code class="descname">stage_file</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/archive_requests.html#ArchiveRequests.stage_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.archive_requests.ArchiveRequests.stage_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a post to the archive interface telling it to stage the file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.archive_requests.ArchiveRequests.status_file">
+<code class="descname">status_file</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/archive_requests.html#ArchiveRequests.status_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.archive_requests.ArchiveRequests.status_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a status from the  archive interface via Head and
+returns response</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-cart.cart_env_globals"></span><p>Used to load in all the carts environment variables</p>
+<p>Wrapped all in if statements so that they can be used in
+unit test environment</p>
+<span class="target" id="module-cart.cart_interface"></span><p>Class for the cart interface.  Allows API to file interactions</p>
+<dl class="class">
+<dt id="cart.cart_interface.CartGenerator">
+<em class="property">class </em><code class="descclassname">cart.cart_interface.</code><code class="descname">CartGenerator</code><a class="reference internal" href="_modules/cart/cart_interface.html#CartGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface.CartGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the methods that can be used for cart request types
+doctest for the cart generator class
+HPSS Doc Tests</p>
+<dl class="method">
+<dt id="cart.cart_interface.CartGenerator.delete_cart">
+<code class="descname">delete_cart</code><span class="sig-paren">(</span><em>env</em>, <em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface.html#CartGenerator.delete_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface.CartGenerator.delete_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a cart that has been created</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface.CartGenerator.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>env</em>, <em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface.html#CartGenerator.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface.CartGenerator.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the tar file created by the cart</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface.CartGenerator.pacifica_cartinterface">
+<code class="descname">pacifica_cartinterface</code><span class="sig-paren">(</span><em>env</em>, <em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface.html#CartGenerator.pacifica_cartinterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface.CartGenerator.pacifica_cartinterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses request method type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface.CartGenerator.return_response">
+<code class="descname">return_response</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface.html#CartGenerator.return_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface.CartGenerator.return_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints all responses in a nice fashion</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface.CartGenerator.stage">
+<code class="descname">stage</code><span class="sig-paren">(</span><em>env</em>, <em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface.html#CartGenerator.stage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface.CartGenerator.stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the files locally and bundled</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface.CartGenerator.status">
+<code class="descname">status</code><span class="sig-paren">(</span><em>env</em>, <em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface.html#CartGenerator.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface.CartGenerator.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the status of a carts tar file</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="cart.cart_interface.CartInterfaceError">
+<em class="property">exception </em><code class="descclassname">cart.cart_interface.</code><code class="descname">CartInterfaceError</code><a class="reference internal" href="_modules/cart/cart_interface.html#CartInterfaceError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface.CartInterfaceError" title="Permalink to this definition">¶</a></dt>
+<dd><p>CartInterfaceError - basic exception class for this module.
+Will be used to throw exceptions up to the top level of the application</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cart.cart_interface.fix_cart_uid">
+<code class="descclassname">cart.cart_interface.</code><code class="descname">fix_cart_uid</code><span class="sig-paren">(</span><em>uid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface.html#fix_cart_uid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface.fix_cart_uid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes / from front of cart_uid</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cart.cart_interface.is_valid_uid">
+<code class="descclassname">cart.cart_interface.</code><code class="descname">is_valid_uid</code><span class="sig-paren">(</span><em>uid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface.html#is_valid_uid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface.is_valid_uid" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks to see if the uid is valid before using it</p>
+</dd></dl>
+
+<span class="target" id="module-cart.cart_interface_responses"></span><p>File for setting up Cart Interface server responses</p>
+<dl class="class">
+<dt id="cart.cart_interface_responses.Responses">
+<em class="property">class </em><code class="descclassname">cart.cart_interface_responses.</code><code class="descname">Responses</code><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic responses class to centralize how we reply to given states.</p>
+<dl class="method">
+<dt id="cart.cart_interface_responses.Responses.base_response">
+<code class="descname">base_response</code><span class="sig-paren">(</span><em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses.base_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses.base_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response base</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface_responses.Responses.bundle_doesnt_exist">
+<code class="descname">bundle_doesnt_exist</code><span class="sig-paren">(</span><em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses.bundle_doesnt_exist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses.bundle_doesnt_exist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response for when the cart bundle does not exist</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface_responses.Responses.cart_delete_response">
+<code class="descname">cart_delete_response</code><span class="sig-paren">(</span><em>start_response</em>, <em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses.cart_delete_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses.cart_delete_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response For cart deletion</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface_responses.Responses.cart_proccessing_response">
+<code class="descname">cart_proccessing_response</code><span class="sig-paren">(</span><em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses.cart_proccessing_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses.cart_proccessing_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response base</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface_responses.Responses.cart_status_response">
+<code class="descname">cart_status_response</code><span class="sig-paren">(</span><em>start_response</em>, <em>status</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses.cart_status_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses.cart_status_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response that tells the carts status.
+Status is a tuple of status, and message</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface_responses.Responses.invalid_uid_error_response">
+<code class="descname">invalid_uid_error_response</code><span class="sig-paren">(</span><em>start_response</em>, <em>uid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses.invalid_uid_error_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses.invalid_uid_error_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response when unknown exception occurs</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface_responses.Responses.json_stage_error_response">
+<code class="descname">json_stage_error_response</code><span class="sig-paren">(</span><em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses.json_stage_error_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses.json_stage_error_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response for when there is a problem reading the json file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface_responses.Responses.test_response">
+<code class="descname">test_response</code><span class="sig-paren">(</span><em>start_response</em>, <em>variable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses.test_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses.test_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response when unknown exception occurs</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface_responses.Responses.unknown_exception">
+<code class="descname">unknown_exception</code><span class="sig-paren">(</span><em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses.unknown_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses.unknown_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response when unknown exception occurs</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface_responses.Responses.unknown_request">
+<code class="descname">unknown_request</code><span class="sig-paren">(</span><em>start_response</em>, <em>request_method</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses.unknown_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses.unknown_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response for when unknown request type given</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_interface_responses.Responses.unready_cart">
+<code class="descname">unready_cart</code><span class="sig-paren">(</span><em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_interface_responses.html#Responses.unready_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_interface_responses.Responses.unready_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response for when the cart is not ready for download</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-cart.cart_orm"></span><p>Cart Object Relational Model</p>
+<p>Using PeeWee to implement the ORM.</p>
+<dl class="class">
+<dt id="cart.cart_orm.Cart">
+<em class="property">class </em><code class="descclassname">cart.cart_orm.</code><code class="descname">Cart</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_orm.html#Cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_orm.Cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cart object model</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="cart.cart_orm.File">
+<em class="property">class </em><code class="descclassname">cart.cart_orm.</code><code class="descname">File</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_orm.html#File"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_orm.File" title="Permalink to this definition">¶</a></dt>
+<dd><p>File object model to keep track of what&#8217;s been downloaded for a cart</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cart.cart_orm.database_close">
+<code class="descclassname">cart.cart_orm.</code><code class="descname">database_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_orm.html#database_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_orm.database_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the database connection. Closing already closed database
+throws an error so catch it and continue on</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cart.cart_orm.database_connect">
+<code class="descclassname">cart.cart_orm.</code><code class="descname">database_connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_orm.html#database_connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_orm.database_connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes sure database is connected.  Trying to connect a second
+time doesnt cause any problems</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cart.cart_orm.database_setup">
+<code class="descclassname">cart.cart_orm.</code><code class="descname">database_setup</code><span class="sig-paren">(</span><em>attempts=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_orm.html#database_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_orm.database_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup and create the database from the db connection.</p>
+</dd></dl>
+
+<span class="target" id="module-cart.cart_unit_tests"></span><p>File used to unit test the pacifica_cart</p>
+<dl class="class">
+<dt id="cart.cart_unit_tests.TestCartInterface">
+<em class="property">class </em><code class="descclassname">cart.cart_unit_tests.</code><code class="descname">TestCartInterface</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains all the tests for the Cart Interface</p>
+<dl class="method">
+<dt id="cart.cart_unit_tests.TestCartInterface.test_fix_cart_uid">
+<code class="descname">test_fix_cart_uid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartInterface.test_fix_cart_uid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartInterface.test_fix_cart_uid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Testing the create filepath cleanup</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_unit_tests.TestCartInterface.test_is_valid_uid">
+<code class="descname">test_is_valid_uid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartInterface.test_is_valid_uid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartInterface.test_is_valid_uid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Testing if the passed guids are valid</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="cart.cart_unit_tests.TestCartUtils">
+<em class="property">class </em><code class="descclassname">cart.cart_unit_tests.</code><code class="descname">TestCartUtils</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartUtils"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartUtils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains all the tests for the CartUtils class</p>
+<dl class="method">
+<dt id="cart.cart_unit_tests.TestCartUtils.test_check_file_ready_pull">
+<code class="descname">test_check_file_ready_pull</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartUtils.test_check_file_ready_pull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartUtils.test_check_file_ready_pull" title="Permalink to this definition">¶</a></dt>
+<dd><p>test that checks to see if a file is ready to pull
+by checking the archive response</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_unit_tests.TestCartUtils.test_check_file_size_needed">
+<code class="descname">test_check_file_size_needed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartUtils.test_check_file_size_needed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartUtils.test_check_file_size_needed" title="Permalink to this definition">¶</a></dt>
+<dd><p>test that the file size returned from the archive is parsed right</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_unit_tests.TestCartUtils.test_check_space_requirements">
+<code class="descname">test_check_space_requirements</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartUtils.test_check_space_requirements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartUtils.test_check_space_requirements" title="Permalink to this definition">¶</a></dt>
+<dd><p>test that there is enough space on the volume for the file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_unit_tests.TestCartUtils.test_create_bundle_directories">
+<code class="descname">test_create_bundle_directories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartUtils.test_create_bundle_directories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartUtils.test_create_bundle_directories" title="Permalink to this definition">¶</a></dt>
+<dd><p>test the creation of direcoties were files will be saved</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_unit_tests.TestCartUtils.test_create_download_path">
+<code class="descname">test_create_download_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartUtils.test_create_download_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartUtils.test_create_download_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>test the creation of the download path for a cart file</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_unit_tests.TestCartUtils.test_delete_cart_bundle">
+<code class="descname">test_delete_cart_bundle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartUtils.test_delete_cart_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartUtils.test_delete_cart_bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>test that trys to delete a cart bundle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_unit_tests.TestCartUtils.test_fix_absolute_path">
+<code class="descname">test_fix_absolute_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartUtils.test_fix_absolute_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartUtils.test_fix_absolute_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>test the correct creation of paths by removing absolute paths</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_unit_tests.TestCartUtils.test_get_path_size">
+<code class="descname">test_get_path_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartUtils.test_get_path_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartUtils.test_get_path_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>test to see if the path size of a directory is returned</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_unit_tests.TestCartUtils.test_set_file_status">
+<code class="descname">test_set_file_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_unit_tests.html#TestCartUtils.test_set_file_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_unit_tests.TestCartUtils.test_set_file_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>test that trys to set a specific files status</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-cart.cart_utils"></span><p>Module that has the utility functionality for
+the cart</p>
+<dl class="class">
+<dt id="cart.cart_utils.Cartutils">
+<em class="property">class </em><code class="descclassname">cart.cart_utils.</code><code class="descname">Cartutils</code><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class used to provide utility functions for the
+cart to use.</p>
+<dl class="staticmethod">
+<dt id="cart.cart_utils.Cartutils.available_cart">
+<em class="property">static </em><code class="descname">available_cart</code><span class="sig-paren">(</span><em>uid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.available_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.available_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the asked for cart tar is available
+returns the path to tar if yes, false if not</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="cart.cart_utils.Cartutils.cart_status">
+<em class="property">static </em><code class="descname">cart_status</code><span class="sig-paren">(</span><em>uid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.cart_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.cart_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the status of a specified cart</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="cart.cart_utils.Cartutils.check_file_modified_time">
+<em class="property">static </em><code class="descname">check_file_modified_time</code><span class="sig-paren">(</span><em>response</em>, <em>cart_file</em>, <em>mycart</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.check_file_modified_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.check_file_modified_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks response (should be from Archive Interface head request)
+for file modified time</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="cart.cart_utils.Cartutils.check_file_ready_pull">
+<em class="property">static </em><code class="descname">check_file_ready_pull</code><span class="sig-paren">(</span><em>response</em>, <em>cart_file</em>, <em>mycart</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.check_file_ready_pull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.check_file_ready_pull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks response (should be from Archive Interface head request)
+for bytes per level then returns True or False based on if the file
+is at level 1 (downloadable)</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="cart.cart_utils.Cartutils.check_file_size_needed">
+<em class="property">static </em><code class="descname">check_file_size_needed</code><span class="sig-paren">(</span><em>response</em>, <em>cart_file</em>, <em>mycart</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.check_file_size_needed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.check_file_size_needed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks response (should be from Archive Interface head request)
+for file size</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.cart_utils.Cartutils.check_space_requirements">
+<code class="descname">check_space_requirements</code><span class="sig-paren">(</span><em>cart_file</em>, <em>mycart</em>, <em>size_needed</em>, <em>deleted_flag</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.check_space_requirements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.check_space_requirements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks to make sure there is enough space available on disk
+for the file to be downloaded
+Note it will recursively call itself if there isnt enough
+space. It will delete a cart first, then call  itself
+until either there is enough space or there is no carts to delete</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="cart.cart_utils.Cartutils.create_bundle_directories">
+<em class="property">static </em><code class="descname">create_bundle_directories</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.create_bundle_directories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.create_bundle_directories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates all the directories in the given path
+if they do not already exist.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="cart.cart_utils.Cartutils.create_download_path">
+<em class="property">classmethod </em><code class="descname">create_download_path</code><span class="sig-paren">(</span><em>cart_file</em>, <em>mycart</em>, <em>abs_cart_file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.create_download_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.create_download_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the directories that the file will be pulled to</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="cart.cart_utils.Cartutils.delete_cart_bundle">
+<em class="property">static </em><code class="descname">delete_cart_bundle</code><span class="sig-paren">(</span><em>cart</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.delete_cart_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.delete_cart_bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the path to where a carts file are and
+attempts to delete the file tree</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="cart.cart_utils.Cartutils.fix_absolute_path">
+<em class="property">static </em><code class="descname">fix_absolute_path</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.fix_absolute_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.fix_absolute_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes / from front of path</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="cart.cart_utils.Cartutils.get_path_size">
+<em class="property">classmethod </em><code class="descname">get_path_size</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.get_path_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.get_path_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the size of a specific directory, including
+all subdirectories and files</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="cart.cart_utils.Cartutils.lru_cart_delete">
+<em class="property">classmethod </em><code class="descname">lru_cart_delete</code><span class="sig-paren">(</span><em>mycart</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.lru_cart_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.lru_cart_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the least recently used cart that isnt this one.
+Only delete one cart per call</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="cart.cart_utils.Cartutils.remove_cart">
+<em class="property">classmethod </em><code class="descname">remove_cart</code><span class="sig-paren">(</span><em>uid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.remove_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.remove_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call when a DELETE request comes in. Verifies there is a cart
+to delete then removes it</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="cart.cart_utils.Cartutils.set_file_status">
+<em class="property">static </em><code class="descname">set_file_status</code><span class="sig-paren">(</span><em>cart_file</em>, <em>cart</em>, <em>status</em>, <em>error</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.set_file_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.set_file_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status and/or error for a cart</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="cart.cart_utils.Cartutils.update_cart_files">
+<em class="property">classmethod </em><code class="descname">update_cart_files</code><span class="sig-paren">(</span><em>cart</em>, <em>file_ids</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/cart_utils.html#Cartutils.update_cart_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.cart_utils.Cartutils.update_cart_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the files associated to a cart</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-cart.celery"></span><p>Primary celery process.</p>
+<span class="target" id="module-cart.tasks"></span><p>Module that contains all the amqp tasks that support the
+cart infrastructure</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="archiveinterface.html" class="btn btn-neutral float-right" title="Archiveinterface Project" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="cartd.html" class="btn btn-neutral" title="Cartd Project" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

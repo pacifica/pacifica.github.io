@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>home.instrument_server &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>home.instrument_server</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for home.instrument_server</h1><div class="highlight"><pre>
+<span></span><span class="c1">#pylint: disable=too-many-return-statements</span>
+<span class="c1"># justification: argument with style</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Configuration specific to an instrument</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">psutil</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">home</span> <span class="k">import</span> <span class="n">file_tools</span>
+
+<span class="kn">from</span> <span class="nn">home</span> <span class="k">import</span> <span class="n">task_comm</span>
+
+<div class="viewcode-block" id="MetaData"><a class="viewcode-back" href="../../uploader.home.html#home.instrument_server.MetaData">[docs]</a><span class="k">class</span> <span class="nc">MetaData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    structure used to pass upload metadata back and forth to the upload page</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="InstrumentConfiguration"><a class="viewcode-back" href="../../uploader.home.html#home.instrument_server.InstrumentConfiguration">[docs]</a><span class="k">class</span> <span class="nc">InstrumentConfiguration</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    meta data about for a session</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">run_without_celery</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">initialized</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">instrument</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="n">server_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">target_dir</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;instrument&#39;</span>
+
+    <span class="c1"># meta data values</span>
+    <span class="n">meta_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># free disk space</span>
+    <span class="n">free_space</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">free_size_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+<div class="viewcode-block" id="InstrumentConfiguration.initialize_settings"><a class="viewcode-back" href="../../uploader.home.html#home.instrument_server.InstrumentConfiguration.initialize_settings">[docs]</a>    <span class="k">def</span> <span class="nf">initialize_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        if the system hasn&#39;t been initialized, do so</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialized</span><span class="p">:</span> <span class="c1"># first time through, initialize</span>
+
+                <span class="n">configuration</span> <span class="o">=</span> <span class="n">read_config_file</span><span class="p">()</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span> <span class="o">=</span> <span class="n">configuration</span><span class="p">[</span><span class="s1">&#39;instrument&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s1">&#39;Configuration: Missing instrument&#39;</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">target_dir</span> <span class="o">=</span> <span class="n">configuration</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_dir</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s1">&#39;Configuration: Missing target directory&#39;</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_dir</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="s1">&#39;Configuration: target directory unmounted&#39;</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">server_path</span> <span class="o">=</span> <span class="n">configuration</span><span class="p">[</span><span class="s1">&#39;server&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_path</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s1">&#39;Configuration: Missing server path&#39;</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">configuration</span><span class="p">[</span><span class="s1">&#39;timeout&#39;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s1">&#39;Configuration: Missing timeout&#39;</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">configuration</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s1">&#39;Configuration: Missing mode&#39;</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">use_celery</span> <span class="o">=</span> <span class="n">configuration</span><span class="p">[</span><span class="s1">&#39;use_celery&#39;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                        <span class="n">task_comm</span><span class="o">.</span><span class="n">USE_CELERY</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">task_comm</span><span class="o">.</span><span class="n">USE_CELERY</span> <span class="o">=</span> <span class="p">(</span><span class="n">use_celery</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">task_comm</span><span class="o">.</span><span class="n">USE_CELERY</span> <span class="o">=</span> <span class="kc">True</span>
+
+                
+
+                <span class="n">root_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">configuration</span><span class="p">[</span><span class="s1">&#39;dataRoot&#39;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">root_dir</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s1">&#39;Configuration: Missing root directory&#39;</span>
+
+                <span class="k">if</span> <span class="n">root_dir</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">):</span>
+                    <span class="n">root_dir</span> <span class="o">=</span> <span class="n">root_dir</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">root_dir</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="s1">&#39;Configuration: root directory unmounted&#39;</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">root_dir</span>
+
+                <span class="c1"># create a list of metadata entries to pass to the list upload page</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">meta_list</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">meta</span> <span class="ow">in</span> <span class="n">configuration</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">]:</span>
+                        <span class="n">meta_entry</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+                        <span class="n">meta_entry</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">meta_entry</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="n">meta_entry</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">meta_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">meta_entry</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s1">&#39;Configuration: missing metadata&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="n">err</span>
+            <span class="k">return</span> <span class="s1">&#39;Configuration Error&#39;</span>
+
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+<div class="viewcode-block" id="InstrumentConfiguration.update_free_space"><a class="viewcode-back" href="../../uploader.home.html#home.instrument_server.InstrumentConfiguration.update_free_space">[docs]</a>    <span class="k">def</span> <span class="nf">update_free_space</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        update the amount of free space currently available</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># get the disk usage</span>
+        <span class="n">space</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">disk_usage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_dir</span><span class="p">)</span>
+
+        <span class="c1">#give ourselves a cushion for other processes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">free_space</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="o">.</span><span class="mi">9</span> <span class="o">*</span> <span class="n">space</span><span class="o">.</span><span class="n">free</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">free_size_str</span> <span class="o">=</span> <span class="n">file_tools</span><span class="o">.</span><span class="n">size_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">free_space</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="read_config_file"><a class="viewcode-back" href="../../uploader.home.html#home.instrument_server.read_config_file">[docs]</a><span class="k">def</span> <span class="nf">read_config_file</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    read the configuration file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">config_file</span> <span class="o">=</span> <span class="s1">&#39;UploaderConfig.json&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config_file</span><span class="p">):</span>
+        <span class="n">write_default_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">read_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="read_config"><a class="viewcode-back" href="../../uploader.home.html#home.instrument_server.read_config">[docs]</a><span class="k">def</span> <span class="nf">read_config</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    read the configuration file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">configuration</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">configuration</span></div>
+
+<div class="viewcode-block" id="write_default_config"><a class="viewcode-back" href="../../uploader.home.html#home.instrument_server.write_default_config">[docs]</a><span class="k">def</span> <span class="nf">write_default_config</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    write a default configuration file as a template</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">config_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/srv/localdata&#39;</span>
+    <span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;dataRoot &#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/srv/home&#39;</span>
+    <span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;timeout&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;10&#39;</span>
+    <span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;server&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;dev2.my.emsl.pnl.gov&#39;</span>
+    <span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;instrument&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;0a&#39;</span>
+    <span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;instrument&#39;</span>
+
+
+    <span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;Tag&#39;</span><span class="p">,</span> <span class="s1">&#39;Tag&#39;</span><span class="p">))</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">config</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">configdict</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

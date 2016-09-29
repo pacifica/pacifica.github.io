@@ -1,0 +1,14 @@
+
+Uploader Module
+**************************************************************
+
+
+.. automodule:: uploader.auth
+   :members:
+   :private-members:
+
+
+.. automodule:: uploader.PycurlSession
+   :members:
+   :private-members:
+

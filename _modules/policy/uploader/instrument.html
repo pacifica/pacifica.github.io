@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>policy.uploader.instrument &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>policy.uploader.instrument</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for policy.uploader.instrument</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">CherryPy Uploader Policy object class</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span><span class="p">,</span> <span class="n">loads</span>
+<span class="kn">from</span> <span class="nn">sets</span> <span class="k">import</span> <span class="n">Set</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">policy.uploader.base</span> <span class="k">import</span> <span class="n">QueryBase</span>
+
+<span class="c1"># pylint: disable=too-few-public-methods</span>
+<div class="viewcode-block" id="InstrumentQuery"><a class="viewcode-back" href="../../../policy.policy.uploader.html#policy.uploader.instrument.InstrumentQuery">[docs]</a><span class="k">class</span> <span class="nc">InstrumentQuery</span><span class="p">(</span><span class="n">QueryBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    CherryPy root object class</span>
+
+<span class="sd">    not exposed by default the base objects are exposed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">exposed</span> <span class="o">=</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="InstrumentQuery._get"><a class="viewcode-back" href="../../../policy.policy.uploader.html#policy.uploader.instrument.InstrumentQuery._get">[docs]</a>    <span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">proposal_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the list of instruments given the user and</span>
+<span class="sd">        an optional proposal_id</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">all_proposals</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">proposal_id</span><span class="p">:</span>
+            <span class="n">all_proposals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">proposal_id</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_admin</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+                <span class="n">all_instruments</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_instruments_url</span><span class="p">)</span>
+                <span class="n">all_instruments</span> <span class="o">=</span> <span class="n">Set</span><span class="p">([</span><span class="n">inst</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">loads</span><span class="p">(</span><span class="n">all_instruments</span><span class="o">.</span><span class="n">text</span><span class="p">)])</span>
+                <span class="k">return</span> <span class="n">dumps</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_instruments</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">all_proposals</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">?person_id=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prop_participant_url</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+                <span class="n">all_proposals</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">all_proposals</span><span class="p">)</span>
+                <span class="n">all_proposals</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;proposal_id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">loads</span><span class="p">(</span><span class="n">all_proposals</span><span class="o">.</span><span class="n">text</span><span class="p">)]</span>
+        <span class="n">all_inst_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">all_proposals</span><span class="p">:</span>
+            <span class="n">insts_for_prop</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">?proposal_id=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prop_instrument_url</span><span class="p">,</span> <span class="n">prop</span><span class="p">)</span>
+            <span class="n">insts_for_prop</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">insts_for_prop</span><span class="p">)</span>
+            <span class="n">all_inst_list</span> <span class="o">+=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;instrument_id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">loads</span><span class="p">(</span><span class="n">insts_for_prop</span><span class="o">.</span><span class="n">text</span><span class="p">)]</span>
+        <span class="n">all_instruments</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="n">all_inst_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dumps</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_instruments</span><span class="p">))</span></div>
+
+    <span class="c1"># CherryPy requires these named methods</span>
+    <span class="c1"># Add HEAD (basically Get without returning body</span>
+    <span class="c1"># pylint: disable=invalid-name</span>
+<div class="viewcode-block" id="InstrumentQuery.GET"><a class="viewcode-back" href="../../../policy.policy.uploader.html#policy.uploader.instrument.InstrumentQuery.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        CherryPy GET method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">proposal_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="s1">&#39;user_id&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">user_id</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;proposal_id&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">proposal_id</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;proposal_id&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">user_id</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">proposal_id</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">proposal_id</span><span class="p">)</span></div></div>
+    <span class="c1"># pylint: enable=invalid-name</span>
+<span class="c1"># pylint: enable=too-few-public-methods</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

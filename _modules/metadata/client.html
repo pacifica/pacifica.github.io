@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -136,13 +137,13 @@
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">dumps</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<div class="viewcode-block" id="PMClientError"><a class="viewcode-back" href="../../metadata.client.html#metadata.client.PMClientError">[docs]</a><span class="k">class</span> <span class="nc">PMClientError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="PMClientError"><a class="viewcode-back" href="../../metadata.metadata.html#metadata.client.PMClientError">[docs]</a><span class="k">class</span> <span class="nc">PMClientError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base Exception Error Class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="PMClient"><a class="viewcode-back" href="../../metadata.client.html#metadata.client.PMClient">[docs]</a><span class="k">class</span> <span class="nc">PMClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="PMClient"><a class="viewcode-back" href="../../metadata.metadata.html#metadata.client.PMClient">[docs]</a><span class="k">class</span> <span class="nc">PMClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Pacifica Metadata Client</span>
 
@@ -155,7 +156,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
 
-<div class="viewcode-block" id="PMClient.create"><a class="viewcode-back" href="../../metadata.client.html#metadata.client.PMClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_type</span><span class="p">,</span> <span class="n">set_hash</span><span class="p">):</span>
+<div class="viewcode-block" id="PMClient.create"><a class="viewcode-back" href="../../metadata.metadata.html#metadata.client.PMClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_type</span><span class="p">,</span> <span class="n">set_hash</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create the object of type based on hash</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -165,10 +166,9 @@
         <span class="k">elif</span> <span class="n">ret</span><span class="o">.</span><span class="n">status_code</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Internal Server Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Unknown Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
+            <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Unknown Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PMClient.update"><a class="viewcode-back" href="../../metadata.client.html#metadata.client.PMClient.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_type</span><span class="p">,</span> <span class="n">query_hash</span><span class="p">,</span> <span class="n">set_hash</span><span class="p">):</span>
+<div class="viewcode-block" id="PMClient.update"><a class="viewcode-back" href="../../metadata.metadata.html#metadata.client.PMClient.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_type</span><span class="p">,</span> <span class="n">query_hash</span><span class="p">,</span> <span class="n">set_hash</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update the object of type returned from query_hash and</span>
 <span class="sd">        set the values in set_hash</span>
@@ -181,10 +181,9 @@
         <span class="k">elif</span> <span class="n">ret</span><span class="o">.</span><span class="n">status_code</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Internal Server Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Unknown Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
+            <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Unknown Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PMClient.get"><a class="viewcode-back" href="../../metadata.client.html#metadata.client.PMClient.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_type</span><span class="p">,</span> <span class="n">query_hash</span><span class="p">):</span>
+<div class="viewcode-block" id="PMClient.get"><a class="viewcode-back" href="../../metadata.metadata.html#metadata.client.PMClient.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_type</span><span class="p">,</span> <span class="n">query_hash</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the object of type from query_hash</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -196,10 +195,9 @@
         <span class="k">elif</span> <span class="n">ret</span><span class="o">.</span><span class="n">status_code</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Internal Server Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Unknown Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
-        <span class="k">return</span> <span class="p">{}</span></div>
+            <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Unknown Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PMClient.delete"><a class="viewcode-back" href="../../metadata.client.html#metadata.client.PMClient.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_type</span><span class="p">,</span> <span class="n">query_hash</span><span class="p">):</span>
+<div class="viewcode-block" id="PMClient.delete"><a class="viewcode-back" href="../../metadata.metadata.html#metadata.client.PMClient.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cls_type</span><span class="p">,</span> <span class="n">query_hash</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete the object of type from query_hash</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -209,8 +207,7 @@
         <span class="k">elif</span> <span class="n">ret</span><span class="o">.</span><span class="n">status_code</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Internal Server Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Unknown Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
-        <span class="k">return</span> <span class="kc">False</span></div></div>
+            <span class="k">raise</span> <span class="n">PMClientError</span><span class="p">(</span><span class="s2">&quot;Unknown Error (</span><span class="si">%s</span><span class="s2">) </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">content</span><span class="p">))</span></div></div>
 </pre></div>
 
            </div>

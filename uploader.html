@@ -1,0 +1,383 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Uploader Project &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
+        <link rel="up" title="Pacifica API Documentation" href="code.html"/>
+        <link rel="next" title="App Module" href="uploader.app.html"/>
+        <link rel="prev" title="Uniqueid Project" href="uniqueid.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="metadata.html">Metadata Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ingest.html">Ingest Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy.html">Policy Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uniqueid.html">Uniqueid Project</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Uploader Project</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="uploader.app.html">App Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uploader.home.html">Home Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uploader.MyEmslUpload.html">MyEmslUpload Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uploader.uploader.html">Uploader Module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uploader.UploadServer.html">UploadServer Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
+      
+    <li>Uploader Project</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/uploader.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="uploader-project">
+<h1>Uploader Project<a class="headerlink" href="#uploader-project" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="uploader.app.html">App Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uploader.home.html">Home Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uploader.home.migrations.html">Migrations Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uploader.home.templatetags.html">Templatetags Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uploader.MyEmslUpload.html">MyEmslUpload Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uploader.uploader.html">Uploader Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uploader.UploadServer.html">UploadServer Module</a></li>
+</ul>
+</div>
+<span class="target" id="module-bundler"></span><p>A Bundler module that aggregates files into a single bundle</p>
+<dl class="class">
+<dt id="bundler.FileBundler">
+<em class="property">class </em><code class="descclassname">bundler.</code><code class="descname">FileBundler</code><span class="sig-paren">(</span><em>bundle_path</em>, <em>proposal_id=''</em>, <em>instrument_name=''</em>, <em>instrument_id=''</em>, <em>groups=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bundler.html#FileBundler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bundler.FileBundler" title="Permalink to this definition">¶</a></dt>
+<dd><p>An &#8216;Abstract&#8217; Base Class that provide a template by which bundlers using
+specific formats/libraries shall be defined</p>
+<dl class="method">
+<dt id="bundler.FileBundler._bundle_file">
+<code class="descname">_bundle_file</code><span class="sig-paren">(</span><em>file_paths</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bundler.html#FileBundler._bundle_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bundler.FileBundler._bundle_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>A &#8216;Pure Virtual&#8217; function that will perform file bundling in a child class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>file_name</dt>
+<dd><p class="first last">The name of the file to bundle</p>
+</dd>
+<dt>file_arcname</dt>
+<dd><p class="first last">An alternative name to use for the file inside of the bundle</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bundler.FileBundler._bundle_metadata">
+<code class="descname">_bundle_metadata</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bundler.html#FileBundler._bundle_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bundler.FileBundler._bundle_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>A &#8216;Pure Virtual&#8217; function that will perform metadata bundling in a child class
+&#64;param metadata: The metadata string to bundle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bundler.FileBundler.bundle_metadata">
+<code class="descname">bundle_metadata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bundler.html#FileBundler.bundle_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bundler.FileBundler.bundle_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bundle in the metadata for the bundled files</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bundler.FileBundler.hash_file">
+<code class="descname">hash_file</code><span class="sig-paren">(</span><em>file_path</em>, <em>file_arcname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bundler.html#FileBundler.hash_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bundler.FileBundler.hash_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bundle in a file or directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>file_path</dt>
+<dd><p class="first last">The path to the file to bundle</p>
+</dd>
+<dt>file_arcname</dt>
+<dd><p class="first last">An alternative name to use for the file inside of the bundle</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bundler.TarBundler">
+<em class="property">class </em><code class="descclassname">bundler.</code><code class="descname">TarBundler</code><span class="sig-paren">(</span><em>bundle_path</em>, <em>proposal_ID=''</em>, <em>instrument_name=''</em>, <em>instrument_ID=''</em>, <em>groups=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bundler.html#TarBundler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bundler.TarBundler" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Derived Class that bundles files in a tarfile format</p>
+<dl class="method">
+<dt id="bundler.TarBundler._bundle_metadata">
+<code class="descname">_bundle_metadata</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bundler.html#TarBundler._bundle_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bundler.TarBundler._bundle_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bundles the metadata into a tarfile formatted bundle</p>
+<p>&#64;param metadata: The metadata string to bundle</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bundler.TarBundler.bundle_file">
+<code class="descname">bundle_file</code><span class="sig-paren">(</span><em>file_paths</em>, <em>bundle_size=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bundler.html#TarBundler.bundle_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bundler.TarBundler.bundle_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bundles files into a tarfile formatted bundle</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>file_name</dt>
+<dd><p class="first last">The name of the file to bundle</p>
+</dd>
+<dt>file_arcname</dt>
+<dd><p class="first last">An alternative name to use for the file inside of the bundle</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bundler.TarBundler.report_percent_complete">
+<code class="descname">report_percent_complete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bundler.html#TarBundler.report_percent_complete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bundler.TarBundler.report_percent_complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>update the task state with the progress of the bundle</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bundler.bundle">
+<code class="descclassname">bundler.</code><code class="descname">bundle</code><span class="sig-paren">(</span><em>bundle_name=''</em>, <em>instrument_name=''</em>, <em>proposal=''</em>, <em>file_list=None</em>, <em>groups=None</em>, <em>bundle_size=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bundler.html#bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bundler.bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bundles a list of files into a single aggregated bundle file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>bundle_name</dt>
+<dd><p class="first last">The target bundle file in which to aggregate the file list</p>
+</dd>
+<dt>instrument_name</dt>
+<dd><p class="first last">The name of the instrument that produced the data files that will be bundled</p>
+</dd>
+<dt>groups</dt>
+<dd><p class="first last">The a hash of type/name groups to attach to</p>
+</dd>
+<dt>tarfile</dt>
+<dd><p class="first last">If true, tarfile format is used to bundle.  Otherwise zipfile format is used</p>
+</dd>
+<dt>proposal</dt>
+<dd><p class="first last">An optional proposal ID to attach to the bundle</p>
+</dd>
+<dt>file_list</dt>
+<dd><p class="first last">The list of files to bundle</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="bundler.main">
+<code class="descclassname">bundler.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/bundler.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#bundler.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>placeholder</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="uploader.app.html" class="btn btn-neutral float-right" title="App Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="uniqueid.html" class="btn btn-neutral" title="Uniqueid Project" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

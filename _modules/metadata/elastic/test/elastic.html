@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
-        <link rel="up" title="metadata.elastic" href="../../elastic.html"/> 
+        <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -115,8 +116,6 @@
       
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
       
-          <li><a href="../../elastic.html">metadata.elastic</a> &raquo;</li>
-      
     <li>metadata.elastic.test.elastic</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -134,11 +133,11 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Test the elastic mapping class methods.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span><span class="p">,</span> <span class="n">main</span>
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
 <span class="kn">from</span> <span class="nn">metadata.orm</span> <span class="k">import</span> <span class="n">ORM_OBJECTS</span>
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
-<div class="viewcode-block" id="TestElastic"><a class="viewcode-back" href="../../../../metadata.elastic.test.elastic.html#metadata.elastic.test.elastic.TestElastic">[docs]</a><span class="k">class</span> <span class="nc">TestElastic</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestElastic"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.elastic.TestElastic">[docs]</a><span class="k">class</span> <span class="nc">TestElastic</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test elastic mapping class methods.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -147,7 +146,7 @@
 
 
 <span class="k">for</span> <span class="n">ORM_CLS</span> <span class="ow">in</span> <span class="n">ORM_OBJECTS</span><span class="p">:</span>
-<div class="viewcode-block" id="test_elastic_mapping"><a class="viewcode-back" href="../../../../metadata.elastic.test.elastic.html#metadata.elastic.test.elastic.test_elastic_mapping">[docs]</a>    <span class="k">def</span> <span class="nf">test_elastic_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orm_cls</span><span class="o">=</span><span class="n">ORM_CLS</span><span class="p">):</span>
+<div class="viewcode-block" id="test_elastic_mapping"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.elastic.test_elastic_mapping">[docs]</a>    <span class="k">def</span> <span class="nf">test_elastic_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orm_cls</span><span class="o">=</span><span class="n">ORM_CLS</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the elasticsearch mapping method.</span>
 
@@ -160,9 +159,6 @@
         <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">properties</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">properties</span><span class="p">[</span><span class="n">column</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">elastic_mapping_types</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
     <span class="nb">setattr</span><span class="p">(</span><span class="n">TestElastic</span><span class="p">,</span> <span class="s2">&quot;test_elastic_mapping_</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ORM_CLS</span><span class="o">.</span><span class="n">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()),</span> <span class="n">test_elastic_mapping</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">main</span><span class="p">()</span>
 </pre></div>
 
            </div>

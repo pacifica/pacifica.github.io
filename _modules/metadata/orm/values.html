@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
-        <link rel="up" title="metadata.orm" href="../orm.html"/> 
+        <link rel="up" title="Module code" href="../../index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -115,8 +116,6 @@
       
           <li><a href="../../index.html">Module code</a> &raquo;</li>
       
-          <li><a href="../orm.html">metadata.orm</a> &raquo;</li>
-      
     <li>metadata.orm.values</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -137,22 +136,31 @@
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">CharField</span><span class="p">,</span> <span class="n">Expression</span><span class="p">,</span> <span class="n">OP</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.orm</span> <span class="k">import</span> <span class="n">CherryPyAPI</span>
 
-<div class="viewcode-block" id="Values"><a class="viewcode-back" href="../../../metadata.orm.values.html#metadata.orm.test.values.Values">[docs]</a><span class="k">class</span> <span class="nc">Values</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
+<div class="viewcode-block" id="Values"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.values.Values">[docs]</a><span class="k">class</span> <span class="nc">Values</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Values model class for metadata</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | Name              | Description                         |</span>
+<span class="sd">        +===================+=====================================+</span>
+<span class="sd">        | value             | generic value for some metadata     |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | encoding          | language encoding of the value      |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="n">encoding</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;UTF8&quot;</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="Values.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.orm.values.html#metadata.orm.test.values.Values.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="Values.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.values.Values.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build the elasticsearch mapping bits</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Values</span><span class="p">,</span> <span class="n">Values</span><span class="p">)</span><span class="o">.</span><span class="n">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">}</span></div>
 
-<div class="viewcode-block" id="Values.to_hash"><a class="viewcode-back" href="../../../metadata.orm.values.html#metadata.orm.test.values.Values.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Values.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.values.Values.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the object to a hash</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -162,7 +170,7 @@
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">obj</span></div>
 
-<div class="viewcode-block" id="Values.from_hash"><a class="viewcode-back" href="../../../metadata.orm.values.html#metadata.orm.test.values.Values.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="Values.from_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.values.Values.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the hash to the object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -176,7 +184,7 @@
         <span class="k">if</span> <span class="s1">&#39;encoding&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Values.where_clause"><a class="viewcode-back" href="../../../metadata.orm.values.html#metadata.orm.test.values.Values.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Values.where_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.values.Values.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        PeeWee specific where clause used for search.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Metadata Module &mdash; Pacifica v1.0.0</title>
+  <title>Metadata Project &mdash; Pacifica v1.0.0</title>
   
 
   
@@ -31,8 +31,9 @@
 
   
     <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
-        <link rel="next" title="Metadata Orm Module" href="metadata.orm.html"/>
-        <link rel="prev" title="Welcome to Pacifica Code Documentation!" href="index.html"/> 
+        <link rel="up" title="Pacifica API Documentation" href="code.html"/>
+        <link rel="next" title="Metadata Module" href="metadata.metadata.html"/>
+        <link rel="prev" title="Pacifica API Documentation" href="code.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -82,15 +83,17 @@
             
             
                 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Metadata Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.html">Metadata Orm Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.test_client.html">Metadata Test Client Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.rest.html">Metadata Rest Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.elastic.html">Metadata Elastic Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.client.html">Metadata Client Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Metadata Project</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metadata.metadata.html">Metadata Module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cart.html">Cart Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -121,7 +124,9 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>Metadata Module</li>
+          <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
+      
+    <li>Metadata Project</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -135,56 +140,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="metadata-module">
-<h1>Metadata Module<a class="headerlink" href="#metadata-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="metadata-project">
+<h1>Metadata Project<a class="headerlink" href="#metadata-project" title="Permalink to this headline">¶</a></h1>
 <p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="metadata.orm.html">Metadata Orm Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.citation_contributor.html">Metadata Orm Citation Contributor Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.contributors.html">Metadata Orm Contributors Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.instruments.html">Metadata Orm Instruments Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.utils.html">Metadata Orm Utils Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.instrument_custodian.html">Metadata Orm Instrument Custodian Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.trans_key_value.html">Metadata Orm Trans Key Value Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.keywords.html">Metadata Orm Keywords Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.citation_proposal.html">Metadata Orm Citation Proposal Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.institution_person.html">Metadata Orm Institution Person Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.citations.html">Metadata Orm Citations Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.test.html">Metadata Orm Test Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.files.html">Metadata Orm Files Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.proposal_instrument.html">Metadata Orm Proposal Instrument Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.users.html">Metadata Orm Users Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.transactions.html">Metadata Orm Transactions Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.keys.html">Metadata Orm Keys Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.instrument_group.html">Metadata Orm Instrument Group Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.proposal_participant.html">Metadata Orm Proposal Participant Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.base.html">Metadata Orm Base Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.groups.html">Metadata Orm Groups Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.user_group.html">Metadata Orm User Group Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.file_key_value.html">Metadata Orm File Key Value Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.journals.html">Metadata Orm Journals Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.proposals.html">Metadata Orm Proposals Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.values.html">Metadata Orm Values Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.orm.institutions.html">Metadata Orm Institutions Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.metadata.html">Metadata Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metadata.metadata.elastic.html">Elastic Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.metadata.orm.html">Orm Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.metadata.rest.html">Rest Module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="metadata.test_client.html">Metadata Test Client Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="metadata.rest.html">Metadata Rest Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="metadata.rest.orm.html">Metadata Rest Orm Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.rest.root.html">Metadata Rest Root Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.rest.uploader.html">Metadata Rest Uploader Module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="metadata.elastic.html">Metadata Elastic Module</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="metadata.elastic.test.html">Metadata Elastic Test Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.elastic.orm.html">Metadata Elastic Orm Module</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="metadata.client.html">Metadata Client Module</a></li>
 </ul>
 </div>
-<span class="target" id="module-metadata"></span><p>Metadata Module</p>
 </div>
 
 
@@ -194,10 +162,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="metadata.orm.html" class="btn btn-neutral float-right" title="Metadata Orm Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="metadata.metadata.html" class="btn btn-neutral float-right" title="Metadata Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to Pacifica Code Documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="code.html" class="btn btn-neutral" title="Pacifica API Documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

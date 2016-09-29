@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -134,7 +135,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">getenv</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
-<span class="kn">from</span> <span class="nn">pycurl</span> <span class="k">import</span> <span class="n">Curl</span><span class="p">,</span> <span class="n">URL</span><span class="p">,</span> <span class="n">PUT</span><span class="p">,</span> <span class="n">HTTP_CODE</span><span class="p">,</span> <span class="n">error</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">ELASTIC_CONNECT_ATTEMPTS</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">ELASTIC_WAIT</span> <span class="o">=</span> <span class="mi">1</span>
@@ -144,32 +145,25 @@
 <span class="n">ES_INDEX_URL</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ELASTIC_ENDPOINT</span><span class="p">,</span> <span class="n">ELASTIC_INDEX</span><span class="p">)</span>
 <span class="n">ES_STATUS_URL</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/_stats&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ELASTIC_ENDPOINT</span><span class="p">)</span>
 
-<div class="viewcode-block" id="create_elastic_index"><a class="viewcode-back" href="../../metadata.elastic.html#metadata.elastic.create_elastic_index">[docs]</a><span class="k">def</span> <span class="nf">create_elastic_index</span><span class="p">():</span>
+<div class="viewcode-block" id="create_elastic_index"><a class="viewcode-back" href="../../metadata.metadata.elastic.html#metadata.elastic.create_elastic_index">[docs]</a><span class="k">def</span> <span class="nf">create_elastic_index</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create the elastic search index for all our data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">curl</span> <span class="o">=</span> <span class="n">Curl</span><span class="p">()</span>
-        <span class="n">curl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">ES_INDEX_URL</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-        <span class="n">curl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">PUT</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">curl</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
-        <span class="n">curl_http_code</span> <span class="o">=</span> <span class="n">curl</span><span class="o">.</span><span class="n">getinfo</span><span class="p">(</span><span class="n">HTTP_CODE</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">curl_http_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;create_elastic_index: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">curl_http_code</span><span class="p">))</span>
-    <span class="k">except</span> <span class="n">error</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;cURL operations failed during upload: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">curl</span><span class="o">.</span><span class="n">errstr</span><span class="p">())</span></div>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ES_INDEX_URL</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">ES_INDEX_URL</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;create_elastic_index: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="try_es_connect"><a class="viewcode-back" href="../../metadata.elastic.html#metadata.elastic.try_es_connect">[docs]</a><span class="k">def</span> <span class="nf">try_es_connect</span><span class="p">(</span><span class="n">attempts</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="try_es_connect"><a class="viewcode-back" href="../../metadata.metadata.elastic.html#metadata.elastic.try_es_connect">[docs]</a><span class="k">def</span> <span class="nf">try_es_connect</span><span class="p">(</span><span class="n">attempts</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Recursively try to connect to elasticsearch.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">curl</span> <span class="o">=</span> <span class="n">Curl</span><span class="p">()</span>
-        <span class="n">curl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">URL</span><span class="p">,</span> <span class="n">ES_STATUS_URL</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-        <span class="n">curl</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
-        <span class="n">curl_http_code</span> <span class="o">=</span> <span class="n">curl</span><span class="o">.</span><span class="n">getinfo</span><span class="p">(</span><span class="n">HTTP_CODE</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">curl_http_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;create_elastic_index: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">curl_http_code</span><span class="p">))</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ES_STATUS_URL</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;try_es_connect: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span>
     <span class="c1"># pylint: disable=broad-except</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
         <span class="c1"># pylint: enable=broad-except</span>

@@ -1,0 +1,458 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>home.file_tools &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>home.file_tools</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for home.file_tools</h1><div class="highlight"><pre>
+<span></span><span class="c1">#pylint: disable=unused-variable</span>
+<span class="c1">#justification: because I don&#39;t want to add extra code to parse a returned tuple</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">tools to bundle, parse file structures, etc.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<div class="viewcode-block" id="FolderMeta"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FolderMeta">[docs]</a><span class="k">class</span> <span class="nc">FolderMeta</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    meta data about a folder, including filecount, directory count, and the total bytes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">fileCount</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dir_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">totalBytes</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="FileManager"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager">[docs]</a><span class="k">class</span> <span class="nc">FileManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;description of class&quot;&quot;&quot;</span>
+
+    <span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">bundle_filepath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">bundle_size</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">bundle_size_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="n">common_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">archive_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="n">error_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+<div class="viewcode-block" id="FileManager.cleanup_files"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.cleanup_files">[docs]</a>    <span class="k">def</span> <span class="nf">cleanup_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        resets a class to a clean state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bundle_filepath</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bundle_size</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bundle_size_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">common_path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></div>
+
+<div class="viewcode-block" id="FileManager.calculate_bundle_size"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.calculate_bundle_size">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_bundle_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected_paths</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        totals up total size of the files in the bundle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total_size</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">selected_paths</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">accessible</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="n">total_size</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="n">total_size</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder_size</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bundle_size</span> <span class="o">=</span> <span class="n">total_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bundle_size_str</span> <span class="o">=</span> <span class="n">size_string</span><span class="p">(</span><span class="n">total_size</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">total_size</span></div>
+
+<div class="viewcode-block" id="FileManager.folder_size"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.folder_size">[docs]</a>    <span class="k">def</span> <span class="nf">folder_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        recursively totals up total size of the files in the folder and sub folders</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">total_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+            <span class="n">itempath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">accessible</span><span class="p">(</span><span class="n">itempath</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">itempath</span><span class="p">):</span>
+                    <span class="n">total_size</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">itempath</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">itempath</span><span class="p">):</span>
+                    <span class="n">total_size</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">folder_size</span><span class="p">(</span><span class="n">itempath</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">total_size</span></div>
+
+<div class="viewcode-block" id="FileManager.folder_meta"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.folder_meta">[docs]</a>    <span class="k">def</span> <span class="nf">folder_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">meta</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        gets the meta data for a folder</span>
+<span class="sd">        number of folders</span>
+<span class="sd">        number of files</span>
+<span class="sd">        total size</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">meta</span><span class="o">.</span><span class="n">dir_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+            <span class="n">itempath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">accessible</span><span class="p">(</span><span class="n">itempath</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">itempath</span><span class="p">):</span>
+                    <span class="n">meta</span><span class="o">.</span><span class="n">totalBytes</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">itempath</span><span class="p">)</span>
+                    <span class="n">meta</span><span class="o">.</span><span class="n">fileCount</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">itempath</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">folder_meta</span><span class="p">(</span><span class="n">itempath</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FileManager.folder_meta_string"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.folder_meta_string">[docs]</a>    <span class="k">def</span> <span class="nf">folder_meta_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns the meta data for a folder as a string to be displayed to the user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="n">FolderMeta</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder_meta</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span>
+
+        <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">|</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">fileCount</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">totalBytes</span><span class="p">))</span>
+
+        <span class="n">meta</span><span class="o">.</span><span class="n">dir_count</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">meta_str</span> <span class="o">=</span> <span class="s1">&#39;folders </span><span class="si">{0}</span><span class="s1"> | files </span><span class="si">{1}</span><span class="s1"> | </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span>\
+            <span class="nb">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">dir_count</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">fileCount</span><span class="p">),</span> <span class="n">size_string</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">totalBytes</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">meta_str</span></div>
+
+<div class="viewcode-block" id="FileManager.get_archive_path"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.get_archive_path">[docs]</a>    <span class="k">def</span> <span class="nf">get_archive_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        build the archive path from the real path modified to conform to the archive structure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#remove the common root</span>
+        <span class="n">arc_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">common_path</span><span class="p">)</span>
+        <span class="c1"># prepend the archive nodes</span>
+        <span class="n">arc_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">archive_path</span><span class="p">,</span> <span class="n">arc_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">arc_path</span></div>
+
+<div class="viewcode-block" id="FileManager.file_tuples_recursively"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.file_tuples_recursively">[docs]</a>    <span class="k">def</span> <span class="nf">file_tuples_recursively</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">tuple_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        recursively gets file tuples for a folder</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">accessible</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="n">tuple_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_archive_path</span><span class="p">(</span><span class="n">path</span><span class="p">)))</span>
+                <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">file_tuples_recursively</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">tuple_list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FileManager.file_tuples"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.file_tuples">[docs]</a>    <span class="k">def</span> <span class="nf">file_tuples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected_list</span><span class="p">,</span> <span class="n">tuple_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        gets all the file tuples for a list of either folders or files</span>
+<span class="sd">        tuples consist of the absolute path where the local file can be found</span>
+<span class="sd">        and the relative path used to store the file in the archive</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">selected_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">accessible</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                        <span class="n">tuple_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_archive_path</span><span class="p">(</span><span class="n">path</span><span class="p">)))</span>
+                <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">file_tuples_recursively</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">tuple_list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FileManager.upload_meta_string"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.upload_meta_string">[docs]</a>    <span class="k">def</span> <span class="nf">upload_meta_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns the meta data for a folder as a string to be displayed to the user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="n">FolderMeta</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder_meta</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span>
+
+        <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">|</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">fileCount</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">totalBytes</span><span class="p">))</span>
+
+        <span class="n">meta</span><span class="o">.</span><span class="n">dir_count</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">meta_str</span> <span class="o">=</span> <span class="s1">&#39;folders </span><span class="si">{0}</span><span class="s1"> | files </span><span class="si">{1}</span><span class="s1"> | </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span>\
+            <span class="nb">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">dir_count</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">fileCount</span><span class="p">),</span> <span class="n">size_string</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">totalBytes</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">meta_str</span></div>
+
+<div class="viewcode-block" id="FileManager.get_bundle_files"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.get_bundle_files">[docs]</a>    <span class="k">def</span> <span class="nf">get_bundle_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        the common path will be clipped from the file archive structure,</span>
+<span class="sd">        the archive structure will be added</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_selected_list</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+
+        <span class="c1">#create a list of tuples (filepath, arcpath)</span>
+        <span class="n">tuples</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_tuples</span><span class="p">(</span><span class="n">filtered</span><span class="p">,</span> <span class="n">tuples</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">calculate_bundle_size</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tuples</span></div>
+
+<div class="viewcode-block" id="FileManager.accessible"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.accessible">[docs]</a>    <span class="k">def</span> <span class="nf">accessible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        os.access fails under certain situations so we wrote this POS</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">retval</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">islink</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># this doesn&#39;t work, at least in windows.  A file may be readable</span>
+                <span class="c1"># by _someone_ and this will return true, but fail on reading</span>
+                <span class="c1">#if os.access(path, os.R_OK):</span>
+                <span class="c1">#    size = os.path.getsize(path)</span>
+                <span class="c1">#else:</span>
+                <span class="c1">#    return false;</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">tempFile</span><span class="p">:</span>
+                    <span class="n">tempFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span> <span class="n">e</span>
+                <span class="n">retval</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                <span class="n">retval</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># we only support files and directories</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">retval</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error_string</span> <span class="o">=</span> <span class="s1">&#39;Unaccessible files were skipped&#39;</span>
+        
+        <span class="k">return</span> <span class="n">retval</span></div>
+
+<div class="viewcode-block" id="FileManager.get_size"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.get_size">[docs]</a>    <span class="k">def</span> <span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        recursively add up the sizes of all files under a root dir</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total_size</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">start_path</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+                <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accessible</span><span class="p">(</span><span class="n">filepath</span><span class="p">)):</span>
+                    <span class="n">total_size</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">total_size</span></div>
+
+<div class="viewcode-block" id="FileManager.filter_selected_list"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.FileManager.filter_selected_list">[docs]</a>    <span class="k">def</span> <span class="nf">filter_selected_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">files</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        remove filepaths that are contained in other filepaths to preclude redundant files when bundling</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">test_path</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">test_path</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                    <span class="n">fpath</span> <span class="o">=</span> <span class="n">filtered</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accessible</span><span class="p">(</span><span class="n">fpath</span><span class="p">)):</span>
+                        <span class="k">if</span> <span class="n">test_path</span> <span class="ow">in</span> <span class="n">fpath</span> <span class="ow">and</span> <span class="n">test_path</span> <span class="o">!=</span> <span class="n">fpath</span><span class="p">:</span>
+                            <span class="n">filtered</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">filtered</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">filtered</span></div></div>
+
+
+<div class="viewcode-block" id="size_string"><a class="viewcode-back" href="../../uploader.home.html#home.file_tools.size_string">[docs]</a><span class="k">def</span> <span class="nf">size_string</span><span class="p">(</span><span class="n">total_size</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    returns the upload size as a string with the appropriate units</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># less than a Kb show b</span>
+    <span class="k">if</span> <span class="n">total_size</span> <span class="o">&lt;</span> <span class="mi">1024</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">total_size</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; b&quot;</span>
+    <span class="c1"># less than an Mb show Kb</span>
+    <span class="k">if</span> <span class="n">total_size</span> <span class="o">&lt;</span> <span class="mi">1048576</span><span class="p">:</span>
+        <span class="n">kilobytes</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">total_size</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1024.0</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">kilobytes</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; Kb&quot;</span>
+    <span class="c1"># less than a Gb show Mb</span>
+    <span class="k">elif</span> <span class="n">total_size</span> <span class="o">&lt;</span> <span class="mi">1073741824</span><span class="p">:</span>
+        <span class="n">megabytes</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">total_size</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1048576.0</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">megabytes</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; Mb&quot;</span>
+    <span class="c1"># else show in Gb</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">gigabytes</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">total_size</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1073741824.0</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">gigabytes</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot; Gb&quot;</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

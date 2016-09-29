@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
-        <link rel="up" title="metadata.orm" href="../orm.html"/> 
+        <link rel="up" title="Module code" href="../../index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -114,8 +115,6 @@
     <li><a href="../../../index.html">Docs</a> &raquo;</li>
       
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-      
-          <li><a href="../orm.html">metadata.orm</a> &raquo;</li>
       
     <li>metadata.orm.base</li>
       <li class="wy-breadcrumbs-aside">
@@ -168,9 +167,20 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="PacificaModel"><a class="viewcode-back" href="../../../metadata.orm.base.html#metadata.orm.base.PacificaModel">[docs]</a><span class="k">class</span> <span class="nc">PacificaModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel">[docs]</a><span class="k">class</span> <span class="nc">PacificaModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Basic fields for an object within the model</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | Name              | Description                         |</span>
+<span class="sd">        +===================+=====================================+</span>
+<span class="sd">        | created           | When was the object created         |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | updated           | When was the object last changed    |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | deleted           | When was the object deleted         |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># this is peewee specific need to disable this check</span>
     <span class="c1"># pylint: disable=invalid-name</span>
@@ -189,13 +199,13 @@
         <span class="n">only_save_dirty</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="c1"># pylint: enable=too-few-public-methods</span>
 
-<div class="viewcode-block" id="PacificaModel.rollback"><a class="viewcode-back" href="../../../metadata.orm.base.html#metadata.orm.base.PacificaModel.rollback">[docs]</a>    <span class="k">def</span> <span class="nf">rollback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel.rollback"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.rollback">[docs]</a>    <span class="k">def</span> <span class="nf">rollback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reconnect to the database on errors.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="PacificaModel.to_hash"><a class="viewcode-back" href="../../../metadata.orm.base.html#metadata.orm.base.PacificaModel.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the base object fields into serializable attributes</span>
 <span class="sd">        in a hash.</span>
@@ -211,14 +221,14 @@
         <span class="k">if</span> <span class="n">date_part</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date_part</span><span class="p">,</span> <span class="n">date_converts</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">date_part</span><span class="p">]))</span>
 
-<div class="viewcode-block" id="PacificaModel._set_datetime_part"><a class="viewcode-back" href="../../../metadata.orm.base.html#metadata.orm.base.PacificaModel._set_datetime_part">[docs]</a>    <span class="k">def</span> <span class="nf">_set_datetime_part</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_part</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel._set_datetime_part"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel._set_datetime_part">[docs]</a>    <span class="k">def</span> <span class="nf">_set_datetime_part</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_part</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        do more consistent type checking</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">time_part</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_part</span><span class="p">,</span> <span class="n">datetime_converts</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">time_part</span><span class="p">]))</span></div>
 
-<div class="viewcode-block" id="PacificaModel.from_hash"><a class="viewcode-back" href="../../../metadata.orm.base.html#metadata.orm.base.PacificaModel.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel.from_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the hash objects into object fields if they are</span>
 <span class="sd">        present.</span>
@@ -227,19 +237,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_datetime_part</span><span class="p">(</span><span class="s1">&#39;updated&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_datetime_part</span><span class="p">(</span><span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PacificaModel.from_json"><a class="viewcode-back" href="../../../metadata.orm.base.html#metadata.orm.base.PacificaModel.from_json">[docs]</a>    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_str</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel.from_json"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.from_json">[docs]</a>    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the json string into the current object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">json_str</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PacificaModel.to_json"><a class="viewcode-back" href="../../../metadata.orm.base.html#metadata.orm.base.PacificaModel.to_json">[docs]</a>    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel.to_json"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.to_json">[docs]</a>    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the object into a json object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_hash</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="PacificaModel.where_clause"><a class="viewcode-back" href="../../../metadata.orm.base.html#metadata.orm.base.PacificaModel.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel.where_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        PeeWee specific extension meant to be passed to a PeeWee get</span>
 <span class="sd">        or select.</span>
@@ -253,14 +263,14 @@
         <span class="k">return</span> <span class="n">where_clause</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="PacificaModel.last_change_date"><a class="viewcode-back" href="../../../metadata.orm.base.html#metadata.orm.base.PacificaModel.last_change_date">[docs]</a>    <span class="k">def</span> <span class="nf">last_change_date</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel.last_change_date"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.last_change_date">[docs]</a>    <span class="k">def</span> <span class="nf">last_change_date</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Find the last changed date for the object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">Max</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">updated</span><span class="p">))</span><span class="o">.</span><span class="n">scalar</span><span class="p">()</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="PacificaModel.available_hash_list"><a class="viewcode-back" href="../../../metadata.orm.base.html#metadata.orm.base.PacificaModel.available_hash_list">[docs]</a>    <span class="k">def</span> <span class="nf">available_hash_list</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel.available_hash_list"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.available_hash_list">[docs]</a>    <span class="k">def</span> <span class="nf">available_hash_list</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Need to figure out more about what this does...</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -293,7 +303,7 @@
         <span class="k">return</span> <span class="n">hash_list</span><span class="p">,</span> <span class="n">hash_dict</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="PacificaModel.get_primary_keys"><a class="viewcode-back" href="../../../metadata.orm.base.html#metadata.orm.base.PacificaModel.get_primary_keys">[docs]</a>    <span class="k">def</span> <span class="nf">get_primary_keys</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel.get_primary_keys"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.get_primary_keys">[docs]</a>    <span class="k">def</span> <span class="nf">get_primary_keys</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the primary keys for the object</span>
 <span class="sd">        &quot;&quot;&quot;</span>

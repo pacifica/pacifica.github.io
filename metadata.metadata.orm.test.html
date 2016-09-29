@@ -1,0 +1,1466 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Test Module &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
+        <link rel="up" title="Orm Module" href="metadata.metadata.orm.html"/>
+        <link rel="next" title="Rest Module" href="metadata.metadata.rest.html"/>
+        <link rel="prev" title="Orm Module" href="metadata.metadata.orm.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="metadata.html">Metadata Project</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="metadata.metadata.html">Metadata Module</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.elastic.html">Elastic Module</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="metadata.metadata.orm.html">Orm Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.rest.html">Rest Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
+      
+          <li><a href="metadata.html">Metadata Project</a> &raquo;</li>
+      
+          <li><a href="metadata.metadata.html">Metadata Module</a> &raquo;</li>
+      
+          <li><a href="metadata.metadata.orm.html">Orm Module</a> &raquo;</li>
+      
+    <li>Test Module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/metadata.metadata.orm.test.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-metadata.orm.test.base">
+<span id="test-module"></span><h1>Test Module<a class="headerlink" href="#module-metadata.orm.test.base" title="Permalink to this headline">¶</a></h1>
+<p>Base testing module implements the temporary database to be used.</p>
+<dl class="class">
+<dt id="metadata.orm.test.base.TestBase">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.base.</code><code class="descname">TestBase</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/base.html#TestBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.base.TestBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup the test cases for the base object attributes for the ORM</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.base.TestBase.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/base.html#TestBase.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.base.TestBase.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create dependent objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.base.TestBase.base_create_obj">
+<code class="descname">base_create_obj</code><span class="sig-paren">(</span><em>cls</em>, <em>obj_hash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/base.html#TestBase.base_create_obj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.base.TestBase.base_create_obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create obj based on the class given.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.base.TestBase.base_test_hash">
+<code class="descname">base_test_hash</code><span class="sig-paren">(</span><em>obj_hash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/base.html#TestBase.base_test_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.base.TestBase.base_test_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base hash test</p>
+<p>create a new object out of the hash
+save the object to the DB
+pull the object out of the DB using the obj_id column
+create a new hash from the new object
+check all keys in the new hash from the obj_hash passed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.base.TestBase.base_test_json">
+<code class="descname">base_test_json</code><span class="sig-paren">(</span><em>json_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/base.html#TestBase.base_test_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.base.TestBase.base_test_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base test json</p>
+<p>pass the json string to the objects from_json method
+save the object to the DB
+get the new object using column in obj_id
+convert the object to json</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.base.TestBase.base_where_clause">
+<code class="descname">base_where_clause</code><span class="sig-paren">(</span><em>obj_hash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/base.html#TestBase.base_where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.base.TestBase.base_where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base where clause checking</p>
+<p>create a new object from the obj_hash
+save it to the database
+check all keys in obj_hash separately
+query a new object using that key and value in obj_hash
+compare the pulled object hash with obj_hash</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.base.TestBase.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/base.html#TestBase.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.base.TestBase.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.base.TestBase.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.base.TestBase.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">PacificaModel</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.citation_contributor"></span><p>Test the citation contributor ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.citation_contributor.TestCitationContributor">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.citation_contributor.</code><code class="descname">TestCitationContributor</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_contributor.html#TestCitationContributor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_contributor.TestCitationContributor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Files ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.citation_contributor.TestCitationContributor.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_contributor.html#TestCitationContributor.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_contributor.TestCitationContributor.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that Files depend on.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.citation_contributor.TestCitationContributor.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_contributor.html#TestCitationContributor.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_contributor.TestCitationContributor.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the CitationContributor object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.citation_contributor.TestCitationContributor.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.citation_contributor.TestCitationContributor.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">CitationContributor</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_hash">
+<code class="descname">test_citation_contributor_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_contributor.html#TestCitationContributor.test_citation_contributor_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_json">
+<code class="descname">test_citation_contributor_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_contributor.html#TestCitationContributor.test_citation_contributor_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_where">
+<code class="descname">test_citation_contributor_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_contributor.html#TestCitationContributor.test_citation_contributor_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.citation_proposal"></span><p>Test the file_key_values ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.citation_proposal.TestCitationProposal">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.citation_proposal.</code><code class="descname">TestCitationProposal</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_proposal.html#TestCitationProposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_proposal.TestCitationProposal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the InstitutionPerson ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.citation_proposal.TestCitationProposal.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_proposal.html#TestCitationProposal.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_proposal.TestCitationProposal.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that FileKeyValue need.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.citation_proposal.TestCitationProposal.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_proposal.html#TestCitationProposal.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_proposal.TestCitationProposal.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the CitationProposal object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.citation_proposal.TestCitationProposal.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.citation_proposal.TestCitationProposal.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">CitationProposal</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.citation_proposal.TestCitationProposal.test_citation_proposal_hash">
+<code class="descname">test_citation_proposal_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_proposal.html#TestCitationProposal.test_citation_proposal_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_proposal.TestCitationProposal.test_citation_proposal_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.citation_proposal.TestCitationProposal.test_citation_proposal_json">
+<code class="descname">test_citation_proposal_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_proposal.html#TestCitationProposal.test_citation_proposal_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_proposal.TestCitationProposal.test_citation_proposal_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.citation_proposal.TestCitationProposal.test_citation_proposal_where">
+<code class="descname">test_citation_proposal_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citation_proposal.html#TestCitationProposal.test_citation_proposal_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citation_proposal.TestCitationProposal.test_citation_proposal_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.citations"></span><p>Test the citations ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.citations.TestCitations">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.citations.</code><code class="descname">TestCitations</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citations.html#TestCitations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citations.TestCitations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Citations ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.citations.TestCitations.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citations.html#TestCitations.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citations.TestCitations.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that Files depend on.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.citations.TestCitations.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citations.html#TestCitations.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citations.TestCitations.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Citations object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.citations.TestCitations.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.citations.TestCitations.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Citations</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.citations.TestCitations.test_citations_hash">
+<code class="descname">test_citations_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citations.html#TestCitations.test_citations_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citations.TestCitations.test_citations_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.citations.TestCitations.test_citations_json">
+<code class="descname">test_citations_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citations.html#TestCitations.test_citations_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citations.TestCitations.test_citations_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.citations.TestCitations.test_citations_where">
+<code class="descname">test_citations_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citations.html#TestCitations.test_citations_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citations.TestCitations.test_citations_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.citations.TestCitations.test_unicode_citations_hash">
+<code class="descname">test_unicode_citations_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citations.html#TestCitations.test_unicode_citations_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citations.TestCitations.test_unicode_citations_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the unicode hash base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.citations.TestCitations.test_unicode_citations_where">
+<code class="descname">test_unicode_citations_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/citations.html#TestCitations.test_unicode_citations_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.citations.TestCitations.test_unicode_citations_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.contributors"></span><p>Test the contributors ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.contributors.TestContributors">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.contributors.</code><code class="descname">TestContributors</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/contributors.html#TestContributors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.contributors.TestContributors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Institutions ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.contributors.TestContributors.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/contributors.html#TestContributors.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.contributors.TestContributors.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that Files depend on.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.contributors.TestContributors.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/contributors.html#TestContributors.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.contributors.TestContributors.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Contributors object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.contributors.TestContributors.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.contributors.TestContributors.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Contributors</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.contributors.TestContributors.test_contributors_hash">
+<code class="descname">test_contributors_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/contributors.html#TestContributors.test_contributors_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.contributors.TestContributors.test_contributors_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.contributors.TestContributors.test_contributors_json">
+<code class="descname">test_contributors_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/contributors.html#TestContributors.test_contributors_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.contributors.TestContributors.test_contributors_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.contributors.TestContributors.test_contributors_where">
+<code class="descname">test_contributors_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/contributors.html#TestContributors.test_contributors_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.contributors.TestContributors.test_contributors_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.contributors.TestContributors.test_unicode_contributors_hash">
+<code class="descname">test_unicode_contributors_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/contributors.html#TestContributors.test_unicode_contributors_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.contributors.TestContributors.test_unicode_contributors_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the unicode hash using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.contributors.TestContributors.test_unicode_contributors_where">
+<code class="descname">test_unicode_contributors_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/contributors.html#TestContributors.test_unicode_contributors_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.contributors.TestContributors.test_unicode_contributors_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the unicode hash using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.dbdates"></span><p>Base testing module implements the temporary database to be used.</p>
+<dl class="class">
+<dt id="metadata.orm.test.dbdates.TestDBDates">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.dbdates.</code><code class="descname">TestDBDates</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/dbdates.html#TestDBDates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.dbdates.TestDBDates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup the test cases for the base object attributes for the ORM</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.dbdates.TestDBDates.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/dbdates.html#TestDBDates.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.dbdates.TestDBDates.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the base model object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.dbdates.TestDBDates.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.dbdates.TestDBDates.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">PacificaModel</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.dbdates.TestDBDates.test_bad_dates_from_hash">
+<code class="descname">test_bad_dates_from_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/dbdates.html#TestDBDates.test_bad_dates_from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.dbdates.TestDBDates.test_bad_dates_from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test method to check the hash against zero dates.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.dbdates.TestDBDates.test_now_dates_from_hash">
+<code class="descname">test_now_dates_from_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/dbdates.html#TestDBDates.test_now_dates_from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.dbdates.TestDBDates.test_now_dates_from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test method to check the hash against now dates</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.dbdates.TestDBDates.test_now_dates_from_json">
+<code class="descname">test_now_dates_from_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/dbdates.html#TestDBDates.test_now_dates_from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.dbdates.TestDBDates.test_now_dates_from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test method to check the json against now dates</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.dbdates.TestDBDates.test_now_dates_from_where">
+<code class="descname">test_now_dates_from_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/dbdates.html#TestDBDates.test_now_dates_from_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.dbdates.TestDBDates.test_now_dates_from_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test method to check the where clause against now dates</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.dbdates.TestDBDates.test_zero_dates_from_hash">
+<code class="descname">test_zero_dates_from_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/dbdates.html#TestDBDates.test_zero_dates_from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.dbdates.TestDBDates.test_zero_dates_from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test method to check the hash against zero dates.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.dbdates.TestDBDates.test_zero_dates_from_json">
+<code class="descname">test_zero_dates_from_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/dbdates.html#TestDBDates.test_zero_dates_from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.dbdates.TestDBDates.test_zero_dates_from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test method to check the json against zero dates.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.dbdates.TestDBDates.test_zero_dates_from_where">
+<code class="descname">test_zero_dates_from_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/dbdates.html#TestDBDates.test_zero_dates_from_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.dbdates.TestDBDates.test_zero_dates_from_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test method to check the where clause against zero dates.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.file_key_value"></span><p>Test the file_key_values ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.file_key_value.TestFileKeyValue">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.file_key_value.</code><code class="descname">TestFileKeyValue</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/file_key_value.html#TestFileKeyValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.file_key_value.TestFileKeyValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Keys ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.file_key_value.TestFileKeyValue.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/file_key_value.html#TestFileKeyValue.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.file_key_value.TestFileKeyValue.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that FileKeyValue need.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.file_key_value.TestFileKeyValue.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/file_key_value.html#TestFileKeyValue.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.file_key_value.TestFileKeyValue.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the FileKeyValue object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.file_key_value.TestFileKeyValue.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.file_key_value.TestFileKeyValue.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">FileKeyValue</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.file_key_value.TestFileKeyValue.test_file_key_value_hash">
+<code class="descname">test_file_key_value_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/file_key_value.html#TestFileKeyValue.test_file_key_value_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.file_key_value.TestFileKeyValue.test_file_key_value_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.file_key_value.TestFileKeyValue.test_file_key_value_json">
+<code class="descname">test_file_key_value_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/file_key_value.html#TestFileKeyValue.test_file_key_value_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.file_key_value.TestFileKeyValue.test_file_key_value_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.file_key_value.TestFileKeyValue.test_file_key_value_where">
+<code class="descname">test_file_key_value_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/file_key_value.html#TestFileKeyValue.test_file_key_value_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.file_key_value.TestFileKeyValue.test_file_key_value_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.files"></span><p>Test the files ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.files.TestFiles">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.files.</code><code class="descname">TestFiles</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/files.html#TestFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.files.TestFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Files ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.files.TestFiles.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/files.html#TestFiles.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.files.TestFiles.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that Files depend on.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.files.TestFiles.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/files.html#TestFiles.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.files.TestFiles.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Files object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.files.TestFiles.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.files.TestFiles.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Files</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.files.TestFiles.test_files_hash">
+<code class="descname">test_files_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/files.html#TestFiles.test_files_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.files.TestFiles.test_files_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.files.TestFiles.test_files_json">
+<code class="descname">test_files_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/files.html#TestFiles.test_files_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.files.TestFiles.test_files_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.files.TestFiles.test_files_where">
+<code class="descname">test_files_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/files.html#TestFiles.test_files_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.files.TestFiles.test_files_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.files.TestFiles.test_unicode_files_hash">
+<code class="descname">test_unicode_files_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/files.html#TestFiles.test_unicode_files_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.files.TestFiles.test_unicode_files_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the unicode hash using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.files.TestFiles.test_unicode_files_where">
+<code class="descname">test_unicode_files_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/files.html#TestFiles.test_unicode_files_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.files.TestFiles.test_unicode_files_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.groups"></span><p>Test the groups ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.groups.TestGroups">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.groups.</code><code class="descname">TestGroups</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/groups.html#TestGroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.groups.TestGroups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Groups ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.groups.TestGroups.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/groups.html#TestGroups.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.groups.TestGroups.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Groups object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.groups.TestGroups.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.groups.TestGroups.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Groups</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.groups.TestGroups.test_group_hash">
+<code class="descname">test_group_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/groups.html#TestGroups.test_group_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.groups.TestGroups.test_group_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.groups.TestGroups.test_group_json">
+<code class="descname">test_group_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/groups.html#TestGroups.test_group_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.groups.TestGroups.test_group_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.groups.TestGroups.test_group_where">
+<code class="descname">test_group_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/groups.html#TestGroups.test_group_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.groups.TestGroups.test_group_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.groups.TestGroups.test_unicode_group_hash">
+<code class="descname">test_unicode_group_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/groups.html#TestGroups.test_unicode_group_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.groups.TestGroups.test_unicode_group_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the unicode hash using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.groups.TestGroups.test_unicode_group_where">
+<code class="descname">test_unicode_group_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/groups.html#TestGroups.test_unicode_group_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.groups.TestGroups.test_unicode_group_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.institution_person"></span><p>Test the file_key_values ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.institution_person.TestInstitutionPerson">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.institution_person.</code><code class="descname">TestInstitutionPerson</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institution_person.html#TestInstitutionPerson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institution_person.TestInstitutionPerson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the InstitutionPerson ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.institution_person.TestInstitutionPerson.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institution_person.html#TestInstitutionPerson.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institution_person.TestInstitutionPerson.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that InstitutionPerson need.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.institution_person.TestInstitutionPerson.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institution_person.html#TestInstitutionPerson.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institution_person.TestInstitutionPerson.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the InstitutionPerson object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.institution_person.TestInstitutionPerson.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.institution_person.TestInstitutionPerson.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">InstitutionPerson</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.institution_person.TestInstitutionPerson.test_institution_person_hash">
+<code class="descname">test_institution_person_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institution_person.html#TestInstitutionPerson.test_institution_person_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institution_person.TestInstitutionPerson.test_institution_person_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.institution_person.TestInstitutionPerson.test_institution_person_json">
+<code class="descname">test_institution_person_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institution_person.html#TestInstitutionPerson.test_institution_person_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institution_person.TestInstitutionPerson.test_institution_person_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.institution_person.TestInstitutionPerson.test_institution_person_where">
+<code class="descname">test_institution_person_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institution_person.html#TestInstitutionPerson.test_institution_person_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institution_person.TestInstitutionPerson.test_institution_person_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.institutions"></span><p>Test the keys ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.institutions.TestInstitutions">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.institutions.</code><code class="descname">TestInstitutions</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institutions.html#TestInstitutions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institutions.TestInstitutions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Institutions ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.institutions.TestInstitutions.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institutions.html#TestInstitutions.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institutions.TestInstitutions.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Institutions object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.institutions.TestInstitutions.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.institutions.TestInstitutions.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Institutions</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.institutions.TestInstitutions.test_institutions_hash">
+<code class="descname">test_institutions_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institutions.html#TestInstitutions.test_institutions_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institutions.TestInstitutions.test_institutions_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.institutions.TestInstitutions.test_institutions_json">
+<code class="descname">test_institutions_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institutions.html#TestInstitutions.test_institutions_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institutions.TestInstitutions.test_institutions_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.institutions.TestInstitutions.test_institutions_where">
+<code class="descname">test_institutions_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institutions.html#TestInstitutions.test_institutions_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institutions.TestInstitutions.test_institutions_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.institutions.TestInstitutions.test_unicode_institutions_hash">
+<code class="descname">test_unicode_institutions_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institutions.html#TestInstitutions.test_unicode_institutions_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institutions.TestInstitutions.test_unicode_institutions_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.institutions.TestInstitutions.test_unicode_institutions_where">
+<code class="descname">test_unicode_institutions_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/institutions.html#TestInstitutions.test_unicode_institutions_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.institutions.TestInstitutions.test_unicode_institutions_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.instrument_custodian"></span><p>Test the file_key_values ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.instrument_custodian.TestInstrumentCustodian">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.instrument_custodian.</code><code class="descname">TestInstrumentCustodian</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_custodian.html#TestInstrumentCustodian"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_custodian.TestInstrumentCustodian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the InstitutionPerson ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.instrument_custodian.TestInstrumentCustodian.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_custodian.html#TestInstrumentCustodian.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_custodian.TestInstrumentCustodian.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that InstrumentCustodian need.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.instrument_custodian.TestInstrumentCustodian.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_custodian.html#TestInstrumentCustodian.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_custodian.TestInstrumentCustodian.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the InstrumentCustodian object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.instrument_custodian.TestInstrumentCustodian.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.instrument_custodian.TestInstrumentCustodian.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">InstrumentCustodian</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.instrument_custodian.TestInstrumentCustodian.test_instrument_custodian_hash">
+<code class="descname">test_instrument_custodian_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_custodian.html#TestInstrumentCustodian.test_instrument_custodian_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_custodian.TestInstrumentCustodian.test_instrument_custodian_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.instrument_custodian.TestInstrumentCustodian.test_instrument_custodian_json">
+<code class="descname">test_instrument_custodian_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_custodian.html#TestInstrumentCustodian.test_instrument_custodian_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_custodian.TestInstrumentCustodian.test_instrument_custodian_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.instrument_custodian.TestInstrumentCustodian.test_instrument_custodian_where">
+<code class="descname">test_instrument_custodian_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_custodian.html#TestInstrumentCustodian.test_instrument_custodian_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_custodian.TestInstrumentCustodian.test_instrument_custodian_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.instrument_group"></span><p>Test the user_group ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.instrument_group.TestInstrumentGroup">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.instrument_group.</code><code class="descname">TestInstrumentGroup</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_group.html#TestInstrumentGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_group.TestInstrumentGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Keys ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.instrument_group.TestInstrumentGroup.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_group.html#TestInstrumentGroup.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_group.TestInstrumentGroup.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that InstrumentGroup need.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.instrument_group.TestInstrumentGroup.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_group.html#TestInstrumentGroup.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_group.TestInstrumentGroup.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the InstrumentGroup object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.instrument_group.TestInstrumentGroup.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.instrument_group.TestInstrumentGroup.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">InstrumentGroup</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.instrument_group.TestInstrumentGroup.test_instrument_group_hash">
+<code class="descname">test_instrument_group_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_group.html#TestInstrumentGroup.test_instrument_group_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_group.TestInstrumentGroup.test_instrument_group_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.instrument_group.TestInstrumentGroup.test_instrument_group_json">
+<code class="descname">test_instrument_group_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_group.html#TestInstrumentGroup.test_instrument_group_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_group.TestInstrumentGroup.test_instrument_group_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.instrument_group.TestInstrumentGroup.test_instrument_group_where">
+<code class="descname">test_instrument_group_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instrument_group.html#TestInstrumentGroup.test_instrument_group_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instrument_group.TestInstrumentGroup.test_instrument_group_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.instruments"></span><p>Test the proposals ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.instruments.TestInstruments">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.instruments.</code><code class="descname">TestInstruments</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instruments.html#TestInstruments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instruments.TestInstruments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Proposals ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.instruments.TestInstruments.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instruments.html#TestInstruments.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instruments.TestInstruments.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Instruments object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.instruments.TestInstruments.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.instruments.TestInstruments.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Instruments</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.instruments.TestInstruments.test_instruments_hash">
+<code class="descname">test_instruments_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instruments.html#TestInstruments.test_instruments_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instruments.TestInstruments.test_instruments_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.instruments.TestInstruments.test_instruments_json">
+<code class="descname">test_instruments_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instruments.html#TestInstruments.test_instruments_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instruments.TestInstruments.test_instruments_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.instruments.TestInstruments.test_instruments_where">
+<code class="descname">test_instruments_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instruments.html#TestInstruments.test_instruments_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instruments.TestInstruments.test_instruments_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.instruments.TestInstruments.test_unicode_instruments_hash">
+<code class="descname">test_unicode_instruments_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instruments.html#TestInstruments.test_unicode_instruments_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instruments.TestInstruments.test_unicode_instruments_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.instruments.TestInstruments.test_unicode_instruments_where">
+<code class="descname">test_unicode_instruments_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/instruments.html#TestInstruments.test_unicode_instruments_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.instruments.TestInstruments.test_unicode_instruments_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.journals"></span><p>Test the journals ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.journals.TestJournals">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.journals.</code><code class="descname">TestJournals</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/journals.html#TestJournals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.journals.TestJournals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Journals ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.journals.TestJournals.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/journals.html#TestJournals.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.journals.TestJournals.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Journals object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.journals.TestJournals.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.journals.TestJournals.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Journals</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.journals.TestJournals.test_journal_hash">
+<code class="descname">test_journal_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/journals.html#TestJournals.test_journal_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.journals.TestJournals.test_journal_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.journals.TestJournals.test_journal_json">
+<code class="descname">test_journal_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/journals.html#TestJournals.test_journal_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.journals.TestJournals.test_journal_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.journals.TestJournals.test_journal_where">
+<code class="descname">test_journal_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/journals.html#TestJournals.test_journal_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.journals.TestJournals.test_journal_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.journals.TestJournals.test_unicode_journal_hash">
+<code class="descname">test_unicode_journal_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/journals.html#TestJournals.test_unicode_journal_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.journals.TestJournals.test_unicode_journal_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.journals.TestJournals.test_unicode_journal_where">
+<code class="descname">test_unicode_journal_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/journals.html#TestJournals.test_unicode_journal_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.journals.TestJournals.test_unicode_journal_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.keys"></span><p>Test the keys ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.keys.TestKeys">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.keys.</code><code class="descname">TestKeys</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keys.html#TestKeys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keys.TestKeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Keys ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.keys.TestKeys.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keys.html#TestKeys.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keys.TestKeys.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Keys object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.keys.TestKeys.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.keys.TestKeys.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Keys</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.keys.TestKeys.test_keys_hash">
+<code class="descname">test_keys_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keys.html#TestKeys.test_keys_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keys.TestKeys.test_keys_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.keys.TestKeys.test_keys_json">
+<code class="descname">test_keys_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keys.html#TestKeys.test_keys_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keys.TestKeys.test_keys_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.keys.TestKeys.test_keys_where">
+<code class="descname">test_keys_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keys.html#TestKeys.test_keys_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keys.TestKeys.test_keys_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.keys.TestKeys.test_unicode_keys_hash">
+<code class="descname">test_unicode_keys_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keys.html#TestKeys.test_unicode_keys_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keys.TestKeys.test_unicode_keys_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.keys.TestKeys.test_unicode_keys_where">
+<code class="descname">test_unicode_keys_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keys.html#TestKeys.test_unicode_keys_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keys.TestKeys.test_unicode_keys_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.keywords"></span><p>Test the file_key_values ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.keywords.TestKeywords">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.keywords.</code><code class="descname">TestKeywords</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keywords.html#TestKeywords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keywords.TestKeywords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the InstitutionPerson ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.keywords.TestKeywords.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keywords.html#TestKeywords.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keywords.TestKeywords.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that FileKeyValue need.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.keywords.TestKeywords.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keywords.html#TestKeywords.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keywords.TestKeywords.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Keywords object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.keywords.TestKeywords.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.keywords.TestKeywords.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Keywords</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.keywords.TestKeywords.test_keywords_hash">
+<code class="descname">test_keywords_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keywords.html#TestKeywords.test_keywords_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keywords.TestKeywords.test_keywords_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.keywords.TestKeywords.test_keywords_json">
+<code class="descname">test_keywords_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keywords.html#TestKeywords.test_keywords_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keywords.TestKeywords.test_keywords_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.keywords.TestKeywords.test_keywords_where">
+<code class="descname">test_keywords_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keywords.html#TestKeywords.test_keywords_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keywords.TestKeywords.test_keywords_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.keywords.TestKeywords.test_unicode_keywords_hash">
+<code class="descname">test_unicode_keywords_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keywords.html#TestKeywords.test_unicode_keywords_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keywords.TestKeywords.test_unicode_keywords_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.keywords.TestKeywords.test_unicode_keywords_where">
+<code class="descname">test_unicode_keywords_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/keywords.html#TestKeywords.test_unicode_keywords_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.keywords.TestKeywords.test_unicode_keywords_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.proposal_instrument"></span><p>Test the proposal_instrument ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.proposal_instrument.TestProposalInstrument">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.proposal_instrument.</code><code class="descname">TestProposalInstrument</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_instrument.html#TestProposalInstrument"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_instrument.TestProposalInstrument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the ProposalInstrument ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.proposal_instrument.TestProposalInstrument.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_instrument.html#TestProposalInstrument.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_instrument.TestProposalInstrument.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that FileKeyValue need.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.proposal_instrument.TestProposalInstrument.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_instrument.html#TestProposalInstrument.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_instrument.TestProposalInstrument.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the ProposalInstrument object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.proposal_instrument.TestProposalInstrument.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.proposal_instrument.TestProposalInstrument.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">ProposalInstrument</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.proposal_instrument.TestProposalInstrument.test_proposal_instrument_hash">
+<code class="descname">test_proposal_instrument_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_instrument.html#TestProposalInstrument.test_proposal_instrument_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_instrument.TestProposalInstrument.test_proposal_instrument_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.proposal_instrument.TestProposalInstrument.test_proposal_instrument_json">
+<code class="descname">test_proposal_instrument_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_instrument.html#TestProposalInstrument.test_proposal_instrument_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_instrument.TestProposalInstrument.test_proposal_instrument_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.proposal_instrument.TestProposalInstrument.test_proposal_instrument_where">
+<code class="descname">test_proposal_instrument_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_instrument.html#TestProposalInstrument.test_proposal_instrument_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_instrument.TestProposalInstrument.test_proposal_instrument_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.proposal_participant"></span><p>Test the file_key_values ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.proposal_participant.TestProposalParticipant">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.proposal_participant.</code><code class="descname">TestProposalParticipant</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_participant.html#TestProposalParticipant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_participant.TestProposalParticipant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the ProposalParticipant ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.proposal_participant.TestProposalParticipant.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_participant.html#TestProposalParticipant.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_participant.TestProposalParticipant.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that ProposalParticipant need.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.proposal_participant.TestProposalParticipant.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_participant.html#TestProposalParticipant.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_participant.TestProposalParticipant.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the ProposalParticipant object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.proposal_participant.TestProposalParticipant.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.proposal_participant.TestProposalParticipant.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">ProposalParticipant</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.proposal_participant.TestProposalParticipant.test_proposal_participant_hash">
+<code class="descname">test_proposal_participant_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_participant.html#TestProposalParticipant.test_proposal_participant_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_participant.TestProposalParticipant.test_proposal_participant_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.proposal_participant.TestProposalParticipant.test_proposal_participant_json">
+<code class="descname">test_proposal_participant_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_participant.html#TestProposalParticipant.test_proposal_participant_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_participant.TestProposalParticipant.test_proposal_participant_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.proposal_participant.TestProposalParticipant.test_proposal_participant_where">
+<code class="descname">test_proposal_participant_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposal_participant.html#TestProposalParticipant.test_proposal_participant_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposal_participant.TestProposalParticipant.test_proposal_participant_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.proposals"></span><p>Test the proposals ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.proposals.TestProposals">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.proposals.</code><code class="descname">TestProposals</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposals.html#TestProposals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposals.TestProposals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Proposals ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.proposals.TestProposals.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposals.html#TestProposals.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposals.TestProposals.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Proposals object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.proposals.TestProposals.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.proposals.TestProposals.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Proposals</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.proposals.TestProposals.test_proposals_hash">
+<code class="descname">test_proposals_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposals.html#TestProposals.test_proposals_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposals.TestProposals.test_proposals_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.proposals.TestProposals.test_proposals_json">
+<code class="descname">test_proposals_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposals.html#TestProposals.test_proposals_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposals.TestProposals.test_proposals_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.proposals.TestProposals.test_proposals_where">
+<code class="descname">test_proposals_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposals.html#TestProposals.test_proposals_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposals.TestProposals.test_proposals_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.proposals.TestProposals.test_unicode_proposals_hash">
+<code class="descname">test_unicode_proposals_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposals.html#TestProposals.test_unicode_proposals_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposals.TestProposals.test_unicode_proposals_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.proposals.TestProposals.test_unicode_proposals_where">
+<code class="descname">test_unicode_proposals_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/proposals.html#TestProposals.test_unicode_proposals_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.proposals.TestProposals.test_unicode_proposals_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.trans_key_value"></span><p>Test the trans_key_values ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.trans_key_value.TestTransactionKeyValue">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.trans_key_value.</code><code class="descname">TestTransactionKeyValue</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/trans_key_value.html#TestTransactionKeyValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.trans_key_value.TestTransactionKeyValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Keys ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.trans_key_value.TestTransactionKeyValue.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/trans_key_value.html#TestTransactionKeyValue.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.trans_key_value.TestTransactionKeyValue.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that TransactionKeyValue need.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.trans_key_value.TestTransactionKeyValue.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/trans_key_value.html#TestTransactionKeyValue.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.trans_key_value.TestTransactionKeyValue.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the TransactionKeyValue object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.trans_key_value.TestTransactionKeyValue.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.trans_key_value.TestTransactionKeyValue.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">TransactionKeyValue</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.trans_key_value.TestTransactionKeyValue.test_trans_key_value_hash">
+<code class="descname">test_trans_key_value_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/trans_key_value.html#TestTransactionKeyValue.test_trans_key_value_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.trans_key_value.TestTransactionKeyValue.test_trans_key_value_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.trans_key_value.TestTransactionKeyValue.test_trans_key_value_json">
+<code class="descname">test_trans_key_value_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/trans_key_value.html#TestTransactionKeyValue.test_trans_key_value_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.trans_key_value.TestTransactionKeyValue.test_trans_key_value_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.trans_key_value.TestTransactionKeyValue.test_trans_key_value_where">
+<code class="descname">test_trans_key_value_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/trans_key_value.html#TestTransactionKeyValue.test_trans_key_value_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.trans_key_value.TestTransactionKeyValue.test_trans_key_value_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.transactions"></span><p>Test the keys ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.transactions.TestTransactions">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.transactions.</code><code class="descname">TestTransactions</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/transactions.html#TestTransactions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.transactions.TestTransactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Transactions ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.transactions.TestTransactions.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/transactions.html#TestTransactions.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.transactions.TestTransactions.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the object and make dependent user object.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.transactions.TestTransactions.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/transactions.html#TestTransactions.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.transactions.TestTransactions.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Transactions object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.transactions.TestTransactions.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.transactions.TestTransactions.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Transactions</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.transactions.TestTransactions.test_transactions_hash">
+<code class="descname">test_transactions_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/transactions.html#TestTransactions.test_transactions_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.transactions.TestTransactions.test_transactions_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.transactions.TestTransactions.test_transactions_json">
+<code class="descname">test_transactions_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/transactions.html#TestTransactions.test_transactions_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.transactions.TestTransactions.test_transactions_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.transactions.TestTransactions.test_transactions_where">
+<code class="descname">test_transactions_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/transactions.html#TestTransactions.test_transactions_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.transactions.TestTransactions.test_transactions_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.user_group"></span><p>Test the user_group ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.user_group.TestUserGroup">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.user_group.</code><code class="descname">TestUserGroup</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/user_group.html#TestUserGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.user_group.TestUserGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Keys ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.user_group.TestUserGroup.base_create_dep_objs">
+<em class="property">classmethod </em><code class="descname">base_create_dep_objs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/user_group.html#TestUserGroup.base_create_dep_objs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.user_group.TestUserGroup.base_create_dep_objs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create all objects that UserGroup need.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.test.user_group.TestUserGroup.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/user_group.html#TestUserGroup.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.user_group.TestUserGroup.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the UserGroup object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.user_group.TestUserGroup.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.user_group.TestUserGroup.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">UserGroup</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.user_group.TestUserGroup.test_user_group_hash">
+<code class="descname">test_user_group_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/user_group.html#TestUserGroup.test_user_group_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.user_group.TestUserGroup.test_user_group_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.user_group.TestUserGroup.test_user_group_json">
+<code class="descname">test_user_group_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/user_group.html#TestUserGroup.test_user_group_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.user_group.TestUserGroup.test_user_group_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.user_group.TestUserGroup.test_user_group_where">
+<code class="descname">test_user_group_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/user_group.html#TestUserGroup.test_user_group_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.user_group.TestUserGroup.test_user_group_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.users"></span><p>Test the keys ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.users.TestUsers">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.users.</code><code class="descname">TestUsers</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/users.html#TestUsers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.users.TestUsers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Users ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.users.TestUsers.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/users.html#TestUsers.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.users.TestUsers.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Users object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.users.TestUsers.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.users.TestUsers.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Users</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.users.TestUsers.test_unicode_users_hash">
+<code class="descname">test_unicode_users_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/users.html#TestUsers.test_unicode_users_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.users.TestUsers.test_unicode_users_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.users.TestUsers.test_unicode_users_where">
+<code class="descname">test_unicode_users_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/users.html#TestUsers.test_unicode_users_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.users.TestUsers.test_unicode_users_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.users.TestUsers.test_users_hash">
+<code class="descname">test_users_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/users.html#TestUsers.test_users_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.users.TestUsers.test_users_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.users.TestUsers.test_users_json">
+<code class="descname">test_users_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/users.html#TestUsers.test_users_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.users.TestUsers.test_users_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.users.TestUsers.test_users_where">
+<code class="descname">test_users_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/users.html#TestUsers.test_users_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.users.TestUsers.test_users_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.utils"></span><p>Test the metadata.orm.utils methods</p>
+<dl class="class">
+<dt id="metadata.orm.test.utils.TestUtils">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.utils.</code><code class="descname">TestUtils</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/utils.html#TestUtils"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.utils.TestUtils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the utils methods to make sure they work and have covergage</p>
+<dl class="method">
+<dt id="metadata.orm.test.utils.TestUtils.test_date_converts">
+<code class="descname">test_date_converts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/utils.html#TestUtils.test_date_converts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.utils.TestUtils.test_date_converts" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method supports three types of conversions
+1. a parsable string either unicode or str
+2. a datetime object
+3. an epoch style int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.utils.TestUtils.test_datetime_converts">
+<code class="descname">test_datetime_converts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/utils.html#TestUtils.test_datetime_converts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.utils.TestUtils.test_datetime_converts" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method supports three types of conversions
+1. a parsable string either unicode or str
+2. a datetime object
+3. an epoch style int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.utils.TestUtils.test_index_hash">
+<code class="descname">test_index_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/utils.html#TestUtils.test_index_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.utils.TestUtils.test_index_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the index hash method with some static knowns</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.test.values"></span><p>Test the keys ORM object</p>
+<dl class="class">
+<dt id="metadata.orm.test.values.TestValues">
+<em class="property">class </em><code class="descclassname">metadata.orm.test.values.</code><code class="descname">TestValues</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/values.html#TestValues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.values.TestValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Values ORM object</p>
+<dl class="classmethod">
+<dt id="metadata.orm.test.values.TestValues.dependent_cls">
+<em class="property">classmethod </em><code class="descname">dependent_cls</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/values.html#TestValues.dependent_cls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.values.TestValues.dependent_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dependent classes for the Values object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="metadata.orm.test.values.TestValues.obj_cls">
+<code class="descname">obj_cls</code><a class="headerlink" href="#metadata.orm.test.values.TestValues.obj_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">Values</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.values.TestValues.test_unicode_values_hash">
+<code class="descname">test_unicode_values_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/values.html#TestValues.test_unicode_values_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.values.TestValues.test_unicode_values_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.values.TestValues.test_unicode_values_where">
+<code class="descname">test_unicode_values_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/values.html#TestValues.test_unicode_values_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.values.TestValues.test_unicode_values_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.values.TestValues.test_values_hash">
+<code class="descname">test_values_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/values.html#TestValues.test_values_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.values.TestValues.test_values_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.values.TestValues.test_values_json">
+<code class="descname">test_values_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/values.html#TestValues.test_values_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.values.TestValues.test_values_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.test.values.TestValues.test_values_where">
+<code class="descname">test_values_where</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/test/values.html#TestValues.test_values_where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.test.values.TestValues.test_values_where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the hash portion using base object method.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="metadata.metadata.rest.html" class="btn btn-neutral float-right" title="Rest Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="metadata.metadata.orm.html" class="btn btn-neutral" title="Orm Module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

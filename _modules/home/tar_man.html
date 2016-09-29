@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>home.tar_man &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>home.tar_man</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for home.tar_man</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">manages the tar directory to keep it from overflowing</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<div class="viewcode-block" id="job_list"><a class="viewcode-back" href="../../uploader.home.html#home.tar_man.job_list">[docs]</a><span class="k">def</span> <span class="nf">job_list</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    gets a list of jobs based on the files in the tar directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dir_files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">fpath</span> <span class="ow">in</span> <span class="n">dir_files</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;_uploaded.tar&#39;</span> <span class="ow">in</span> <span class="n">fpath</span><span class="p">:</span>
+            <span class="n">job</span> <span class="o">=</span> <span class="n">fpath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_uploaded.tar&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">jobs</span></div>
+
+<div class="viewcode-block" id="parse_job"><a class="viewcode-back" href="../../uploader.home.html#home.tar_man.parse_job">[docs]</a><span class="k">def</span> <span class="nf">parse_job</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    parse job id from status url, ex:</span>
+<span class="sd">    https://dev2.my.emsl.pnl.gov/myemsl/cgi-bin/status/2000796</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">joblist</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+    <span class="n">job_id</span> <span class="o">=</span> <span class="n">joblist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">job_id</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">job_id</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+<div class="viewcode-block" id="remove_tar_file"><a class="viewcode-back" href="../../uploader.home.html#home.tar_man.remove_tar_file">[docs]</a><span class="k">def</span> <span class="nf">remove_tar_file</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">job_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    remove a tar file from the tar directory based on job id</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">job_id</span> <span class="o">+</span> <span class="s1">&#39;_uploaded.tar&#39;</span>
+
+    <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
+
+    <span class="c1"># remove from directory</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">full_path</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="rename_tar_file"><a class="viewcode-back" href="../../uploader.home.html#home.tar_man.rename_tar_file">[docs]</a><span class="k">def</span> <span class="nf">rename_tar_file</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">old_name</span><span class="p">,</span> <span class="n">job_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    rename tar files with a job id so that we can start tracking status in the archive</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_name</span> <span class="o">=</span> <span class="n">job_id</span> <span class="o">+</span> <span class="s1">&#39;_uploaded.tar&#39;</span>
+    <span class="n">new_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>
+
+    <span class="nb">print</span> <span class="n">old_name</span>
+    <span class="nb">print</span> <span class="n">new_name</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">old_name</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">old_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="remove_orphans"><a class="viewcode-back" href="../../uploader.home.html#home.tar_man.remove_orphans">[docs]</a><span class="k">def</span> <span class="nf">remove_orphans</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    gets rid of turds left by cancelled uploads</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dir_files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+
+    <span class="c1"># compare the files to the contents of the directory</span>
+    <span class="k">for</span> <span class="n">fpath</span> <span class="ow">in</span> <span class="n">dir_files</span><span class="p">:</span>
+        <span class="c1"># if a file is in the directory but not uploaded, remove it if it is out of date</span>
+        <span class="c1"># kludge in place to remove things that never progress in the database</span>
+        <span class="c1"># if not &#39;_uploaded.tar&#39; in fpath:</span>
+        <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">fpath</span><span class="p">)</span>
+        <span class="c1"># remove from directory</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">full_path</span><span class="p">):</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">current</span> <span class="o">-</span> <span class="n">timestamp</span> <span class="o">&gt;</span> <span class="mi">86400</span><span class="p">:</span> <span class="c1"># a day in seconds</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">full_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="clean_tar_directory"><a class="viewcode-back" href="../../uploader.home.html#home.tar_man.clean_tar_directory">[docs]</a><span class="k">def</span> <span class="nf">clean_tar_directory</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">jobs_state</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    remove turds and jobs that have been archived</span>
+<span class="sd">    dfh to do: change to appropriate status level when we move to validation earlier</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+
+        <span class="n">jobs</span> <span class="o">=</span> <span class="n">job_list</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+
+        <span class="c1">#ex:</span>
+        <span class="c1">#jobs_state = &#39;[{?20001066? : {?state_name?:?Received?, ?state?:?1&quot;}},</span>
+        <span class="c1">#               {?20001067? : {?state_name?:?Available?, ?state?:?5&quot;}},</span>
+        <span class="c1">#               {?20001068? : {?state_name?:?Available?, ?state?:?5&quot;}}]&#39;</span>
+
+        <span class="n">info</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">jobs_state</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">job_state</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="n">job</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">job_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">state_index</span> <span class="o">=</span> <span class="n">job_state</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">state_index</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+                        <span class="n">remove_tar_file</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">job</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">remove_tar_file</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">job</span><span class="p">)</span>
+
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;clean tar failed&#39;</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

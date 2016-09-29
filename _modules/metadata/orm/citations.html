@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
-        <link rel="up" title="metadata.orm" href="../orm.html"/> 
+        <link rel="up" title="Module code" href="../../index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -115,8 +116,6 @@
       
           <li><a href="../../index.html">Module code</a> &raquo;</li>
       
-          <li><a href="../orm.html">metadata.orm</a> &raquo;</li>
-      
     <li>metadata.orm.citations</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -140,9 +139,38 @@
 
 <span class="c1"># Citations has too many attributes...</span>
 <span class="c1"># pylint: disable=too-many-instance-attributes</span>
-<div class="viewcode-block" id="Citations"><a class="viewcode-back" href="../../../metadata.orm.citations.html#metadata.orm.citations.Citations">[docs]</a><span class="k">class</span> <span class="nc">Citations</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
+<div class="viewcode-block" id="Citations"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citations.Citations">[docs]</a><span class="k">class</span> <span class="nc">Citations</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Citations model tracks metadata for a journal article.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        +--------------------------+-----------------------------------------+</span>
+<span class="sd">        | Name                     | Description                             |</span>
+<span class="sd">        +==========================+=========================================+</span>
+<span class="sd">        | article_title            | The title of the article                |</span>
+<span class="sd">        +--------------------------+-----------------------------------------+</span>
+<span class="sd">        | journal                  | Link to the journal it was published in |</span>
+<span class="sd">        +--------------------------+-----------------------------------------+</span>
+<span class="sd">        | journal_volume           | Journal volume for the publication      |</span>
+<span class="sd">        +--------------------------+-----------------------------------------+</span>
+<span class="sd">        | journal_issue            | Journal issue for the publication       |</span>
+<span class="sd">        +--------------------------+-----------------------------------------+</span>
+<span class="sd">        | page_range               | Pages in issue/volume was the article   |</span>
+<span class="sd">        +--------------------------+-----------------------------------------+</span>
+<span class="sd">        | abstract_text            | Abstract from the article in the        |</span>
+<span class="sd">        |                          | journal                                 |</span>
+<span class="sd">        +--------------------------+-----------------------------------------+</span>
+<span class="sd">        | xml_text                 | xml blob for the citation               |</span>
+<span class="sd">        +--------------------------+-----------------------------------------+</span>
+<span class="sd">        | release_authorization_id | External link to authorization metadata |</span>
+<span class="sd">        |                          | about the released article              |</span>
+<span class="sd">        +--------------------------+-----------------------------------------+</span>
+<span class="sd">        | doi_reference            | Digital Object Identifier for the       |</span>
+<span class="sd">        |                          | citation                                |</span>
+<span class="sd">        +--------------------------+-----------------------------------------+</span>
+<span class="sd">        | encoding                 | Language this metadata is in not the    |</span>
+<span class="sd">        |                          | article itself                          |</span>
+<span class="sd">        +-------------------+------------------------------------------------+</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">article_title</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="n">journal</span> <span class="o">=</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">Journals</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;citations&#39;</span><span class="p">)</span>
@@ -156,7 +184,7 @@
     <span class="n">encoding</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;UTF8&quot;</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="Citations.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.orm.citations.html#metadata.orm.citations.Citations.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="Citations.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citations.Citations.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build the elasticsearch mapping bits</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -167,7 +195,7 @@
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;page_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;doi_reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;release_authorization_id&#39;</span><span class="p">]</span> <span class="o">=</span> \
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">}</span></div>
 
-<div class="viewcode-block" id="Citations.to_hash"><a class="viewcode-back" href="../../../metadata.orm.citations.html#metadata.orm.citations.Citations.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Citations.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citations.Citations.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert the citation fields to a serializable hash.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -185,7 +213,7 @@
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">obj</span></div>
 
-<div class="viewcode-block" id="Citations.from_hash"><a class="viewcode-back" href="../../../metadata.orm.citations.html#metadata.orm.citations.Citations.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="Citations.from_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citations.Citations.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the object into the citation object fields.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -215,7 +243,7 @@
         <span class="k">if</span> <span class="s1">&#39;encoding&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="Citations.where_clause"><a class="viewcode-back" href="../../../metadata.orm.citations.html#metadata.orm.citations.Citations.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Citations.where_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citations.Citations.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate the PeeWee where clause used in searching.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

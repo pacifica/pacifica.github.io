@@ -1,0 +1,1775 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Orm Module &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
+        <link rel="up" title="Metadata Module" href="metadata.metadata.html"/>
+        <link rel="next" title="Test Module" href="metadata.metadata.orm.test.html"/>
+        <link rel="prev" title="Test Module" href="metadata.metadata.elastic.test.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="metadata.html">Metadata Project</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="metadata.metadata.html">Metadata Module</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.elastic.html">Elastic Module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Orm Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.rest.html">Rest Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
+      
+          <li><a href="metadata.html">Metadata Project</a> &raquo;</li>
+      
+          <li><a href="metadata.metadata.html">Metadata Module</a> &raquo;</li>
+      
+    <li>Orm Module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/metadata.metadata.orm.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="orm-module">
+<h1>Orm Module<a class="headerlink" href="#orm-module" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="metadata.metadata.orm.test.html">Test Module</a></li>
+</ul>
+</div>
+<span class="target" id="module-metadata.orm.base"></span><p>Pacifica Metadata ORM Base Class</p>
+<p>This class implements the basic functionality needed for all
+metadata objects in the metadata model for Pacifica.</p>
+<dl class="data">
+<dt id="metadata.orm.base.ELASTIC_ENDPOINT">
+<code class="descclassname">metadata.orm.base.</code><code class="descname">ELASTIC_ENDPOINT</code><em class="property"> = 'http://127.0.0.1:9200'</em><a class="headerlink" href="#metadata.orm.base.ELASTIC_ENDPOINT" title="Permalink to this definition">¶</a></dt>
+<dd><p>PacificaModel</p>
+<p>Base class inherits from the PeeWee ORM Model class to create
+required fields by all objects and serialization methods for
+the base fields.</p>
+<p>There are also CherryPy methods for creating, updating, getting
+and deleting these objects in from a web service layer.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="metadata.orm.base.PacificaModel">
+<em class="property">class </em><code class="descclassname">metadata.orm.base.</code><code class="descname">PacificaModel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic fields for an object within the model</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>created</td>
+<td>When was the object created</td>
+</tr>
+<tr class="row-odd"><td>updated</td>
+<td>When was the object last changed</td>
+</tr>
+<tr class="row-even"><td>deleted</td>
+<td>When was the object deleted</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="method">
+<dt id="metadata.orm.base.PacificaModel._set_datetime_part">
+<code class="descname">_set_datetime_part</code><span class="sig-paren">(</span><em>time_part</em>, <em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel._set_datetime_part"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel._set_datetime_part" title="Permalink to this definition">¶</a></dt>
+<dd><p>do more consistent type checking</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.base.PacificaModel.available_hash_list">
+<em class="property">classmethod </em><code class="descname">available_hash_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.available_hash_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.available_hash_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Need to figure out more about what this does...</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.base.PacificaModel.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash objects into object fields if they are
+present.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.base.PacificaModel.from_json">
+<code class="descname">from_json</code><span class="sig-paren">(</span><em>json_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.from_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the json string into the current object.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.base.PacificaModel.get_primary_keys">
+<em class="property">classmethod </em><code class="descname">get_primary_keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.get_primary_keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.get_primary_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the primary keys for the object</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.base.PacificaModel.last_change_date">
+<em class="property">classmethod </em><code class="descname">last_change_date</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.last_change_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.last_change_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the last changed date for the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.base.PacificaModel.rollback">
+<code class="descname">rollback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.rollback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.rollback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reconnect to the database on errors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.base.PacificaModel.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the base object fields into serializable attributes
+in a hash.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.base.PacificaModel.to_json">
+<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.to_json" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object into a json object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.base.PacificaModel.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>PeeWee specific extension meant to be passed to a PeeWee get
+or select.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.citation_contributor"></span><p>CitationContributor links citations and their authors.</p>
+<dl class="class">
+<dt id="metadata.orm.citation_contributor.CitationContributor">
+<em class="property">class </em><code class="descclassname">metadata.orm.citation_contributor.</code><code class="descname">CitationContributor</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_contributor.html#CitationContributor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_contributor.CitationContributor" title="Permalink to this definition">¶</a></dt>
+<dd><p>CitationsContributors data model</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>citation</td>
+<td>Link to the Citation model</td>
+</tr>
+<tr class="row-odd"><td>author</td>
+<td>Link to the Contributor model</td>
+</tr>
+<tr class="row-even"><td>author_precedence</td>
+<td>Order of the Author in the Citation</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.citation_contributor.CitationContributor.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_contributor.html#CitationContributor.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_contributor.CitationContributor.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.citation_contributor.CitationContributor.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_contributor.html#CitationContributor.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_contributor.CitationContributor.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.citation_contributor.CitationContributor.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_contributor.html#CitationContributor.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_contributor.CitationContributor.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.citation_contributor.CitationContributor.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_contributor.html#CitationContributor.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_contributor.CitationContributor.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.citation_proposal"></span><p>Citation proposal relationship</p>
+<dl class="class">
+<dt id="metadata.orm.citation_proposal.CitationProposal">
+<em class="property">class </em><code class="descclassname">metadata.orm.citation_proposal.</code><code class="descname">CitationProposal</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_proposal.html#CitationProposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_proposal.CitationProposal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relates citations with proposals</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>citation</td>
+<td>Link to the Citation model</td>
+</tr>
+<tr class="row-odd"><td>proposal</td>
+<td>Link to the Proposal model</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.citation_proposal.CitationProposal.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_proposal.html#CitationProposal.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_proposal.CitationProposal.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.citation_proposal.CitationProposal.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_proposal.html#CitationProposal.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_proposal.CitationProposal.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.citation_proposal.CitationProposal.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_proposal.html#CitationProposal.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_proposal.CitationProposal.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.citation_proposal.CitationProposal.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_proposal.html#CitationProposal.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_proposal.CitationProposal.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.citations"></span><p>Citations model for tracking journal articles.</p>
+<dl class="class">
+<dt id="metadata.orm.citations.Citations">
+<em class="property">class </em><code class="descclassname">metadata.orm.citations.</code><code class="descname">Citations</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citations.html#Citations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citations.Citations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Citations model tracks metadata for a journal article.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="29%" />
+<col width="9%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td colspan="2">article_title</td>
+<td>The title of the article</td>
+</tr>
+<tr class="row-odd"><td colspan="2">journal</td>
+<td>Link to the journal it was published in</td>
+</tr>
+<tr class="row-even"><td colspan="2">journal_volume</td>
+<td>Journal volume for the publication</td>
+</tr>
+<tr class="row-odd"><td colspan="2">journal_issue</td>
+<td>Journal issue for the publication</td>
+</tr>
+<tr class="row-even"><td colspan="2">page_range</td>
+<td>Pages in issue/volume was the article</td>
+</tr>
+<tr class="row-odd"><td colspan="2">abstract_text</td>
+<td>Abstract from the article in the
+journal</td>
+</tr>
+<tr class="row-even"><td colspan="2">xml_text</td>
+<td>xml blob for the citation</td>
+</tr>
+<tr class="row-odd"><td colspan="2">release_authorization_id</td>
+<td>External link to authorization metadata
+about the released article</td>
+</tr>
+<tr class="row-even"><td colspan="2">doi_reference</td>
+<td>Digital Object Identifier for the
+citation</td>
+</tr>
+<tr class="row-odd"><td colspan="3"><dl class="first last docutils">
+<dt>encoding                 | Language this metadata is in not the</dt>
+<dd><div class="first last line-block">
+<div class="line">article itself</div>
+</div>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.citations.Citations.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citations.html#Citations.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citations.Citations.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.citations.Citations.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citations.html#Citations.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citations.Citations.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object into the citation object fields.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.citations.Citations.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citations.html#Citations.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citations.Citations.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the citation fields to a serializable hash.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.citations.Citations.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citations.html#Citations.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citations.Citations.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the PeeWee where clause used in searching.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.contributors"></span><p>Contributors model describes an author to a journal article.</p>
+<dl class="class">
+<dt id="metadata.orm.contributors.Contributors">
+<em class="property">class </em><code class="descclassname">metadata.orm.contributors.</code><code class="descname">Contributors</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/contributors.html#Contributors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.contributors.Contributors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contributors object and associated fields.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>person</td>
+<td>Link to the User model</td>
+</tr>
+<tr class="row-odd"><td>institution</td>
+<td>Link to the Institution model</td>
+</tr>
+<tr class="row-even"><td>first_name</td>
+<td>Users first name as it appears in
+the citation</td>
+</tr>
+<tr class="row-odd"><td>middle_initial</td>
+<td>Users middle initial as it appears
+in the citation</td>
+</tr>
+<tr class="row-even"><td>last_name</td>
+<td>Users last name as it appears in
+the citation</td>
+</tr>
+<tr class="row-odd"><td>dept_code</td>
+<td>Department of the institution the
+User was a member of at the time of
+the citation</td>
+</tr>
+<tr class="row-even"><td>encoding</td>
+<td>Language encoding of the attributes
+above</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.contributors.Contributors.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/contributors.html#Contributors.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.contributors.Contributors.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.contributors.Contributors.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/contributors.html#Contributors.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.contributors.Contributors.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the hash into the object fields.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.contributors.Contributors.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/contributors.html#Contributors.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.contributors.Contributors.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the object fields into a serializable hash.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.contributors.Contributors.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/contributors.html#Contributors.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.contributors.Contributors.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the PeeWee where clause used in searching.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.file_key_value"></span><p>FileKeyValue links Files and Keys and Values objects.</p>
+<dl class="class">
+<dt id="metadata.orm.file_key_value.FileKeyValue">
+<em class="property">class </em><code class="descclassname">metadata.orm.file_key_value.</code><code class="descname">FileKeyValue</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/file_key_value.html#FileKeyValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.file_key_value.FileKeyValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>FileKeyValue attributes are foreign keys.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>file</td>
+<td>Link to the File model</td>
+</tr>
+<tr class="row-odd"><td>key</td>
+<td>Link to the Key model</td>
+</tr>
+<tr class="row-even"><td>value</td>
+<td>Link to the Value model</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.file_key_value.FileKeyValue.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/file_key_value.html#FileKeyValue.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.file_key_value.FileKeyValue.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.file_key_value.FileKeyValue.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/file_key_value.html#FileKeyValue.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.file_key_value.FileKeyValue.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.file_key_value.FileKeyValue.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/file_key_value.html#FileKeyValue.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.file_key_value.FileKeyValue.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.file_key_value.FileKeyValue.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/file_key_value.html#FileKeyValue.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.file_key_value.FileKeyValue.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.files"></span><p>Contains the Files object model primary unit of metadata for Pacifica.</p>
+<dl class="class">
+<dt id="metadata.orm.files.Files">
+<em class="property">class </em><code class="descclassname">metadata.orm.files.</code><code class="descname">Files</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/files.html#Files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.files.Files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Files metadata contains various attributes describing a file and where
+it came from.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="23%" />
+<col width="77%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>Name of the file</td>
+</tr>
+<tr class="row-odd"><td>subdir</td>
+<td>Subdirectory the file is in</td>
+</tr>
+<tr class="row-even"><td>ctime</td>
+<td>Creation time for the file</td>
+</tr>
+<tr class="row-odd"><td>mtime</td>
+<td>User modified time for the file</td>
+</tr>
+<tr class="row-even"><td>size</td>
+<td>Size of the file in bytes</td>
+</tr>
+<tr class="row-odd"><td>transaction</td>
+<td>Link to the transaction model</td>
+</tr>
+<tr class="row-even"><td>mimetype</td>
+<td>mimetype of the file, if any</td>
+</tr>
+<tr class="row-odd"><td>encoding</td>
+<td>encoding in the file name or subdir field</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.files.Files.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/files.html#Files.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.files.Files.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.files.Files.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/files.html#Files.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.files.Files.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash to an object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.files.Files.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/files.html#Files.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.files.Files.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.files.Files.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/files.html#Files.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.files.Files.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>PeeWee specific extension meant to be passed to a PeeWee get
+or select.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.groups"></span><p>Contains model for groups</p>
+<dl class="class">
+<dt id="metadata.orm.groups.Groups">
+<em class="property">class </em><code class="descclassname">metadata.orm.groups.</code><code class="descname">Groups</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/groups.html#Groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.groups.Groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Groups model and associated fields.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>group_name</td>
+<td>name of the group</td>
+</tr>
+<tr class="row-odd"><td>is_admin</td>
+<td>does the group has admin abilities</td>
+</tr>
+<tr class="row-even"><td>author_precedence</td>
+<td>encoding for the group_name</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.groups.Groups.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/groups.html#Groups.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.groups.Groups.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.groups.Groups.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/groups.html#Groups.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.groups.Groups.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the hash into the object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.groups.Groups.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/groups.html#Groups.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.groups.Groups.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.groups.Groups.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/groups.html#Groups.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.groups.Groups.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>PeeWee specific where clause used for search.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.institution_person"></span><p>Connects a User with an Institution</p>
+<dl class="class">
+<dt id="metadata.orm.institution_person.InstitutionPerson">
+<em class="property">class </em><code class="descclassname">metadata.orm.institution_person.</code><code class="descname">InstitutionPerson</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institution_person.html#InstitutionPerson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institution_person.InstitutionPerson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relates persons and institution objects.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>person</td>
+<td>Link to the Users model</td>
+</tr>
+<tr class="row-odd"><td>institution</td>
+<td>Link to the Institutions model</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.institution_person.InstitutionPerson.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institution_person.html#InstitutionPerson.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institution_person.InstitutionPerson.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.institution_person.InstitutionPerson.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institution_person.html#InstitutionPerson.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institution_person.InstitutionPerson.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.institution_person.InstitutionPerson.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institution_person.html#InstitutionPerson.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institution_person.InstitutionPerson.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.institution_person.InstitutionPerson.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institution_person.html#InstitutionPerson.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institution_person.InstitutionPerson.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.institutions"></span><p>Describes an institution and its attributes.</p>
+<dl class="class">
+<dt id="metadata.orm.institutions.Institutions">
+<em class="property">class </em><code class="descclassname">metadata.orm.institutions.</code><code class="descname">Institutions</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institutions.html#Institutions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institutions.Institutions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Institution model scribes an institute.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>institution_name</td>
+<td>Name of the institution</td>
+</tr>
+<tr class="row-odd"><td>association_cd</td>
+<td>Type of institution (TBD)</td>
+</tr>
+<tr class="row-even"><td>is_foreign</td>
+<td>Is the institution foreign or not</td>
+</tr>
+<tr class="row-odd"><td>encoding</td>
+<td>Any encoding for the name</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.institutions.Institutions.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institutions.html#Institutions.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institutions.Institutions.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.institutions.Institutions.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institutions.html#Institutions.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institutions.Institutions.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the hash into the object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.institutions.Institutions.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institutions.html#Institutions.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institutions.Institutions.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.institutions.Institutions.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institutions.html#Institutions.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institutions.Institutions.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>PeeWee specific where clause used for search.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.instrument_custodian"></span><p>Instrument custodian relationship</p>
+<dl class="class">
+<dt id="metadata.orm.instrument_custodian.InstrumentCustodian">
+<em class="property">class </em><code class="descclassname">metadata.orm.instrument_custodian.</code><code class="descname">InstrumentCustodian</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_custodian.html#InstrumentCustodian"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_custodian.InstrumentCustodian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relates proposals and instrument objects.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="21%" />
+<col width="79%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>instrument</td>
+<td>Link to the Instrument model</td>
+</tr>
+<tr class="row-odd"><td>custodian</td>
+<td>User who is responsible for the instrument</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.instrument_custodian.InstrumentCustodian.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_custodian.html#InstrumentCustodian.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_custodian.InstrumentCustodian.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.instrument_custodian.InstrumentCustodian.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_custodian.html#InstrumentCustodian.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_custodian.InstrumentCustodian.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.instrument_custodian.InstrumentCustodian.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_custodian.html#InstrumentCustodian.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_custodian.InstrumentCustodian.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.instrument_custodian.InstrumentCustodian.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_custodian.html#InstrumentCustodian.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_custodian.InstrumentCustodian.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.instrument_group"></span><p>InstrumentGroup links Groups and Instruments and objects.</p>
+<dl class="class">
+<dt id="metadata.orm.instrument_group.InstrumentGroup">
+<em class="property">class </em><code class="descclassname">metadata.orm.instrument_group.</code><code class="descname">InstrumentGroup</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_group.html#InstrumentGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_group.InstrumentGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>InstrumentGroup attributes are foreign keys.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>instrument</td>
+<td>Link to the Instrument model</td>
+</tr>
+<tr class="row-odd"><td>group</td>
+<td>Link to the Group model</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.instrument_group.InstrumentGroup.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_group.html#InstrumentGroup.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_group.InstrumentGroup.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.instrument_group.InstrumentGroup.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_group.html#InstrumentGroup.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_group.InstrumentGroup.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.instrument_group.InstrumentGroup.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_group.html#InstrumentGroup.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_group.InstrumentGroup.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.instrument_group.InstrumentGroup.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_group.html#InstrumentGroup.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_group.InstrumentGroup.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.instruments"></span><p>Instrument model describing data generators.</p>
+<dl class="class">
+<dt id="metadata.orm.instruments.Instruments">
+<em class="property">class </em><code class="descclassname">metadata.orm.instruments.</code><code class="descname">Instruments</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instruments.html#Instruments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instruments.Instruments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instrument and associated fields.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>display_name</td>
+<td>Long display string for web sites</td>
+</tr>
+<tr class="row-odd"><td>instrument_name</td>
+<td>Machine parsable display name</td>
+</tr>
+<tr class="row-even"><td>name_short</td>
+<td>Short version used in lists</td>
+</tr>
+<tr class="row-odd"><td>active</td>
+<td>whether the instrument is active</td>
+</tr>
+<tr class="row-even"><td>encoding</td>
+<td>encoding for the various name attrs</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.instruments.Instruments.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instruments.html#Instruments.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instruments.Instruments.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.instruments.Instruments.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instruments.html#Instruments.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instruments.Instruments.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the hash into the object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.instruments.Instruments.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instruments.html#Instruments.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instruments.Instruments.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.instruments.Instruments.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instruments.html#Instruments.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instruments.Instruments.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>PeeWee specific where clause used for search.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.journals"></span><p>Contains model for Journal</p>
+<dl class="class">
+<dt id="metadata.orm.journals.Journals">
+<em class="property">class </em><code class="descclassname">metadata.orm.journals.</code><code class="descname">Journals</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/journals.html#Journals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.journals.Journals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Journal model and associated fields.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>journal_name</td>
+<td>name of the journal</td>
+</tr>
+<tr class="row-odd"><td>author</td>
+<td>impact factor of the journal</td>
+</tr>
+<tr class="row-even"><td>website_url</td>
+<td>website for the journal (optional)</td>
+</tr>
+<tr class="row-odd"><td>encoding</td>
+<td>language encoding for the name</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.journals.Journals.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/journals.html#Journals.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.journals.Journals.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.journals.Journals.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/journals.html#Journals.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.journals.Journals.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the hash into the object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.journals.Journals.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/journals.html#Journals.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.journals.Journals.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.journals.Journals.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/journals.html#Journals.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.journals.Journals.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>PeeWee specific where clause used for search.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.keys"></span><p>Contains the model for metadata keys</p>
+<dl class="class">
+<dt id="metadata.orm.keys.Keys">
+<em class="property">class </em><code class="descclassname">metadata.orm.keys.</code><code class="descname">Keys</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keys.html#Keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keys.Keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keys model class for metadata</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>key</td>
+<td>generic metadata key</td>
+</tr>
+<tr class="row-odd"><td>encoding</td>
+<td>encoding for the key</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.keys.Keys.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keys.html#Keys.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keys.Keys.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.keys.Keys.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keys.html#Keys.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keys.Keys.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash to the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.keys.Keys.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keys.html#Keys.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keys.Keys.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.keys.Keys.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keys.html#Keys.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keys.Keys.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>PeeWee specific where clause used for search.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.keywords"></span><p>Keywords linked to citations</p>
+<dl class="class">
+<dt id="metadata.orm.keywords.Keywords">
+<em class="property">class </em><code class="descclassname">metadata.orm.keywords.</code><code class="descname">Keywords</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keywords.html#Keywords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keywords.Keywords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keywords Model</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>citation</td>
+<td>Link to the Citation model</td>
+</tr>
+<tr class="row-odd"><td>keyword</td>
+<td>keyword in the citation</td>
+</tr>
+<tr class="row-even"><td>encoding</td>
+<td>encoding of the keyword</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.keywords.Keywords.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keywords.html#Keywords.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keywords.Keywords.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.keywords.Keywords.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keywords.html#Keywords.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keywords.Keywords.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash to the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.keywords.Keywords.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keywords.html#Keywords.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keywords.Keywords.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.keywords.Keywords.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keywords.html#Keywords.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keywords.Keywords.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.proposal_instrument"></span><p>Proposal instrument relationship</p>
+<dl class="class">
+<dt id="metadata.orm.proposal_instrument.ProposalInstrument">
+<em class="property">class </em><code class="descclassname">metadata.orm.proposal_instrument.</code><code class="descname">ProposalInstrument</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_instrument.html#ProposalInstrument"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_instrument.ProposalInstrument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relates proposals and instrument objects.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>instrument</td>
+<td>Link to the Instrument model</td>
+</tr>
+<tr class="row-odd"><td>proposal</td>
+<td>Link to the Proposal model</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.proposal_instrument.ProposalInstrument.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_instrument.html#ProposalInstrument.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_instrument.ProposalInstrument.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.proposal_instrument.ProposalInstrument.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_instrument.html#ProposalInstrument.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_instrument.ProposalInstrument.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.proposal_instrument.ProposalInstrument.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_instrument.html#ProposalInstrument.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_instrument.ProposalInstrument.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.proposal_instrument.ProposalInstrument.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_instrument.html#ProposalInstrument.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_instrument.ProposalInstrument.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.proposal_participant"></span><p>Proposal person relationship</p>
+<dl class="class">
+<dt id="metadata.orm.proposal_participant.ProposalParticipant">
+<em class="property">class </em><code class="descclassname">metadata.orm.proposal_participant.</code><code class="descname">ProposalParticipant</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_participant.html#ProposalParticipant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_participant.ProposalParticipant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relates proposals and users objects.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>person</td>
+<td>Link to the Users model</td>
+</tr>
+<tr class="row-odd"><td>proposal</td>
+<td>Link to the Proposals model</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.proposal_participant.ProposalParticipant.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_participant.html#ProposalParticipant.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_participant.ProposalParticipant.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.proposal_participant.ProposalParticipant.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_participant.html#ProposalParticipant.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_participant.ProposalParticipant.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.proposal_participant.ProposalParticipant.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_participant.html#ProposalParticipant.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_participant.ProposalParticipant.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.proposal_participant.ProposalParticipant.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_participant.html#ProposalParticipant.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_participant.ProposalParticipant.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.proposals"></span><p>Proposals data model</p>
+<dl class="class">
+<dt id="metadata.orm.proposals.Proposals">
+<em class="property">class </em><code class="descclassname">metadata.orm.proposals.</code><code class="descname">Proposals</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposals.html#Proposals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposals.Proposals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Proposals data model</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>title</td>
+<td>Title of the proposal</td>
+</tr>
+<tr class="row-odd"><td>abstract</td>
+<td>Long abstract of the proposal</td>
+</tr>
+<tr class="row-even"><td>science_theme</td>
+<td>science group or theme assigned to</td>
+</tr>
+<tr class="row-odd"><td>proposal_type</td>
+<td>kind or type of proposal</td>
+</tr>
+<tr class="row-even"><td>submitted_date</td>
+<td>date proposal entered the system</td>
+</tr>
+<tr class="row-odd"><td>accepted_date</td>
+<td>date proposal was accepted</td>
+</tr>
+<tr class="row-even"><td>actual_start_date</td>
+<td>date the proposal was started</td>
+</tr>
+<tr class="row-odd"><td>actual_end_date</td>
+<td>date the proposal was ended</td>
+</tr>
+<tr class="row-even"><td>closed_date</td>
+<td>date the proposal was terminated</td>
+</tr>
+<tr class="row-odd"><td>encoding</td>
+<td>encoding of the other text attrs</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.proposals.Proposals.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposals.html#Proposals.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposals.Proposals.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.proposals.Proposals.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposals.html#Proposals.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposals.Proposals.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash to the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.proposals.Proposals.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposals.html#Proposals.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposals.Proposals.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.proposals.Proposals.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposals.html#Proposals.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposals.Proposals.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>PeeWee specific where clause used for search.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.trans_key_value"></span><p>TransactionKeyValue links Transactions and Keys and Values objects.</p>
+<dl class="class">
+<dt id="metadata.orm.trans_key_value.TransactionKeyValue">
+<em class="property">class </em><code class="descclassname">metadata.orm.trans_key_value.</code><code class="descname">TransactionKeyValue</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/trans_key_value.html#TransactionKeyValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.trans_key_value.TransactionKeyValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>TransactionKeyValue attributes are foreign keys.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>transaction</td>
+<td>Link to the Transactions model</td>
+</tr>
+<tr class="row-odd"><td>key</td>
+<td>Link to the Keys model</td>
+</tr>
+<tr class="row-even"><td>value</td>
+<td>Link to the Values model</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.trans_key_value.TransactionKeyValue.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/trans_key_value.html#TransactionKeyValue.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.trans_key_value.TransactionKeyValue.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.trans_key_value.TransactionKeyValue.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/trans_key_value.html#TransactionKeyValue.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.trans_key_value.TransactionKeyValue.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.trans_key_value.TransactionKeyValue.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/trans_key_value.html#TransactionKeyValue.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.trans_key_value.TransactionKeyValue.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.trans_key_value.TransactionKeyValue.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/trans_key_value.html#TransactionKeyValue.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.trans_key_value.TransactionKeyValue.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.transactions"></span><p>Transactions model</p>
+<dl class="class">
+<dt id="metadata.orm.transactions.Transactions">
+<em class="property">class </em><code class="descclassname">metadata.orm.transactions.</code><code class="descname">Transactions</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/transactions.html#Transactions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.transactions.Transactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transactions model class</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>submitter</td>
+<td>User who submitted the transaction</td>
+</tr>
+<tr class="row-odd"><td>instrument</td>
+<td>Instrument the transaction came from</td>
+</tr>
+<tr class="row-even"><td>proposal</td>
+<td>Proposal the transaction is for</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.transactions.Transactions.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/transactions.html#Transactions.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.transactions.Transactions.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.transactions.Transactions.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/transactions.html#Transactions.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.transactions.Transactions.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.transactions.Transactions.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/transactions.html#Transactions.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.transactions.Transactions.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.transactions.Transactions.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/transactions.html#Transactions.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.transactions.Transactions.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.user_group"></span><p>UserGroup links Groups and Users and objects.</p>
+<dl class="class">
+<dt id="metadata.orm.user_group.UserGroup">
+<em class="property">class </em><code class="descclassname">metadata.orm.user_group.</code><code class="descname">UserGroup</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/user_group.html#UserGroup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.user_group.UserGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>UserGroup attributes are foreign keys.</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>person</td>
+<td>Link to the Users model</td>
+</tr>
+<tr class="row-odd"><td>group</td>
+<td>Link to the Groups model</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="method">
+<dt id="metadata.orm.user_group.UserGroup.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/user_group.html#UserGroup.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.user_group.UserGroup.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.user_group.UserGroup.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/user_group.html#UserGroup.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.user_group.UserGroup.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.user_group.UserGroup.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/user_group.html#UserGroup.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.user_group.UserGroup.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.users"></span><p>Users data model</p>
+<dl class="class">
+<dt id="metadata.orm.users.Users">
+<em class="property">class </em><code class="descclassname">metadata.orm.users.</code><code class="descname">Users</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/users.html#Users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.users.Users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Users data model object</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>first_name</td>
+<td>first name of the user/person</td>
+</tr>
+<tr class="row-odd"><td>middle_initial</td>
+<td>middle initial of the user/person</td>
+</tr>
+<tr class="row-even"><td>last_name</td>
+<td>last name of the user/person</td>
+</tr>
+<tr class="row-odd"><td>network_id</td>
+<td>computer account of the user/person</td>
+</tr>
+<tr class="row-even"><td>email_address</td>
+<td>user/person email address</td>
+</tr>
+<tr class="row-odd"><td>encoding</td>
+<td>encoding for the other attrs</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.users.Users.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/users.html#Users.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.users.Users.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.users.Users.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/users.html#Users.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.users.Users.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the hash into the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.users.Users.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/users.html#Users.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.users.Users.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.users.Users.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/users.html#Users.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.users.Users.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Where clause for the various elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.utils"></span><p>Utilities for common metadata tools.</p>
+<dl class="class">
+<dt id="metadata.orm.utils.ExtendDateField">
+<em class="property">class </em><code class="descclassname">metadata.orm.utils.</code><code class="descname">ExtendDateField</code><span class="sig-paren">(</span><em>formats=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#ExtendDateField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.ExtendDateField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends to the DateField to add isoformatted date</p>
+<dl class="method">
+<dt id="metadata.orm.utils.ExtendDateField.isoformat">
+<code class="descname">isoformat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#ExtendDateField.isoformat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.ExtendDateField.isoformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the isoformat date field</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="metadata.orm.utils.ExtendDateTimeField">
+<em class="property">class </em><code class="descclassname">metadata.orm.utils.</code><code class="descname">ExtendDateTimeField</code><span class="sig-paren">(</span><em>formats=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#ExtendDateTimeField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.ExtendDateTimeField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends to the DateTimeField to add isoformat from datetime object</p>
+<dl class="method">
+<dt id="metadata.orm.utils.ExtendDateTimeField.isoformat">
+<code class="descname">isoformat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#ExtendDateTimeField.isoformat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.ExtendDateTimeField.isoformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the isoformat datetime field</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="metadata.orm.utils.date_converts">
+<code class="descclassname">metadata.orm.utils.</code><code class="descname">date_converts</code><span class="sig-paren">(</span><em>date_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#date_converts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.date_converts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standardize on converting to date objects</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="metadata.orm.utils.datetime_converts">
+<code class="descclassname">metadata.orm.utils.</code><code class="descname">datetime_converts</code><span class="sig-paren">(</span><em>time_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#datetime_converts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.datetime_converts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standardize on converting to datetime objects</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="metadata.orm.utils.datetime_now_nomicrosecond">
+<code class="descclassname">metadata.orm.utils.</code><code class="descname">datetime_now_nomicrosecond</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#datetime_now_nomicrosecond"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.datetime_now_nomicrosecond" title="Permalink to this definition">¶</a></dt>
+<dd><p>return now with no microseconds</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="metadata.orm.utils.index_hash">
+<code class="descclassname">metadata.orm.utils.</code><code class="descname">index_hash</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/utils.html#index_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.utils.index_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a hash for all the arguments passed.</p>
+<p>This is used to combine multiple unique IDs into a single string.</p>
+</dd></dl>
+
+<span class="target" id="module-metadata.orm.values"></span><p>Contains the model for metadata values</p>
+<dl class="class">
+<dt id="metadata.orm.values.Values">
+<em class="property">class </em><code class="descclassname">metadata.orm.values.</code><code class="descname">Values</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/values.html#Values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.values.Values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Values model class for metadata</p>
+<dl class="docutils">
+<dt>Attributes:</dt>
+<dd><table border="1" class="first last docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>value</td>
+<td>generic value for some metadata</td>
+</tr>
+<tr class="row-odd"><td>encoding</td>
+<td>language encoding of the value</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="metadata.orm.values.Values.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/values.html#Values.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.values.Values.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.values.Values.from_hash">
+<code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/values.html#Values.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.values.Values.from_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the hash to the object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.values.Values.to_hash">
+<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/values.html#Values.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.values.Values.to_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the object to a hash</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.orm.values.Values.where_clause">
+<code class="descname">where_clause</code><span class="sig-paren">(</span><em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/values.html#Values.where_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.values.Values.where_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>PeeWee specific where clause used for search.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="metadata.metadata.orm.test.html" class="btn btn-neutral float-right" title="Test Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="metadata.metadata.elastic.test.html" class="btn btn-neutral" title="Test Module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

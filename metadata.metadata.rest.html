@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Rest Module &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
+        <link rel="up" title="Metadata Module" href="metadata.metadata.html"/>
+        <link rel="next" title="Cartd Project" href="cartd.html"/>
+        <link rel="prev" title="Test Module" href="metadata.metadata.orm.test.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="metadata.html">Metadata Project</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="metadata.metadata.html">Metadata Module</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.elastic.html">Elastic Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.orm.html">Orm Module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Rest Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
+      
+          <li><a href="metadata.html">Metadata Project</a> &raquo;</li>
+      
+          <li><a href="metadata.metadata.html">Metadata Module</a> &raquo;</li>
+      
+    <li>Rest Module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/metadata.metadata.rest.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-metadata.rest.orm">
+<span id="rest-module"></span><h1>Rest Module<a class="headerlink" href="#module-metadata.rest.orm" title="Permalink to this headline">¶</a></h1>
+<p>Core interface for each ORM object to interface with CherryPy</p>
+<dl class="class">
+<dt id="metadata.rest.orm.CherryPyAPI">
+<em class="property">class </em><code class="descclassname">metadata.rest.orm.</code><code class="descname">CherryPyAPI</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/orm.html#CherryPyAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.orm.CherryPyAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Core CherryPy interface for all orm objects</p>
+<dl class="method">
+<dt id="metadata.rest.orm.CherryPyAPI.DELETE">
+<code class="descname">DELETE</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/orm.html#CherryPyAPI.DELETE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.orm.CherryPyAPI.DELETE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the DELETE HTTP method. Gets a single object based on
+kwargs, sets the deleted flag and saves the object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.orm.CherryPyAPI.GET">
+<code class="descname">GET</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/orm.html#CherryPyAPI.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.orm.CherryPyAPI.GET" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the GET HTTP method. Returns the json object based on
+fields passed into kwargs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.orm.CherryPyAPI.POST">
+<code class="descname">POST</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/orm.html#CherryPyAPI.POST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.orm.CherryPyAPI.POST" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the POST HTTP method. Gets the object similar to GET()
+and uses the request body to update the object and saves it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.orm.CherryPyAPI.PUT">
+<code class="descname">PUT</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/orm.html#CherryPyAPI.PUT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.orm.CherryPyAPI.PUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the PUT HTTP method. Creates an object based on the
+request body.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.orm.CherryPyAPI._delete">
+<code class="descname">_delete</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/orm.html#CherryPyAPI._delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.orm.CherryPyAPI._delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal delete object method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.orm.CherryPyAPI._insert">
+<code class="descname">_insert</code><span class="sig-paren">(</span><em>insert_json</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/orm.html#CherryPyAPI._insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.orm.CherryPyAPI._insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert object from json into the system.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.orm.CherryPyAPI._select">
+<code class="descname">_select</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/orm.html#CherryPyAPI._select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.orm.CherryPyAPI._select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal select method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.orm.CherryPyAPI._set_or_create">
+<code class="descname">_set_or_create</code><span class="sig-paren">(</span><em>insert_json</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/orm.html#CherryPyAPI._set_or_create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.orm.CherryPyAPI._set_or_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set or create the object if it doesn&#8217;t already exist</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.orm.CherryPyAPI._update">
+<code class="descname">_update</code><span class="sig-paren">(</span><em>update_json</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/orm.html#CherryPyAPI._update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.orm.CherryPyAPI._update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal update method for an object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.rest.root"></span><p>CherryPy root object class</p>
+<dl class="class">
+<dt id="metadata.rest.root.Root">
+<em class="property">class </em><code class="descclassname">metadata.rest.root.</code><code class="descname">Root</code><a class="reference internal" href="_modules/metadata/rest/root.html#Root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.root.Root" title="Permalink to this definition">¶</a></dt>
+<dd><p>CherryPy root object class</p>
+<p>not exposed by default the base objects are exposed</p>
+<dl class="attribute">
+<dt id="metadata.rest.root.Root.uploader">
+<code class="descname">uploader</code><a class="headerlink" href="#metadata.rest.root.Root.uploader" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal"><span class="pre">UploaderAPI</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.rest.uploader"></span><p>Core interface for the uploader metadata objects to interface with CherryPy</p>
+<dl class="class">
+<dt id="metadata.rest.uploader.UploaderAPI">
+<em class="property">class </em><code class="descclassname">metadata.rest.uploader.</code><code class="descname">UploaderAPI</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/uploader.html#UploaderAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.uploader.UploaderAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uploader ingest API</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cartd.html" class="btn btn-neutral float-right" title="Cartd Project" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="metadata.metadata.orm.test.html" class="btn btn-neutral" title="Test Module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>archiveinterface.archive_interface &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>archiveinterface.archive_interface</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for archiveinterface.archive_interface</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;Class for the archive interface.  Allows API to file interactions for</span>
+<span class="sd">passed in archive backends&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="k">import</span> <span class="n">stderr</span>
+<span class="kn">from</span> <span class="nn">archiveinterface.archive_utils</span> <span class="k">import</span> <span class="n">get_http_modified_time</span>
+<span class="kn">from</span> <span class="nn">archiveinterface.archive_interface_error</span> <span class="k">import</span> <span class="n">ArchiveInterfaceError</span>
+<span class="kn">import</span> <span class="nn">archiveinterface.archive_interface_responses</span> <span class="k">as</span> <span class="nn">interface_responses</span>
+
+<span class="n">BLOCK_SIZE</span> <span class="o">=</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">20</span>
+
+
+<div class="viewcode-block" id="ArchiveInterfaceGenerator"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface.ArchiveInterfaceGenerator">[docs]</a><span class="k">class</span> <span class="nc">ArchiveInterfaceGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Defines the methods that can be used on files for request types&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archive</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_archive</span> <span class="o">=</span> <span class="n">archive</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ArchiveInterfaceGenerator.get"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface.ArchiveInterfaceGenerator.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets a file specified in the request and writes back the data&quot;&quot;&quot;</span>
+        <span class="n">archivefile</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">path_info</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">]</span>
+        <span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">archivefile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archive</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path_info</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;application/octet-stream&#39;</span><span class="p">)])</span>
+        <span class="k">if</span> <span class="s1">&#39;wsgi.file_wrapper&#39;</span> <span class="ow">in</span> <span class="n">env</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;wsgi.file_wrapper&#39;</span><span class="p">](</span><span class="n">archivefile</span><span class="p">,</span> <span class="n">BLOCK_SIZE</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">archivefile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArchiveInterfaceGenerator.put"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface.ArchiveInterfaceGenerator.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes a file passed in the request to the archive&quot;&quot;&quot;</span>
+        <span class="n">archivefile</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">interface_responses</span><span class="o">.</span><span class="n">Responses</span><span class="p">()</span>
+        <span class="n">path_info</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">]</span>
+        <span class="n">mod_time</span> <span class="o">=</span> <span class="n">get_http_modified_time</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+        <span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">archivefile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archive</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path_info</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">content_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;CONTENT_LENGTH&#39;</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t get file content length with &quot;</span>\
+                <span class="s2">&quot;error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+        <span class="k">while</span> <span class="n">content_length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">content_length</span> <span class="o">&gt;</span> <span class="n">BLOCK_SIZE</span><span class="p">:</span>
+                <span class="n">buf</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;wsgi.input&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">BLOCK_SIZE</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">buf</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;wsgi.input&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">content_length</span><span class="p">)</span>
+            <span class="n">archivefile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+            <span class="n">content_length</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">successful_put_response</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span>
+                                                      <span class="n">env</span><span class="p">[</span><span class="s1">&#39;CONTENT_LENGTH&#39;</span><span class="p">])</span>
+        <span class="n">archivefile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">archivefile</span><span class="o">.</span><span class="n">set_mod_time</span><span class="p">(</span><span class="n">mod_time</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ArchiveInterfaceGenerator.status"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface.ArchiveInterfaceGenerator.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the status of a file specified in the request&quot;&quot;&quot;</span>
+        <span class="n">archivefile</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">path_info</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">]</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">interface_responses</span><span class="o">.</span><span class="n">Responses</span><span class="p">()</span>
+        <span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">archivefile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archive</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path_info</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">archivefile</span><span class="o">.</span><span class="n">status</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">file_status</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+        <span class="n">archivefile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ArchiveInterfaceGenerator.stage"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface.ArchiveInterfaceGenerator.stage">[docs]</a>    <span class="k">def</span> <span class="nf">stage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stage the file specified in the request to disk&quot;&quot;&quot;</span>
+        <span class="n">archivefile</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">path_info</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">]</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">interface_responses</span><span class="o">.</span><span class="n">Responses</span><span class="p">()</span>
+        <span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">archivefile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_archive</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path_info</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">archivefile</span><span class="o">.</span><span class="n">stage</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">file_stage</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span> <span class="n">path_info</span><span class="p">)</span>
+        <span class="n">archivefile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ArchiveInterfaceGenerator.return_response"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface.ArchiveInterfaceGenerator.return_response">[docs]</a>    <span class="k">def</span> <span class="nf">return_response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Prints all responses in a nice fashion&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_response</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ArchiveInterfaceGenerator.pacifica_archiveinterface"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface.ArchiveInterfaceGenerator.pacifica_archiveinterface">[docs]</a>    <span class="k">def</span> <span class="nf">pacifica_archiveinterface</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parses request method type&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;GET&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;PUT&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stage</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="n">interface_responses</span><span class="o">.</span><span class="n">Responses</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">unknown_request</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span>
+                                                      <span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">])</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">ArchiveInterfaceError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="c1">#catching application errors</span>
+            <span class="c1">#set the error reponse</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="n">interface_responses</span><span class="o">.</span><span class="n">Responses</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">archive_exception</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span> <span class="n">ex</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span></div></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

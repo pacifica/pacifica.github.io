@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
-        <link rel="up" title="metadata.orm" href="../../orm.html"/> 
+        <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -114,8 +115,6 @@
     <li><a href="../../../../index.html">Docs</a> &raquo;</li>
       
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      
-          <li><a href="../../orm.html">metadata.orm</a> &raquo;</li>
       
     <li>metadata.orm.test.citation_contributor</li>
       <li class="wy-breadcrumbs-aside">
@@ -149,7 +148,7 @@
     <span class="s2">&quot;author_precedence&quot;</span><span class="p">:</span> <span class="mi">20</span>
 <span class="p">}</span>
 
-<div class="viewcode-block" id="TestCitationContributor"><a class="viewcode-back" href="../../../../metadata.orm.test.citation_contributor.html#metadata.orm.test.citation_contributor.TestCitationContributor">[docs]</a><span class="k">class</span> <span class="nc">TestCitationContributor</span><span class="p">(</span><span class="n">TestBase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestCitationContributor"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.citation_contributor.TestCitationContributor">[docs]</a><span class="k">class</span> <span class="nc">TestCitationContributor</span><span class="p">(</span><span class="n">TestBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Test the Files ORM object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -157,7 +156,7 @@
     <span class="n">obj_id</span> <span class="o">=</span> <span class="n">CitationContributor</span><span class="o">.</span><span class="n">author</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="TestCitationContributor.dependent_cls"><a class="viewcode-back" href="../../../../metadata.orm.test.citation_contributor.html#metadata.orm.test.citation_contributor.TestCitationContributor.dependent_cls">[docs]</a>    <span class="k">def</span> <span class="nf">dependent_cls</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="TestCitationContributor.dependent_cls"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.citation_contributor.TestCitationContributor.dependent_cls">[docs]</a>    <span class="k">def</span> <span class="nf">dependent_cls</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return dependent classes for the CitationContributor object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -167,7 +166,7 @@
         <span class="k">return</span> <span class="n">ret</span></div>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="TestCitationContributor.base_create_dep_objs"><a class="viewcode-back" href="../../../../metadata.orm.test.citation_contributor.html#metadata.orm.test.citation_contributor.TestCitationContributor.base_create_dep_objs">[docs]</a>    <span class="k">def</span> <span class="nf">base_create_dep_objs</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="TestCitationContributor.base_create_dep_objs"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.citation_contributor.TestCitationContributor.base_create_dep_objs">[docs]</a>    <span class="k">def</span> <span class="nf">base_create_dep_objs</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create all objects that Files depend on.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -180,19 +179,19 @@
         <span class="n">contrib</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">SAMPLE_CONTRIBUTOR_HASH</span><span class="p">)</span>
         <span class="n">contrib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TestCitationContributor.test_citation_contributor_hash"><a class="viewcode-back" href="../../../../metadata.orm.test.citation_contributor.html#metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_citation_contributor_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestCitationContributor.test_citation_contributor_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_citation_contributor_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_CITATION_CONTRIBUTOR_HASH</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TestCitationContributor.test_citation_contributor_json"><a class="viewcode-back" href="../../../../metadata.orm.test.citation_contributor.html#metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_citation_contributor_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestCitationContributor.test_citation_contributor_json"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_citation_contributor_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_CITATION_CONTRIBUTOR_HASH</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="TestCitationContributor.test_citation_contributor_where"><a class="viewcode-back" href="../../../../metadata.orm.test.citation_contributor.html#metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_citation_contributor_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestCitationContributor.test_citation_contributor_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.citation_contributor.TestCitationContributor.test_citation_contributor_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_citation_contributor_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Test the hash portion using base object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

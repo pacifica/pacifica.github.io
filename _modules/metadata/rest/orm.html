@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -140,13 +141,13 @@
 <span class="kn">from</span> <span class="nn">metadata.elastic.orm</span> <span class="k">import</span> <span class="n">ElasticAPI</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.utils</span> <span class="k">import</span> <span class="n">datetime_now_nomicrosecond</span>
 
-<div class="viewcode-block" id="CherryPyAPI"><a class="viewcode-back" href="../../../metadata.rest.orm.html#metadata.rest.orm.CherryPyAPI">[docs]</a><span class="k">class</span> <span class="nc">CherryPyAPI</span><span class="p">(</span><span class="n">PacificaModel</span><span class="p">,</span> <span class="n">ElasticAPI</span><span class="p">):</span>
+<div class="viewcode-block" id="CherryPyAPI"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI">[docs]</a><span class="k">class</span> <span class="nc">CherryPyAPI</span><span class="p">(</span><span class="n">PacificaModel</span><span class="p">,</span> <span class="n">ElasticAPI</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Core CherryPy interface for all orm objects</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">exposed</span> <span class="o">=</span> <span class="kc">True</span>
 
-<div class="viewcode-block" id="CherryPyAPI._select"><a class="viewcode-back" href="../../../metadata.rest.orm.html#metadata.rest.orm.CherryPyAPI._select">[docs]</a>    <span class="k">def</span> <span class="nf">_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CherryPyAPI._select"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._select">[docs]</a>    <span class="k">def</span> <span class="nf">_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal select method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -156,7 +157,7 @@
             <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">dumps</span><span class="p">([</span><span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="CherryPyAPI._update"><a class="viewcode-back" href="../../../metadata.rest.orm.html#metadata.rest.orm.CherryPyAPI._update">[docs]</a>    <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_json</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CherryPyAPI._update"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._update">[docs]</a>    <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_json</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal update method for an object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -181,7 +182,7 @@
                 <span class="n">obj</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
                 <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="CherryPyAPI._set_or_create"><a class="viewcode-back" href="../../../metadata.rest.orm.html#metadata.rest.orm.CherryPyAPI._set_or_create">[docs]</a>    <span class="k">def</span> <span class="nf">_set_or_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">insert_json</span><span class="p">):</span>
+<div class="viewcode-block" id="CherryPyAPI._set_or_create"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._set_or_create">[docs]</a>    <span class="k">def</span> <span class="nf">_set_or_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">insert_json</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set or create the object if it doesn&#39;t already exist</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -208,7 +209,7 @@
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="CherryPyAPI._insert"><a class="viewcode-back" href="../../../metadata.rest.orm.html#metadata.rest.orm.CherryPyAPI._insert">[docs]</a>    <span class="k">def</span> <span class="nf">_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">insert_json</span><span class="p">):</span>
+<div class="viewcode-block" id="CherryPyAPI._insert"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._insert">[docs]</a>    <span class="k">def</span> <span class="nf">_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">insert_json</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Insert object from json into the system.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -234,7 +235,7 @@
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="CherryPyAPI._delete"><a class="viewcode-back" href="../../../metadata.rest.orm.html#metadata.rest.orm.CherryPyAPI._delete">[docs]</a>    <span class="k">def</span> <span class="nf">_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CherryPyAPI._delete"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._delete">[docs]</a>    <span class="k">def</span> <span class="nf">_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Internal delete object method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -258,28 +259,28 @@
     <span class="c1"># CherryPy requires these named methods</span>
     <span class="c1"># Add HEAD (basically Get without returning body</span>
     <span class="c1"># pylint: disable=invalid-name</span>
-<div class="viewcode-block" id="CherryPyAPI.GET"><a class="viewcode-back" href="../../../metadata.rest.orm.html#metadata.rest.orm.CherryPyAPI.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CherryPyAPI.GET"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Implements the GET HTTP method. Returns the json object based on</span>
 <span class="sd">        fields passed into kwargs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CherryPyAPI.PUT"><a class="viewcode-back" href="../../../metadata.rest.orm.html#metadata.rest.orm.CherryPyAPI.PUT">[docs]</a>    <span class="k">def</span> <span class="nf">PUT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CherryPyAPI.PUT"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI.PUT">[docs]</a>    <span class="k">def</span> <span class="nf">PUT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Implements the PUT HTTP method. Creates an object based on the</span>
 <span class="sd">        request body.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="CherryPyAPI.POST"><a class="viewcode-back" href="../../../metadata.rest.orm.html#metadata.rest.orm.CherryPyAPI.POST">[docs]</a>    <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CherryPyAPI.POST"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI.POST">[docs]</a>    <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Implements the POST HTTP method. Gets the object similar to GET()</span>
 <span class="sd">        and uses the request body to update the object and saves it.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CherryPyAPI.DELETE"><a class="viewcode-back" href="../../../metadata.rest.orm.html#metadata.rest.orm.CherryPyAPI.DELETE">[docs]</a>    <span class="k">def</span> <span class="nf">DELETE</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CherryPyAPI.DELETE"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI.DELETE">[docs]</a>    <span class="k">def</span> <span class="nf">DELETE</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Implements the DELETE HTTP method. Gets a single object based on</span>
 <span class="sd">        kwargs, sets the deleted flag and saves the object.</span>

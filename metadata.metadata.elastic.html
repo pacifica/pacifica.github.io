@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Elastic Module &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
+        <link rel="up" title="Metadata Module" href="metadata.metadata.html"/>
+        <link rel="next" title="Test Module" href="metadata.metadata.elastic.test.html"/>
+        <link rel="prev" title="Metadata Module" href="metadata.metadata.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="metadata.html">Metadata Project</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="metadata.metadata.html">Metadata Module</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Elastic Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.orm.html">Orm Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.rest.html">Rest Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
+      
+          <li><a href="metadata.html">Metadata Project</a> &raquo;</li>
+      
+          <li><a href="metadata.metadata.html">Metadata Module</a> &raquo;</li>
+      
+    <li>Elastic Module</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/metadata.metadata.elastic.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="elastic-module">
+<h1>Elastic Module<a class="headerlink" href="#elastic-module" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="metadata.metadata.elastic.test.html">Test Module</a></li>
+</ul>
+</div>
+<span class="target" id="module-metadata.elastic.orm"></span><p>Elastic search core class to convert db object.</p>
+<dl class="class">
+<dt id="metadata.elastic.orm.ElasticAPI">
+<em class="property">class </em><code class="descclassname">metadata.elastic.orm.</code><code class="descname">ElasticAPI</code><a class="reference internal" href="_modules/metadata/elastic/orm.html#ElasticAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.orm.ElasticAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Elastic search conversion and interface methods.</p>
+<dl class="classmethod">
+<dt id="metadata.elastic.orm.ElasticAPI.create_elastic_mapping">
+<em class="property">classmethod </em><code class="descname">create_elastic_mapping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/orm.html#ElasticAPI.create_elastic_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.orm.ElasticAPI.create_elastic_mapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>take the elastic search mapping from the object and
+create an elastic search index with it.
+PUT /{index}/_mapping/{type}
+{ body }</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.elastic.orm.ElasticAPI.elastic_delete">
+<em class="property">classmethod </em><code class="descname">elastic_delete</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/orm.html#ElasticAPI.elastic_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.orm.ElasticAPI.elastic_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>delete the object for the class in elastic search.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.elastic.orm.ElasticAPI.elastic_mapping">
+<em class="property">classmethod </em><code class="descname">elastic_mapping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/orm.html#ElasticAPI.elastic_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.orm.ElasticAPI.elastic_mapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the elasticsearch mapping for the object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="metadata.elastic.orm.ElasticAPI.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/orm.html#ElasticAPI.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.orm.ElasticAPI.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build elastic mapping properties hash from object.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.elastic.orm.ElasticAPI.elastic_upload">
+<em class="property">classmethod </em><code class="descname">elastic_upload</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/orm.html#ElasticAPI.elastic_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.orm.ElasticAPI.elastic_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>upload the object for the class to elastic search.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="metadata.metadata.elastic.test.html" class="btn btn-neutral float-right" title="Test Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="metadata.metadata.html" class="btn btn-neutral" title="Metadata Module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

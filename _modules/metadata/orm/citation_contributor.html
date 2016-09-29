@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
-        <link rel="up" title="metadata.orm" href="../orm.html"/> 
+        <link rel="up" title="Module code" href="../../index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -115,8 +116,6 @@
       
           <li><a href="../../index.html">Module code</a> &raquo;</li>
       
-          <li><a href="../orm.html">metadata.orm</a> &raquo;</li>
-      
     <li>metadata.orm.citation_contributor</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -141,9 +140,20 @@
 <span class="kn">from</span> <span class="nn">metadata.orm.contributors</span> <span class="k">import</span> <span class="n">Contributors</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.orm</span> <span class="k">import</span> <span class="n">CherryPyAPI</span>
 
-<div class="viewcode-block" id="CitationContributor"><a class="viewcode-back" href="../../../metadata.orm.citation_contributor.html#metadata.orm.citation_contributor.CitationContributor">[docs]</a><span class="k">class</span> <span class="nc">CitationContributor</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
+<div class="viewcode-block" id="CitationContributor"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citation_contributor.CitationContributor">[docs]</a><span class="k">class</span> <span class="nc">CitationContributor</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    CitationsContributors data model</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | Name              | Description                         |</span>
+<span class="sd">        +===================+=====================================+</span>
+<span class="sd">        | citation          | Link to the Citation model          |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | author            | Link to the Contributor model       |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | author_precedence | Order of the Author in the Citation |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">citation</span> <span class="o">=</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">Citations</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;authors&#39;</span><span class="p">)</span>
     <span class="n">author</span> <span class="o">=</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">Contributors</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;citations&#39;</span><span class="p">)</span>
@@ -159,7 +169,7 @@
     <span class="c1"># pylint: enable=too-few-public-methods</span>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="CitationContributor.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.orm.citation_contributor.html#metadata.orm.citation_contributor.CitationContributor.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="CitationContributor.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citation_contributor.CitationContributor.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build the elasticsearch mapping bits</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -167,7 +177,7 @@
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;citation_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;author_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;author_precedence&#39;</span><span class="p">]</span> <span class="o">=</span> \
         <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">}</span></div>
 
-<div class="viewcode-block" id="CitationContributor.to_hash"><a class="viewcode-back" href="../../../metadata.orm.citation_contributor.html#metadata.orm.citation_contributor.CitationContributor.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CitationContributor.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citation_contributor.CitationContributor.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the object to a hash</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -178,7 +188,7 @@
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;author_precedence&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">author_precedence</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">obj</span></div>
 
-<div class="viewcode-block" id="CitationContributor.from_hash"><a class="viewcode-back" href="../../../metadata.orm.citation_contributor.html#metadata.orm.citation_contributor.CitationContributor.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="CitationContributor.from_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citation_contributor.CitationContributor.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the hash into the object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -190,7 +200,7 @@
         <span class="k">if</span> <span class="s1">&#39;author_precedence&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">author_precedence</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;author_precedence&#39;</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="CitationContributor.where_clause"><a class="viewcode-back" href="../../../metadata.orm.citation_contributor.html#metadata.orm.citation_contributor.CitationContributor.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CitationContributor.where_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citation_contributor.CitationContributor.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Where clause for the various elements.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

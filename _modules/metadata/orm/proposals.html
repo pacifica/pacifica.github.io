@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
-        <link rel="up" title="metadata.orm" href="../orm.html"/> 
+        <link rel="up" title="Module code" href="../../index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -115,8 +116,6 @@
       
           <li><a href="../../index.html">Module code</a> &raquo;</li>
       
-          <li><a href="../orm.html">metadata.orm</a> &raquo;</li>
-      
     <li>metadata.orm.proposals</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -140,9 +139,34 @@
 <span class="kn">from</span> <span class="nn">metadata.orm.utils</span> <span class="k">import</span> <span class="n">datetime_converts</span><span class="p">,</span> <span class="n">date_converts</span><span class="p">,</span> <span class="n">datetime_now_nomicrosecond</span>
 
 <span class="c1"># pylint: disable=too-many-instance-attributes</span>
-<div class="viewcode-block" id="Proposals"><a class="viewcode-back" href="../../../metadata.orm.proposals.html#metadata.orm.proposals.Proposals">[docs]</a><span class="k">class</span> <span class="nc">Proposals</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposals"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.proposals.Proposals">[docs]</a><span class="k">class</span> <span class="nc">Proposals</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Proposals data model</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | Name              | Description                         |</span>
+<span class="sd">        +===================+=====================================+</span>
+<span class="sd">        | title             | Title of the proposal               |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | abstract          | Long abstract of the proposal       |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | science_theme     | science group or theme assigned to  |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | proposal_type     | kind or type of proposal            |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | submitted_date    | date proposal entered the system    |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | accepted_date     | date proposal was accepted          |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | actual_start_date | date the proposal was started       |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | actual_end_date   | date the proposal was ended         |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | closed_date       | date the proposal was terminated    |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | encoding          | encoding of the other text attrs    |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">title</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
@@ -157,7 +181,7 @@
     <span class="n">encoding</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;UTF8&quot;</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="Proposals.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.orm.proposals.html#metadata.orm.proposals.Proposals.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposals.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.proposals.Proposals.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build the elasticsearch mapping bits</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -172,7 +196,7 @@
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;actual_end_date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;closed_date&#39;</span><span class="p">]</span> <span class="o">=</span> \
         <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s2">&quot;yyyy-mm-dd&quot;</span><span class="p">}</span></div>
 
-<div class="viewcode-block" id="Proposals.to_hash"><a class="viewcode-back" href="../../../metadata.orm.proposals.html#metadata.orm.proposals.Proposals.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposals.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.proposals.Proposals.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the object to a hash</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -194,7 +218,7 @@
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">obj</span></div>
 
-<div class="viewcode-block" id="Proposals.from_hash"><a class="viewcode-back" href="../../../metadata.orm.proposals.html#metadata.orm.proposals.Proposals.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposals.from_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.proposals.Proposals.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the hash to the object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -219,7 +243,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_date_part</span><span class="p">(</span><span class="s1">&#39;actual_end_date&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_date_part</span><span class="p">(</span><span class="s1">&#39;closed_date&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Proposals.where_clause"><a class="viewcode-back" href="../../../metadata.orm.proposals.html#metadata.orm.proposals.Proposals.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Proposals.where_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.proposals.Proposals.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        PeeWee specific where clause used for search.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

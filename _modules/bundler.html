@@ -1,0 +1,606 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>bundler &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Pacifica v1.0.0" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Pacifica</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      
+    <li>bundler</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for bundler</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python</span>
+
+<span class="c1">#pylint: disable=unused-argument</span>
+<span class="c1"># justification: virtual class</span>
+
+<span class="c1">#pylint: disable=no-self-use</span>
+<span class="c1"># justification: virtual class</span>
+
+<span class="c1">#pylint: disable=no-member</span>
+<span class="c1">#justification: because pylint is dumb</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A Bundler module that aggregates files into a single bundle</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">stat</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">optparse</span> <span class="k">import</span> <span class="n">OptionParser</span>
+
+<span class="kn">from</span> <span class="nn">home.task_comm</span> <span class="k">import</span> <span class="n">task_error</span><span class="p">,</span> <span class="n">task_state</span>
+
+<div class="viewcode-block" id="FileBundler"><a class="viewcode-back" href="../uploader.html#bundler.FileBundler">[docs]</a><span class="k">class</span> <span class="nc">FileBundler</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An &#39;Abstract&#39; Base Class that provide a template by which bundlers using</span>
+<span class="sd">    specific formats/libraries shall be defined</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bundle_path</span><span class="p">,</span>
+                 <span class="n">proposal_id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">instrument_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">instrument_id</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a Bundler</span>
+
+<span class="sd">        :Parameters:</span>
+<span class="sd">            bundle_path</span>
+<span class="sd">                The path to the target bundle file</span>
+<span class="sd">            proposal_ID</span>
+<span class="sd">                An optional string describing the proposal associated with this bundle</span>
+<span class="sd">            instrument_name</span>
+<span class="sd">                The name of the instrument that produced the data packaged in the bundle</span>
+<span class="sd">            groups</span>
+<span class="sd">                The type:name groups</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">groups</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bundle_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">bundle_path</span><span class="p">)</span>
+        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bundle_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bundle_name</span><span class="p">)</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposal_id</span> <span class="o">=</span> <span class="n">proposal_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrument_name</span> <span class="o">=</span> <span class="n">instrument_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span> <span class="o">=</span> <span class="n">instrument_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">running_size</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_percent</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bundle_size</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="FileBundler.bundle_metadata"><a class="viewcode-back" href="../uploader.html#bundler.FileBundler.bundle_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">bundle_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Bundle in the metadata for the bundled files</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># version 1.2.0 pushes the data to a &quot;data&quot; directory while the</span>
+        <span class="c1"># metadata.txt file lives in the root.  This keeps us from collisions with users</span>
+        <span class="c1"># having their own versions of metadata.txt</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="s1">&#39;{&quot;version&quot;:&quot;1.2.0&quot;,&quot;eusInfo&quot;:{&#39;</span>
+
+        <span class="n">need_comma</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposal_id</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="n">metadata</span> <span class="o">+=</span> <span class="s1">&#39;&quot;proposalID&quot;:&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposal_id</span>
+            <span class="n">need_comma</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument_name</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposal_id</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">metadata</span> <span class="o">+=</span> <span class="s1">&#39;, &#39;</span>
+            <span class="n">metadata</span> <span class="o">+=</span> <span class="s1">&#39;&quot;instrumentName&quot;:&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument_name</span>
+            <span class="n">need_comma</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">metadata</span> <span class="o">+=</span> <span class="s1">&#39;, &quot;instrumentId&quot;:&quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">need_comma</span><span class="p">:</span>
+                <span class="n">metadata</span> <span class="o">+=</span> <span class="s1">&#39;, &#39;</span>
+            <span class="n">metadata</span> <span class="o">+=</span> <span class="s1">&#39;&quot;groups&quot;:[&#39;</span>
+            <span class="n">another_need_comma</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">g_type</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">another_need_comma</span><span class="p">:</span>
+                    <span class="n">metadata</span> <span class="o">+=</span> <span class="s1">&#39;, &#39;</span>
+                <span class="n">metadata</span> <span class="o">+=</span> <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">name</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">type</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">}&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">g_type</span><span class="p">)</span>
+                <span class="n">another_need_comma</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">metadata</span> <span class="o">+=</span> <span class="s1">&#39;]&#39;</span>
+            <span class="n">need_comma</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">metadata</span> <span class="o">+=</span> <span class="s1">&#39;},&quot;file&quot;:[</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+        <span class="c1"># Add metadata for each file</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">file_arcname</span><span class="p">,</span> <span class="n">file_hash</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># prepend the file paths and destination filepaths with the data directory to keep from</span>
+            <span class="c1"># metadata collisions with user files</span>
+            <span class="n">modified_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">file_arcname</span><span class="p">)</span>
+            <span class="p">(</span><span class="n">file_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">modified_name</span><span class="p">)</span>
+
+            <span class="c1"># linuxfy the directory</span>
+            <span class="n">file_dir</span> <span class="o">=</span> <span class="n">file_dir</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span>
+
+            <span class="n">metadata</span> <span class="o">+=</span> <span class="s1">&#39;{&quot;sha1Hash&quot;:&quot;</span><span class="si">%s</span><span class="s1">&quot;,&quot;fileName&quot;:&quot;</span><span class="si">%s</span><span class="s1">&quot;, &quot;destinationDirectory&quot;:&quot;</span><span class="si">%s</span><span class="s1">&quot;},</span><span class="se">\n</span><span class="s1">&#39;</span> \
+                <span class="o">%</span> <span class="p">(</span><span class="n">file_hash</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">file_dir</span><span class="p">)</span>
+
+        <span class="c1"># Strip the trailing comma off of the end and close the string</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;]}&quot;</span>
+
+        <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s2">&quot;Preparing Metadata:</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+        <span class="c1"># print &gt;&gt; sys.stderr, &quot;Preparing Metadata:\n%s&quot; % metadata</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bundle_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="FileBundler.hash_file"><a class="viewcode-back" href="../uploader.html#bundler.FileBundler.hash_file">[docs]</a>    <span class="k">def</span> <span class="nf">hash_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">file_arcname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Bundle in a file or directory</span>
+
+<span class="sd">        :Parameters:</span>
+<span class="sd">            file_path</span>
+<span class="sd">                The path to the file to bundle</span>
+<span class="sd">            file_arcname</span>
+<span class="sd">                An alternative name to use for the file inside of the bundle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+        <span class="c1"># If the file_arcname argument is None use the base file name as the</span>
+        <span class="c1"># arc name</span>
+        <span class="k">if</span> <span class="n">file_arcname</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file_arcname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> doesn&#39;t exist&quot;</span> <span class="o">%</span> <span class="n">file_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">R_OK</span><span class="p">):</span>
+            <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Can&#39;t read from </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">file_path</span><span class="p">)</span>
+
+        <span class="n">file_mode</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">file_path</span><span class="p">)[</span><span class="n">stat</span><span class="o">.</span><span class="n">ST_MODE</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_ISDIR</span><span class="p">(</span><span class="n">file_mode</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stat</span><span class="o">.</span><span class="n">S_ISREG</span><span class="p">(</span><span class="n">file_mode</span><span class="p">):</span>
+            <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Unknown file type for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">file_path</span><span class="p">)</span>
+
+
+        <span class="n">file_in</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># open to read binary.  This is important.</span>
+            <span class="n">file_in</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t read from file: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">file_path</span><span class="p">)</span>
+
+        <span class="c1"># hash file 1Mb at a time</span>
+        <span class="n">hashval</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">()</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">file_in</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">hashval</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="c1"># update file bundle status</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">running_size</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span> <span class="o">=</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">running_size</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">bundle_size</span>
+
+            <span class="c1"># only update significant progress</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_percent</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">report_percent_complete</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">last_percent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span>
+
+        <span class="n">file_hash</span> <span class="o">=</span> <span class="n">hashval</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+        <span class="c1"># print &#39;hash:  &#39; + file_hash</span>
+        <span class="n">file_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1">#todo make sure errors bubble up without crashing</span>
+        <span class="k">if</span> <span class="n">file_arcname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hash</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">[</span><span class="n">file_arcname</span><span class="p">]:</span>
+                <span class="nb">print</span> <span class="n">file_arcname</span>
+                <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Different file with the same arcname is already in the bundle&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hash_dict</span><span class="p">[</span><span class="n">file_arcname</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_hash</span></div>
+
+<div class="viewcode-block" id="FileBundler._bundle_metadata"><a class="viewcode-back" href="../uploader.html#bundler.FileBundler._bundle_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">_bundle_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A &#39;Pure Virtual&#39; function that will perform metadata bundling in a child class</span>
+<span class="sd">        @param metadata: The metadata string to bundle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Can&#39;t bundle metadata with the base class&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="FileBundler._bundle_file"><a class="viewcode-back" href="../uploader.html#bundler.FileBundler._bundle_file">[docs]</a>    <span class="k">def</span> <span class="nf">_bundle_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_paths</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A &#39;Pure Virtual&#39; function that will perform file bundling in a child class</span>
+
+<span class="sd">        :Parameters:</span>
+<span class="sd">            file_name</span>
+<span class="sd">                The name of the file to bundle</span>
+<span class="sd">            file_arcname</span>
+<span class="sd">                An alternative name to use for the file inside of the bundle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Can&#39;t bundle a file with the base class&quot;</span><span class="p">)</span></div></div>
+
+
+
+<div class="viewcode-block" id="TarBundler"><a class="viewcode-back" href="../uploader.html#bundler.TarBundler">[docs]</a><span class="k">class</span> <span class="nc">TarBundler</span><span class="p">(</span><span class="n">FileBundler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A Derived Class that bundles files in a tarfile format</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">bundle_path</span><span class="p">,</span>
+                 <span class="n">proposal_ID</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">instrument_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">instrument_ID</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                 <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a Tar_Bundler</span>
+
+<span class="sd">        :Parameters:</span>
+<span class="sd">            bundle_path</span>
+<span class="sd">                The path to the target bundle file</span>
+<span class="sd">            proposal_ID</span>
+<span class="sd">                An optional string describing the proposal associated with this bundle</span>
+<span class="sd">            instrument_name</span>
+<span class="sd">                The name of the instrument that produced the data packaged in the bundle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="k">if</span> <span class="n">bundle_path</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="n">bundle_path</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">bundle_path</span> <span class="o">=</span> <span class="s1">&#39;bundle.tar&#39;</span>
+
+        <span class="c1"># Initialize the Base Bundler Class</span>
+        <span class="n">FileBundler</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bundle_path</span><span class="p">,</span>
+                             <span class="n">proposal_id</span><span class="o">=</span><span class="n">proposal_ID</span><span class="p">,</span>
+                             <span class="n">instrument_name</span><span class="o">=</span><span class="n">instrument_name</span><span class="p">,</span>
+                             <span class="n">instrument_id</span><span class="o">=</span><span class="n">instrument_ID</span><span class="p">,</span>
+                             <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tarball</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">TarFile</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">tarball</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t create bundle tarball: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">empty_tar</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="s2">&quot;Successfully created tarfile bundle </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">bundle_path</span>
+
+<div class="viewcode-block" id="TarBundler.bundle_file"><a class="viewcode-back" href="../uploader.html#bundler.TarBundler.bundle_file">[docs]</a>    <span class="k">def</span> <span class="nf">bundle_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_paths</span><span class="p">,</span> <span class="n">bundle_size</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Bundles files into a tarfile formatted bundle</span>
+
+<span class="sd">        :Parameters:</span>
+<span class="sd">            file_name</span>
+<span class="sd">                The name of the file to bundle</span>
+<span class="sd">            file_arcname</span>
+<span class="sd">                An alternative name to use for the file inside of the bundle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty_tar</span><span class="p">:</span>
+            <span class="n">tarball</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">TarFile</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">empty_tar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tarball</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">TarFile</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">running_size</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_percent</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bundle_size</span> <span class="o">=</span> <span class="n">bundle_size</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">report_percent_complete</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">file_arcname</span><span class="p">)</span> <span class="ow">in</span> <span class="n">file_paths</span><span class="p">:</span>
+                <span class="c1"># hash the file and store in hash_dict</span>
+                <span class="c1"># percent complete is reported only as read and hashed</span>
+                <span class="c1"># hopefully that being the slowest part and all we have</span>
+                <span class="c1"># access to for completion statistics</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hash_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">file_arcname</span><span class="p">)</span>
+
+                <span class="c1"># for version 1.2, push files to a data/ directory</span>
+                <span class="c1">#to avoid collisions with metadata.txt in the root</span>
+                <span class="n">modified_arc_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">file_arcname</span><span class="p">)</span>
+                <span class="n">tarball</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">arcname</span><span class="o">=</span><span class="n">modified_arc_name</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">BundlerError</span><span class="p">,</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Failed to bundle file: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">err</span><span class="o">.</span><span class="n">msg</span><span class="p">))</span>
+
+        <span class="n">tarball</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TarBundler.report_percent_complete"><a class="viewcode-back" href="../uploader.html#bundler.TarBundler.report_percent_complete">[docs]</a>    <span class="k">def</span> <span class="nf">report_percent_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        update the task state with the progress of the bundle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">meta_str</span> <span class="o">=</span> <span class="s2">&quot;Bundling percent complete: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">percent_complete</span><span class="p">))</span>
+        <span class="nb">print</span> <span class="n">meta_str</span>
+
+        <span class="n">task_state</span><span class="p">(</span><span class="s1">&#39;PROGRESS&#39;</span><span class="p">,</span> <span class="n">meta_str</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TarBundler._bundle_metadata"><a class="viewcode-back" href="../uploader.html#bundler.TarBundler._bundle_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">_bundle_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Bundles the metadata into a tarfile formatted bundle</span>
+
+<span class="sd">        @param metadata: The metadata string to bundle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#print &gt;&gt; sys.stderr, &quot;Bundle meta!&quot;</span>
+        <span class="c1">#print &gt;&gt; sys.stderr, metadata</span>
+
+        <span class="n">metadata_file</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">metadata_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryFile</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Can&#39;t create metadata file in working directory&quot;</span><span class="p">)</span>
+
+        <span class="n">metadata_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="n">metadata_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty_tar</span><span class="p">:</span>
+            <span class="n">tarball</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">TarFile</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">empty_tar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tarball</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">TarFile</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+
+        <span class="n">tar_info</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">TarInfo</span><span class="p">(</span><span class="s2">&quot;metadata.txt&quot;</span><span class="p">)</span>
+        <span class="n">tar_info</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
+        <span class="n">tar_info</span><span class="o">.</span><span class="n">mtime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">tarball</span><span class="o">.</span><span class="n">addfile</span><span class="p">(</span><span class="n">tar_info</span><span class="p">,</span> <span class="n">metadata_file</span><span class="p">)</span>
+        <span class="n">metadata_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">tarball</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="bundle"><a class="viewcode-back" href="../uploader.html#bundler.bundle">[docs]</a><span class="k">def</span> <span class="nf">bundle</span><span class="p">(</span><span class="n">bundle_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+           <span class="n">instrument_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+           <span class="n">proposal</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+           <span class="n">file_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">bundle_size</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Bundles a list of files into a single aggregated bundle file</span>
+
+<span class="sd">    :Parameters:</span>
+<span class="sd">        bundle_name</span>
+<span class="sd">            The target bundle file in which to aggregate the file list</span>
+<span class="sd">        instrument_name</span>
+<span class="sd">            The name of the instrument that produced the data files that will be bundled</span>
+<span class="sd">        groups</span>
+<span class="sd">            The a hash of type/name groups to attach to</span>
+<span class="sd">        tarfile</span>
+<span class="sd">            If true, tarfile format is used to bundle.  Otherwise zipfile format is used</span>
+<span class="sd">        proposal</span>
+<span class="sd">            An optional proposal ID to attach to the bundle</span>
+<span class="sd">        file_list</span>
+<span class="sd">            The list of files to bundle</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># validate parameters</span>
+    <span class="k">if</span> <span class="n">bundle_name</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">bundle_name</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Missing bundle name&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">instrument_name</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">instrument_name</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Missing instrument name&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">proposal</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">proposal</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Missing proposal&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">file_list</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Missing file list&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">groups</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">groups</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="n">task_error</span><span class="p">(</span><span class="s2">&quot;Missing groups&quot;</span><span class="p">)</span>
+
+    <span class="c1">#print &gt;&gt; sys.stderr, &quot;Start bundling %s&quot; % bundle_name</span>
+
+    <span class="c1"># Set up the bundle file</span>
+    <span class="n">bundle_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">bundle_name</span><span class="p">)</span>
+    <span class="c1">#print &gt;&gt; sys.stderr, &quot;Bundle file set to %s&quot; % bundle_path</span>
+
+    <span class="c1"># Set up the bundler object</span>
+    <span class="n">bundler</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># dfh note we are setting the instrument name and ID to the same thing,</span>
+    <span class="c1"># which is being</span>
+    <span class="c1"># sent in as the instrument name but is actually the instrument ID.  Fix</span>
+    <span class="c1"># this.</span>
+    <span class="n">bundler</span> <span class="o">=</span> <span class="n">TarBundler</span><span class="p">(</span><span class="n">bundle_path</span><span class="p">,</span> <span class="n">proposal_ID</span><span class="o">=</span><span class="n">proposal</span><span class="p">,</span>
+                         <span class="n">instrument_name</span><span class="o">=</span><span class="n">instrument_name</span><span class="p">,</span>
+                         <span class="n">instrument_ID</span><span class="o">=</span><span class="n">instrument_name</span><span class="p">,</span>
+                         <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
+
+    <span class="n">bundler</span><span class="o">.</span><span class="n">bundle_file</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">bundle_size</span><span class="p">)</span>
+
+    <span class="n">bundler</span><span class="o">.</span><span class="n">bundle_metadata</span><span class="p">()</span>
+
+    <span class="c1">#print &gt;&gt; sys.stderr, &quot;Finished bundling&quot;</span>
+    <span class="n">task_state</span><span class="p">(</span><span class="s1">&#39;PROGRESS&#39;</span><span class="p">,</span> <span class="s2">&quot;Bundling complete&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../uploader.html#bundler.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    placeholder</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">print</span> <span class="s1">&#39;empty&#39;</span></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

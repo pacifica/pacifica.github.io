@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
-        <link rel="up" title="metadata.orm" href="../orm.html"/> 
+        <link rel="up" title="Module code" href="../../index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -81,8 +81,9 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../metadata.html">Metadata Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../cart.html">Cart Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
 </ul>
 
             
@@ -115,8 +116,6 @@
       
           <li><a href="../../index.html">Module code</a> &raquo;</li>
       
-          <li><a href="../orm.html">metadata.orm</a> &raquo;</li>
-      
     <li>metadata.orm.instrument_group</li>
       <li class="wy-breadcrumbs-aside">
         
@@ -141,9 +140,18 @@
 <span class="kn">from</span> <span class="nn">metadata.orm.groups</span> <span class="k">import</span> <span class="n">Groups</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.instruments</span> <span class="k">import</span> <span class="n">Instruments</span>
 
-<div class="viewcode-block" id="InstrumentGroup"><a class="viewcode-back" href="../../../metadata.orm.instrument_group.html#metadata.orm.instrument_group.InstrumentGroup">[docs]</a><span class="k">class</span> <span class="nc">InstrumentGroup</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
+<div class="viewcode-block" id="InstrumentGroup"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.instrument_group.InstrumentGroup">[docs]</a><span class="k">class</span> <span class="nc">InstrumentGroup</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    InstrumentGroup attributes are foreign keys.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | Name              | Description                         |</span>
+<span class="sd">        +===================+=====================================+</span>
+<span class="sd">        | instrument        | Link to the Instrument model        |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
+<span class="sd">        | group             | Link to the Group model             |</span>
+<span class="sd">        +-------------------+-------------------------------------+</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">instrument</span> <span class="o">=</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">Instruments</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;groups&#39;</span><span class="p">)</span>
     <span class="n">group</span> <span class="o">=</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">Groups</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;instrument_members&#39;</span><span class="p">)</span>
@@ -158,14 +166,14 @@
     <span class="c1"># pylint: enable=too-few-public-methods</span>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="InstrumentGroup.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.orm.instrument_group.html#metadata.orm.instrument_group.InstrumentGroup.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="InstrumentGroup.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.instrument_group.InstrumentGroup.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build the elasticsearch mapping bits</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">InstrumentGroup</span><span class="p">,</span> <span class="n">InstrumentGroup</span><span class="p">)</span><span class="o">.</span><span class="n">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;instrument_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;group_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">}</span></div>
 
-<div class="viewcode-block" id="InstrumentGroup.to_hash"><a class="viewcode-back" href="../../../metadata.orm.instrument_group.html#metadata.orm.instrument_group.InstrumentGroup.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="InstrumentGroup.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.instrument_group.InstrumentGroup.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the object to a hash</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -175,7 +183,7 @@
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;group_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">obj</span></div>
 
-<div class="viewcode-block" id="InstrumentGroup.from_hash"><a class="viewcode-back" href="../../../metadata.orm.instrument_group.html#metadata.orm.instrument_group.InstrumentGroup.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="InstrumentGroup.from_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.instrument_group.InstrumentGroup.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts the hash into the object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -185,7 +193,7 @@
         <span class="k">if</span> <span class="s1">&#39;group_id&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">Groups</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Groups</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;group_id&#39;</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="InstrumentGroup.where_clause"><a class="viewcode-back" href="../../../metadata.orm.instrument_group.html#metadata.orm.instrument_group.InstrumentGroup.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="InstrumentGroup.where_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.instrument_group.InstrumentGroup.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Where clause for the various elements.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
