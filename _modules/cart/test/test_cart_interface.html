@@ -1,0 +1,670 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cart.test.test_cart_interface &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pacifica</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>cart.test.test_cart_interface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for cart.test.test_cart_interface</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">File used to unit test the pacifica_cart</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="k">import</span> <span class="n">MethodType</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">dumps</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="k">import</span> <span class="n">mkstemp</span><span class="p">,</span> <span class="n">mkdtemp</span>
+<span class="kn">from</span> <span class="nn">playhouse.test_utils</span> <span class="k">import</span> <span class="n">test_database</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">SqliteDatabase</span>
+<span class="kn">from</span> <span class="nn">cart.cart_orm</span> <span class="k">import</span> <span class="n">Cart</span><span class="p">,</span> <span class="n">File</span>
+<span class="kn">from</span> <span class="nn">cart.cart_interface</span> <span class="k">import</span> <span class="n">fix_cart_uid</span><span class="p">,</span> <span class="n">is_valid_uid</span><span class="p">,</span> <span class="n">CartGenerator</span><span class="p">,</span> <span class="n">CartInterfaceError</span>
+<span class="kn">from</span> <span class="nn">cart.cart_env_globals</span> <span class="k">import</span> <span class="n">VOLUME_PATH</span>
+<span class="kn">from</span> <span class="nn">cart.celery</span> <span class="k">import</span> <span class="n">CART_APP</span>
+
+<span class="n">CART_APP</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">CELERY_ALWAYS_EAGER</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># there&#39;s a lot of testing with this class suckit pylint</span>
+<span class="c1">#pylint: disable=too-many-public-methods</span>
+<div class="viewcode-block" id="TestCartInterface"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface">[docs]</a><span class="k">class</span> <span class="nc">TestCartInterface</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Contains all the tests for the Cart Interface</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">endpoint_url</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8080&#39;</span>
+<div class="viewcode-block" id="TestCartInterface.setUp"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new sqlite3 db&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db_path</span> <span class="o">=</span> <span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.sqlite3&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span> <span class="o">=</span> <span class="n">SqliteDatabase</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db_path</span><span class="p">)</span></div>
+<div class="viewcode-block" id="TestCartInterface.tearDown"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete the sqlite3 db&quot;&quot;&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db_path</span><span class="p">)</span></div>
+<div class="viewcode-block" id="TestCartInterface.test_cart_int_get_no_file_fd"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_cart_int_get_no_file_fd">[docs]</a>    <span class="k">def</span> <span class="nf">test_cart_int_get_no_file_fd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface get method w/o file_wrapper&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/octet-stream&#39;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/123&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">sample_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">cart_uid</span> <span class="o">=</span> <span class="mi">123</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">bundle_path</span> <span class="o">=</span> <span class="n">mkdtemp</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;ready&#39;</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">tarfile_read</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">buf</span> <span class="ow">in</span> <span class="n">tarfile_read</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_cart_int_get"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_cart_int_get">[docs]</a>    <span class="k">def</span> <span class="nf">test_cart_int_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface get method&quot;&quot;&quot;</span>
+        <span class="n">saved_state</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/octet-stream&#39;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">file_wrapper</span><span class="p">(</span><span class="n">rfd</span><span class="p">,</span> <span class="n">blksize</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for file_wrapper to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">blksize</span><span class="p">,</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="mi">20</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">rfd</span><span class="p">),</span> <span class="n">file</span><span class="p">)</span>
+            <span class="n">saved_state</span><span class="p">[</span><span class="s1">&#39;fd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rfd</span>
+            <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">rfd</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">blksize</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/123&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;wsgi.file_wrapper&#39;</span><span class="p">:</span> <span class="n">file_wrapper</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;filename=my_file.tar&#39;</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">sample_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">cart_uid</span> <span class="o">=</span> <span class="mi">123</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">bundle_path</span> <span class="o">=</span> <span class="n">mkdtemp</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;ready&#39;</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">tarfile_read</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">buf</span> <span class="ow">in</span> <span class="n">tarfile_read</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">saved_state</span><span class="p">[</span><span class="s1">&#39;fd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_invalid_cart_uid"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_invalid_cart_uid">[docs]</a>    <span class="k">def</span> <span class="nf">test_invalid_cart_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface get against not valid cart uid&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;400 Bad Request&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;The uid was not valid&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_not_valid_cart"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_not_valid_cart">[docs]</a>    <span class="k">def</span> <span class="nf">test_not_valid_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface get against not ready cart&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;404 Not Found&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/123&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">sample_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">cart_uid</span> <span class="o">=</span> <span class="mi">123</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">bundle_path</span> <span class="o">=</span> <span class="n">mkstemp</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;ready&#39;</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;The cart bundle does not exist&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_not_ready_cart"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_not_ready_cart">[docs]</a>    <span class="k">def</span> <span class="nf">test_not_ready_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface get against not ready cart&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;202 Accepted&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/123&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">sample_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">cart_uid</span> <span class="o">=</span> <span class="mi">123</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">bundle_path</span> <span class="o">=</span> <span class="n">mkdtemp</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;The cart is not ready for download&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_read_cart_ioerrror"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_read_cart_ioerrror">[docs]</a>    <span class="k">def</span> <span class="nf">test_read_cart_ioerrror</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface get against not ready cart&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;404 Not Found&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/123&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">sample_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">cart_uid</span> <span class="o">=</span> <span class="mi">123</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">bundle_path</span> <span class="o">=</span> <span class="n">mkdtemp</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;ready&#39;</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">orig_fork</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">fork</span>
+            <span class="k">def</span> <span class="nf">bad_fork</span><span class="p">():</span>
+                <span class="sd">&quot;&quot;&quot;The get method trys to fork so replacing it with a method that fails.</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;failed to fork&#39;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">fork</span> <span class="o">=</span> <span class="n">bad_fork</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;The cart bundle does not exist&#39;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">fork</span> <span class="o">=</span> <span class="n">orig_fork</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_status_invalid_uid"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_status_invalid_uid">[docs]</a>    <span class="k">def</span> <span class="nf">test_status_invalid_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface status&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;400 Bad Request&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;The uid was not valid&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_cart_int_stage_nojson"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_cart_int_stage_nojson">[docs]</a>    <span class="k">def</span> <span class="nf">test_cart_int_stage_nojson</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface stage bad json input&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;400 Bad Request&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">one_up_self</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="c1">#pylint: disable=too-few-public-methods</span>
+        <span class="k">class</span> <span class="nc">FakeReader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;fake reader class for wsgi.input&quot;&quot;&quot;</span>
+            <span class="n">sent_content</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;Fake out the wsgi.input object bits&quot;&quot;&quot;</span>
+                <span class="n">one_up_self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sent_content</span>
+        <span class="c1">#pylint: enable=too-few-public-methods</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/123&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;CONTENT_LENGTH&#39;</span><span class="p">:</span> <span class="s1">&#39;blah&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;wsgi.input&#39;</span><span class="p">:</span> <span class="n">FakeReader</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">stage</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;JSON content could not be read&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_cart_int_stage_invalid_uid"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_cart_int_stage_invalid_uid">[docs]</a>    <span class="k">def</span> <span class="nf">test_cart_int_stage_invalid_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface stage invalid cart uid&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;400 Bad Request&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">one_up_self</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="c1">#pylint: disable=too-few-public-methods</span>
+        <span class="k">class</span> <span class="nc">FakeReader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;fake reader class for wsgi.input&quot;&quot;&quot;</span>
+            <span class="n">sent_content</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;fileids&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="p">}</span>
+            <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;Fake out the wsgi.input object bits&quot;&quot;&quot;</span>
+                <span class="n">one_up_self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sent_content</span><span class="p">)))</span>
+                <span class="k">return</span> <span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sent_content</span><span class="p">)</span>
+        <span class="c1">#pylint: enable=too-few-public-methods</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;CONTENT_LENGTH&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">FakeReader</span><span class="o">.</span><span class="n">sent_content</span><span class="p">)),</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;wsgi.input&#39;</span><span class="p">:</span> <span class="n">FakeReader</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">stage</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;The uid was not valid&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_cart_int_stage_ioerror"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_cart_int_stage_ioerror">[docs]</a>    <span class="k">def</span> <span class="nf">test_cart_int_stage_ioerror</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface stage&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;400 Bad Request&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">one_up_self</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="c1">#pylint: disable=too-few-public-methods</span>
+        <span class="k">class</span> <span class="nc">FakeReader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;fake reader class for wsgi.input&quot;&quot;&quot;</span>
+            <span class="n">size</span> <span class="o">=</span> <span class="mi">47</span>
+            <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;Fake out the wsgi.input object bits&quot;&quot;&quot;</span>
+                <span class="n">one_up_self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;failed to read&#39;</span><span class="p">)</span>
+        <span class="c1">#pylint: enable=too-few-public-methods</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/123&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;CONTENT_LENGTH&#39;</span><span class="p">:</span> <span class="n">FakeReader</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;wsgi.input&#39;</span><span class="p">:</span> <span class="n">FakeReader</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">stage</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;JSON content could not be read&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_cart_int_delete"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_cart_int_delete">[docs]</a>    <span class="k">def</span> <span class="nf">test_cart_int_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface delete&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/123&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">sample_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">cart_uid</span> <span class="o">=</span> <span class="mi">123</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">bundle_path</span> <span class="o">=</span> <span class="n">mkdtemp</span><span class="p">()</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;ready&#39;</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">sample_cart</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+            <span class="n">path_to_files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">VOLUME_PATH</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">sample_cart</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">path_to_files</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">delete_cart</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Cart Deleted Successfully&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_delete_invalid_uid"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_delete_invalid_uid">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_invalid_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Testing the cart interface delete with invalid uid&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;400 Bad Request&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">}</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">delete_cart</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;The uid was not valid&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_pacifica_cartinterface"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_pacifica_cartinterface">[docs]</a>    <span class="k">def</span> <span class="nf">test_pacifica_cartinterface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test pacifica cart interface&quot;&quot;&quot;</span>
+        <span class="c1">####</span>
+        <span class="c1"># this is going to be tricky we need to override the methods we tested</span>
+        <span class="c1"># above so we don&#39;t need to make an super test harness</span>
+        <span class="c1"># used to validate start_response, not actually calling it so no coverage</span>
+        <span class="c1"># Stubs out the response</span>
+        <span class="c1">####</span>
+        <span class="c1"># pylint: disable=unused-argument</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>  <span class="c1"># pragma no cover</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="k">pass</span>
+        <span class="c1"># pylint: enable=unused-argument</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;called_get&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;called_status&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;called_stage&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s1">&#39;called_delete&#39;</span><span class="p">:</span> <span class="kc">False</span>
+        <span class="p">}</span>
+        <span class="k">def</span> <span class="nf">fake_get</span><span class="p">(</span><span class="n">other_self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">other_start_response</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;fake the get method&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="ow">not</span> <span class="n">other_self</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">],</span> <span class="s1">&#39;GET&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span> <span class="n">other_start_response</span><span class="p">)</span>
+            <span class="n">env</span><span class="p">[</span><span class="s1">&#39;called_get&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="s1">&#39;this is get()&#39;</span>
+        <span class="k">def</span> <span class="nf">fake_status</span><span class="p">(</span><span class="n">other_self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">other_start_response</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;fake the get method&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="ow">not</span> <span class="n">other_self</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">],</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span> <span class="n">other_start_response</span><span class="p">)</span>
+            <span class="n">env</span><span class="p">[</span><span class="s1">&#39;called_status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="s1">&#39;this is status()&#39;</span>
+        <span class="k">def</span> <span class="nf">fake_stage</span><span class="p">(</span><span class="n">other_self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">other_start_response</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;fake the stage method&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="ow">not</span> <span class="n">other_self</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">],</span> <span class="s1">&#39;POST&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span> <span class="n">other_start_response</span><span class="p">)</span>
+            <span class="n">env</span><span class="p">[</span><span class="s1">&#39;called_stage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="s1">&#39;this is stage()&#39;</span>
+        <span class="k">def</span> <span class="nf">fake_delete</span><span class="p">(</span><span class="n">other_self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">other_start_response</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;fake the delete method&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="ow">not</span> <span class="n">other_self</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">],</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span> <span class="n">other_start_response</span><span class="p">)</span>
+            <span class="n">env</span><span class="p">[</span><span class="s1">&#39;called_delete&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="s1">&#39;this is delete()&#39;</span>
+        <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+        <span class="n">cgen</span><span class="o">.</span><span class="n">get</span> <span class="o">=</span> <span class="n">MethodType</span><span class="p">(</span><span class="n">fake_get</span><span class="p">,</span> <span class="n">cgen</span><span class="p">)</span>
+        <span class="n">cgen</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">MethodType</span><span class="p">(</span><span class="n">fake_status</span><span class="p">,</span> <span class="n">cgen</span><span class="p">)</span>
+        <span class="n">cgen</span><span class="o">.</span><span class="n">stage</span> <span class="o">=</span> <span class="n">MethodType</span><span class="p">(</span><span class="n">fake_stage</span><span class="p">,</span> <span class="n">cgen</span><span class="p">)</span>
+        <span class="n">cgen</span><span class="o">.</span><span class="n">delete_cart</span> <span class="o">=</span> <span class="n">MethodType</span><span class="p">(</span><span class="n">fake_delete</span><span class="p">,</span> <span class="n">cgen</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">method</span><span class="p">,</span> <span class="n">message</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;this is get()&#39;</span><span class="p">),</span>
+                                <span class="p">(</span><span class="s1">&#39;HEAD&#39;</span><span class="p">,</span> <span class="s1">&#39;this is status()&#39;</span><span class="p">),</span>
+                                <span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;this is stage()&#39;</span><span class="p">),</span>
+                                <span class="p">(</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="s1">&#39;this is delete()&#39;</span><span class="p">)]:</span>
+            <span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">method</span>
+            <span class="n">chk_message</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">pacifica_cartinterface</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">chk_message</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;called_get&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;called_stage&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;called_status&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;called_delete&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_pacifica_ci_throw_error"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_pacifica_ci_throw_error">[docs]</a>    <span class="k">def</span> <span class="nf">test_pacifica_ci_throw_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test pacifica cart interface throw exception&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;500 Internal Server Error&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">fake_get</span><span class="p">(</span><span class="n">other_self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">other_start_response</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;fake the get method&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="ow">not</span> <span class="n">other_self</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">],</span> <span class="s1">&#39;GET&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">start_response</span><span class="p">,</span> <span class="n">other_start_response</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">CartInterfaceError</span><span class="p">(</span><span class="s1">&#39;This is an error&#39;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">:</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">}</span>
+        <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+        <span class="n">cgen</span><span class="o">.</span><span class="n">get</span> <span class="o">=</span> <span class="n">MethodType</span><span class="p">(</span><span class="n">fake_get</span><span class="p">,</span> <span class="n">cgen</span><span class="p">)</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">pacifica_cartinterface</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Unknown Exception Occured&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_pacifica_ci_bad_request"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_pacifica_ci_bad_request">[docs]</a>    <span class="k">def</span> <span class="nf">test_pacifica_ci_bad_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test pacifica cart interface bad request method&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">start_response</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;stub for start_response to do some checking&quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;501 Not Implemented&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">:</span> <span class="s1">&#39;IMNOTREAL&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;QUERY_STRING&#39;</span> <span class="p">:</span> <span class="s1">&#39;&#39;</span>
+        <span class="p">}</span>
+        <span class="n">cgen</span> <span class="o">=</span> <span class="n">CartGenerator</span><span class="p">()</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">cgen</span><span class="o">.</span><span class="n">pacifica_cartinterface</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="p">)[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Unknown request method&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_fix_cart_uid"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_fix_cart_uid">[docs]</a>    <span class="k">def</span> <span class="nf">test_fix_cart_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Testing the create filepath cleanup&quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">fix_cart_uid</span><span class="p">(</span><span class="s1">&#39;test/&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;test/&#39;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">fix_cart_uid</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">fix_cart_uid</span><span class="p">(</span><span class="s1">&#39;/test&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartInterface.test_is_valid_uid"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_interface.TestCartInterface.test_is_valid_uid">[docs]</a>    <span class="k">def</span> <span class="nf">test_is_valid_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Testing if the passed guids are valid&quot;&quot;&quot;</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">is_valid_uid</span><span class="p">(</span><span class="s1">&#39;3434&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">valid</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">is_valid_uid</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">valid</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">is_valid_uid</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">valid</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">is_valid_uid</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">valid</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">is_valid_uid</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">valid</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

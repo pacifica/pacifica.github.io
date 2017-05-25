@@ -1,9 +1,0 @@
-
-Metadata Orm Test Instruments Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.test.instruments
-   :members:
-   :private-members:
-

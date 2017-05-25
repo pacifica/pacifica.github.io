@@ -1,9 +1,0 @@
-
-Metadata Orm Test Citations Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.test.citations
-   :members:
-   :private-members:
-

@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,19 +121,36 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-      
-    <li>metadata.orm.files</li>
+        
+      <li>metadata.orm.files</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -130,21 +158,21 @@
             
   <h1>Source code for metadata.orm.files</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Contains the Files object model primary unit of metadata for Pacifica.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">mktime</span>
+<span class="sd">&quot;&quot;&quot;Contains the Files object model primary unit of metadata for Pacifica.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">ForeignKeyField</span><span class="p">,</span> <span class="n">CharField</span><span class="p">,</span> <span class="n">BigIntegerField</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">Expression</span><span class="p">,</span> <span class="n">OP</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.orm</span> <span class="k">import</span> <span class="n">CherryPyAPI</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.transactions</span> <span class="k">import</span> <span class="n">Transactions</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.utils</span> <span class="k">import</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">,</span> <span class="n">ExtendDateTimeField</span>
+<span class="kn">from</span> <span class="nn">metadata.orm.utils</span> <span class="k">import</span> <span class="n">unicode_type</span>
 
-<span class="c1">#pylint: disable=too-many-instance-attributes</span>
+
+<span class="c1"># pylint: disable=too-many-instance-attributes</span>
 <div class="viewcode-block" id="Files"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.files.Files">[docs]</a><span class="k">class</span> <span class="nc">Files</span><span class="p">(</span><span class="n">CherryPyAPI</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Files metadata contains various attributes describing a file and where</span>
+<span class="sd">    Files metadata.</span>
+
+<span class="sd">    This object contains various attributes describing a file and where</span>
 <span class="sd">    it came from.</span>
 
 <span class="sd">    Attributes:</span>
@@ -159,6 +187,10 @@
 <span class="sd">        +-------------+-------------------------------------------+</span>
 <span class="sd">        | mtime       | User modified time for the file           |</span>
 <span class="sd">        +-------------+-------------------------------------------+</span>
+<span class="sd">        | hashsum     | Hash sum string                           |</span>
+<span class="sd">        +-------------+-------------------------------------------+</span>
+<span class="sd">        | hashtype    | Hash sum type string                      |</span>
+<span class="sd">        +-------------+-------------------------------------------+</span>
 <span class="sd">        | size        | Size of the file in bytes                 |</span>
 <span class="sd">        +-------------+-------------------------------------------+</span>
 <span class="sd">        | transaction | Link to the transaction model             |</span>
@@ -168,93 +200,102 @@
 <span class="sd">        | encoding    | encoding in the file name or subdir field |</span>
 <span class="sd">        +-------------+-------------------------------------------+</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">subdir</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">subdir</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
     <span class="n">ctime</span> <span class="o">=</span> <span class="n">ExtendDateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime_now_nomicrosecond</span><span class="p">)</span>
     <span class="n">mtime</span> <span class="o">=</span> <span class="n">ExtendDateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime_now_nomicrosecond</span><span class="p">)</span>
+    <span class="n">hashsum</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">hashtype</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;sha1&#39;</span><span class="p">)</span>
     <span class="n">size</span> <span class="o">=</span> <span class="n">BigIntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">transaction</span> <span class="o">=</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">Transactions</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;files&#39;</span><span class="p">)</span>
-    <span class="n">mimetype</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">encoding</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;UTF8&quot;</span><span class="p">)</span>
+    <span class="n">mimetype</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;UTF8&#39;</span><span class="p">)</span>
 
-    <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="Files.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.files.Files.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Build the elasticsearch mapping bits</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Files.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.files.Files.elastic_mapping_builder">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build the elasticsearch mapping bits.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Files</span><span class="p">,</span> <span class="n">Files</span><span class="p">)</span><span class="o">.</span><span class="n">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;transaction_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span> <span class="o">=</span> \
-        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">}</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;transaction_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">}</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;long&#39;</span><span class="p">}</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;ctime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;mtime&#39;</span><span class="p">]</span> <span class="o">=</span> \
-        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s2">&quot;yyyy-mm-dd&#39;T&#39;HH:mm:ss&quot;</span><span class="p">}</span>
+            <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s1">&#39;yyyy-mm-dd</span><span class="se">\&#39;</span><span class="s1">T</span><span class="se">\&#39;</span><span class="s1">HH:mm:ss&#39;</span><span class="p">}</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;subdir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;mimetype&#39;</span><span class="p">]</span> <span class="o">=</span> \
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">}</span></div>
+            <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;hashsum&#39;</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;hashtype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="Files.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.files.Files.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Converts the object to a hash</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Convert the object to a hash.&quot;&quot;&quot;</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Files</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;subdir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subdir</span><span class="p">)</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;subdir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subdir</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;mimetype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mimetype</span><span class="p">)</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;ctime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctime</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;mtime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">mktime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mtime</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()))</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="c1"># pylint: disable=no-member</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;ctime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctime</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;mtime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mtime</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;transaction_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transaction</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="c1"># pylint: enable=no-member</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;hashsum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hashsum</span><span class="p">)</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;hashtype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hashtype</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">obj</span></div>
 
 <div class="viewcode-block" id="Files.from_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.files.Files.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Converts the hash to an object</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Convert the hash to an object.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Files</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="c1"># pylint: disable=invalid-name</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">])</span>
-            <span class="c1"># pylint: enable=invalid-name</span>
-        <span class="k">if</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;subdir&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">subdir</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;subdir&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;mimetype&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mimetype</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;mimetype&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;ctime&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ctime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;ctime&#39;</span><span class="p">]))</span>
-        <span class="k">if</span> <span class="s1">&#39;mtime&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mtime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;mtime&#39;</span><span class="p">]))</span>
-        <span class="k">if</span> <span class="s1">&#39;size&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;transaction_id&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">transaction</span> <span class="o">=</span> <span class="n">Transactions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-                <span class="n">Transactions</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;transaction_id&#39;</span><span class="p">]</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;encoding&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">])</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">unicode_type</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="s1">&#39;subdir&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;subdir&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">unicode_type</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;subdir&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="s1">&#39;mimetype&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;mimetype&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;mimetype&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_datetime_part</span><span class="p">(</span><span class="s1">&#39;ctime&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_datetime_part</span><span class="p">(</span><span class="s1">&#39;mtime&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="s1">&#39;hashtype&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;hashtype&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;hashtype&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="s1">&#39;hashsum&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;hashsum&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;hashsum&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]))</span>
 
-<div class="viewcode-block" id="Files.where_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.files.Files.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        PeeWee specific extension meant to be passed to a PeeWee get</span>
-<span class="sd">        or select.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">where_clause</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Files</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">trans_func</span><span class="p">():</span>
+            <span class="sd">&quot;&quot;&quot;Return the transaction for the obj id.&quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="n">Transactions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Transactions</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;transaction_id&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="s1">&#39;transaction_id&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;transaction&#39;</span><span class="p">,</span> <span class="n">trans_func</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_where_date_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">where_clause</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;mtime&#39;</span><span class="p">,</span> <span class="s1">&#39;ctime&#39;</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-                <span class="n">kwargs</span><span class="p">[</span><span class="n">date</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">date</span><span class="p">])</span>
+                <span class="n">date_obj</span><span class="p">,</span> <span class="n">date_oper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_date_operator_compare</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+                <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">Files</span><span class="p">,</span> <span class="n">date</span><span class="p">),</span> <span class="n">date_oper</span><span class="p">,</span> <span class="n">date_obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">where_clause</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_where_attr_clause</span><span class="p">(</span><span class="n">where_clause</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;subdir&#39;</span><span class="p">,</span> <span class="s1">&#39;mimetype&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">,</span> <span class="s1">&#39;hashtype&#39;</span><span class="p">,</span> <span class="s1">&#39;hashsum&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="n">key_oper</span> <span class="o">=</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span>
+                <span class="k">if</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_operator&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                    <span class="n">key_oper</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">OP</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_operator&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+                <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">Files</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span> <span class="n">key_oper</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">where_clause</span>
+
+<div class="viewcode-block" id="Files.where_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.files.Files.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;PeeWee specific where expression.&quot;&quot;&quot;</span>
+        <span class="n">where_clause</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Files</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;transaction_id&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;transaction_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Transactions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">trans</span> <span class="o">=</span> <span class="n">Transactions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
                 <span class="n">Transactions</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;transaction_id&#39;</span><span class="p">]</span>
             <span class="p">)</span>
+            <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="n">Files</span><span class="o">.</span><span class="n">transaction</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="n">trans</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="n">Files</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;subdir&#39;</span><span class="p">,</span> <span class="s1">&#39;mimetype&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="s1">&#39;mtime&#39;</span><span class="p">,</span> <span class="s1">&#39;ctime&#39;</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-                <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">Files</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+        <span class="n">where_clause</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_where_date_clause</span><span class="p">(</span><span class="n">where_clause</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">where_clause</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_where_attr_clause</span><span class="p">(</span><span class="n">where_clause</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">where_clause</span></div></div>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -289,7 +330,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>

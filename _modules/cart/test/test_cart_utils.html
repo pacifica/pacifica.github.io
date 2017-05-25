@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cart.test.test_cart_utils &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pacifica</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>cart.test.test_cart_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for cart.test.test_cart_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">File used to unit test the pacifica_cart</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="k">import</span> <span class="n">MethodType</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">mock</span>
+<span class="kn">import</span> <span class="nn">psutil</span>
+<span class="kn">from</span> <span class="nn">playhouse.test_utils</span> <span class="k">import</span> <span class="n">test_database</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">SqliteDatabase</span>
+<span class="kn">from</span> <span class="nn">cart.cart_orm</span> <span class="k">import</span> <span class="n">Cart</span><span class="p">,</span> <span class="n">File</span>
+<span class="kn">from</span> <span class="nn">cart.cart_utils</span> <span class="k">import</span> <span class="n">Cartutils</span>
+<span class="kn">import</span> <span class="nn">cart.cart_orm</span>
+
+<div class="viewcode-block" id="TestCartUtils"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils">[docs]</a><span class="k">class</span> <span class="nc">TestCartUtils</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Contains all the tests for the CartUtils class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TestCartUtils.test_create_download_path"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_create_download_path">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_download_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test the creation of the download path for a cart file&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">)</span>
+            <span class="n">test_file</span> <span class="o">=</span> <span class="n">File</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart</span><span class="o">=</span><span class="n">test_cart</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;1.txt&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/1.txt&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">create_download_path</span><span class="p">(</span><span class="n">test_file</span><span class="p">,</span> <span class="n">test_cart</span><span class="p">,</span>
+                                                      <span class="n">test_file</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">)</span>
+            <span class="n">directory_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">test_file</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">success</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">directory_name</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">directory_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">directory_name</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_bad_create_download_path"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_bad_create_download_path">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">Cartutils</span><span class="p">,</span> <span class="s1">&#39;create_bundle_directories&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_bad_create_download_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_create_bundle</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test the creation of the download path for a cart file&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">)</span>
+            <span class="n">test_file</span> <span class="o">=</span> <span class="n">File</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart</span><span class="o">=</span><span class="n">test_cart</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;1.txt&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/1.txt&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">mock_create_bundle</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="ne">OSError</span><span class="p">(</span><span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">(),</span> <span class="s1">&#39;Error&#39;</span><span class="p">)</span>
+            <span class="n">success</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">create_download_path</span><span class="p">(</span><span class="n">test_file</span><span class="p">,</span> <span class="n">test_cart</span><span class="p">,</span>
+                                                      <span class="n">test_file</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">success</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestCartUtils.test_create_bundle_directories"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_create_bundle_directories">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_bundle_directories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test the  creation of directories where files will be saved&quot;&quot;&quot;</span>
+        <span class="n">directory_name</span> <span class="o">=</span> <span class="s1">&#39;/tmp/fakedir/&#39;</span>
+        <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+        <span class="n">cart_utils</span><span class="o">.</span><span class="n">create_bundle_directories</span><span class="p">(</span><span class="n">directory_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">directory_name</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">directory_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">directory_name</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_bad_makedirs"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_bad_makedirs">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">os</span><span class="p">,</span> <span class="s1">&#39;makedirs&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_bad_makedirs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_makedirs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test a error return from a file not ready to pull&quot;&quot;&quot;</span>
+        <span class="n">mock_makedirs</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="ne">OSError</span><span class="p">(</span><span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">(),</span> <span class="s1">&#39;Error&#39;</span><span class="p">)</span>
+        <span class="n">c_util</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">OSError</span><span class="p">,</span> <span class="n">c_util</span><span class="o">.</span><span class="n">create_bundle_directories</span><span class="p">,</span> <span class="s2">&quot;fakepath&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_fix_absolute_path"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_fix_absolute_path">[docs]</a>    <span class="k">def</span> <span class="nf">test_fix_absolute_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test the correct creation of paths by removing absolute paths&quot;&quot;&quot;</span>
+        <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+        <span class="n">return_one</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">fix_absolute_path</span><span class="p">(</span><span class="s1">&#39;tmp/foo.text&#39;</span><span class="p">)</span>
+        <span class="n">return_two</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">fix_absolute_path</span><span class="p">(</span><span class="s1">&#39;/tmp/foo.text&#39;</span><span class="p">)</span>
+        <span class="n">return_three</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">fix_absolute_path</span><span class="p">(</span><span class="s1">&#39;/tmp/foo.text&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">return_one</span><span class="p">,</span> <span class="s1">&#39;tmp/foo.text&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">return_two</span><span class="p">,</span> <span class="s1">&#39;tmp/foo.text&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">return_three</span><span class="p">,</span> <span class="s1">&#39;/tmp/foo.text&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_check_file_size_needed"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_check_file_size_needed">[docs]</a>    <span class="k">def</span> <span class="nf">test_check_file_size_needed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test that the file size returned from the archive is parsed right&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">                            &quot;bytes_per_level&quot;: &quot;(24L, 0L, 0L, 0L, 0L)&quot;,</span>
+<span class="s2">                            &quot;ctime&quot;: &quot;1444938166&quot;,</span>
+<span class="s2">                            &quot;file&quot;: &quot;/myemsl-dev/bundle/file.1&quot;,</span>
+<span class="s2">                            &quot;file_storage_media&quot;: &quot;disk&quot;,</span>
+<span class="s2">                            &quot;filesize&quot;: &quot;24&quot;,</span>
+<span class="s2">                            &quot;message&quot;: &quot;File was found&quot;,</span>
+<span class="s2">                            &quot;mtime&quot;: &quot;1444938166&quot;</span>
+<span class="s2">                            }&quot;&quot;&quot;</span>
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">)</span>
+            <span class="n">test_file</span> <span class="o">=</span> <span class="n">File</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart</span><span class="o">=</span><span class="n">test_cart</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;1.txt&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/1.txt&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">file_size</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">check_file_size_needed</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
+                                                          <span class="n">test_cart</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">file_size</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">test_file</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span>
+
+            <span class="c1">#now check for an error by sending a bad response</span>
+            <span class="n">file_size</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">check_file_size_needed</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
+                                                          <span class="n">test_cart</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">file_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">test_file</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_check_space_requirements"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_check_space_requirements">[docs]</a>    <span class="k">def</span> <span class="nf">test_check_space_requirements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test that there is enough space on the volume for the file&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">)</span>
+            <span class="n">test_file</span> <span class="o">=</span> <span class="n">File</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart</span><span class="o">=</span><span class="n">test_cart</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;1.txt&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/1.txt&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">rtn</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">check_space_requirements</span><span class="p">(</span><span class="n">test_file</span><span class="p">,</span> <span class="n">test_cart</span><span class="p">,</span>
+                                                      <span class="mi">10</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rtn</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">test_file</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span>
+
+            <span class="c1">#now check for an error by sending a way to large size needed number</span>
+            <span class="n">rtn</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">check_space_requirements</span><span class="p">(</span><span class="n">test_file</span><span class="p">,</span> <span class="n">test_cart</span><span class="p">,</span>
+                                                      <span class="mi">9999999999999999999999</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rtn</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">test_file</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_check_space_bad_path"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_check_space_bad_path">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">psutil</span><span class="p">,</span> <span class="s1">&#39;disk_usage&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_check_space_bad_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_disk_usage</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test that the error when a bad path&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">)</span>
+            <span class="n">test_file</span> <span class="o">=</span> <span class="n">File</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart</span><span class="o">=</span><span class="n">test_cart</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;1.txt&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/1.txt&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">mock_disk_usage</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Error</span><span class="p">(</span><span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">())</span>
+            <span class="n">rtn</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">check_space_requirements</span><span class="p">(</span><span class="n">test_file</span><span class="p">,</span> <span class="n">test_cart</span><span class="p">,</span>
+                                                      <span class="mi">10</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">rtn</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">test_file</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_get_path_size"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_get_path_size">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_path_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test to see if the path size of a directory is returned&quot;&quot;&quot;</span>
+
+        <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+        <span class="n">rtn</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">get_path_size</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;/../&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">rtn</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_check_file_not_ready_pull"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_check_file_not_ready_pull">[docs]</a>    <span class="k">def</span> <span class="nf">test_check_file_not_ready_pull</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test that checks to see if a file is not ready to pull</span>
+<span class="sd">        by checking the archive response&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">                            &quot;bytes_per_level&quot;: &quot;(0L, 24L, 0L, 0L, 0L)&quot;,</span>
+<span class="s2">                            &quot;ctime&quot;: &quot;1444938166&quot;,</span>
+<span class="s2">                            &quot;file&quot;: &quot;/myemsl-dev/bundle/file.1&quot;,</span>
+<span class="s2">                            &quot;file_storage_media&quot;: &quot;tape&quot;,</span>
+<span class="s2">                            &quot;filesize&quot;: &quot;24&quot;,</span>
+<span class="s2">                            &quot;message&quot;: &quot;File was found&quot;,</span>
+<span class="s2">                            &quot;mtime&quot;: &quot;1444938166&quot;</span>
+<span class="s2">                            }&quot;&quot;&quot;</span>
+            <span class="n">resp_bad</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">                            &quot;bytes_per_level&quot;: &quot;(0L, 33L, 33L, 0L, 0L)&quot;,</span>
+<span class="s2">                            &quot;ctime&quot;: &quot;1444938177&quot;,</span>
+<span class="s2">                            &quot;file&quot;: &quot;/myemsl-dev/bundle/file.2&quot;,</span>
+<span class="s2">                            &quot;filesize&quot;: &quot;33&quot;,</span>
+<span class="s2">                            &quot;message&quot;: &quot;File was found&quot;,</span>
+<span class="s2">                            &quot;mtime&quot;: &quot;1444938133&quot;</span>
+<span class="s2">                            }&quot;&quot;&quot;</span>
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">)</span>
+            <span class="n">test_file</span> <span class="o">=</span> <span class="n">File</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart</span><span class="o">=</span><span class="n">test_cart</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;1.txt&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/1.txt&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">ready</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">check_file_ready_pull</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
+                                                     <span class="n">test_cart</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ready</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1">#now check for an error by sending a bad response</span>
+            <span class="n">ready</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">check_file_ready_pull</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">test_cart</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ready</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">test_file</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span>
+
+            <span class="c1">#now check for an error with storage media</span>
+            <span class="n">ready</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">check_file_ready_pull</span><span class="p">(</span><span class="n">resp_bad</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="n">test_cart</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ready</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">test_file</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_check_file_ready_pull"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_check_file_ready_pull">[docs]</a>    <span class="k">def</span> <span class="nf">test_check_file_ready_pull</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test that checks to see if a file is ready to pull</span>
+<span class="sd">        by checking the archive response&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">                            &quot;bytes_per_level&quot;: &quot;(24L, 0L, 0L, 0L, 0L)&quot;,</span>
+<span class="s2">                            &quot;ctime&quot;: &quot;1444938166&quot;,</span>
+<span class="s2">                            &quot;file&quot;: &quot;/myemsl-dev/bundle/file.1&quot;,</span>
+<span class="s2">                            &quot;file_storage_media&quot;: &quot;disk&quot;,</span>
+<span class="s2">                            &quot;filesize&quot;: &quot;24&quot;,</span>
+<span class="s2">                            &quot;message&quot;: &quot;File was found&quot;,</span>
+<span class="s2">                            &quot;mtime&quot;: &quot;1444938166&quot;</span>
+<span class="s2">                            }&quot;&quot;&quot;</span>
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">)</span>
+            <span class="n">test_file</span> <span class="o">=</span> <span class="n">File</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart</span><span class="o">=</span><span class="n">test_cart</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;1.txt&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/1.txt&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">ready</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">check_file_ready_pull</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span>
+                                                     <span class="n">test_cart</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ready</span><span class="p">[</span><span class="s1">&#39;enough_space&#39;</span><span class="p">],</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">test_file</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_delete_cart_bundle"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_delete_cart_bundle">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_cart_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test that trys to delete a cart bundle&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">test_cart</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">,</span> <span class="mo">0o777</span><span class="p">)</span>
+            <span class="n">deleted</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">delete_cart_bundle</span><span class="p">(</span><span class="n">test_cart</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">test_cart</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">deleted</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">test_cart</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_delete_cart_bundle_fail"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_delete_cart_bundle_fail">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">shutil</span><span class="p">,</span> <span class="s1">&#39;rmtree&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_delete_cart_bundle_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_rmtree</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test that trys to delete a cart bundle but fails&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">test_cart</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">,</span> <span class="mo">0o777</span><span class="p">)</span>
+            <span class="n">mock_rmtree</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="ne">OSError</span><span class="p">(</span><span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">(),</span> <span class="s1">&#39;Error&#39;</span><span class="p">)</span>
+            <span class="n">deleted</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">delete_cart_bundle</span><span class="p">(</span><span class="n">test_cart</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">test_cart</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">deleted</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">test_cart</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_set_file_status"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_set_file_status">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_file_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test that trys to set a specific files status&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/&#39;</span><span class="p">)</span>
+            <span class="n">test_file</span> <span class="o">=</span> <span class="n">File</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart</span><span class="o">=</span><span class="n">test_cart</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;1.txt&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/1.txt&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+
+            <span class="n">cart_utils</span><span class="o">.</span><span class="n">set_file_status</span><span class="p">(</span><span class="n">test_file</span><span class="p">,</span> <span class="n">test_cart</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;fake error&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">test_file</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">test_file</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="s1">&#39;fake error&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_status_details_fail"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_status_details_fail">[docs]</a>    <span class="k">def</span> <span class="nf">test_status_details_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test status details fail&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/&#39;</span><span class="p">)</span>
+            <span class="n">test_file</span> <span class="o">=</span> <span class="n">File</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart</span><span class="o">=</span><span class="n">test_cart</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s1">&#39;1.txt&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/1.txt&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+
+            <span class="c1">#say file is way to big</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">check_status_details</span><span class="p">(</span><span class="n">test_cart</span><span class="p">,</span> <span class="n">test_file</span><span class="p">,</span> <span class="mi">99999999999999999999999999999</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">retval</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_cart_no_hash_passed"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_cart_no_hash_passed">[docs]</a>    <span class="k">def</span> <span class="nf">test_cart_no_hash_passed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test error with cart with no hash passed&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/&#39;</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="s1">&#39;{&quot;fileids&quot;: [{&quot;id&quot;:&quot;foo.txt&quot;, &quot;path&quot;:&quot;1/2/3/foo.txt&quot;, &quot;hashtype&quot;:&quot;md5&quot;}]}&#39;</span><span class="p">)</span>
+
+            <span class="n">file_ids</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;fileids&#39;</span><span class="p">]</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">update_cart_files</span><span class="p">(</span><span class="n">test_cart</span><span class="p">,</span> <span class="n">file_ids</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">retval</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_lru_cart_delete"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_lru_cart_delete">[docs]</a>    <span class="k">def</span> <span class="nf">test_lru_cart_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test that trys to delete a cart&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">,</span>
+                                    <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/1/&#39;</span><span class="p">)</span>
+            <span class="n">test_cart2</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">,</span>
+                                     <span class="n">bundle_path</span><span class="o">=</span><span class="s1">&#39;/tmp/2/&#39;</span><span class="p">,</span> <span class="n">updated_date</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">test_cart2</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">,</span> <span class="mo">0o777</span><span class="p">)</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">lru_cart_delete</span><span class="p">(</span><span class="n">test_cart</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">retval</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="n">test_c2</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">test_cart2</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">test_c2</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">)</span>
+            <span class="c1">#also hit error block when nothing to delete</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">lru_cart_delete</span><span class="p">(</span><span class="n">test_cart</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">retval</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_bad_cart_status"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_bad_cart_status">[docs]</a>    <span class="k">def</span> <span class="nf">test_bad_cart_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test getting a status of a cart that doesnt exist&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">cart_status</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">retval</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_bad_available_cart"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_bad_available_cart">[docs]</a>    <span class="k">def</span> <span class="nf">test_bad_available_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test getting a cart that doesnt exist&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">retval</span> <span class="o">=</span> <span class="n">cart_utils</span><span class="o">.</span><span class="n">available_cart</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">retval</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCartUtils.test_bad_stage"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_utils.TestCartUtils.test_bad_stage">[docs]</a>    <span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">Cartutils</span><span class="p">,</span> <span class="s1">&#39;delete_cart_bundle&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_bad_stage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_delete_cart</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test the bad stage of a archive file&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">),</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">)):</span>
+            <span class="n">test_cart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">cart_uid</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s1">&#39;staging&#39;</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">fake_database_connect</span><span class="p">(</span><span class="n">cls_name</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;no error&quot;&quot;&quot;</span>
+                <span class="k">return</span> <span class="n">cls_name</span>
+
+            <span class="k">def</span> <span class="nf">fake_database_close</span><span class="p">(</span><span class="n">cls_name</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;no error&quot;&quot;&quot;</span>
+                <span class="k">return</span> <span class="n">cls_name</span>
+            <span class="n">cart</span><span class="o">.</span><span class="n">cart_orm</span><span class="o">.</span><span class="n">CartBase</span><span class="o">.</span><span class="n">database_connect</span> <span class="o">=</span> <span class="n">MethodType</span><span class="p">(</span><span class="n">fake_database_connect</span><span class="p">,</span> <span class="n">cart</span><span class="o">.</span><span class="n">cart_orm</span><span class="o">.</span><span class="n">CartBase</span><span class="p">)</span>
+            <span class="n">cart</span><span class="o">.</span><span class="n">cart_orm</span><span class="o">.</span><span class="n">CartBase</span><span class="o">.</span><span class="n">database_close</span> <span class="o">=</span> <span class="n">MethodType</span><span class="p">(</span><span class="n">fake_database_close</span><span class="p">,</span> <span class="n">cart</span><span class="o">.</span><span class="n">cart_orm</span><span class="o">.</span><span class="n">CartBase</span><span class="p">)</span>
+            <span class="n">cart</span><span class="o">.</span><span class="n">cart_orm</span><span class="o">.</span><span class="n">CartBase</span><span class="o">.</span><span class="n">throw_error</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">mock_delete_cart</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">cart_util</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
+            <span class="n">return_val</span> <span class="o">=</span> <span class="n">cart_util</span><span class="o">.</span><span class="n">remove_cart</span><span class="p">(</span><span class="n">test_cart</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">return_val</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

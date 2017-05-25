@@ -1,9 +1,0 @@
-
-Metadata Orm Proposal Instrument Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.proposal_instrument
-   :members:
-   :private-members:
-

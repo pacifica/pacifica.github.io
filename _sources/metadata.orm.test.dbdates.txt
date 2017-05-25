@@ -1,9 +1,0 @@
-
-Metadata Orm Test Dbdates Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.test.dbdates
-   :members:
-   :private-members:
-

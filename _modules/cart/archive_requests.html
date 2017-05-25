@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,19 +121,36 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../index.html">Module code</a> &raquo;</li>
-      
-    <li>cart.archive_requests</li>
+        
+      <li>cart.archive_requests</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -134,8 +162,9 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">StringIO</span> <span class="k">import</span> <span class="n">StringIO</span>
-<span class="kn">import</span> <span class="nn">pycurl</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">cart.cart_env_globals</span> <span class="k">import</span>  <span class="n">ARCHIVE_INTERFACE_URL</span>
 
 
@@ -147,45 +176,56 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">ARCHIVE_INTERFACE_URL</span>
 
-<div class="viewcode-block" id="ArchiveRequests.pull_file"><a class="viewcode-back" href="../../cartd.cart.html#cart.archive_requests.ArchiveRequests.pull_file">[docs]</a>    <span class="k">def</span> <span class="nf">pull_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archive_filename</span><span class="p">,</span> <span class="n">cart_filepath</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Performs a curl that will attempt to write</span>
+<div class="viewcode-block" id="ArchiveRequests.pull_file"><a class="viewcode-back" href="../../cartd.cart.html#cart.archive_requests.ArchiveRequests.pull_file">[docs]</a>    <span class="k">def</span> <span class="nf">pull_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archive_filename</span><span class="p">,</span> <span class="n">cart_filepath</span><span class="p">,</span> <span class="n">hashval</span><span class="p">,</span> <span class="n">hashtype</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Performs a request that will attempt to write</span>
 <span class="sd">        the contents of a file from the archive interface</span>
 <span class="sd">        to the specified cart filepath</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mycurl</span> <span class="o">=</span> <span class="n">pycurl</span><span class="o">.</span><span class="n">Curl</span><span class="p">()</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">pycurl</span><span class="o">.</span><span class="n">URL</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">+</span> <span class="n">archive_filename</span><span class="p">))</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cart_filepath</span><span class="p">,</span> <span class="s1">&#39;w+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
-            <span class="n">mycurl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">pycurl</span><span class="o">.</span><span class="n">WRITEFUNCTION</span><span class="p">,</span> <span class="n">myfile</span><span class="o">.</span><span class="n">write</span><span class="p">)</span>
-            <span class="n">mycurl</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">+</span> <span class="n">archive_filename</span><span class="p">),</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">myfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">cart_filepath</span><span class="p">,</span> <span class="s1">&#39;wb+&#39;</span><span class="p">)</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="n">myhash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">hashtype</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">buf</span><span class="p">:</span>
+            <span class="n">myfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+            <span class="n">myhash</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+            <span class="n">buf</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="n">myfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">myhashval</span> <span class="o">=</span> <span class="n">myhash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">myhashval</span> <span class="o">!=</span> <span class="n">hashval</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;File hash does not match provided hash&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ArchiveRequests.stage_file"><a class="viewcode-back" href="../../cartd.cart.html#cart.archive_requests.ArchiveRequests.stage_file">[docs]</a>    <span class="k">def</span> <span class="nf">stage_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sends a post to the archive interface telling it to stage the file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;500&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)))</span></div>
 
-        <span class="n">mycurl</span> <span class="o">=</span> <span class="n">pycurl</span><span class="o">.</span><span class="n">Curl</span><span class="p">()</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">pycurl</span><span class="o">.</span><span class="n">URL</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">))</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">pycurl</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
+<div class="viewcode-block" id="ArchiveRequests._status_dict"><a class="viewcode-back" href="../../cartd.cart.html#cart.archive_requests.ArchiveRequests._status_dict">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_status_dict</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return status dictionary from http response headers&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-pacifica-messsage&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="n">file_name</span><span class="p">,</span>
+            <span class="s1">&#39;filesize&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;content-length&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;ctime&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-pacifica-ctime&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;mtime&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;last-modified&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;bytes_per_level&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-pacifica-bytes-per-level&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;file_storage_media&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-pacifica-file-storage-media&#39;</span><span class="p">]</span>
+        <span class="p">}</span></div>
 
 <div class="viewcode-block" id="ArchiveRequests.status_file"><a class="viewcode-back" href="../../cartd.cart.html#cart.archive_requests.ArchiveRequests.status_file">[docs]</a>    <span class="k">def</span> <span class="nf">status_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gets a status from the  archive interface via Head and</span>
 <span class="sd">        returns response &quot;&quot;&quot;</span>
 
-        <span class="n">storage</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
-        <span class="n">mycurl</span> <span class="o">=</span> <span class="n">pycurl</span><span class="o">.</span><span class="n">Curl</span><span class="p">()</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">pycurl</span><span class="o">.</span><span class="n">CUSTOMREQUEST</span><span class="p">,</span> <span class="s2">&quot;HEAD&quot;</span><span class="p">)</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">pycurl</span><span class="o">.</span><span class="n">URL</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">))</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">pycurl</span><span class="o">.</span><span class="n">NOBODY</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">setopt</span><span class="p">(</span><span class="n">pycurl</span><span class="o">.</span><span class="n">WRITEFUNCTION</span><span class="p">,</span> <span class="n">storage</span><span class="o">.</span><span class="n">write</span><span class="p">)</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
-        <span class="n">mycurl</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">storage</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">content</span></div></div>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_status_dict</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span></div></div>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -220,7 +260,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>

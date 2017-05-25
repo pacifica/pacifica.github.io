@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,19 +121,36 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-      
-    <li>metadata.orm.citations</li>
+        
+      <li>metadata.orm.citations</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -130,12 +158,12 @@
             
   <h1>Source code for metadata.orm.citations</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Citations model for tracking journal articles.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Citations model for tracking journal articles.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">IntegerField</span><span class="p">,</span> <span class="n">TextField</span><span class="p">,</span> <span class="n">CharField</span><span class="p">,</span> <span class="n">ForeignKeyField</span><span class="p">,</span> <span class="n">Expression</span><span class="p">,</span> <span class="n">OP</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.journals</span> <span class="k">import</span> <span class="n">Journals</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.orm</span> <span class="k">import</span> <span class="n">CherryPyAPI</span>
+<span class="kn">from</span> <span class="nn">metadata.orm.utils</span> <span class="k">import</span> <span class="n">unicode_type</span>
+
 
 <span class="c1"># Citations has too many attributes...</span>
 <span class="c1"># pylint: disable=too-many-instance-attributes</span>
@@ -172,39 +200,38 @@
 <span class="sd">        |                          | article itself                          |</span>
 <span class="sd">        +-------------------+------------------------------------------------+</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">article_title</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">article_title</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
     <span class="n">journal</span> <span class="o">=</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">Journals</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;citations&#39;</span><span class="p">)</span>
     <span class="n">journal_volume</span> <span class="o">=</span> <span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">journal_issue</span> <span class="o">=</span> <span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">page_range</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">abstract_text</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">xml_text</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">release_authorization_id</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">doi_reference</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">encoding</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;UTF8&quot;</span><span class="p">)</span>
+    <span class="n">page_range</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">abstract_text</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">xml_text</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">release_authorization_id</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">doi_reference</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;UTF8&#39;</span><span class="p">)</span>
 
-    <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="Citations.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citations.Citations.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Build the elasticsearch mapping bits</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Citations.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citations.Citations.elastic_mapping_builder">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build the elasticsearch mapping bits.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Citations</span><span class="p">,</span> <span class="n">Citations</span><span class="p">)</span><span class="o">.</span><span class="n">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;journal_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;journal_volume&#39;</span><span class="p">]</span> <span class="o">=</span> \
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;journal_issue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">}</span>
+            <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;journal_issue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;integer&#39;</span><span class="p">}</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;article_title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;abstract_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;xml_text&#39;</span><span class="p">]</span> <span class="o">=</span> \
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;page_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;doi_reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;release_authorization_id&#39;</span><span class="p">]</span> <span class="o">=</span> \
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">}</span></div>
+            <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;page_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;doi_reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;release_authorization_id&#39;</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="Citations.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citations.Citations.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Convert the citation fields to a serializable hash.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Convert the citation fields to a serializable hash.&quot;&quot;&quot;</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Citations</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;article_title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">article_title</span><span class="p">)</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;abstract_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abstract_text</span><span class="p">)</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;xml_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml_text</span><span class="p">)</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;article_title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">article_title</span><span class="p">)</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;abstract_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abstract_text</span><span class="p">)</span>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;xml_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xml_text</span><span class="p">)</span>
+        <span class="c1"># pylint: disable=no-member</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;journal_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">journal</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="c1"># pylint: enable=no-member</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;journal_volume&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">journal_volume</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;journal_issue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">journal_issue</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;page_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">page_range</span><span class="p">)</span>
@@ -214,52 +241,44 @@
         <span class="k">return</span> <span class="n">obj</span></div>
 
 <div class="viewcode-block" id="Citations.from_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citations.Citations.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Converts the object into the citation object fields.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Convert the object into the citation object fields.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Citations</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="c1"># pylint: disable=invalid-name</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">])</span>
-            <span class="c1"># pylint: enable=invalid-name</span>
-        <span class="k">if</span> <span class="s1">&#39;article_title&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">article_title</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;article_title&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;journal_id&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">journal</span> <span class="o">=</span> <span class="n">Journals</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Journals</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;journal_id&#39;</span><span class="p">]))</span>
-        <span class="k">if</span> <span class="s1">&#39;journal_volume&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">journal_volume</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;journal_volume&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;journal_issue&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">journal_issue</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;journal_issue&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;page_range&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">page_range</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;page_range&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;doi_reference&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">doi_reference</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;doi_reference&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;xml_text&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">xml_text</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;xml_text&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;release_authorization_id&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">release_authorization_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;release_authorization_id&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;abstract_text&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">abstract_text</span> <span class="o">=</span> <span class="n">unicode</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;abstract_text&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;encoding&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">])</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="s1">&#39;journal_id&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;journal&#39;</span><span class="p">,</span>
+                          <span class="k">lambda</span><span class="p">:</span> <span class="n">Journals</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Journals</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;journal_id&#39;</span><span class="p">])))</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;journal_volume&#39;</span><span class="p">,</span> <span class="s1">&#39;journal_issue&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">k</span><span class="o">=</span><span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;page_range&#39;</span><span class="p">,</span> <span class="s1">&#39;release_authorization_id&#39;</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;doi_reference&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">k</span><span class="o">=</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;article_title&#39;</span><span class="p">,</span> <span class="s1">&#39;xml_text&#39;</span><span class="p">,</span> <span class="s1">&#39;abstract_text&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">k</span><span class="o">=</span><span class="n">key</span><span class="p">:</span> <span class="n">unicode_type</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_where_attr_clause</span><span class="p">(</span><span class="n">where_clause</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;article_title&#39;</span><span class="p">,</span> <span class="s1">&#39;journal_volume&#39;</span><span class="p">,</span> <span class="s1">&#39;journal_issue&#39;</span><span class="p">,</span> <span class="s1">&#39;page_range&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;doi_reference&#39;</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="n">key_oper</span> <span class="o">=</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span>
+                <span class="k">if</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_operator&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                    <span class="n">key_oper</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">OP</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_operator&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+                <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">Citations</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span> <span class="n">key_oper</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">where_clause</span>
 
 <div class="viewcode-block" id="Citations.where_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.citations.Citations.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generate the PeeWee where clause used in searching.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Generate the PeeWee where clause used in searching.&quot;&quot;&quot;</span>
         <span class="n">where_clause</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Citations</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;journal_id&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">journal</span> <span class="o">=</span> <span class="n">Journals</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Journals</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;journal_id&#39;</span><span class="p">]))</span>
             <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="n">Citations</span><span class="o">.</span><span class="n">journal</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="n">journal</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="n">Citations</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]))</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;article_title&#39;</span><span class="p">,</span> <span class="s1">&#39;journal_volume&#39;</span><span class="p">,</span> <span class="s1">&#39;journal_issue&#39;</span><span class="p">,</span> <span class="s1">&#39;page_range&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;doi_reference&#39;</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-                <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">Citations</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">where_clause</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_where_attr_clause</span><span class="p">(</span><span class="n">where_clause</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span></div></div>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -294,7 +313,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>

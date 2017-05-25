@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,19 +121,36 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../index.html">Module code</a> &raquo;</li>
-      
-    <li>archiveinterface.archive_utils</li>
+        
+      <li>archiveinterface.archive_utils</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -130,39 +158,74 @@
             
   <h1>Source code for archiveinterface.archive_utils</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
-<span class="sd">&quot;&quot;&quot;Group of utility functions that are used in various parts of the</span>
-<span class="sd">archive interface &quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Group of utility functions.</span>
+
+<span class="sd">Used in various parts of the archive interface.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">email.utils</span> <span class="k">as</span> <span class="nn">eut</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">ConfigParser</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.archive_interface_error</span> <span class="k">import</span> <span class="n">ArchiveInterfaceError</span>
 
+<span class="c1"># defaulting to this, but the global is set in the archiveinterfaceserver if different</span>
+<span class="c1"># looks at command line first, then environment, and then falls back to config.cfg</span>
+<span class="n">CONFIG_FILE</span> <span class="o">=</span> <span class="s1">&#39;config.cfg&#39;</span>
+
+
 <div class="viewcode-block" id="un_abs_path"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_utils.un_abs_path">[docs]</a><span class="k">def</span> <span class="nf">un_abs_path</span><span class="p">(</span><span class="n">path_name</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Removes absolute path piece&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Remove absolute path piece.&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">path_name</span><span class="p">):</span>
             <span class="n">path_name</span> <span class="o">=</span> <span class="n">path_name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="k">return</span> <span class="n">path_name</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="s2">&quot;Cant remove absolute path: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span></div>
+    <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="s1">&#39;Cant remove absolute path: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span></div>
+
 
 <div class="viewcode-block" id="get_http_modified_time"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_utils.get_http_modified_time">[docs]</a><span class="k">def</span> <span class="nf">get_http_modified_time</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Gets the modified time from the request in unix timestamp.</span>
-<span class="sd">    Returns current time if no time was passed&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Get the modified time from the request in unix timestamp.</span>
+
+<span class="sd">    Returns current time if no time was passed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">mod_time</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="s1">&#39;HTTP_LAST_MODIFIED&#39;</span> <span class="ow">in</span> <span class="n">env</span><span class="p">:</span>
-            <span class="n">http_time</span> <span class="o">=</span> <span class="n">env</span><span class="p">[</span><span class="s1">&#39;HTTP_LAST_MODIFIED&#39;</span><span class="p">]</span>
-            <span class="n">date_time_obj</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="o">*</span><span class="n">eut</span><span class="o">.</span><span class="n">parsedate</span><span class="p">(</span><span class="n">http_time</span><span class="p">)[:</span><span class="mi">6</span><span class="p">])</span>
-            <span class="n">mod_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">date_time_obj</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span>
+            <span class="n">mod_time</span> <span class="o">=</span> <span class="n">eut</span><span class="o">.</span><span class="n">mktime_tz</span><span class="p">(</span><span class="n">eut</span><span class="o">.</span><span class="n">parsedate_tz</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s1">&#39;HTTP_LAST_MODIFIED&#39;</span><span class="p">]))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">mod_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">mod_time</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="s2">&quot;Cant parse the files modtime: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span></div>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="s1">&#39;Cant parse the files modtime: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="set_config_name"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_utils.set_config_name">[docs]</a><span class="k">def</span> <span class="nf">set_config_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set the global config name.&quot;&quot;&quot;</span>
+    <span class="c1"># pylint: disable=global-statement</span>
+    <span class="k">global</span> <span class="n">CONFIG_FILE</span>
+    <span class="c1"># pylint: enable=global-statement</span>
+    <span class="n">CONFIG_FILE</span> <span class="o">=</span> <span class="n">name</span></div>
+
+
+<div class="viewcode-block" id="read_config_value"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_utils.read_config_value">[docs]</a><span class="k">def</span> <span class="nf">read_config_value</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">field</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read the value from the config file if exists.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">RawConfigParser</span><span class="p">()</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">CONFIG_FILE</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dataset</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Failed to open config file with name: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">CONFIG_FILE</span><span class="p">)))</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">field</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoSectionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="s1">&#39;Error reading config file, no section: &#39;</span> <span class="o">+</span> <span class="n">section</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoOptionError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="s1">&#39;Error reading config file, no field: &#39;</span> <span class="o">+</span> <span class="n">field</span> <span class="o">+</span>
+                                    <span class="s1">&#39; in section: &#39;</span> <span class="o">+</span> <span class="n">section</span><span class="p">)</span></div>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -197,7 +260,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>

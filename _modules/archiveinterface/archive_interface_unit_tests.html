@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,112 +121,137 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../index.html">Module code</a> &raquo;</li>
-      
-    <li>archiveinterface.archive_interface_unit_tests</li>
+        
+      <li>archiveinterface.archive_interface_unit_tests</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <h1>Source code for archiveinterface.archive_interface_unit_tests</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">File used to unit test the pacifica archive interface</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;File used to unit test the pacifica archive interface.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
-<span class="kn">from</span> <span class="nn">archiveinterface.archive_utils</span> <span class="k">import</span> <span class="n">un_abs_path</span><span class="p">,</span> <span class="n">get_http_modified_time</span>
-<span class="kn">from</span> <span class="nn">archiveinterface.archivebackends.hpss.id2filename</span> <span class="k">import</span> <span class="n">id2filename</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">archiveinterface.archive_utils</span> <span class="k">import</span> <span class="n">un_abs_path</span><span class="p">,</span> <span class="n">get_http_modified_time</span><span class="p">,</span> <span class="n">read_config_value</span>
+<span class="kn">from</span> <span class="nn">archiveinterface.id2filename</span> <span class="k">import</span> <span class="n">id2filename</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.archivebackends.posix.extendedfile</span> <span class="k">import</span> <span class="n">ExtendedFile</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.archivebackends.posix.posix_status</span> <span class="k">import</span> <span class="n">PosixStatus</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.archivebackends.posix.posix_backend_archive</span> <span class="k">import</span> <span class="n">PosixBackendArchive</span>
+<span class="kn">from</span> <span class="nn">archiveinterface.archive_interface_error</span> <span class="k">import</span> <span class="n">ArchiveInterfaceError</span>
+
 
 <div class="viewcode-block" id="TestArchiveUtils"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestArchiveUtils">[docs]</a><span class="k">class</span> <span class="nc">TestArchiveUtils</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Contains all the tests for the Archive utils class</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Test the Archive utils class.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="TestArchiveUtils.test_utils_absolute_path"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestArchiveUtils.test_utils_absolute_path">[docs]</a>    <span class="k">def</span> <span class="nf">test_utils_absolute_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the return of un_abs_path&quot;&quot;&quot;</span>
-        <span class="n">return_one</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="s2">&quot;tmp/foo.text&quot;</span><span class="p">)</span>
-        <span class="n">return_two</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="s2">&quot;/tmp/foo.text&quot;</span><span class="p">)</span>
-        <span class="n">return_three</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="s2">&quot;/tmp/foo.text&quot;</span><span class="p">)</span>
-        <span class="n">return_four</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="s2">&quot;foo.text&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">return_one</span><span class="p">,</span> <span class="s2">&quot;tmp/foo.text&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">return_two</span><span class="p">,</span> <span class="s2">&quot;tmp/foo.text&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">return_three</span><span class="p">,</span> <span class="s2">&quot;/tmp/foo.text&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">return_four</span><span class="p">,</span> <span class="s2">&quot;foo.text&quot;</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the return of un_abs_path.&quot;&quot;&quot;</span>
+        <span class="n">return_one</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="s1">&#39;tmp/foo.text&#39;</span><span class="p">)</span>
+        <span class="n">return_two</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="s1">&#39;/tmp/foo.text&#39;</span><span class="p">)</span>
+        <span class="n">return_three</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="s1">&#39;/tmp/foo.text&#39;</span><span class="p">)</span>
+        <span class="n">return_four</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="s1">&#39;foo.text&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">return_one</span><span class="p">,</span> <span class="s1">&#39;tmp/foo.text&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">return_two</span><span class="p">,</span> <span class="s1">&#39;tmp/foo.text&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">return_three</span><span class="p">,</span> <span class="s1">&#39;/tmp/foo.text&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">return_four</span><span class="p">,</span> <span class="s1">&#39;foo.text&#39;</span><span class="p">)</span>
+        <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">un_abs_path</span><span class="p">(</span><span class="mi">47</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ArchiveInterfaceError</span><span class="p">:</span>
+            <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestArchiveUtils.test_get_http_modified_time"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestArchiveUtils.test_get_http_modified_time">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_http_modified_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test to see if the path size of a directory is returned&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test to see if the path size of a directory is returned.&quot;&quot;&quot;</span>
         <span class="n">env</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">env</span><span class="p">[</span><span class="s1">&#39;HTTP_LAST_MODIFIED&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;SUN, 06 NOV 1994 08:49:37 GMT&#39;</span>
         <span class="n">mod_time</span> <span class="o">=</span> <span class="n">get_http_modified_time</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mod_time</span><span class="p">,</span> <span class="mf">784140577.0</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">mod_time</span><span class="p">,</span> <span class="mi">784111777</span><span class="p">)</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">mod_time</span> <span class="o">=</span> <span class="n">get_http_modified_time</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">mod_time</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+        <span class="k">for</span> <span class="n">thing</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">[],</span> <span class="mi">46</span><span class="p">):</span>
+            <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">env</span><span class="p">[</span><span class="s1">&#39;HTTP_LAST_MODIFIED&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">thing</span>
+                <span class="n">get_http_modified_time</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">ArchiveInterfaceError</span><span class="p">:</span>
+                <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span></div></div>
+
 
 <div class="viewcode-block" id="TestId2Filename"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestId2Filename">[docs]</a><span class="k">class</span> <span class="nc">TestId2Filename</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Contains all the tests for the id2filename method</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Test the id2filename method.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="TestId2Filename.test_id2filename_basic"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_basic">[docs]</a>    <span class="k">def</span> <span class="nf">test_id2filename_basic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct creation of a basicfilename &quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Test the correct creation of a basicfilename.&quot;&quot;&quot;</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">id2filename</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;/d2/4d2&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestId2Filename.test_id2filename_negative"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_negative">[docs]</a>    <span class="k">def</span> <span class="nf">test_id2filename_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct creation of a negative filename &quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Test the correct creation of a negative filename.&quot;&quot;&quot;</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">id2filename</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;/file.-1&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestId2Filename.test_id2filename_zero"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_zero">[docs]</a>    <span class="k">def</span> <span class="nf">test_id2filename_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct creation of a zero filename &quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Test the correct creation of a zero filename.&quot;&quot;&quot;</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">id2filename</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;/file.0&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestId2Filename.test_id2filename_simple"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_simple">[docs]</a>    <span class="k">def</span> <span class="nf">test_id2filename_simple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct creation of a simple filename &quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Test the correct creation of a simple filename.&quot;&quot;&quot;</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">id2filename</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;/file.1&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestId2Filename.test_id2filename_u_shift_point"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_u_shift_point">[docs]</a>    <span class="k">def</span> <span class="nf">test_id2filename_u_shift_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct creation of an under shift point filename &quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Test the correct creation of an under shift point filename.&quot;&quot;&quot;</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">id2filename</span><span class="p">((</span><span class="mi">32</span><span class="o">*</span><span class="mi">1024</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;/ff/7fff&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestId2Filename.test_id2filename_shift_point"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_shift_point">[docs]</a>    <span class="k">def</span> <span class="nf">test_id2filename_shift_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct creation of the shift point filename &quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Test the correct creation of the shift point filename.&quot;&quot;&quot;</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">id2filename</span><span class="p">((</span><span class="mi">32</span><span class="o">*</span><span class="mi">1024</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;/00/8000&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestId2Filename.test_id2filename_o_shift_point"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_o_shift_point">[docs]</a>    <span class="k">def</span> <span class="nf">test_id2filename_o_shift_point</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct creation of an over shift point filename &quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Test the correct creation of an over shift point filename.&quot;&quot;&quot;</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">id2filename</span><span class="p">((</span><span class="mi">32</span><span class="o">*</span><span class="mi">1024</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;/01/8001&#39;</span><span class="p">)</span></div></div>
 
+
 <div class="viewcode-block" id="TestExtendedFile"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestExtendedFile">[docs]</a><span class="k">class</span> <span class="nc">TestExtendedFile</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Contains all the tests for the ExtendedFile Class</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Test the ExtendedFile Class.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="TestExtendedFile.test_posix_file_status"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestExtendedFile.test_posix_file_status">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_file_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct values of a files status&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test the correct values of a files status.&quot;&quot;&quot;</span>
         <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;/tmp/1234&#39;</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
         <span class="n">my_file</span> <span class="o">=</span> <span class="n">ExtendedFile</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
@@ -226,19 +262,19 @@
         <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TestExtendedFile.test_posix_file_stage"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestExtendedFile.test_posix_file_stage">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_file_stage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct staging of a posix file&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test the correct staging of a posix file.&quot;&quot;&quot;</span>
         <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;/tmp/1234&#39;</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
         <span class="n">my_file</span> <span class="o">=</span> <span class="n">ExtendedFile</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
         <span class="n">my_file</span><span class="o">.</span><span class="n">stage</span><span class="p">()</span>
-        <span class="c1">#easiest way to unit test is look at class variable</span>
+        <span class="c1"># easiest way to unit test is look at class variable</span>
         <span class="c1"># pylint: disable=protected-access</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">my_file</span><span class="o">.</span><span class="n">_staged</span><span class="p">)</span>
         <span class="c1"># pylint: enable=protected-access</span>
         <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TestExtendedFile.test_posix_file_mod_time"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestExtendedFile.test_posix_file_mod_time">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_file_mod_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct setting of a file mod time&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test the correct setting of a file mod time.&quot;&quot;&quot;</span>
         <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;/tmp/1234&#39;</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
         <span class="n">my_file</span> <span class="o">=</span> <span class="n">ExtendedFile</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
@@ -247,14 +283,12 @@
         <span class="n">status</span> <span class="o">=</span> <span class="n">my_file</span><span class="o">.</span><span class="n">status</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">mtime</span><span class="p">,</span> <span class="mi">036</span><span class="p">)</span></div></div>
 
+
 <div class="viewcode-block" id="TestPosixStatus"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixStatus">[docs]</a><span class="k">class</span> <span class="nc">TestPosixStatus</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Contains all the tests for the POSIXStatus Class</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Test the POSIXStatus Class.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="TestPosixStatus.test_posix_status_object"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixStatus.test_posix_status_object">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_status_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct creation of posix status object&quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Test the correct creation of posix status object.&quot;&quot;&quot;</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">PosixStatus</span><span class="p">(</span><span class="mi">036</span><span class="p">,</span> <span class="mi">035</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">mtime</span><span class="p">,</span> <span class="mi">036</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">ctime</span><span class="p">,</span> <span class="mi">035</span><span class="p">)</span>
@@ -264,55 +298,73 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">file_storage_media</span><span class="p">,</span> <span class="s1">&#39;disk&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestPosixStatus.test_posix_status_storage_media"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixStatus.test_posix_status_storage_media">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_status_storage_media</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct finding of posix storage media&quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Test the correct finding of posix storage media.&quot;&quot;&quot;</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">PosixStatus</span><span class="p">(</span><span class="mi">036</span><span class="p">,</span> <span class="mi">035</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">find_file_storage_media</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;disk&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestPosixStatus.test_posix_status_levels"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixStatus.test_posix_status_levels">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_status_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the correct setting of file storage levels&quot;&quot;&quot;</span>
-
+        <span class="sd">&quot;&quot;&quot;Test the correct setting of file storage levels.&quot;&quot;&quot;</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">PosixStatus</span><span class="p">(</span><span class="mi">036</span><span class="p">,</span> <span class="mi">035</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">define_levels</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;disk&#39;</span><span class="p">])</span></div></div>
 
+
 <div class="viewcode-block" id="TestPosixBackendArchive"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive">[docs]</a><span class="k">class</span> <span class="nc">TestPosixBackendArchive</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Contains all the tests for the Posix backend archive</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Test the Posix backend archive.&quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="TestPosixBackendArchive.test_posix_backend_create"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_create">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_backend_create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test creating a posix backend &quot;&quot;&quot;</span>
-        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Test creating a posix backend.&quot;&quot;&quot;</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="n">PosixBackendArchive</span><span class="p">))</span>
-        <span class="c1">#easiest way to unit test is look at class variable</span>
+        <span class="c1"># easiest way to unit test is look at class variable</span>
         <span class="c1"># pylint: disable=protected-access</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">_prefix</span><span class="p">,</span> <span class="s1">&#39;/tmp&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">_user</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">_auth</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">_file</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">_prefix</span><span class="p">,</span> <span class="s1">&#39;/tmp&#39;</span><span class="p">)</span></div>
         <span class="c1"># pylint: enable=protected-access</span>
 
 <div class="viewcode-block" id="TestPosixBackendArchive.test_posix_backend_open"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_open">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_backend_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test opening a file from posix backend&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test opening a file from posix backend.&quot;&quot;&quot;</span>
         <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;1234&#39;</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
-        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp&#39;</span><span class="p">)</span>
         <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">my_file</span><span class="p">,</span> <span class="n">PosixBackendArchive</span><span class="p">))</span>
-        <span class="c1">#easiest way to unit test is look at class variable</span>
+        <span class="c1"># easiest way to unit test is look at class variable</span>
         <span class="c1"># pylint: disable=protected-access</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">_file</span><span class="p">,</span> <span class="n">ExtendedFile</span><span class="p">))</span>
         <span class="c1"># pylint: enable=protected-access</span>
-        <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+        <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="c1"># opening twice in a row is okay</span>
+        <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+
+        <span class="c1"># force a close to throw an error</span>
+        <span class="k">def</span> <span class="nf">close_error</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="s1">&#39;this is an error&#39;</span><span class="p">)</span>
+        <span class="n">orig_close</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">close</span>
+        <span class="n">backend</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">close</span> <span class="o">=</span> <span class="n">close_error</span>
+        <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ArchiveInterfaceError</span><span class="p">:</span>
+            <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span>
+        <span class="n">backend</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">close</span> <span class="o">=</span> <span class="n">orig_close</span>
+        <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="mi">47</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ArchiveInterfaceError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;Cant remove absolute path&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+            <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestPosixBackendArchive.test_posix_backend_close"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_close">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_backend_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test closing a file from posix backend&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test closing a file from posix backend.&quot;&quot;&quot;</span>
         <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;1234&#39;</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
-        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp/&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp/&#39;</span><span class="p">)</span>
         <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
-        <span class="c1">#easiest way to unit test is look at class variable</span>
+        <span class="c1"># easiest way to unit test is look at class variable</span>
         <span class="c1"># pylint: disable=protected-access</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">backend</span><span class="o">.</span><span class="n">_file</span><span class="p">,</span> <span class="n">ExtendedFile</span><span class="p">))</span>
         <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -320,32 +372,71 @@
         <span class="c1"># pylint: enable=protected-access</span>
 
 <div class="viewcode-block" id="TestPosixBackendArchive.test_posix_backend_write"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_write">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_backend_write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test writing a file from posix backend&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test writing a file from posix backend.&quot;&quot;&quot;</span>
         <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;1234&#39;</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
-        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp/&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp/&#39;</span><span class="p">)</span>
         <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
-        <span class="n">error</span> <span class="o">=</span> <span class="n">my_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;i am a test string&quot;</span><span class="p">)</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">my_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;i am a test string&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
+<div class="viewcode-block" id="TestPosixBackendArchive.test_posix_backend_failed_write"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_failed_write">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_backend_failed_write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test writing to a failed file.&quot;&quot;&quot;</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;1234&#39;</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp/&#39;</span><span class="p">)</span>
+        <span class="c1"># test failed write</span>
+        <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">write_error</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Unable to Write!&#39;</span><span class="p">)</span>
+        <span class="n">backend</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">write</span> <span class="o">=</span> <span class="n">write_error</span>
+        <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">backend</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;write stuff&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ArchiveInterfaceError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s2">&quot;Can&#39;t write posix file with error&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TestPosixBackendArchive.test_posix_backend_read"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_read">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_backend_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test reading a file from posix backend&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test reading a file from posix backend.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_posix_backend_write</span><span class="p">()</span>
         <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;1234&#39;</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
-        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp/&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp/&#39;</span><span class="p">)</span>
         <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
         <span class="n">buf</span> <span class="o">=</span> <span class="n">my_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="s2">&quot;i am a test string&quot;</span><span class="p">)</span>
-        <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
-        
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="s1">&#39;i am a test string&#39;</span><span class="p">)</span>
+        <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TestPosixBackendArchive.test_read_config_file"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_read_config_file">[docs]</a>    <span class="k">def</span> <span class="nf">test_read_config_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test reading from config file.&quot;&quot;&quot;</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="n">read_config_value</span><span class="p">(</span><span class="s1">&#39;hms_sideband&#39;</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="s1">&#39;3306&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestPosixBackendArchive.test_read_config_bad_section"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_read_config_bad_section">[docs]</a>    <span class="k">def</span> <span class="nf">test_read_config_bad_section</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test reading from config file with bad section.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">ArchiveInterfaceError</span><span class="p">)</span> <span class="k">as</span> <span class="n">context</span><span class="p">:</span>
+            <span class="n">read_config_value</span><span class="p">(</span><span class="s1">&#39;bad_section&#39;</span><span class="p">,</span> <span class="s1">&#39;port&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;Error reading config file, no section: bad_section&#39;</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">exception</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestPosixBackendArchive.test_read_config_bad_field"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_read_config_bad_field">[docs]</a>    <span class="k">def</span> <span class="nf">test_read_config_bad_field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test reading from config file with bad section.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">ArchiveInterfaceError</span><span class="p">)</span> <span class="k">as</span> <span class="n">context</span><span class="p">:</span>
+            <span class="n">read_config_value</span><span class="p">(</span><span class="s1">&#39;hms_sideband&#39;</span><span class="p">,</span> <span class="s1">&#39;bad_field&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;Error reading config file, no field: bad_field in section: hms_sideband&#39;</span><span class="p">,</span>
+                        <span class="n">context</span><span class="o">.</span><span class="n">exception</span><span class="p">)</span></div></div>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -380,7 +471,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>

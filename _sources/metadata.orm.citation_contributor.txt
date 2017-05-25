@@ -1,9 +1,0 @@
-
-Metadata Orm Citation Contributor Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.citation_contributor
-   :members:
-   :private-members:
-

@@ -1,9 +1,0 @@
-
-Metadata Orm Transactions Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.transactions
-   :members:
-   :private-members:
-

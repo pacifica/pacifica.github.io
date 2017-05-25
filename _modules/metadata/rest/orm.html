@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,19 +121,36 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-      
-    <li>metadata.rest.orm</li>
+        
+      <li>metadata.rest.orm</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -130,166 +158,189 @@
             
   <h1>Source code for metadata.rest.orm</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Core interface for each ORM object to interface with CherryPy</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Core interface for each ORM object to interface with CherryPy.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">dumps</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">request</span><span class="p">,</span> <span class="n">HTTPError</span>
-<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">DoesNotExist</span><span class="p">,</span> <span class="n">IntegrityError</span>
-<span class="kn">from</span> <span class="nn">metadata.orm.base</span> <span class="k">import</span> <span class="n">PacificaModel</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">DoesNotExist</span>
+<span class="kn">from</span> <span class="nn">metadata.orm.base</span> <span class="k">import</span> <span class="n">PacificaModel</span><span class="p">,</span> <span class="n">db_connection_decorator</span>
 <span class="kn">from</span> <span class="nn">metadata.elastic.orm</span> <span class="k">import</span> <span class="n">ElasticAPI</span>
-<span class="kn">from</span> <span class="nn">metadata.orm.utils</span> <span class="k">import</span> <span class="n">datetime_now_nomicrosecond</span>
+<span class="kn">from</span> <span class="nn">metadata.orm.utils</span> <span class="k">import</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">,</span> <span class="n">datetime_converts</span>
+
 
 <div class="viewcode-block" id="CherryPyAPI"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI">[docs]</a><span class="k">class</span> <span class="nc">CherryPyAPI</span><span class="p">(</span><span class="n">PacificaModel</span><span class="p">,</span> <span class="n">ElasticAPI</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Core CherryPy interface for all orm objects</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Core CherryPy interface for all orm objects.&quot;&quot;&quot;</span>
+
     <span class="n">exposed</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="CherryPyAPI._select"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._select">[docs]</a>    <span class="k">def</span> <span class="nf">_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Internal select method.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">objs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
-        <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+        <span class="sd">&quot;&quot;&quot;Internal select method.&quot;&quot;&quot;</span>
+        <span class="n">primary_keys</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_primary_keys</span><span class="p">():</span>
+            <span class="n">primary_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+        <span class="n">objs</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+                <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="o">*</span><span class="n">primary_keys</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s1">&#39;page_number&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="s1">&#39;items_per_page&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">objs</span> <span class="o">=</span> <span class="n">objs</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;page_number&#39;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;items_per_page&#39;</span><span class="p">]))</span>
         <span class="k">return</span> <span class="n">dumps</span><span class="p">([</span><span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="CherryPyAPI._update"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._update">[docs]</a>    <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_json</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Internal update method for an object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span> <span class="n">kwargs</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">objs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
-        <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">obj</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">update_json</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
-            <span class="n">obj</span><span class="o">.</span><span class="n">updated</span> <span class="o">=</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">()</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">obj</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="k">except</span> <span class="n">IntegrityError</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-                <span class="n">obj</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
-                <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span></div>
+        <span class="sd">&quot;&quot;&quot;Internal update method for an object.&quot;&quot;&quot;</span>
+        <span class="n">update_hash</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">update_json</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;updated&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">update_hash</span><span class="p">:</span>
+            <span class="n">update_hash</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">()</span>
+        <span class="n">did_something</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)):</span>
+            <span class="n">did_something</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">update_hash</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">did_something</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s2">&quot;Get args didn&#39;t select any objects.&quot;</span><span class="p">)</span>
+        <span class="n">complete_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="n">complete_objs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CherryPyAPI._set_or_create"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._set_or_create">[docs]</a>    <span class="k">def</span> <span class="nf">_set_or_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">insert_json</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Set or create the object if it doesn&#39;t already exist</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">objs</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">objs</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">insert_json</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+        <span class="sd">&quot;&quot;&quot;Set or create the object if it doesn&#39;t already exist.&quot;&quot;&quot;</span>
+        <span class="n">objs</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">insert_json</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">objs</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">objs</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">created</span> <span class="o">=</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="k">except</span> <span class="n">IntegrityError</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">deleted</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">updated</span> <span class="o">=</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span></div>
+        <span class="n">complete_objs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">obj_hash</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">obj_hash</span><span class="p">:</span>
+                <span class="n">obj_hash</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj_hash</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span><span class="p">)</span>
+            <span class="n">obj</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="o">**</span><span class="n">obj_hash</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">created</span><span class="p">:</span>
+                <span class="n">complete_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="n">complete_objs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CherryPyAPI._insert"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._insert">[docs]</a>    <span class="k">def</span> <span class="nf">_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">insert_json</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Insert object from json into the system.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">objs</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">objs</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">insert_json</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+        <span class="sd">&quot;&quot;&quot;Insert object from json into the system.&quot;&quot;&quot;</span>
+        <span class="n">objs</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">insert_json</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">objs</span><span class="p">):</span>
+            <span class="c1"># nothing to upload</span>
+            <span class="k">return</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">objs</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">objs</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
+        <span class="n">bad_id_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">check_for_key_existence</span><span class="p">(</span><span class="n">objs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bad_id_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Could not insert records [ID: </span><span class="si">{0}</span><span class="s1">] due to duplicated ID values. &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bad_id_list</span><span class="p">))</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39;Remove or change the duplicated id values&#39;</span>
+            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">fix_dates</span><span class="p">(</span><span class="n">orig_obj</span><span class="p">,</span> <span class="n">db_obj</span><span class="p">,</span> <span class="n">es_obj</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Fix the dates for insert.&quot;&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">date_key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">,</span> <span class="s1">&#39;updated&#39;</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">date_key</span> <span class="ow">in</span> <span class="n">orig_obj</span><span class="p">:</span>
+                    <span class="n">es_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime_converts</span><span class="p">(</span><span class="n">orig_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">date_key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">,</span> <span class="s1">&#39;updated&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">date_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">orig_obj</span><span class="p">:</span>
+                    <span class="n">es_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime_converts</span><span class="p">(</span><span class="n">datetime_now_nomicrosecond</span><span class="p">())</span>
+            <span class="k">if</span> <span class="s1">&#39;deleted&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">orig_obj</span><span class="p">:</span>
+                <span class="n">db_obj</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">es_obj</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">clean_objs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clean_for_bulk_upload</span><span class="p">(</span><span class="n">objs</span><span class="p">,</span> <span class="n">fix_dates</span><span class="p">)</span>
+        <span class="n">es_objs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">insert_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">insert_many</span><span class="p">(</span><span class="n">clean_objs</span><span class="p">[</span><span class="s1">&#39;upload_objs&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">insert_query</span><span class="o">.</span><span class="n">execute</span><span class="p">():</span>
+            <span class="n">es_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">to_hash</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="n">es_objs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CherryPyAPI.check_for_key_existence"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI.check_for_key_existence">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">check_for_key_existence</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">object_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check for already loaded keys to prevent collisions.&quot;&quot;&quot;</span>
+        <span class="n">cls_instance</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+        <span class="n">bad_id_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">object_list</span><span class="p">:</span>
+            <span class="n">item_id</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">item_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cls_instance</span><span class="o">.</span><span class="n">where_clause</span><span class="p">({</span><span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="n">item_id</span><span class="p">}))</span>
+                    <span class="n">bad_id_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">:</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bad_id_list</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">_clean_for_bulk_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_hashes</span><span class="p">,</span> <span class="n">fix_dates</span><span class="p">):</span>
+        <span class="n">model_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">get_object_info</span><span class="p">()</span>
+        <span class="n">clean_objs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;es_objs&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;upload_objs&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">obj_hashes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">deleted</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">updated</span> <span class="o">=</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">created</span> <span class="o">=</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">()</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="k">except</span> <span class="n">IntegrityError</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
-                <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span></div>
+            <span class="n">new_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
+            <span class="n">es_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
+            <span class="n">fix_dates</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">new_obj</span><span class="p">,</span> <span class="n">es_obj</span><span class="p">)</span>
+            <span class="n">clean_objs</span><span class="p">[</span><span class="s1">&#39;es_objs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">es_obj</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;related_models&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">rel_models</span> <span class="o">=</span> <span class="n">model_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;related_models&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span> <span class="ow">in</span> <span class="n">rel_models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="c1"># replace incoming lookup table names with</span>
+                    <span class="c1"># corresponding model field names</span>
+                    <span class="n">db_col</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;db_column&#39;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">db_col</span> <span class="ow">in</span> <span class="n">new_obj</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">new_obj</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_obj</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">db_col</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">new_obj</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span><span class="p">)</span>
+            <span class="n">new_obj</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span><span class="p">)</span>
+            <span class="n">clean_objs</span><span class="p">[</span><span class="s1">&#39;upload_objs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_obj</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">clean_objs</span>
 
 <div class="viewcode-block" id="CherryPyAPI._delete"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._delete">[docs]</a>    <span class="k">def</span> <span class="nf">_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Internal delete object method.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">objs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
-        <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
-            <span class="c1"># also set updated</span>
-            <span class="n">obj</span><span class="o">.</span><span class="n">deleted</span> <span class="o">=</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">()</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">elastic_delete</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()[</span><span class="s1">&#39;_id&#39;</span><span class="p">])</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">obj</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="k">except</span> <span class="n">IntegrityError</span><span class="p">,</span> <span class="n">ex</span><span class="p">:</span>
-                <span class="n">obj</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
-                <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span></div>
+        <span class="sd">&quot;&quot;&quot;Internal delete object method.&quot;&quot;&quot;</span>
+        <span class="n">update_hash</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;deleted&#39;</span><span class="p">:</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">update_hash</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
     <span class="c1"># CherryPy requires these named methods</span>
     <span class="c1"># Add HEAD (basically Get without returning body</span>
     <span class="c1"># pylint: disable=invalid-name</span>
-<div class="viewcode-block" id="CherryPyAPI.GET"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI.GET">[docs]</a>    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Implements the GET HTTP method. Returns the json object based on</span>
-<span class="sd">        fields passed into kwargs.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CherryPyAPI.PUT"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI.PUT">[docs]</a>    <span class="k">def</span> <span class="nf">PUT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@db_connection_decorator</span>
+    <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Implements the PUT HTTP method. Creates an object based on the</span>
-<span class="sd">        request body.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
+<span class="sd">        Implement the GET HTTP method.</span>
 
-<div class="viewcode-block" id="CherryPyAPI.POST"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI.POST">[docs]</a>    <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Implements the POST HTTP method. Gets the object similar to GET()</span>
-<span class="sd">        and uses the request body to update the object and saves it.</span>
+<span class="sd">        Returns the json object based on fields passed into kwargs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_select</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CherryPyAPI.DELETE"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI.DELETE">[docs]</a>    <span class="k">def</span> <span class="nf">DELETE</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nd">@db_connection_decorator</span>
+    <span class="k">def</span> <span class="nf">PUT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Implements the DELETE HTTP method. Gets a single object based on</span>
-<span class="sd">        kwargs, sets the deleted flag and saves the object.</span>
+<span class="sd">        Implement the PUT HTTP method.</span>
+
+<span class="sd">        Creates an object based on the request body.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="nd">@db_connection_decorator</span>
+    <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Implement the POST HTTP method.</span>
+
+<span class="sd">        Gets the object similar to GET() and uses the request body to update</span>
+<span class="sd">        the object and saves it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="nd">@db_connection_decorator</span>
+    <span class="k">def</span> <span class="nf">DELETE</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Implement the DELETE HTTP method.</span>
+
+<span class="sd">        Gets a single object based on kwargs, sets the deleted flag and saves</span>
+<span class="sd">        the object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
     <span class="c1"># pylint: enable=invalid-name</span>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -324,7 +375,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>

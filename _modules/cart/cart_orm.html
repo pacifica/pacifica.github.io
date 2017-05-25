@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,19 +121,36 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../index.html">Module code</a> &raquo;</li>
-      
-    <li>cart.cart_orm</li>
+        
+      <li>cart.cart_orm</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -142,7 +170,7 @@
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">MySQLDatabase</span><span class="p">,</span> <span class="n">PrimaryKeyField</span><span class="p">,</span> <span class="n">CharField</span><span class="p">,</span> <span class="n">DateTimeField</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">ForeignKeyField</span><span class="p">,</span> <span class="n">TextField</span>
-<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">ProgrammingError</span><span class="p">,</span> <span class="n">OperationalError</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">OperationalError</span>
 <span class="kn">from</span> <span class="nn">cart.cart_env_globals</span> <span class="k">import</span> <span class="n">MYSQL_USER</span><span class="p">,</span> <span class="n">MYSQL_PASS</span><span class="p">,</span> <span class="n">MYSQL_ADDR</span>
 <span class="kn">from</span> <span class="nn">cart.cart_env_globals</span> <span class="k">import</span> <span class="n">MYSQL_PORT</span><span class="p">,</span> <span class="n">MYSQL_DATABASE</span>
 <span class="kn">from</span> <span class="nn">cart.cart_env_globals</span> <span class="k">import</span> <span class="n">DATABASE_CONNECT_ATTEMPTS</span><span class="p">,</span> <span class="n">DATABASE_WAIT</span>
@@ -159,9 +187,10 @@
 <span class="sd">    Setup and create the database from the db connection.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">database_connect</span><span class="p">()</span>
-        <span class="n">DB</span><span class="o">.</span><span class="n">create_tables</span><span class="p">([</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">],</span> <span class="n">safe</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">database_close</span><span class="p">()</span>
+        <span class="n">Cart</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
+        <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">]:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="n">fail_silently</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">OperationalError</span><span class="p">:</span>
         <span class="c1">#couldnt connect, potentially wait and try again</span>
         <span class="k">if</span> <span class="n">attempts</span> <span class="o">&lt;</span> <span class="n">DATABASE_CONNECT_ATTEMPTS</span><span class="p">:</span>
@@ -170,58 +199,78 @@
             <span class="n">attempts</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">database_setup</span><span class="p">(</span><span class="n">attempts</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="CartBase"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_orm.CartBase">[docs]</a><span class="k">class</span> <span class="nc">CartBase</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base Cart Model class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CartBase.atomic"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_orm.CartBase.atomic">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">atomic</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Do the DB atomic bits.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=no-member</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">atomic</span><span class="p">()</span></div>
+        <span class="c1"># pylint: enable=no-member</span>
 
-<div class="viewcode-block" id="database_connect"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_orm.database_connect">[docs]</a><span class="k">def</span> <span class="nf">database_connect</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Makes sure database is connected.  Trying to connect a second</span>
-<span class="sd">    time doesnt cause any problems&quot;&quot;&quot;</span>
-    <span class="n">DB</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span></div>
+<div class="viewcode-block" id="CartBase.database_connect"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_orm.CartBase.database_connect">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">database_connect</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes sure database is connected.  Dont reopen connection&quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=no-member</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">is_closed</span><span class="p">():</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span></div>
+        <span class="c1"># pylint: enable=no-member</span>
 
-<div class="viewcode-block" id="database_close"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_orm.database_close">[docs]</a><span class="k">def</span> <span class="nf">database_close</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Closes the database connection. Closing already closed database</span>
-<span class="sd">    throws an error so catch it and continue on&quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">DB</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="k">except</span> <span class="n">ProgrammingError</span><span class="p">:</span>
-        <span class="c1">#error for closing an already closed database so continue on</span>
-        <span class="k">return</span></div>
+<div class="viewcode-block" id="CartBase.database_close"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_orm.CartBase.database_close">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">database_close</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Closes the database connection. &quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=no-member</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">is_closed</span><span class="p">():</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+        <span class="c1"># pylint: enable=no-member</span>
 
-<div class="viewcode-block" id="Cart"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_orm.Cart">[docs]</a><span class="k">class</span> <span class="nc">Cart</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Meta object containing the database connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">database</span> <span class="o">=</span> <span class="n">DB</span> <span class="c1"># This model uses the pacifica_cart database.</span>
+
+<div class="viewcode-block" id="CartBase.reload"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_orm.CartBase.reload">[docs]</a>    <span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;reload my current state from the DB&quot;&quot;&quot;</span>
+        <span class="n">newer_self</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">primary_key</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_pk_value</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">newer_self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dirty</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="Cart"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_orm.Cart">[docs]</a><span class="k">class</span> <span class="nc">Cart</span><span class="p">(</span><span class="n">CartBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cart object model</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKeyField</span><span class="p">()</span>
     <span class="n">cart_uid</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">bundle_path</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">bundle_path</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
     <span class="n">creation_date</span> <span class="o">=</span> <span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
     <span class="n">updated_date</span> <span class="o">=</span> <span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
     <span class="n">deleted_date</span> <span class="o">=</span> <span class="n">DateTimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">status</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;waiting&quot;</span><span class="p">)</span>
-    <span class="n">error</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;waiting&#39;</span><span class="p">)</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
 
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Meta object containing the database connection</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">database</span> <span class="o">=</span> <span class="n">DB</span> <span class="c1"># This model uses the pacifica_cart database.</span></div>
-
-<div class="viewcode-block" id="File"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_orm.File">[docs]</a><span class="k">class</span> <span class="nc">File</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+<div class="viewcode-block" id="File"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_orm.File">[docs]</a><span class="k">class</span> <span class="nc">File</span><span class="p">(</span><span class="n">CartBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    File object model to keep track of what&#39;s been downloaded for a cart</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKeyField</span><span class="p">()</span>
-    <span class="n">cart</span> <span class="o">=</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">to_field</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
-    <span class="n">file_name</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">bundle_path</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">status</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;waiting&quot;</span><span class="p">)</span>
-    <span class="n">error</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-
-    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Meta object containing the database connection</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">database</span> <span class="o">=</span> <span class="n">DB</span> <span class="c1"># This model uses the pacifica_cart database.</span></div>
+    <span class="n">cart</span> <span class="o">=</span> <span class="n">ForeignKeyField</span><span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">to_field</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">bundle_path</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">hash_type</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">hash_value</span> <span class="o">=</span> <span class="n">CharField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;waiting&#39;</span><span class="p">)</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="n">TextField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -256,7 +305,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>

@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Test Rest Module &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
+        <link rel="up" title="Rest Module" href="metadata.metadata.rest.html"/>
+        <link rel="next" title="Transaction Rest Module" href="metadata.metadata.rest.transaction_queries.html"/>
+        <link rel="prev" title="Reporting Rest Module" href="metadata.metadata.rest.reporting_queries.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="metadata.html">Metadata Project</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="metadata.metadata.html">Metadata Module</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.elastic.html">Elastic Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.orm.html">Orm Module</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="metadata.metadata.rest.html">Rest Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ingest.html">Ingest Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy.html">Policy Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uniqueid.html">UniqueID Project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pacifica</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
+        
+          <li><a href="metadata.html">Metadata Project</a> &raquo;</li>
+        
+          <li><a href="metadata.metadata.html">Metadata Module</a> &raquo;</li>
+        
+          <li><a href="metadata.metadata.rest.html">Rest Module</a> &raquo;</li>
+        
+      <li>Test Rest Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/metadata.metadata.rest.test.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-metadata.rest.test.test_fileinfo">
+<span id="test-rest-module"></span><h1>Test Rest Module<a class="headerlink" href="#module-metadata.rest.test.test_fileinfo" title="Permalink to this headline">¶</a></h1>
+<p>Test the ORM interface IngestAPI.</p>
+<dl class="class">
+<dt id="metadata.rest.test.test_fileinfo.TestFileInfoAPI">
+<em class="property">class </em><code class="descclassname">metadata.rest.test.test_fileinfo.</code><code class="descname">TestFileInfoAPI</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_fileinfo.html#TestFileInfoAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_fileinfo.TestFileInfoAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the ObjectInfoAPI class.</p>
+<dl class="method">
+<dt id="metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_bad_earliest_latest_api">
+<code class="descname">test_bad_earliest_latest_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_fileinfo.html#TestFileInfoAPI.test_bad_earliest_latest_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_bad_earliest_latest_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test invalid earliest/latest functionality.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_bad_fileinfo_api">
+<code class="descname">test_bad_fileinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_fileinfo.html#TestFileInfoAPI.test_bad_fileinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_bad_fileinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test bad file retrievals.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_bad_files_with_tkv">
+<code class="descname">test_bad_files_with_tkv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_fileinfo.html#TestFileInfoAPI.test_bad_files_with_tkv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_bad_files_with_tkv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test fileinfo retrieval with k/v pairs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_earliest_latest_api">
+<code class="descname">test_earliest_latest_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_fileinfo.html#TestFileInfoAPI.test_earliest_latest_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_earliest_latest_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test valid earliest/latest functionality.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_fileinfo_api">
+<code class="descname">test_fileinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_fileinfo.html#TestFileInfoAPI.test_fileinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_fileinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the GET method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_files_with_tkv">
+<code class="descname">test_files_with_tkv</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_fileinfo.html#TestFileInfoAPI.test_files_with_tkv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_fileinfo.TestFileInfoAPI.test_files_with_tkv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test fileinfo retrieval with k/v pairs.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.rest.test.test_ingest"></span><p>Test the ORM interface IngestAPI.</p>
+<dl class="class">
+<dt id="metadata.rest.test.test_ingest.TestIngestAPI">
+<em class="property">class </em><code class="descclassname">metadata.rest.test.test_ingest.</code><code class="descname">TestIngestAPI</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_ingest.html#TestIngestAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_ingest.TestIngestAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the CherryPyAPI class.</p>
+<dl class="method">
+<dt id="metadata.rest.test.test_ingest.TestIngestAPI.test_ingest_api">
+<code class="descname">test_ingest_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_ingest.html#TestIngestAPI.test_ingest_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_ingest.TestIngestAPI.test_ingest_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the PUT (insert) method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_ingest.TestIngestAPI.test_valid_file_data">
+<code class="descname">test_valid_file_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_ingest.html#TestIngestAPI.test_valid_file_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_ingest.TestIngestAPI.test_valid_file_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the validate hash and mimetype functions.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.rest.test.test_instrumentinfo"></span><p>Test the ORM interface InstrumentInfo.</p>
+<dl class="class">
+<dt id="metadata.rest.test.test_instrumentinfo.TestObjectInfoAPI">
+<em class="property">class </em><code class="descclassname">metadata.rest.test.test_instrumentinfo.</code><code class="descname">TestObjectInfoAPI</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_instrumentinfo.html#TestObjectInfoAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_instrumentinfo.TestObjectInfoAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the ObjectInfoAPI class.</p>
+<dl class="method">
+<dt id="metadata.rest.test.test_instrumentinfo.TestObjectInfoAPI.test_bad_instrumentinfo_api">
+<code class="descname">test_bad_instrumentinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_instrumentinfo.html#TestObjectInfoAPI.test_bad_instrumentinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_instrumentinfo.TestObjectInfoAPI.test_bad_instrumentinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the GET method with bad data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_instrumentinfo.TestObjectInfoAPI.test_instrumentinfo_api">
+<code class="descname">test_instrumentinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_instrumentinfo.html#TestObjectInfoAPI.test_instrumentinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_instrumentinfo.TestObjectInfoAPI.test_instrumentinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the GET method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.rest.test.test_objectinfo"></span><p>Test the ORM interface IngestAPI.</p>
+<dl class="class">
+<dt id="metadata.rest.test.test_objectinfo.TestObjectInfoAPI">
+<em class="property">class </em><code class="descclassname">metadata.rest.test.test_objectinfo.</code><code class="descname">TestObjectInfoAPI</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_objectinfo.html#TestObjectInfoAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_objectinfo.TestObjectInfoAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the ObjectInfoAPI class.</p>
+<dl class="method">
+<dt id="metadata.rest.test.test_objectinfo.TestObjectInfoAPI.test_bad_objectinfo_api">
+<code class="descname">test_bad_objectinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_objectinfo.html#TestObjectInfoAPI.test_bad_objectinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_objectinfo.TestObjectInfoAPI.test_bad_objectinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the GET method with bad data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_objectinfo.TestObjectInfoAPI.test_objectinfo_api">
+<code class="descname">test_objectinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_objectinfo.html#TestObjectInfoAPI.test_objectinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_objectinfo.TestObjectInfoAPI.test_objectinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the GET method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.rest.test.test_orm"></span><p>Test the ORM interface CherryPyAPI.</p>
+<dl class="class">
+<dt id="metadata.rest.test.test_orm.TestCherryPyAPI">
+<em class="property">class </em><code class="descclassname">metadata.rest.test.test_orm.</code><code class="descname">TestCherryPyAPI</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_orm.html#TestCherryPyAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_orm.TestCherryPyAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the CherryPyAPI class.</p>
+<dl class="method">
+<dt id="metadata.rest.test.test_orm.TestCherryPyAPI.test_methods">
+<code class="descname">test_methods</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_orm.html#TestCherryPyAPI.test_methods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_orm.TestCherryPyAPI.test_methods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the PUT (insert) method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_orm.TestCherryPyAPI.test_perf_of_large_insert">
+<code class="descname">test_perf_of_large_insert</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_orm.html#TestCherryPyAPI.test_perf_of_large_insert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_orm.TestCherryPyAPI.test_perf_of_large_insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create 10000 records of Values and try to insert them.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_orm.TestCherryPyAPI.test_set_or_create">
+<code class="descname">test_set_or_create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_orm.html#TestCherryPyAPI.test_set_or_create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_orm.TestCherryPyAPI.test_set_or_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the internal set or create method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.rest.test.test_proposalinfo"></span><p>Test the ORM interface IngestAPI.</p>
+<dl class="class">
+<dt id="metadata.rest.test.test_proposalinfo.TestProposalInfoAPI">
+<em class="property">class </em><code class="descclassname">metadata.rest.test.test_proposalinfo.</code><code class="descname">TestProposalInfoAPI</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_proposalinfo.html#TestProposalInfoAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_proposalinfo.TestProposalInfoAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the ObjectInfoAPI class.</p>
+<dl class="method">
+<dt id="metadata.rest.test.test_proposalinfo.TestProposalInfoAPI.test_bad_proposalinfo_api">
+<code class="descname">test_bad_proposalinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_proposalinfo.html#TestProposalInfoAPI.test_bad_proposalinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_proposalinfo.TestProposalInfoAPI.test_bad_proposalinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the GET method with bad data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_proposalinfo.TestProposalInfoAPI.test_proposalinfo_api">
+<code class="descname">test_proposalinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_proposalinfo.html#TestProposalInfoAPI.test_proposalinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_proposalinfo.TestProposalInfoAPI.test_proposalinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the GET method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.rest.test.test_summaryinfo"></span><p>Test the ORM interface SummaryInfoAPI.</p>
+<dl class="class">
+<dt id="metadata.rest.test.test_summaryinfo.TestSummaryInfoAPI">
+<em class="property">class </em><code class="descclassname">metadata.rest.test.test_summaryinfo.</code><code class="descname">TestSummaryInfoAPI</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_summaryinfo.html#TestSummaryInfoAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_summaryinfo.TestSummaryInfoAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the SummaryInfoAPI class.</p>
+<dl class="method">
+<dt id="metadata.rest.test.test_summaryinfo.TestSummaryInfoAPI.test_bad_summaryinfo_api">
+<code class="descname">test_bad_summaryinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_summaryinfo.html#TestSummaryInfoAPI.test_bad_summaryinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_summaryinfo.TestSummaryInfoAPI.test_bad_summaryinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the POST method with bad data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_summaryinfo.TestSummaryInfoAPI.test_detailed_list">
+<code class="descname">test_detailed_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_summaryinfo.html#TestSummaryInfoAPI.test_detailed_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_summaryinfo.TestSummaryInfoAPI.test_detailed_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the detailed_transaction_list function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_summaryinfo.TestSummaryInfoAPI.test_summaryinfo_api">
+<code class="descname">test_summaryinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_summaryinfo.html#TestSummaryInfoAPI.test_summaryinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_summaryinfo.TestSummaryInfoAPI.test_summaryinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the POST method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.rest.test.test_transactioninfo"></span><p>Test the ORM interface TransactionInfo.</p>
+<dl class="class">
+<dt id="metadata.rest.test.test_transactioninfo.TestTransactionInfoAPI">
+<em class="property">class </em><code class="descclassname">metadata.rest.test.test_transactioninfo.</code><code class="descname">TestTransactionInfoAPI</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_transactioninfo.html#TestTransactionInfoAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_transactioninfo.TestTransactionInfoAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the TransactionInfoAPI class.</p>
+<dl class="method">
+<dt id="metadata.rest.test.test_transactioninfo.TestTransactionInfoAPI.test_bad_transactioninfo_api">
+<code class="descname">test_bad_transactioninfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_transactioninfo.html#TestTransactionInfoAPI.test_bad_transactioninfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_transactioninfo.TestTransactionInfoAPI.test_bad_transactioninfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the GET method with bad data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_transactioninfo.TestTransactionInfoAPI.test_transactioninfo_api">
+<code class="descname">test_transactioninfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_transactioninfo.html#TestTransactionInfoAPI.test_transactioninfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_transactioninfo.TestTransactionInfoAPI.test_transactioninfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the GET method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-metadata.rest.test.test_userinfo"></span><p>Test the UserInfoAPI object.</p>
+<dl class="class">
+<dt id="metadata.rest.test.test_userinfo.TestUserInfoAPI">
+<em class="property">class </em><code class="descclassname">metadata.rest.test.test_userinfo.</code><code class="descname">TestUserInfoAPI</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_userinfo.html#TestUserInfoAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_userinfo.TestUserInfoAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test aspects of the UserInfoAPI class.</p>
+<dl class="method">
+<dt id="metadata.rest.test.test_userinfo.TestUserInfoAPI.test_bad_userinfo_api">
+<code class="descname">test_bad_userinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_userinfo.html#TestUserInfoAPI.test_bad_userinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_userinfo.TestUserInfoAPI.test_bad_userinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the GET method with bad data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.rest.test.test_userinfo.TestUserInfoAPI.test_userinfo_api">
+<code class="descname">test_userinfo_api</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/test/test_userinfo.html#TestUserInfoAPI.test_userinfo_api"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.test.test_userinfo.TestUserInfoAPI.test_userinfo_api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the GET method.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="metadata.metadata.rest.transaction_queries.html" class="btn btn-neutral float-right" title="Transaction Rest Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="metadata.metadata.rest.reporting_queries.html" class="btn btn-neutral" title="Reporting Rest Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

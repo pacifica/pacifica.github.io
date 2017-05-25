@@ -1,9 +1,0 @@
-
-Metadata Orm Test Groups Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.test.groups
-   :members:
-   :private-members:
-

@@ -1,9 +1,0 @@
-
-Metadata Orm Proposal Participant Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.proposal_participant
-   :members:
-   :private-members:
-

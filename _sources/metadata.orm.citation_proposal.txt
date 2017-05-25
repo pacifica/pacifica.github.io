@@ -1,9 +1,0 @@
-
-Metadata Orm Citation Proposal Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.citation_proposal
-   :members:
-   :private-members:
-

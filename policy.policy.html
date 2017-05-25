@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,9 +32,12 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
         <link rel="up" title="Policy Project" href="policy.html"/>
-        <link rel="next" title="Test Module" href="policy.policy.test.html"/>
+        <link rel="next" title="Policy Module" href="policy.policy.ingest.html"/>
         <link rel="prev" title="Policy Project" href="policy.html"/> 
 
   
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,20 +88,28 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="metadata.html">Metadata Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ingest.html">Ingest Project</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="policy.html">Policy Project</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Policy Module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="policy.policy.ingest.html">Policy Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="policy.policy.reporting.html">Policy Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="policy.policy.status.html">Policy Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="policy.policy.test.html">Test Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="policy.policy.uploader.html">Uploader Module</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="uniqueid.html">UniqueID Project</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
@@ -111,8 +125,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -121,27 +137,44 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
           <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
-      
+        
           <li><a href="policy.html">Policy Project</a> &raquo;</li>
-      
-    <li>Policy Module</li>
+        
+      <li>Policy Module</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/policy.policy.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/policy.policy.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -152,6 +185,21 @@
 <p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="policy.policy.ingest.html">Policy Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="policy.policy.ingest.test.html">Policy Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="policy.policy.reporting.html">Policy Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="policy.policy.reporting.transaction.html">Policy Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="policy.policy.status.html">Policy Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="policy.policy.status.instrument.html">Policy Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy.policy.status.proposal.html">Policy Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy.policy.status.transaction.html">Policy Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy.policy.status.user.html">Policy Module</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="policy.policy.test.html">Test Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="policy.policy.uploader.html">Uploader Module</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="policy.policy.uploader.test.html">Test Module</a></li>
@@ -159,11 +207,19 @@
 </li>
 </ul>
 </div>
-<span class="target" id="module-policy.root"></span><p>CherryPy root object class</p>
+<span class="target" id="module-policy.admin"></span><p>The Admin module has logic about checking for admin group info.</p>
+<dl class="class">
+<dt id="policy.admin.AdminPolicy">
+<em class="property">class </em><code class="descclassname">policy.admin.</code><code class="descname">AdminPolicy</code><a class="reference internal" href="_modules/policy/admin.html#AdminPolicy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.admin.AdminPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enforces the admin policy.</p>
+<p>Base class for checking for admin group membership or not.</p>
+</dd></dl>
+
+<span class="target" id="module-policy.root"></span><p>CherryPy root object class.</p>
 <dl class="class">
 <dt id="policy.root.Root">
 <em class="property">class </em><code class="descclassname">policy.root.</code><code class="descname">Root</code><a class="reference internal" href="_modules/policy/root.html#Root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.root.Root" title="Permalink to this definition">¶</a></dt>
-<dd><p>CherryPy root object class</p>
+<dd><p>CherryPy root object class.</p>
 <p>not exposed by default the base objects are exposed</p>
 </dd></dl>
 
@@ -171,15 +227,18 @@
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="policy.policy.test.html" class="btn btn-neutral float-right" title="Test Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="policy.policy.ingest.html" class="btn btn-neutral float-right" title="Policy Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="policy.html" class="btn btn-neutral" title="Policy Project" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="policy.html" class="btn btn-neutral" title="Policy Project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -213,7 +272,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

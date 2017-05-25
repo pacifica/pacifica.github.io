@@ -1,9 +1,0 @@
-
-Metadata Orm Files Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.files
-   :members:
-   :private-members:
-

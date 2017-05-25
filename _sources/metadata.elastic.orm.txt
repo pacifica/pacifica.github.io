@@ -1,9 +1,0 @@
-
-Metadata Elastic Orm Module
-**************************************************************
-
-
-.. automodule:: metadata.elastic.orm
-   :members:
-   :private-members:
-

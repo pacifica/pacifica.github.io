@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
         <link rel="up" title="Archiveinterface Module" href="archiveinterface.archiveinterface.html"/>
         <link rel="next" title="Archivebackends Abstract Module" href="archiveinterface.archiveinterface.archivebackends.abstract.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,9 +88,14 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="metadata.html">Metadata Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="archiveinterface.archiveinterface.html">Archiveinterface Module</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Archivebackends Module</a></li>
@@ -92,6 +103,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="ingest.html">Ingest Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy.html">Policy Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uniqueid.html">UniqueID Project</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
@@ -107,8 +121,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -117,29 +133,46 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
           <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
-      
+        
           <li><a href="archiveinterface.html">Archiveinterface Project</a> &raquo;</li>
-      
+        
           <li><a href="archiveinterface.archiveinterface.html">Archiveinterface Module</a> &raquo;</li>
-      
-    <li>Archivebackends Module</li>
+        
+      <li>Archivebackends Module</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/archiveinterface.archiveinterface.archivebackends.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/archiveinterface.archiveinterface.archivebackends.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -153,28 +186,34 @@
 <li class="toctree-l1"><a class="reference internal" href="archiveinterface.archiveinterface.archivebackends.abstract.html">Archivebackends Abstract Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="archiveinterface.archiveinterface.archivebackends.hpss.html">Archivebackends HPSS Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="archiveinterface.archiveinterface.archivebackends.posix.html">Archivebackends Posix Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html">Archivebackends Oracle HMS Sideband Module</a></li>
 </ul>
 </div>
-<span class="target" id="module-archiveinterface.archivebackends.abstract"></span><span class="target" id="module-archiveinterface.archivebackends.hpss"></span><span class="target" id="module-archiveinterface.archivebackends.posix"></span><span class="target" id="module-archiveinterface.archivebackends.archive_backend_factory"></span><p>Factory for returning a Archive backend. New Backends must be added to the
+<span class="target" id="module-archiveinterface.archivebackends.abstract"></span><p>Module for the Abstract Classes.</p>
+<span class="target" id="module-archiveinterface.archivebackends.hpss"></span><p>HPSS Backend Module.</p>
+<span class="target" id="module-archiveinterface.archivebackends.posix"></span><p>Posix Module with ExtendedFile object.</p>
+<span class="target" id="module-archiveinterface.archivebackends.oracle_hms_sideband"></span><p>Oracle HSM Side Band Database Module.</p>
+<span class="target" id="module-archiveinterface.archivebackends.archive_backend_factory"></span><p>Factory for returning a Archive backend.</p>
+<p>New Backends must be added to the
 __share_classes list and that class needs to be imported in</p>
 <p>Call the factory like the following:
 FACTORY = ArchiveBackendFactory()
-BACKEND = FACTORY.get_backend_archive(type, prefix, user, auth)</p>
+BACKEND = FACTORY.get_backend_archive(type, prefix)</p>
 <dl class="class">
 <dt id="archiveinterface.archivebackends.archive_backend_factory.ArchiveBackendFactory">
 <em class="property">class </em><code class="descclassname">archiveinterface.archivebackends.archive_backend_factory.</code><code class="descname">ArchiveBackendFactory</code><a class="reference internal" href="_modules/archiveinterface/archivebackends/archive_backend_factory.html#ArchiveBackendFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.archive_backend_factory.ArchiveBackendFactory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Factory Class for Archive Backends</p>
+<dd><p>Factory Class for Archive Backends.</p>
 <dl class="method">
 <dt id="archiveinterface.archivebackends.archive_backend_factory.ArchiveBackendFactory.get_backend_archive">
-<code class="descname">get_backend_archive</code><span class="sig-paren">(</span><em>name</em>, <em>prefix</em>, <em>user</em>, <em>auth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/archive_backend_factory.html#ArchiveBackendFactory.get_backend_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.archive_backend_factory.ArchiveBackendFactory.get_backend_archive" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_backend_archive</code><span class="sig-paren">(</span><em>name</em>, <em>prefix</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/archive_backend_factory.html#ArchiveBackendFactory.get_backend_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.archive_backend_factory.ArchiveBackendFactory.get_backend_archive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method for creating an instance of the backend archive.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archivebackends.archive_backend_factory.ArchiveBackendFactory.load_backend_archive">
 <code class="descname">load_backend_archive</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/archive_backend_factory.html#ArchiveBackendFactory.load_backend_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.archive_backend_factory.ArchiveBackendFactory.load_backend_archive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method for loading in the correct backend type. Only want to
-load backend type being used</p>
+<dd><p>Method for loading in the correct backend type.</p>
+<p>Only want to load backend type being used.</p>
 </dd></dl>
 
 </dd></dl>
@@ -183,15 +222,18 @@ load backend type being used</p>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="archiveinterface.archiveinterface.archivebackends.abstract.html" class="btn btn-neutral float-right" title="Archivebackends Abstract Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="archiveinterface.archiveinterface.archivebackends.abstract.html" class="btn btn-neutral float-right" title="Archivebackends Abstract Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="archiveinterface.archiveinterface.html" class="btn btn-neutral" title="Archiveinterface Module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="archiveinterface.archiveinterface.html" class="btn btn-neutral" title="Archiveinterface Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -225,7 +267,8 @@ load backend type being used</p>
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

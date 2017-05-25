@@ -1,9 +1,0 @@
-
-Metadata Orm Institution Person Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.institution_person
-   :members:
-   :private-members:
-

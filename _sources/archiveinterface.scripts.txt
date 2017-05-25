@@ -1,9 +1,0 @@
-
-Scripts Module
-**************************************************************
-
-
-.. automodule:: scripts.archiveinterfaceserver
-   :members:
-   :private-members:
-

@@ -1,9 +1,0 @@
-
-Cart Tasks Module
-**************************************************************
-
-
-.. automodule:: cart.tasks
-   :members:
-   :private-members:
-

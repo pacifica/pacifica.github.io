@@ -1,9 +1,0 @@
-
-Metadata Orm Test Contributors Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.test.contributors
-   :members:
-   :private-members:
-
