@@ -1,9 +1,0 @@
-
-Metadata Rest Orm Module
-**************************************************************
-
-
-.. automodule:: metadata.rest.orm
-   :members:
-   :private-members:
-

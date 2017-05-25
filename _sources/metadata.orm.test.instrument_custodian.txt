@@ -1,9 +1,0 @@
-
-Metadata Orm Test Instrument Custodian Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.test.instrument_custodian
-   :members:
-   :private-members:
-

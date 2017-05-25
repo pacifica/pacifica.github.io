@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Ingest Project &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
+        <link rel="up" title="Ingest Project" href="ingest.html"/>
+        <link rel="next" title="Ingest Backend Module" href="ingest.ingest.backend.html"/>
+        <link rel="prev" title="Ingest Project" href="ingest.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="metadata.html">Metadata Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ingest.html">Ingest Project</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Ingest Project</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ingest.ingest.backend.html">Ingest Backend Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ingest.ingest.test.html">Ingest Backend Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="policy.html">Policy Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uniqueid.html">UniqueID Project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pacifica</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
+        
+          <li><a href="ingest.html">Ingest Project</a> &raquo;</li>
+        
+      <li>Ingest Project</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ingest.ingest.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ingest-project">
+<h1>Ingest Project<a class="headerlink" href="#ingest-project" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ingest.ingest.backend.html">Ingest Backend Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ingest.ingest.test.html">Ingest Backend Module</a></li>
+</ul>
+</div>
+<span class="target" id="module-ingest.orm"></span><p>ORM for index server.</p>
+<dl class="class">
+<dt id="ingest.orm.BaseModel">
+<em class="property">class </em><code class="descclassname">ingest.orm.</code><code class="descname">BaseModel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/orm.html#BaseModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.orm.BaseModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Auto-generated by pwiz.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ingest.orm.IngestState">
+<em class="property">class </em><code class="descclassname">ingest.orm.</code><code class="descname">IngestState</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/orm.html#IngestState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.orm.IngestState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map a python record to a mysql table.</p>
+<dl class="classmethod">
+<dt id="ingest.orm.IngestState.database_close">
+<em class="property">classmethod </em><code class="descname">database_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/orm.html#IngestState.database_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.orm.IngestState.database_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the database connection.</p>
+<p>Closing already closed database
+is not a problem, so continue on.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="ingest.orm.IngestState.database_connect">
+<em class="property">classmethod </em><code class="descname">database_connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/orm.html#IngestState.database_connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.orm.IngestState.database_connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure database is connected.</p>
+<p>Trying to connect a second
+time <em>does</em> cause problems.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.orm.read_state">
+<code class="descclassname">ingest.orm.</code><code class="descname">read_state</code><span class="sig-paren">(</span><em>job_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/orm.html#read_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.orm.read_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the state of an ingest job as a json object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.orm.update_state">
+<code class="descclassname">ingest.orm.</code><code class="descname">update_state</code><span class="sig-paren">(</span><em>job_id</em>, <em>state</em>, <em>task</em>, <em>task_percent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/orm.html#update_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.orm.update_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the state of an ingest job.</p>
+</dd></dl>
+
+<span class="target" id="module-ingest.tarutils"></span><p>Utilities and classes for unbundling and archiving a tar file.</p>
+<dl class="class">
+<dt id="ingest.tarutils.FileIngester">
+<em class="property">class </em><code class="descclassname">ingest.tarutils.</code><code class="descname">FileIngester</code><span class="sig-paren">(</span><em>hashcode</em>, <em>server</em>, <em>file_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#FileIngester"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.FileIngester" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to ingest a single file from a tar file into the file archives.</p>
+<dl class="method">
+<dt id="ingest.tarutils.FileIngester.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#FileIngester.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.FileIngester.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read wrapper for requests that calculates the hashcode inline.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.tarutils.FileIngester.upload_file_in_file">
+<code class="descname">upload_file_in_file</code><span class="sig-paren">(</span><em>info</em>, <em>tar</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#FileIngester.upload_file_in_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.FileIngester.upload_file_in_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upload a file from inside a tar file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.tarutils.FileIngester.validate_hash">
+<code class="descname">validate_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#FileIngester.validate_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.FileIngester.validate_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate that the calculated hash matches the hash uploaded in the tar file.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ingest.tarutils.MetaParser">
+<em class="property">class </em><code class="descclassname">ingest.tarutils.</code><code class="descname">MetaParser</code><a class="reference internal" href="_modules/ingest/tarutils.html#MetaParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.MetaParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class used to hold and search metadata.</p>
+<dl class="method">
+<dt id="ingest.tarutils.MetaParser.clean_metadata">
+<code class="descname">clean_metadata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#MetaParser.clean_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.MetaParser.clean_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>clean /data from filepaths.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.tarutils.MetaParser.get_fname">
+<code class="descname">get_fname</code><span class="sig-paren">(</span><em>file_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#MetaParser.get_fname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.MetaParser.get_fname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the file name from the file ID.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.tarutils.MetaParser.get_hash">
+<code class="descname">get_hash</code><span class="sig-paren">(</span><em>file_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#MetaParser.get_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.MetaParser.get_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the hash string for a file name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.tarutils.MetaParser.get_subdir">
+<code class="descname">get_subdir</code><span class="sig-paren">(</span><em>file_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#MetaParser.get_subdir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.MetaParser.get_subdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the sub directory element from the file ID.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.tarutils.MetaParser.load_meta">
+<code class="descname">load_meta</code><span class="sig-paren">(</span><em>tar</em>, <em>job_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#MetaParser.load_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.MetaParser.load_meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the metadata from a tar file into searchable structures.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.tarutils.MetaParser.post_metadata">
+<code class="descname">post_metadata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#MetaParser.post_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.MetaParser.post_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upload metadata to server.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ingest.tarutils.TarIngester">
+<em class="property">class </em><code class="descclassname">ingest.tarutils.</code><code class="descname">TarIngester</code><span class="sig-paren">(</span><em>tar</em>, <em>meta</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#TarIngester"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.TarIngester" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to read a tar file and upload it to the metadata and file archives.</p>
+<dl class="method">
+<dt id="ingest.tarutils.TarIngester.ingest">
+<code class="descname">ingest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#TarIngester.ingest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.TarIngester.ingest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ingest a tar file into the file archive.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.tarutils.file_count">
+<code class="descclassname">ingest.tarutils.</code><code class="descname">file_count</code><span class="sig-paren">(</span><em>tar</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#file_count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.file_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the file count for a tar file.</p>
+<p>Does not count metadata.txt as that is not uploaded to the file archive</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.tarutils.get_clipped">
+<code class="descclassname">ingest.tarutils.</code><code class="descname">get_clipped</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#get_clipped"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.get_clipped" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a file path with the data separator removed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.tarutils.open_tar">
+<code class="descclassname">ingest.tarutils.</code><code class="descname">open_tar</code><span class="sig-paren">(</span><em>fpath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/tarutils.html#open_tar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.tarutils.open_tar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Seek to the location of fpath, returns a file stream pointer and file size.</p>
+</dd></dl>
+
+<span class="target" id="module-ingest.utils"></span><p>Testable utilities for ingest.</p>
+<dl class="function">
+<dt id="ingest.utils.create_invalid_return">
+<code class="descclassname">ingest.utils.</code><code class="descname">create_invalid_return</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/utils.html#create_invalid_return"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.utils.create_invalid_return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an error message.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.utils.create_return_params">
+<code class="descclassname">ingest.utils.</code><code class="descname">create_return_params</code><span class="sig-paren">(</span><em>response_body</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/utils.html#create_return_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.utils.create_return_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create return parameters.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.utils.create_state_return">
+<code class="descclassname">ingest.utils.</code><code class="descname">create_state_return</code><span class="sig-paren">(</span><em>record</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/utils.html#create_state_return"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.utils.create_state_return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the dictionary containing the start and stop index packs the message components.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.utils.get_job_id">
+<code class="descclassname">ingest.utils.</code><code class="descname">get_job_id</code><span class="sig-paren">(</span><em>environ</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/utils.html#get_job_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.utils.get_job_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the parameters for a request from the environ dictionary.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.utils.get_unique_id">
+<code class="descclassname">ingest.utils.</code><code class="descname">get_unique_id</code><span class="sig-paren">(</span><em>id_range</em>, <em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/utils.html#get_unique_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.utils.get_unique_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a unique job id from the id server.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.utils.receive">
+<code class="descclassname">ingest.utils.</code><code class="descname">receive</code><span class="sig-paren">(</span><em>environ</em>, <em>job_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/utils.html#receive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.utils.receive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receive the tar file and save it locally.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.utils.valid_request">
+<code class="descclassname">ingest.utils.</code><code class="descname">valid_request</code><span class="sig-paren">(</span><em>environ</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/utils.html#valid_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.utils.valid_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Catch and handle bogus requests (ex. faveicon).</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ingest.ingest.backend.html" class="btn btn-neutral float-right" title="Ingest Backend Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ingest.html" class="btn btn-neutral" title="Ingest Project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,32 +121,54 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      
-    <li>archiveinterface.archivebackends.abstract.abstract_status</li>
+        
+      <li>archiveinterface.archivebackends.abstract.abstract_status</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <h1>Source code for archiveinterface.archivebackends.abstract.abstract_status</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Module that has the abstract class for a file&#39;s status &quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;Module that has the abstract class for a file&#39;s status.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">abc</span>
 
+
 <div class="viewcode-block" id="AbstractStatus"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_status.AbstractStatus">[docs]</a><span class="k">class</span> <span class="nc">AbstractStatus</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Abstract Base Class that needs to be implemented for a file&#39;s</span>
-<span class="sd">    status method. A implemented instance of this class class should</span>
-<span class="sd">    be returned for the file status &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Abstract Base Class for Status.</span>
+
+<span class="sd">    Child backend objects need to implement the following</span>
+<span class="sd">    methods to allow file status to function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span>
 
     <span class="n">mtime</span> <span class="o">=</span> <span class="kc">None</span>
@@ -148,30 +181,45 @@
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mtime</span><span class="p">,</span> <span class="n">ctime</span><span class="p">,</span> <span class="n">bytes_per_level</span><span class="p">,</span> <span class="n">filesize</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Implemented versions of this class need to set all the</span>
-<span class="sd">        attributes defined in this abstract class. &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Constructor for AbstractClass.</span>
+
+<span class="sd">        Implemented versions of this class need to set all the</span>
+<span class="sd">        attributes defined in this abstract class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-<div class="viewcode-block" id="AbstractStatus.find_file_storage_media"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_status.AbstractStatus.find_file_storage_media">[docs]</a>    <span class="k">def</span> <span class="nf">find_file_storage_media</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method that finds the media the file in the archive</span>
-<span class="sd">        backend is stored on.  Usually disk or tape &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AbstractStatus.find_file_storage_media"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_status.AbstractStatus.find_file_storage_media">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">find_file_storage_media</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find File Storage Media.</span>
+
+<span class="sd">        Method that finds the media the file in the archive</span>
+<span class="sd">        backend is stored on.  Usually disk or tape.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-<div class="viewcode-block" id="AbstractStatus.define_levels"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_status.AbstractStatus.define_levels">[docs]</a>    <span class="k">def</span> <span class="nf">define_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method that defines the storage levels in the archive</span>
+<div class="viewcode-block" id="AbstractStatus.define_levels"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_status.AbstractStatus.define_levels">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">define_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Defined list of levels.</span>
+
+<span class="sd">        Method that defines the storage levels in the archive</span>
 <span class="sd">        backend. So a backend archive with a disk, tape, and error drive</span>
-<span class="sd">        will return the following [&quot;disk&quot;, &quot;tape&quot;, &quot;error&quot;] &quot;&quot;&quot;</span>
+<span class="sd">        will return the following [&quot;disk&quot;, &quot;tape&quot;, &quot;error&quot;].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-<div class="viewcode-block" id="AbstractStatus.set_filepath"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_status.AbstractStatus.set_filepath">[docs]</a>    <span class="k">def</span> <span class="nf">set_filepath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method that sets the filepath class attribute.  Used</span>
-<span class="sd">        to return the correct status of a file&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AbstractStatus.set_filepath"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_status.AbstractStatus.set_filepath">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">set_filepath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set File Path.</span>
+
+<span class="sd">        Method that sets the filepath class attribute.  Used</span>
+<span class="sd">        to return the correct status of a file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div></div>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -206,7 +254,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>

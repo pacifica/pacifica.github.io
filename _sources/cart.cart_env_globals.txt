@@ -1,9 +1,0 @@
-
-Cart Cart Env Globals Module
-**************************************************************
-
-
-.. automodule:: cart.cart_env_globals
-   :members:
-   :private-members:
-

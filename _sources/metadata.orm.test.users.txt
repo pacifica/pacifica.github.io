@@ -1,9 +1,0 @@
-
-Metadata Orm Test Users Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.test.users
-   :members:
-   :private-members:
-

@@ -1,9 +1,0 @@
-
-Metadata Orm Test Citation Contributor Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.test.citation_contributor
-   :members:
-   :private-members:
-

@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>UniqueID Module &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
+        <link rel="up" title="UniqueID Project" href="uniqueid.html"/>
+        <link rel="next" title="UniqueID Test Module" href="uniqueid.uniqueid.test.html"/>
+        <link rel="prev" title="UniqueID Project" href="uniqueid.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="metadata.html">Metadata Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ingest.html">Ingest Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy.html">Policy Project</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="uniqueid.html">UniqueID Project</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">UniqueID Module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="uniqueid.uniqueid.test.html">UniqueID Test Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pacifica</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
+        
+          <li><a href="uniqueid.html">UniqueID Project</a> &raquo;</li>
+        
+      <li>UniqueID Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/uniqueid.uniqueid.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="uniqueid-module">
+<h1>UniqueID Module<a class="headerlink" href="#uniqueid-module" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="uniqueid.uniqueid.test.html">UniqueID Test Module</a></li>
+</ul>
+</div>
+<span class="target" id="module-uniqueid.orm"></span><p>ORM for index server.</p>
+<dl class="class">
+<dt id="uniqueid.orm.UniqueIndex">
+<em class="property">class </em><code class="descclassname">uniqueid.orm.</code><code class="descname">UniqueIndex</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/uniqueid/orm.html#UniqueIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uniqueid.orm.UniqueIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Auto-generated by pwiz maps a python record to a mysql table.</p>
+<dl class="classmethod">
+<dt id="uniqueid.orm.UniqueIndex.atomic">
+<em class="property">classmethod </em><code class="descname">atomic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/uniqueid/orm.html#UniqueIndex.atomic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uniqueid.orm.UniqueIndex.atomic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the atomic context or decorator.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="uniqueid.orm.UniqueIndex.database_close">
+<em class="property">classmethod </em><code class="descname">database_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/uniqueid/orm.html#UniqueIndex.database_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uniqueid.orm.UniqueIndex.database_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the database connection.</p>
+<p>Closing already closed database throws an error so catch it and continue on.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="uniqueid.orm.UniqueIndex.database_connect">
+<em class="property">classmethod </em><code class="descname">database_connect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/uniqueid/orm.html#UniqueIndex.database_connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uniqueid.orm.UniqueIndex.database_connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make sure database is connected.</p>
+<p>Trying to connect a second time doesnt cause any problems.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="uniqueid.orm.try_db_connect">
+<code class="descclassname">uniqueid.orm.</code><code class="descname">try_db_connect</code><span class="sig-paren">(</span><em>attempts=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/uniqueid/orm.html#try_db_connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uniqueid.orm.try_db_connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try connecting to the db.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="uniqueid.orm.update_index">
+<code class="descclassname">uniqueid.orm.</code><code class="descname">update_index</code><span class="sig-paren">(</span><em>id_range</em>, <em>id_mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/uniqueid/orm.html#update_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uniqueid.orm.update_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the index for a mode and returns a unique start and stop index.</p>
+</dd></dl>
+
+<span class="target" id="module-uniqueid.utils"></span><p>Testable utilities for index server.</p>
+<dl class="function">
+<dt id="uniqueid.utils.create_invalid_return">
+<code class="descclassname">uniqueid.utils.</code><code class="descname">create_invalid_return</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/uniqueid/utils.html#create_invalid_return"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uniqueid.utils.create_invalid_return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an error message.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="uniqueid.utils.create_valid_return">
+<code class="descclassname">uniqueid.utils.</code><code class="descname">create_valid_return</code><span class="sig-paren">(</span><em>index</em>, <em>id_range</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/uniqueid/utils.html#create_valid_return"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uniqueid.utils.create_valid_return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the dictionary containing the start and stop index.</p>
+<p>Packs the message components.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="uniqueid.utils.range_and_mode">
+<code class="descclassname">uniqueid.utils.</code><code class="descname">range_and_mode</code><span class="sig-paren">(</span><em>environ</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/uniqueid/utils.html#range_and_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uniqueid.utils.range_and_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the parameters for a request from the environ dictionary.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="uniqueid.utils.valid_request">
+<code class="descclassname">uniqueid.utils.</code><code class="descname">valid_request</code><span class="sig-paren">(</span><em>environ</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/uniqueid/utils.html#valid_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#uniqueid.utils.valid_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Catch and handle bogus requests (ex. faveicon).</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="uniqueid.uniqueid.test.html" class="btn btn-neutral float-right" title="UniqueID Test Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="uniqueid.html" class="btn btn-neutral" title="UniqueID Project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

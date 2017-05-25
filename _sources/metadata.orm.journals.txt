@@ -1,9 +1,0 @@
-
-Metadata Orm Journals Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.journals
-   :members:
-   :private-members:
-

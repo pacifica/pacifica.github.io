@@ -1,9 +1,0 @@
-
-Metadata Orm Test Files Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.test.files
-   :members:
-   :private-members:
-

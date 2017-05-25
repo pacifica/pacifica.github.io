@@ -1,9 +1,0 @@
-
-Metadata Orm Users Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.users
-   :members:
-   :private-members:
-

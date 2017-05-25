@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Ingest Backend Module &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
+        <link rel="up" title="Ingest Project" href="ingest.ingest.html"/>
+        <link rel="next" title="Policy Project" href="policy.html"/>
+        <link rel="prev" title="Ingest Backend Module" href="ingest.ingest.backend.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="metadata.html">Metadata Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="ingest.html">Ingest Project</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="ingest.ingest.html">Ingest Project</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ingest.ingest.backend.html">Ingest Backend Module</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Ingest Backend Module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="policy.html">Policy Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uniqueid.html">UniqueID Project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pacifica</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
+        
+          <li><a href="ingest.html">Ingest Project</a> &raquo;</li>
+        
+          <li><a href="ingest.ingest.html">Ingest Project</a> &raquo;</li>
+        
+      <li>Ingest Backend Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ingest.ingest.test.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-ingest.test.test_ingest">
+<span id="ingest-backend-module"></span><h1>Ingest Backend Module<a class="headerlink" href="#module-ingest.test.test_ingest" title="Permalink to this headline">¶</a></h1>
+<p>Index server unit and integration tests.</p>
+<dl class="class">
+<dt id="ingest.test.test_ingest.IndexServerUnitTests">
+<em class="property">class </em><code class="descclassname">ingest.test.test_ingest.</code><code class="descname">IndexServerUnitTests</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Index server unit and integration tests.</p>
+<dl class="method">
+<dt id="ingest.test.test_ingest.IndexServerUnitTests.test_get_job_id">
+<code class="descname">test_get_job_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests.test_get_job_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests.test_get_job_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the parameters for a request from the environ dictionary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.test.test_ingest.IndexServerUnitTests.test_ingest_tar">
+<code class="descname">test_ingest_tar</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests.test_ingest_tar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests.test_ingest_tar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test moving individual files to the archive files are validated inline with the upload.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.test.test_ingest.IndexServerUnitTests.test_load_meta">
+<code class="descname">test_load_meta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests.test_load_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests.test_load_meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test sucking metadata from uploader and configuring it in a dictionary suitable to blob to meta ingest.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.test.test_ingest.IndexServerUnitTests.test_post_metadata">
+<code class="descname">test_post_metadata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests.test_post_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests.test_post_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test sucking metadata from uploader and configuring it in a dictionary suitable to blob to meta ingest.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.test.test_ingest.IndexServerUnitTests.test_tasks">
+<code class="descname">test_tasks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests.test_tasks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests.test_tasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the ingest task.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.test.test_ingest.IndexServerUnitTests.test_update_state">
+<code class="descname">test_update_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests.test_update_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests.test_update_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test return and update of unique index.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-ingest.test.test_upload"></span><p>Test ingest.</p>
+<dl class="function">
+<dt id="ingest.test.test_upload.check_upload_state">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">check_upload_state</code><span class="sig-paren">(</span><em>job_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#check_upload_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.check_upload_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the upload state and return results.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_upload.test_bad_archiveinterface_upload">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_archiveinterface_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_archiveinterface_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_archiveinterface_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the archive interface is down.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_upload.test_bad_hashsum_upload">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_hashsum_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_hashsum_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_hashsum_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the metadata is down.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_upload.test_bad_metadata_upload">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_metadata_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_metadata_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_metadata_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the metadata is down.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_upload.test_bad_policy_upload">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_policy_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_policy_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_policy_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the archive interface is down.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_upload.test_bad_tarfile_upload">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_tarfile_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_tarfile_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_tarfile_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the metadata is down.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_upload.test_bad_upload">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the upload.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_upload.test_good_upload">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_good_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_good_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_good_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the good upload.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_upload.try_assert_job_state">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">try_assert_job_state</code><span class="sig-paren">(</span><em>job_state</em>, <em>state</em>, <em>task</em>, <em>percent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#try_assert_job_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.try_assert_job_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>assert on the job state bits.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_upload.try_good_upload">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">try_good_upload</code><span class="sig-paren">(</span><em>tarfile</em>, <em>state</em>, <em>task</em>, <em>percent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#try_good_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.try_good_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the upload and see if the state task and percent match.</p>
+</dd></dl>
+
+<span class="target" id="module-ingest.test.test_utils"></span><p>Test ingest.</p>
+<dl class="function">
+<dt id="ingest.test.test_utils.test_bad_form_get_job_id">
+<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_bad_form_get_job_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_bad_form_get_job_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_bad_form_get_job_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the get_job_id methods.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_utils.test_create_return_params">
+<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_create_return_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_create_return_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_create_return_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the create return params.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_utils.test_create_state_return">
+<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_create_state_return</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_create_state_return"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_create_state_return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the create_state_return method.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_utils.test_invalid_return">
+<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_invalid_return</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_invalid_return"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_invalid_return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the invalid return method.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_utils.test_no_get_job_id">
+<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_no_get_job_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_no_get_job_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_no_get_job_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the get_job_id methods.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_utils.test_valid_request">
+<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_valid_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_valid_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_valid_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the valid request method.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="policy.html" class="btn btn-neutral float-right" title="Policy Project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ingest.ingest.backend.html" class="btn btn-neutral" title="Ingest Backend Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

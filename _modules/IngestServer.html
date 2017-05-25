@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>IngestServer &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Pacifica v1.0.0" href="../index.html"/>
+        <link rel="up" title="Module code" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Pacifica</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>IngestServer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for IngestServer</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;Ingest Server Main.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">wsgiref.simple_server</span> <span class="k">import</span> <span class="n">make_server</span>
+<span class="kn">from</span> <span class="nn">ingest.orm</span> <span class="k">import</span> <span class="n">IngestState</span><span class="p">,</span> <span class="n">read_state</span><span class="p">,</span> <span class="n">update_state</span>
+<span class="kn">from</span> <span class="nn">ingest.utils</span> <span class="k">import</span> <span class="n">create_invalid_return</span><span class="p">,</span> <span class="n">create_state_return</span><span class="p">,</span> \
+                            <span class="n">get_unique_id</span><span class="p">,</span> <span class="n">get_job_id</span><span class="p">,</span> <span class="n">receive</span>
+<span class="kn">from</span> <span class="nn">ingest.backend</span> <span class="k">import</span> <span class="n">tasks</span>
+
+
+<span class="c1"># pylint: disable=unused-argument</span>
+<div class="viewcode-block" id="exit_handler"><a class="viewcode-back" href="../ingest.html#IngestServer.exit_handler">[docs]</a><span class="k">def</span> <span class="nf">exit_handler</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Catch term and exit cleanly.&quot;&quot;&quot;</span>
+    <span class="nb">print</span> <span class="s1">&#39;Exiting cleanly from </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">signum</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">signum</span><span class="p">)</span></div>
+<span class="c1"># pylint: enable=unused-argument</span>
+
+
+<span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="n">exit_handler</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="start_ingest"><a class="viewcode-back" href="../ingest.html#IngestServer.start_ingest">[docs]</a><span class="k">def</span> <span class="nf">start_ingest</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Start the celery injest task.&quot;&quot;&quot;</span>
+    <span class="n">tasks</span><span class="o">.</span><span class="n">ingest</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="application"><a class="viewcode-back" href="../ingest.html#IngestServer.application">[docs]</a><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The wsgi callback.&quot;&quot;&quot;</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">info</span> <span class="ow">and</span> <span class="n">info</span> <span class="o">==</span> <span class="s1">&#39;/get_state&#39;</span><span class="p">:</span>
+        <span class="n">job_id</span> <span class="o">=</span> <span class="n">get_job_id</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="n">read_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">record</span><span class="p">:</span>
+            <span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">,</span> <span class="n">response_body</span> <span class="o">=</span> <span class="n">create_state_return</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+            <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">response_body</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">info</span> <span class="ow">and</span> <span class="n">info</span> <span class="o">==</span> <span class="s1">&#39;/upload&#39;</span><span class="p">:</span>
+
+        <span class="c1"># celery_is_alive = ping_celery()</span>
+
+        <span class="n">celery_is_alive</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">celery_is_alive</span><span class="p">:</span>
+            <span class="c1"># get temporary id from id server</span>
+            <span class="n">job_id</span> <span class="o">=</span> <span class="n">get_unique_id</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;upload_job&#39;</span><span class="p">)</span>
+            <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;UPLOADING&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">filepath</span> <span class="o">=</span> <span class="n">receive</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">job_id</span><span class="p">)</span>
+            <span class="c1"># pylint: disable=broad-except</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+                <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;receive bundle (</span><span class="si">{0}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exc</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+            <span class="c1"># pylint: enable=broad-except</span>
+
+            <span class="k">if</span> <span class="n">filepath</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">start_ingest</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span>
+
+            <span class="n">record</span> <span class="o">=</span> <span class="n">read_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">record</span> <span class="o">=</span> <span class="n">IngestState</span><span class="p">()</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;ERROR: Celery is dead&#39;</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">job_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">99</span>
+
+        <span class="k">if</span> <span class="n">record</span><span class="p">:</span>
+            <span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">,</span> <span class="n">response_body</span> <span class="o">=</span> <span class="n">create_state_return</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+            <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">response_body</span><span class="p">]</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">,</span> <span class="n">response_body</span> <span class="o">=</span> <span class="n">create_invalid_return</span><span class="p">()</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">response_body</span><span class="p">]</span>
+
+    <span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">,</span> <span class="n">response_body</span> <span class="o">=</span> <span class="n">create_invalid_return</span><span class="p">()</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">response_body</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../ingest.html#IngestServer.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Entry point for main index server.&quot;&quot;&quot;</span>
+    <span class="n">peewee_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;peewee&#39;</span><span class="p">)</span>
+    <span class="n">peewee_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">peewee_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+
+    <span class="n">main_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;index_server&#39;</span><span class="p">)</span>
+    <span class="n">main_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">main_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;MYSQL_ENV_MYSQL_DATABASE&#39;</span><span class="p">,</span> <span class="s1">&#39;pacifica_ingest&#39;</span><span class="p">)}</span>
+    <span class="n">main_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MYSQL_ENV_MYSQL_DATABASE = </span><span class="si">%(msg)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;MYSQL_PORT_3306_TCP_ADDR&#39;</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">)</span>
+    <span class="n">main_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MYSQL_PORT_3306_TCP_ADDR = </span><span class="si">%(msg)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;MYSQL_PORT_3306_TCP_PORT&#39;</span><span class="p">,</span> <span class="s1">&#39;3306&#39;</span><span class="p">)</span>
+    <span class="n">main_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MYSQL_PORT_3306_TCP_PORT = </span><span class="si">%(msg)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;MYSQL_ENV_MYSQL_USER&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest&#39;</span><span class="p">)</span>
+    <span class="n">main_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MYSQL_ENV_MYSQL_USER = </span><span class="si">%(msg)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+    <span class="n">main_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MYSQL_ENV_MYSQL_PASSWORD = </span><span class="si">%(msg)s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+    <span class="n">msg</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;MYSQL_ENV_MYSQL_PASSWORD&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">IngestState</span><span class="o">.</span><span class="n">table_exists</span><span class="p">():</span>
+        <span class="n">IngestState</span><span class="o">.</span><span class="n">create_table</span><span class="p">()</span>
+
+    <span class="n">httpd</span> <span class="o">=</span> <span class="n">make_server</span><span class="p">(</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="mi">8066</span><span class="p">,</span> <span class="n">application</span><span class="p">)</span>
+    <span class="n">httpd</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

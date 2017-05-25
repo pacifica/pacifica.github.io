@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
         <link rel="up" title="Archiveinterface Project" href="archiveinterface.html"/>
         <link rel="next" title="Archivebackends Module" href="archiveinterface.archiveinterface.archivebackends.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,9 +88,14 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="metadata.html">Metadata Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Archiveinterface Module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="archiveinterface.archiveinterface.archivebackends.html">Archivebackends Module</a></li>
@@ -92,6 +103,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="ingest.html">Ingest Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy.html">Policy Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uniqueid.html">UniqueID Project</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
@@ -107,8 +121,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -117,27 +133,44 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
           <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
-      
+        
           <li><a href="archiveinterface.html">Archiveinterface Project</a> &raquo;</li>
-      
-    <li>Archiveinterface Module</li>
+        
+      <li>Archiveinterface Module</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/archiveinterface.archiveinterface.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/archiveinterface.archiveinterface.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -152,284 +185,355 @@
 <li class="toctree-l2"><a class="reference internal" href="archiveinterface.archiveinterface.archivebackends.abstract.html">Archivebackends Abstract Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="archiveinterface.archiveinterface.archivebackends.hpss.html">Archivebackends HPSS Module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="archiveinterface.archiveinterface.archivebackends.posix.html">Archivebackends Posix Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html">Archivebackends Oracle HMS Sideband Module</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<span class="target" id="module-archiveinterface.archivebackends"></span><span class="target" id="module-archiveinterface.archive_interface"></span><p>Class for the archive interface.  Allows API to file interactions for
-passed in archive backends</p>
+<span class="target" id="module-archiveinterface.archivebackends"></span><p>Backends module contains archive interface backends specifics.</p>
+<span class="target" id="module-archiveinterface.archive_interface"></span><p>Class for the archive interface.</p>
+<p>Allows API to file interactions for passed in archive backends.</p>
 <dl class="class">
 <dt id="archiveinterface.archive_interface.ArchiveInterfaceGenerator">
 <em class="property">class </em><code class="descclassname">archiveinterface.archive_interface.</code><code class="descname">ArchiveInterfaceGenerator</code><span class="sig-paren">(</span><em>archive</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface.html#ArchiveInterfaceGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface.ArchiveInterfaceGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Defines the methods that can be used on files for request types</p>
+<dd><p>Archive Interface Generator.</p>
+<p>Defines the methods that can be used on files for request types.</p>
 <dl class="method">
 <dt id="archiveinterface.archive_interface.ArchiveInterfaceGenerator.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>env</em>, <em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface.html#ArchiveInterfaceGenerator.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface.ArchiveInterfaceGenerator.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a file specified in the request and writes back the data</p>
+<dd><p>Get a file from WSGI request.</p>
+<p>Gets a file specified in the request and writes back the data.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface.ArchiveInterfaceGenerator.pacifica_archiveinterface">
 <code class="descname">pacifica_archiveinterface</code><span class="sig-paren">(</span><em>env</em>, <em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface.html#ArchiveInterfaceGenerator.pacifica_archiveinterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface.ArchiveInterfaceGenerator.pacifica_archiveinterface" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parses request method type</p>
+<dd><p>Parse request method type.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface.ArchiveInterfaceGenerator.put">
 <code class="descname">put</code><span class="sig-paren">(</span><em>env</em>, <em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface.html#ArchiveInterfaceGenerator.put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface.ArchiveInterfaceGenerator.put" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes a file passed in the request to the archive</p>
+<dd><p>Write a file from WSGI requests.</p>
+<p>Writes a file passed in the request to the archive.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface.ArchiveInterfaceGenerator.return_response">
 <code class="descname">return_response</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface.html#ArchiveInterfaceGenerator.return_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface.ArchiveInterfaceGenerator.return_response" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prints all responses in a nice fashion</p>
+<dd><p>Print all responses in a nice fashion.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface.ArchiveInterfaceGenerator.stage">
 <code class="descname">stage</code><span class="sig-paren">(</span><em>env</em>, <em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface.html#ArchiveInterfaceGenerator.stage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface.ArchiveInterfaceGenerator.stage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stage the file specified in the request to disk</p>
+<dd><p>Stage a file from WSGI request.</p>
+<p>Stage the file specified in the request to disk.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface.ArchiveInterfaceGenerator.status">
 <code class="descname">status</code><span class="sig-paren">(</span><em>env</em>, <em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface.html#ArchiveInterfaceGenerator.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface.ArchiveInterfaceGenerator.status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the status of a file specified in the request</p>
+<dd><p>Get the file status from WSGI request.</p>
+<p>Gets the status of a file specified in the request.</p>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-archiveinterface.archive_interface_error"></span><p>Class for passing along Archive Interface Error</p>
+<span class="target" id="module-archiveinterface.archive_interface_error"></span><p>Module with the Archive Interface Error class.</p>
 <dl class="exception">
 <dt id="archiveinterface.archive_interface_error.ArchiveInterfaceError">
 <em class="property">exception </em><code class="descclassname">archiveinterface.archive_interface_error.</code><code class="descname">ArchiveInterfaceError</code><a class="reference internal" href="_modules/archiveinterface/archive_interface_error.html#ArchiveInterfaceError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_error.ArchiveInterfaceError" title="Permalink to this definition">¶</a></dt>
-<dd><p>ArchiveInterfaceError - basic exception class for this module.
+<dd><p>ArchiveInterfaceError.</p>
+<p>Basic exception class for this module.
 Will be used to throw exceptions up to the top level of the application</p>
 </dd></dl>
 
-<span class="target" id="module-archiveinterface.archive_interface_responses"></span><p>File for setting up Archive Interface server responses</p>
+<span class="target" id="module-archiveinterface.archive_interface_responses"></span><p>Archive interface server responses module.</p>
 <dl class="class">
 <dt id="archiveinterface.archive_interface_responses.Responses">
 <em class="property">class </em><code class="descclassname">archiveinterface.archive_interface_responses.</code><code class="descname">Responses</code><a class="reference internal" href="_modules/archiveinterface/archive_interface_responses.html#Responses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_responses.Responses" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class to support the archive interface exceptions</p>
+<dd><p>Class to support the archive interface responses.</p>
 <dl class="method">
 <dt id="archiveinterface.archive_interface_responses.Responses.archive_exception">
-<code class="descname">archive_exception</code><span class="sig-paren">(</span><em>start_response</em>, <em>ex</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_responses.html#Responses.archive_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_responses.Responses.archive_exception" title="Permalink to this definition">¶</a></dt>
-<dd><p>Response when unknown exception occurs</p>
+<code class="descname">archive_exception</code><span class="sig-paren">(</span><em>start_response</em>, <em>ex</em>, <em>request_method=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_responses.html#Responses.archive_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_responses.Responses.archive_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response when unknown exception occurs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="archiveinterface.archive_interface_responses.Responses.archive_working_response">
+<code class="descname">archive_working_response</code><span class="sig-paren">(</span><em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_responses.html#Responses.archive_working_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_responses.Responses.archive_working_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Response when doing a get on /.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_responses.Responses.file_stage">
 <code class="descname">file_stage</code><span class="sig-paren">(</span><em>start_response</em>, <em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_responses.html#Responses.file_stage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_responses.Responses.file_stage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Response for when file is on the hpss system</p>
+<dd><p>Response for when file is on the hpss system.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_responses.Responses.file_status">
 <code class="descname">file_status</code><span class="sig-paren">(</span><em>start_response</em>, <em>status</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_responses.html#Responses.file_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_responses.Responses.file_status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Response for when file is on the hpss system</p>
+<dd><p>Response for when file is on the hpss system.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_responses.Responses.successful_put_response">
 <code class="descname">successful_put_response</code><span class="sig-paren">(</span><em>start_response</em>, <em>total_bytes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_responses.html#Responses.successful_put_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_responses.Responses.successful_put_response" title="Permalink to this definition">¶</a></dt>
-<dd><p>Response on a successful put</p>
+<dd><p>Response on a successful put.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_responses.Responses.unknown_exception">
 <code class="descname">unknown_exception</code><span class="sig-paren">(</span><em>start_response</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_responses.html#Responses.unknown_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_responses.Responses.unknown_exception" title="Permalink to this definition">¶</a></dt>
-<dd><p>Response when unknown exception occurs</p>
+<dd><p>Response when unknown exception occurs.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_responses.Responses.unknown_request">
 <code class="descname">unknown_request</code><span class="sig-paren">(</span><em>start_response</em>, <em>request_method</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_responses.html#Responses.unknown_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_responses.Responses.unknown_request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Response for when unknown request type given</p>
+<dd><p>Response for when unknown request type given.</p>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-archiveinterface.archive_interface_unit_tests"></span><p>File used to unit test the pacifica archive interface</p>
+<span class="target" id="module-archiveinterface.archive_interface_unit_tests"></span><p>File used to unit test the pacifica archive interface.</p>
 <dl class="class">
 <dt id="archiveinterface.archive_interface_unit_tests.TestArchiveUtils">
-<em class="property">class </em><code class="descclassname">archiveinterface.archive_interface_unit_tests.</code><code class="descname">TestArchiveUtils</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestArchiveUtils"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestArchiveUtils" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contains all the tests for the Archive utils class</p>
+<em class="property">class </em><code class="descclassname">archiveinterface.archive_interface_unit_tests.</code><code class="descname">TestArchiveUtils</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestArchiveUtils"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestArchiveUtils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Archive utils class.</p>
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestArchiveUtils.test_get_http_modified_time">
 <code class="descname">test_get_http_modified_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestArchiveUtils.test_get_http_modified_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestArchiveUtils.test_get_http_modified_time" title="Permalink to this definition">¶</a></dt>
-<dd><p>test to see if the path size of a directory is returned</p>
+<dd><p>Test to see if the path size of a directory is returned.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestArchiveUtils.test_utils_absolute_path">
 <code class="descname">test_utils_absolute_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestArchiveUtils.test_utils_absolute_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestArchiveUtils.test_utils_absolute_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the return of un_abs_path</p>
+<dd><p>Test the return of un_abs_path.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="archiveinterface.archive_interface_unit_tests.TestExtendedFile">
-<em class="property">class </em><code class="descclassname">archiveinterface.archive_interface_unit_tests.</code><code class="descname">TestExtendedFile</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestExtendedFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestExtendedFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contains all the tests for the ExtendedFile Class</p>
+<em class="property">class </em><code class="descclassname">archiveinterface.archive_interface_unit_tests.</code><code class="descname">TestExtendedFile</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestExtendedFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestExtendedFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the ExtendedFile Class.</p>
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestExtendedFile.test_posix_file_mod_time">
 <code class="descname">test_posix_file_mod_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestExtendedFile.test_posix_file_mod_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestExtendedFile.test_posix_file_mod_time" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct setting of a file mod time</p>
+<dd><p>Test the correct setting of a file mod time.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestExtendedFile.test_posix_file_stage">
 <code class="descname">test_posix_file_stage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestExtendedFile.test_posix_file_stage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestExtendedFile.test_posix_file_stage" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct staging of a posix file</p>
+<dd><p>Test the correct staging of a posix file.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestExtendedFile.test_posix_file_status">
 <code class="descname">test_posix_file_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestExtendedFile.test_posix_file_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestExtendedFile.test_posix_file_status" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct values of a files status</p>
+<dd><p>Test the correct values of a files status.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="archiveinterface.archive_interface_unit_tests.TestId2Filename">
-<em class="property">class </em><code class="descclassname">archiveinterface.archive_interface_unit_tests.</code><code class="descname">TestId2Filename</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestId2Filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestId2Filename" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contains all the tests for the id2filename method</p>
+<em class="property">class </em><code class="descclassname">archiveinterface.archive_interface_unit_tests.</code><code class="descname">TestId2Filename</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestId2Filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestId2Filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the id2filename method.</p>
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_basic">
 <code class="descname">test_id2filename_basic</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestId2Filename.test_id2filename_basic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_basic" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct creation of a basicfilename</p>
+<dd><p>Test the correct creation of a basicfilename.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_negative">
 <code class="descname">test_id2filename_negative</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestId2Filename.test_id2filename_negative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_negative" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct creation of a negative filename</p>
+<dd><p>Test the correct creation of a negative filename.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_o_shift_point">
 <code class="descname">test_id2filename_o_shift_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestId2Filename.test_id2filename_o_shift_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_o_shift_point" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct creation of an over shift point filename</p>
+<dd><p>Test the correct creation of an over shift point filename.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_shift_point">
 <code class="descname">test_id2filename_shift_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestId2Filename.test_id2filename_shift_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_shift_point" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct creation of the shift point filename</p>
+<dd><p>Test the correct creation of the shift point filename.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_simple">
 <code class="descname">test_id2filename_simple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestId2Filename.test_id2filename_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_simple" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct creation of a simple filename</p>
+<dd><p>Test the correct creation of a simple filename.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_u_shift_point">
 <code class="descname">test_id2filename_u_shift_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestId2Filename.test_id2filename_u_shift_point"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_u_shift_point" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct creation of an under shift point filename</p>
+<dd><p>Test the correct creation of an under shift point filename.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_zero">
 <code class="descname">test_id2filename_zero</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestId2Filename.test_id2filename_zero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestId2Filename.test_id2filename_zero" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct creation of a zero filename</p>
+<dd><p>Test the correct creation of a zero filename.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive">
-<em class="property">class </em><code class="descclassname">archiveinterface.archive_interface_unit_tests.</code><code class="descname">TestPosixBackendArchive</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixBackendArchive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contains all the tests for the Posix backend archive</p>
+<em class="property">class </em><code class="descclassname">archiveinterface.archive_interface_unit_tests.</code><code class="descname">TestPosixBackendArchive</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixBackendArchive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the Posix backend archive.</p>
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_close">
 <code class="descname">test_posix_backend_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixBackendArchive.test_posix_backend_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_close" title="Permalink to this definition">¶</a></dt>
-<dd><p>test closing a file from posix backend</p>
+<dd><p>Test closing a file from posix backend.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_create">
 <code class="descname">test_posix_backend_create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixBackendArchive.test_posix_backend_create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_create" title="Permalink to this definition">¶</a></dt>
-<dd><p>test creating a posix backend</p>
+<dd><p>Test creating a posix backend.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_failed_write">
+<code class="descname">test_posix_backend_failed_write</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixBackendArchive.test_posix_backend_failed_write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_failed_write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test writing to a failed file.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_open">
 <code class="descname">test_posix_backend_open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixBackendArchive.test_posix_backend_open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_open" title="Permalink to this definition">¶</a></dt>
-<dd><p>test opening a file from posix backend</p>
+<dd><p>Test opening a file from posix backend.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_read">
 <code class="descname">test_posix_backend_read</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixBackendArchive.test_posix_backend_read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_read" title="Permalink to this definition">¶</a></dt>
-<dd><p>test reading a file from posix backend</p>
+<dd><p>Test reading a file from posix backend.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_write">
 <code class="descname">test_posix_backend_write</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixBackendArchive.test_posix_backend_write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_write" title="Permalink to this definition">¶</a></dt>
-<dd><p>test writing a file from posix backend</p>
+<dd><p>Test writing a file from posix backend.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_read_config_bad_field">
+<code class="descname">test_read_config_bad_field</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixBackendArchive.test_read_config_bad_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_read_config_bad_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test reading from config file with bad section.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_read_config_bad_section">
+<code class="descname">test_read_config_bad_section</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixBackendArchive.test_read_config_bad_section"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_read_config_bad_section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test reading from config file with bad section.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_read_config_file">
+<code class="descname">test_read_config_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixBackendArchive.test_read_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_read_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test reading from config file.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="archiveinterface.archive_interface_unit_tests.TestPosixStatus">
-<em class="property">class </em><code class="descclassname">archiveinterface.archive_interface_unit_tests.</code><code class="descname">TestPosixStatus</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixStatus" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contains all the tests for the POSIXStatus Class</p>
+<em class="property">class </em><code class="descclassname">archiveinterface.archive_interface_unit_tests.</code><code class="descname">TestPosixStatus</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the POSIXStatus Class.</p>
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestPosixStatus.test_posix_status_levels">
 <code class="descname">test_posix_status_levels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixStatus.test_posix_status_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixStatus.test_posix_status_levels" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct setting of file storage levels</p>
+<dd><p>Test the correct setting of file storage levels.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestPosixStatus.test_posix_status_object">
 <code class="descname">test_posix_status_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixStatus.test_posix_status_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixStatus.test_posix_status_object" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct creation of posix status object</p>
+<dd><p>Test the correct creation of posix status object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="archiveinterface.archive_interface_unit_tests.TestPosixStatus.test_posix_status_storage_media">
 <code class="descname">test_posix_status_storage_media</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_interface_unit_tests.html#TestPosixStatus.test_posix_status_storage_media"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_interface_unit_tests.TestPosixStatus.test_posix_status_storage_media" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the correct finding of posix storage media</p>
+<dd><p>Test the correct finding of posix storage media.</p>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-archiveinterface.archive_utils"></span><p>Group of utility functions that are used in various parts of the
-archive interface</p>
+<span class="target" id="module-archiveinterface.archive_utils"></span><p>Group of utility functions.</p>
+<p>Used in various parts of the archive interface.</p>
 <dl class="function">
 <dt id="archiveinterface.archive_utils.get_http_modified_time">
 <code class="descclassname">archiveinterface.archive_utils.</code><code class="descname">get_http_modified_time</code><span class="sig-paren">(</span><em>env</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_utils.html#get_http_modified_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_utils.get_http_modified_time" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the modified time from the request in unix timestamp.
-Returns current time if no time was passed</p>
+<dd><p>Get the modified time from the request in unix timestamp.</p>
+<p>Returns current time if no time was passed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="archiveinterface.archive_utils.read_config_value">
+<code class="descclassname">archiveinterface.archive_utils.</code><code class="descname">read_config_value</code><span class="sig-paren">(</span><em>section</em>, <em>field</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_utils.html#read_config_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_utils.read_config_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the value from the config file if exists.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="archiveinterface.archive_utils.set_config_name">
+<code class="descclassname">archiveinterface.archive_utils.</code><code class="descname">set_config_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_utils.html#set_config_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_utils.set_config_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the global config name.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="archiveinterface.archive_utils.un_abs_path">
 <code class="descclassname">archiveinterface.archive_utils.</code><code class="descname">un_abs_path</code><span class="sig-paren">(</span><em>path_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archive_utils.html#un_abs_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archive_utils.un_abs_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes absolute path piece</p>
+<dd><p>Remove absolute path piece.</p>
 </dd></dl>
 
+<span class="target" id="module-archiveinterface.id2filename"></span><p>Module to Convert an integer id to a filepath for storage system.</p>
+<dl class="function">
+<dt id="archiveinterface.id2filename.id2dirandfilename">
+<code class="descclassname">archiveinterface.id2filename.</code><code class="descname">id2dirandfilename</code><span class="sig-paren">(</span><em>fileid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/id2filename.html#id2dirandfilename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.id2filename.id2dirandfilename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Algorithm for getting filepath from an integer id.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="archiveinterface.id2filename.id2filename">
+<code class="descclassname">archiveinterface.id2filename.</code><code class="descname">id2filename</code><span class="sig-paren">(</span><em>fileid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/id2filename.html#id2filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.id2filename.id2filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Will return the filepath associated to passed fileid.</p>
+</dd></dl>
+
+<span class="target" id="module-archiveinterface.wsgi"></span><p>Pacifica Archive Interface.</p>
+<p>This is the main program that starts the WSGI server.</p>
+<p>The core of the server code is in archive_interface.py.</p>
+<p>Any new Backends added need to have the type argument extended
+to support the new Backend Archie type</p>
 </div>
 
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="archiveinterface.archiveinterface.archivebackends.html" class="btn btn-neutral float-right" title="Archivebackends Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="archiveinterface.archiveinterface.archivebackends.html" class="btn btn-neutral float-right" title="Archivebackends Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="archiveinterface.html" class="btn btn-neutral" title="Archiveinterface Project" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="archiveinterface.html" class="btn btn-neutral" title="Archiveinterface Project" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -463,7 +567,8 @@ Returns current time if no time was passed</p>
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

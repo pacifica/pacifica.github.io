@@ -1,9 +1,0 @@
-
-Metadata Orm Test Keys Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.test.keys
-   :members:
-   :private-members:
-

@@ -1,9 +1,0 @@
-
-Metadata Orm File Key Value Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.file_key_value
-   :members:
-   :private-members:
-

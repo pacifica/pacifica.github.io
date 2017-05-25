@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
         <link rel="up" title="Metadata Module" href="metadata.metadata.html"/>
         <link rel="next" title="Test Module" href="metadata.metadata.elastic.test.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +88,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="metadata.html">Metadata Project</a><ul class="current">
@@ -96,6 +105,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ingest.html">Ingest Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy.html">Policy Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uniqueid.html">UniqueID Project</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
@@ -111,8 +123,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -121,29 +135,46 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
           <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
-      
+        
           <li><a href="metadata.html">Metadata Project</a> &raquo;</li>
-      
+        
           <li><a href="metadata.metadata.html">Metadata Module</a> &raquo;</li>
-      
-    <li>Elastic Module</li>
+        
+      <li>Elastic Module</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/metadata.metadata.elastic.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/metadata.metadata.elastic.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -165,7 +196,8 @@
 <dl class="classmethod">
 <dt id="metadata.elastic.orm.ElasticAPI.create_elastic_mapping">
 <em class="property">classmethod </em><code class="descname">create_elastic_mapping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/orm.html#ElasticAPI.create_elastic_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.orm.ElasticAPI.create_elastic_mapping" title="Permalink to this definition">¶</a></dt>
-<dd><p>take the elastic search mapping from the object and
+<dd><p>Create elastic search index from object mappings.</p>
+<p>Take the elastic search mapping from the object and
 create an elastic search index with it.
 PUT /{index}/_mapping/{type}
 { body }</p>
@@ -174,7 +206,7 @@ PUT /{index}/_mapping/{type}
 <dl class="classmethod">
 <dt id="metadata.elastic.orm.ElasticAPI.elastic_delete">
 <em class="property">classmethod </em><code class="descname">elastic_delete</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/orm.html#ElasticAPI.elastic_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.orm.ElasticAPI.elastic_delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>delete the object for the class in elastic search.</p>
+<dd><p>Delete the object for the class in elastic search.</p>
 </dd></dl>
 
 <dl class="classmethod">
@@ -191,8 +223,8 @@ PUT /{index}/_mapping/{type}
 
 <dl class="classmethod">
 <dt id="metadata.elastic.orm.ElasticAPI.elastic_upload">
-<em class="property">classmethod </em><code class="descname">elastic_upload</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/orm.html#ElasticAPI.elastic_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.orm.ElasticAPI.elastic_upload" title="Permalink to this definition">¶</a></dt>
-<dd><p>upload the object for the class to elastic search.</p>
+<em class="property">classmethod </em><code class="descname">elastic_upload</code><span class="sig-paren">(</span><em>objs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/orm.html#ElasticAPI.elastic_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.orm.ElasticAPI.elastic_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upload the object for the class to elastic search.</p>
 </dd></dl>
 
 </dd></dl>
@@ -201,15 +233,18 @@ PUT /{index}/_mapping/{type}
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="metadata.metadata.elastic.test.html" class="btn btn-neutral float-right" title="Test Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="metadata.metadata.elastic.test.html" class="btn btn-neutral float-right" title="Test Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="metadata.metadata.html" class="btn btn-neutral" title="Metadata Module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="metadata.metadata.html" class="btn btn-neutral" title="Metadata Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -243,7 +278,8 @@ PUT /{index}/_mapping/{type}
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

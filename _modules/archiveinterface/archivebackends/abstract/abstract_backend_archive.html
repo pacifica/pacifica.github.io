@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,87 +121,132 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      
-    <li>archiveinterface.archivebackends.abstract.abstract_backend_archive</li>
+        
+      <li>archiveinterface.archivebackends.abstract.abstract_backend_archive</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
   <h1>Source code for archiveinterface.archivebackends.abstract.abstract_backend_archive</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Module that has the Abstract class for Archive Backends</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;Abstract Backend Module.</span>
+
+<span class="sd">Module that has the Abstract class for Archive Backends</span>
 <span class="sd">Any new backends need to inherit from this class and implement</span>
 <span class="sd">its methods. If the methods are not implemented in the child,</span>
-<span class="sd">the child object will not be able to be instantiated</span>
+<span class="sd">the child object will not be able to be instantiated.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
 <span class="kn">import</span> <span class="nn">abc</span>
 
+
 <div class="viewcode-block" id="AbstractBackendArchive"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive">[docs]</a><span class="k">class</span> <span class="nc">AbstractBackendArchive</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Abstract Base Class for Archive Backends&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Abstract Base Class for Archive Backends.&quot;&quot;&quot;</span>
+
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor to build backend archive.&quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-<div class="viewcode-block" id="AbstractBackendArchive.open"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method that opens a file for the backend archive that implements</span>
-<span class="sd">        this class Should return a file like object, most likely self</span>
+<div class="viewcode-block" id="AbstractBackendArchive.open"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.open">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Open File.</span>
+
+<span class="sd">        Method that opens a file for the backend archive that implements</span>
+<span class="sd">        this class Should return a file like object, most likely self.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-<div class="viewcode-block" id="AbstractBackendArchive.close"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method that closes an open file for the backend archive that</span>
-<span class="sd">        implements this class&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AbstractBackendArchive.close"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.close">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close File.</span>
+
+<span class="sd">        Method that closes an open file for the backend archive that</span>
+<span class="sd">        implements this class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-<div class="viewcode-block" id="AbstractBackendArchive.read"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method that reads an open file for the backend archive that</span>
-<span class="sd">        implements this class and returns the contents&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AbstractBackendArchive.read"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.read">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read File.</span>
+
+<span class="sd">        Method that reads an open file for the backend archive that</span>
+<span class="sd">        implements this class and returns the contents.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-<div class="viewcode-block" id="AbstractBackendArchive.write"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method that writes an open file for the backend archive that</span>
-<span class="sd">        implements this class&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AbstractBackendArchive.write"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.write">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write File.</span>
+
+<span class="sd">        Method that writes an open file for the backend archive that</span>
+<span class="sd">        implements this class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-<div class="viewcode-block" id="AbstractBackendArchive.stage"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.stage">[docs]</a>    <span class="k">def</span> <span class="nf">stage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method that stages a file for the the backend that implements</span>
+<div class="viewcode-block" id="AbstractBackendArchive.stage"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.stage">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">stage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stage File.</span>
+
+<span class="sd">        Method that stages a file for the the backend that implements</span>
 <span class="sd">        this class Stage moves a file to an appropriate location to be</span>
-<span class="sd">        downloaded&quot;&quot;&quot;</span>
+<span class="sd">        downloaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-<div class="viewcode-block" id="AbstractBackendArchive.status"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method that gets the status of a file in the archive</span>
+<div class="viewcode-block" id="AbstractBackendArchive.status"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.status">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return status of the file.</span>
+
+<span class="sd">        Method that gets the status of a file in the archive</span>
 <span class="sd">        Needs to return an implemented object of the abstract_status_class</span>
-<span class="sd">        The abstract_status_class should be implemented for each backend type&quot;&quot;&quot;</span>
+<span class="sd">        The abstract_status_class should be implemented for each backend type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-<div class="viewcode-block" id="AbstractBackendArchive.set_mod_time"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.set_mod_time">[docs]</a>    <span class="k">def</span> <span class="nf">set_mod_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mod_time</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method that sets a files mod time for the backend archive that</span>
-<span class="sd">        implements this class&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AbstractBackendArchive.set_mod_time"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.set_mod_time">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">set_mod_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mod_time</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set Modification Time for File.</span>
+
+<span class="sd">        Method that sets a files mod time for the backend archive that</span>
+<span class="sd">        implements this class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span></div></div>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -225,7 +281,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>

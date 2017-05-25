@@ -1,9 +1,0 @@
-
-Cart Archive Requests Module
-**************************************************************
-
-
-.. automodule:: cart.archive_requests
-   :members:
-   :private-members:
-

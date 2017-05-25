@@ -1,9 +1,0 @@
-
-Metadata Orm Groups Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.groups
-   :members:
-   :private-members:
-

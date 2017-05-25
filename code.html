@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
         <link rel="next" title="Metadata Project" href="metadata.html"/>
         <link rel="prev" title="Pacifica Architecture" href="architecture.html"/> 
@@ -41,6 +46,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -81,7 +87,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Pacifica API Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="metadata.html">Metadata Project</a></li>
@@ -89,8 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ingest.html">Ingest Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="policy.html">Policy Project</a></li>
-<li class="toctree-l2"><a class="reference internal" href="uniqueid.html">Uniqueid Project</a></li>
-<li class="toctree-l2"><a class="reference internal" href="uploader.html">Uploader Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uniqueid.html">UniqueID Project</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
@@ -106,8 +114,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -116,23 +126,40 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Pacifica API Documentation</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Pacifica API Documentation</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/code.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/code.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -156,20 +183,15 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ingest.html">Ingest Project</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ingest.ingest_backend.html">Ingest Backend Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ingest.ingest.html">Ingest Project</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="policy.html">Policy Project</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="policy.policy.html">Policy Module</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="uniqueid.html">Uniqueid Project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="uploader.html">Uploader Project</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="uploader.app.html">App Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="uploader.home.html">Home Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="uploader.MyEmslUpload.html">MyEmslUpload Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="uploader.uploader.html">Uploader Module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="uploader.UploadServer.html">UploadServer Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uniqueid.html">UniqueID Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uniqueid.uniqueid.html">UniqueID Module</a></li>
 </ul>
 </li>
 </ul>
@@ -178,15 +200,18 @@
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="metadata.html" class="btn btn-neutral float-right" title="Metadata Project" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="metadata.html" class="btn btn-neutral float-right" title="Metadata Project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="architecture.html" class="btn btn-neutral" title="Pacifica Architecture" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="architecture.html" class="btn btn-neutral" title="Pacifica Architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -220,7 +245,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

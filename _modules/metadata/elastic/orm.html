@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,19 +121,36 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-      
-    <li>metadata.elastic.orm</li>
+        
+      <li>metadata.elastic.orm</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -130,79 +158,76 @@
             
   <h1>Source code for metadata.elastic.orm</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Elastic search core class to convert db object.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span>
-<span class="kn">import</span> <span class="nn">requests</span>
+<span class="sd">&quot;&quot;&quot;Elastic search core class to convert db object.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">elasticsearch</span> <span class="k">import</span> <span class="n">Elasticsearch</span><span class="p">,</span> <span class="n">helpers</span>
+<span class="kn">from</span> <span class="nn">metadata.elastic</span> <span class="k">import</span> <span class="n">ELASTIC_ENDPOINT</span><span class="p">,</span> <span class="n">ELASTIC_INDEX</span>
 
-<span class="kn">from</span> <span class="nn">metadata.elastic</span> <span class="k">import</span> <span class="n">ES_INDEX_URL</span>
 
 <div class="viewcode-block" id="ElasticAPI"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI">[docs]</a><span class="k">class</span> <span class="nc">ElasticAPI</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Elastic search conversion and interface methods.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="ElasticAPI.elastic_delete"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.elastic_delete">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_delete</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        delete the object for the class in elastic search.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">class_name</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+    <span class="sd">&quot;&quot;&quot;Elastic search conversion and interface methods.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ElasticAPI.elastic_delete"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.elastic_delete">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">elastic_delete</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete the object for the class in elastic search.&quot;&quot;&quot;</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">obj_id</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">id</span>
-        <span class="n">es_obj_url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ES_INDEX_URL</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj_id</span><span class="p">))</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">es_obj_url</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;elastic_delete_obj: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span></div>
+        <span class="n">esclient</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">([</span><span class="n">ELASTIC_ENDPOINT</span><span class="p">])</span>
+        <span class="n">esclient</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ELASTIC_INDEX</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">obj_id</span><span class="p">)</span></div>
 
-    <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="ElasticAPI.elastic_upload"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.elastic_upload">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_upload</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        upload the object for the class to elastic search.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">class_name</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
-        <span class="n">obj_id</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span>
-        <span class="k">del</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span>
-        <span class="n">es_obj_url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ES_INDEX_URL</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj_id</span><span class="p">))</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">es_obj_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
-        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;upload_obj: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span></div>
+<div class="viewcode-block" id="ElasticAPI.elastic_upload"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.elastic_upload">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">elastic_upload</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">objs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Upload the object for the class to elastic search.&quot;&quot;&quot;</span>
+        <span class="n">esclient</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">([</span><span class="n">ELASTIC_ENDPOINT</span><span class="p">])</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="n">clean_oper</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
+            <span class="n">oper</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">esclient</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ELASTIC_INDEX</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]):</span>
+                <span class="n">oper</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">oper</span><span class="p">[</span><span class="s1">&#39;_op_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;update&#39;</span>
+                <span class="n">oper</span><span class="p">[</span><span class="s1">&#39;doc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">oper</span> <span class="o">=</span> <span class="n">obj</span>
+                <span class="n">oper</span><span class="p">[</span><span class="s1">&#39;_op_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;create&#39;</span>
+            <span class="n">oper</span><span class="p">[</span><span class="s1">&#39;_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ELASTIC_INDEX</span>
+            <span class="n">oper</span><span class="p">[</span><span class="s1">&#39;_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_name</span>
+            <span class="n">oper</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span><span class="p">)</span>
+            <span class="n">clean_oper</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oper</span><span class="p">)</span>
+        <span class="n">helpers</span><span class="o">.</span><span class="n">bulk</span><span class="p">(</span><span class="n">esclient</span><span class="p">,</span> <span class="n">clean_oper</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
 
-    <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="ElasticAPI.create_elastic_mapping"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.create_elastic_mapping">[docs]</a>    <span class="k">def</span> <span class="nf">create_elastic_mapping</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+<div class="viewcode-block" id="ElasticAPI.create_elastic_mapping"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.create_elastic_mapping">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create_elastic_mapping</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        take the elastic search mapping from the object and</span>
+<span class="sd">        Create elastic search index from object mappings.</span>
+
+<span class="sd">        Take the elastic search mapping from the object and</span>
 <span class="sd">        create an elastic search index with it.</span>
 <span class="sd">        PUT /{index}/_mapping/{type}</span>
 <span class="sd">        { body }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">es_mapping_str</span> <span class="o">=</span> <span class="n">dumps</span><span class="p">(</span><span class="n">cls</span><span class="o">.</span><span class="n">elastic_mapping</span><span class="p">())</span>
-        <span class="n">class_name</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">__name__</span>
-        <span class="n">es_mapping_url</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">/_mapping/</span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ES_INDEX_URL</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">es_mapping_url</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">es_mapping_str</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span><span class="o">/</span><span class="mi">100</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;create_elastic_mapping: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span></div>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="n">esclient</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">([</span><span class="n">ELASTIC_ENDPOINT</span><span class="p">])</span>
+        <span class="n">esclient</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">put_mapping</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">elastic_mapping</span><span class="p">())</span></div>
 
-    <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="ElasticAPI.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.elastic_mapping_builder">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Build elastic mapping properties hash from object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ElasticAPI.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.elastic_mapping_builder">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build elastic mapping properties hash from object.&quot;&quot;&quot;</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="o">=</span> \
-        <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s2">&quot;yyyy-mm-dd&#39;T&#39;HH:mm:ss&quot;</span><span class="p">}</span></div>
+            <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s2">&quot;yyyy-mm-dd&#39;T&#39;HH:mm:ss&quot;</span><span class="p">}</span></div>
 
-    <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="ElasticAPI.elastic_mapping"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.elastic_mapping">[docs]</a>    <span class="k">def</span> <span class="nf">elastic_mapping</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return the elasticsearch mapping for the object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ElasticAPI.elastic_mapping"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.elastic_mapping">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">elastic_mapping</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the elasticsearch mapping for the object.&quot;&quot;&quot;</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">cls</span><span class="o">.</span><span class="n">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
         <span class="k">return</span> <span class="n">ret</span></div></div>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -237,7 +262,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>

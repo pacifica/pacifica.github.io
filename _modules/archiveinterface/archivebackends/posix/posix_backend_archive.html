@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,19 +121,36 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      
-    <li>archiveinterface.archivebackends.posix.posix_backend_archive</li>
+        
+      <li>archiveinterface.archivebackends.posix.posix_backend_archive</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -130,8 +158,11 @@
             
   <h1>Source code for archiveinterface.archivebackends.posix.posix_backend_archive</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
-<span class="sd">&quot;&quot;&quot;Module that implements the abstract_backend_archive class for a posix</span>
-<span class="sd">backend&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Posix Backend Archive Module.</span>
+
+<span class="sd">Module that implements the abstract_backend_archive class for a posix</span>
+<span class="sd">backend.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.archive_utils</span> <span class="k">import</span> <span class="n">un_abs_path</span>
@@ -140,25 +171,29 @@
 <span class="kn">from</span> <span class="nn">archiveinterface.archivebackends.abstract.abstract_backend_archive</span> \
     <span class="kn">import</span> <span class="nn">AbstractBackendArchive</span>
 
+
 <div class="viewcode-block" id="PosixBackendArchive"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive">[docs]</a><span class="k">class</span> <span class="nc">PosixBackendArchive</span><span class="p">(</span><span class="n">AbstractBackendArchive</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class that implements the abstract base class for the posix</span>
-<span class="sd">    archive interface backend&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">PosixBackendArchive</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Posix Backend Archive Class.</span>
+
+<span class="sd">    Class that implements the abstract base class for the posix</span>
+<span class="sd">    archive interface backend.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor for Posix Backend Archive.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PosixBackendArchive</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span> <span class="o">=</span> <span class="n">prefix</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_user</span> <span class="o">=</span> <span class="n">user</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_auth</span> <span class="o">=</span> <span class="n">auth</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="PosixBackendArchive.open"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Open a posix file&quot;&quot;&quot;</span>
-        <span class="c1">#want to close any open files first</span>
+        <span class="sd">&quot;&quot;&quot;Open a posix file.&quot;&quot;&quot;</span>
+        <span class="c1"># want to close any open files first</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">ArchiveInterfaceError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t close previous posix file before opening new &quot;</span>\
-                      <span class="s2">&quot;one with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+                      <span class="s1">&#39;one with error: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">fpath</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
@@ -170,7 +205,7 @@
             <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PosixBackendArchive.close"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Close a posix file&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Close a posix file.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -180,7 +215,7 @@
             <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PosixBackendArchive.read"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Read a posix file&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Read a posix file.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">blocksize</span><span class="p">)</span>
@@ -189,7 +224,7 @@
             <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PosixBackendArchive.write"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Write a posix file to the archive&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Write a posix file to the archive.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
@@ -198,7 +233,7 @@
             <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PosixBackendArchive.set_mod_time"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive.set_mod_time">[docs]</a>    <span class="k">def</span> <span class="nf">set_mod_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mod_time</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set the mod time on a posix file&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Set the mod time on a posix file.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">set_mod_time</span><span class="p">(</span><span class="n">mod_time</span><span class="p">)</span>
@@ -207,7 +242,7 @@
             <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PosixBackendArchive.stage"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive.stage">[docs]</a>    <span class="k">def</span> <span class="nf">stage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Stage a posix file (no-opt essentially)&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Stage a posix file (no-opt essentially).&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">stage</span><span class="p">()</span>
@@ -216,7 +251,7 @@
             <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PosixBackendArchive.status"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get the status of a posix file&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Get the status of a posix file.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">status</span><span class="p">()</span>
@@ -225,6 +260,9 @@
             <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div></div>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -259,7 +297,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../../../_static/jquery.js"></script>

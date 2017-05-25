@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
         <link rel="up" title="Elastic Module" href="metadata.metadata.elastic.html"/>
         <link rel="next" title="Orm Module" href="metadata.metadata.orm.html"/>
@@ -42,6 +47,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -82,7 +88,10 @@
           
             
             
-                <ul class="current">
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="code.html">Pacifica API Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="metadata.html">Metadata Project</a><ul class="current">
@@ -96,6 +105,9 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="cartd.html">Cartd Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ingest.html">Ingest Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="policy.html">Policy Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uniqueid.html">UniqueID Project</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="community.html">Pacifica Community</a></li>
@@ -111,8 +123,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -121,299 +135,165 @@
         <div class="rst-content">
           
 
- 
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
           <li><a href="code.html">Pacifica API Documentation</a> &raquo;</li>
-      
+        
           <li><a href="metadata.html">Metadata Project</a> &raquo;</li>
-      
+        
           <li><a href="metadata.metadata.html">Metadata Module</a> &raquo;</li>
-      
+        
           <li><a href="metadata.metadata.elastic.html">Elastic Module</a> &raquo;</li>
-      
-    <li>Test Module</li>
+        
+      <li>Test Module</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
-            <a href="_sources/metadata.metadata.elastic.test.txt" rel="nofollow"> View page source</a>
+            
+            <a href="_sources/metadata.metadata.elastic.test.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-metadata.elastic.test.api">
-<span id="test-module"></span><h1>Test Module<a class="headerlink" href="#module-metadata.elastic.test.api" title="Permalink to this headline">¶</a></h1>
-<p>Test the ElasticAPI object for managing data in ES</p>
+  <div class="section" id="module-metadata.elastic.test.test_api">
+<span id="test-module"></span><h1>Test Module<a class="headerlink" href="#module-metadata.elastic.test.test_api" title="Permalink to this headline">¶</a></h1>
+<p>Test the ElasticAPI object for managing data in ES.</p>
 <dl class="class">
-<dt id="metadata.elastic.test.api.TestElasticAPI">
-<em class="property">class </em><code class="descclassname">metadata.elastic.test.api.</code><code class="descname">TestElasticAPI</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/api.html#TestElasticAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.api.TestElasticAPI" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the elasic API class methods</p>
+<dt id="metadata.elastic.test.test_api.TestElasticAPI">
+<em class="property">class </em><code class="descclassname">metadata.elastic.test.test_api.</code><code class="descname">TestElasticAPI</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_api.html#TestElasticAPI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_api.TestElasticAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the elasic API class methods.</p>
 <dl class="method">
-<dt id="metadata.elastic.test.api.TestElasticAPI.test_delete">
-<code class="descname">test_delete</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/api.html#TestElasticAPI.test_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.api.TestElasticAPI.test_delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the delete class method</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.api.TestElasticAPI.test_elastic_mapping">
-<code class="descname">test_elastic_mapping</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/api.html#TestElasticAPI.test_elastic_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.api.TestElasticAPI.test_elastic_mapping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elastic_mapping class method</p>
+<dt id="metadata.elastic.test.test_api.TestElasticAPI.test_delete">
+<code class="descname">test_delete</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_api.html#TestElasticAPI.test_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_api.TestElasticAPI.test_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the delete class method.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="metadata.elastic.test.api.TestElasticAPI.test_failed_delete">
-<code class="descname">test_failed_delete</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/api.html#TestElasticAPI.test_failed_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.api.TestElasticAPI.test_failed_delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the delete class method failed upload</p>
+<dt id="metadata.elastic.test.test_api.TestElasticAPI.test_elastic_mapping">
+<code class="descname">test_elastic_mapping</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_api.html#TestElasticAPI.test_elastic_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_api.TestElasticAPI.test_elastic_mapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the elastic_mapping class method.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="metadata.elastic.test.api.TestElasticAPI.test_failed_elastic_mapping">
-<code class="descname">test_failed_elastic_mapping</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/api.html#TestElasticAPI.test_failed_elastic_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.api.TestElasticAPI.test_failed_elastic_mapping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elastic mapping class method failed upload</p>
+<dt id="metadata.elastic.test.test_api.TestElasticAPI.test_failed_delete">
+<code class="descname">test_failed_delete</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_api.html#TestElasticAPI.test_failed_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_api.TestElasticAPI.test_failed_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the delete class method failed upload.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="metadata.elastic.test.api.TestElasticAPI.test_failed_upload">
-<code class="descname">test_failed_upload</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/api.html#TestElasticAPI.test_failed_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.api.TestElasticAPI.test_failed_upload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the upload class method failed upload</p>
+<dt id="metadata.elastic.test.test_api.TestElasticAPI.test_failed_elastic_mapping">
+<code class="descname">test_failed_elastic_mapping</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_api.html#TestElasticAPI.test_failed_elastic_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_api.TestElasticAPI.test_failed_elastic_mapping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the elastic mapping class method failed upload.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="metadata.elastic.test.api.TestElasticAPI.test_upload">
-<code class="descname">test_upload</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/api.html#TestElasticAPI.test_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.api.TestElasticAPI.test_upload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the upload class method</p>
+<dt id="metadata.elastic.test.test_api.TestElasticAPI.test_failed_upload">
+<code class="descname">test_failed_upload</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_api.html#TestElasticAPI.test_failed_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_api.TestElasticAPI.test_failed_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the upload class method failed upload.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.elastic.test.test_api.TestElasticAPI.test_upload">
+<code class="descname">test_upload</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_api.html#TestElasticAPI.test_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_api.TestElasticAPI.test_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the upload class method.</p>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-metadata.elastic.test.base"></span><p>this module tests the metadata.elastic module bits...</p>
+<span class="target" id="module-metadata.elastic.test.test_base"></span><p>This module tests the metadata.elastic module bits.</p>
 <dl class="class">
-<dt id="metadata.elastic.test.base.TestElasticUtils">
-<em class="property">class </em><code class="descclassname">metadata.elastic.test.base.</code><code class="descname">TestElasticUtils</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/base.html#TestElasticUtils"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.base.TestElasticUtils" title="Permalink to this definition">¶</a></dt>
-<dd><p>This tests the utility functions in metadata.elastic</p>
+<dt id="metadata.elastic.test.test_base.TestElasticUtils">
+<em class="property">class </em><code class="descclassname">metadata.elastic.test.test_base.</code><code class="descname">TestElasticUtils</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_base.html#TestElasticUtils"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_base.TestElasticUtils" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tests the utility functions in metadata.elastic.</p>
 <dl class="method">
-<dt id="metadata.elastic.test.base.TestElasticUtils.test_create_elastic_index">
-<code class="descname">test_create_elastic_index</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/base.html#TestElasticUtils.test_create_elastic_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.base.TestElasticUtils.test_create_elastic_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the create elastic index</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.base.TestElasticUtils.test_elastic_connect">
-<code class="descname">test_elastic_connect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/base.html#TestElasticUtils.test_elastic_connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.base.TestElasticUtils.test_elastic_connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the create elastic index</p>
+<dt id="metadata.elastic.test.test_base.TestElasticUtils.test_create_elastic_index">
+<code class="descname">test_create_elastic_index</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_base.html#TestElasticUtils.test_create_elastic_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_base.TestElasticUtils.test_create_elastic_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the create elastic index.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="metadata.elastic.test.base.TestElasticUtils.test_error_elastic_index">
-<code class="descname">test_error_elastic_index</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/base.html#TestElasticUtils.test_error_elastic_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.base.TestElasticUtils.test_error_elastic_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the create elastic index</p>
+<dt id="metadata.elastic.test.test_base.TestElasticUtils.test_elastic_connect">
+<code class="descname">test_elastic_connect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_base.html#TestElasticUtils.test_elastic_connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_base.TestElasticUtils.test_elastic_connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the create elastic index.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="metadata.elastic.test.base.TestElasticUtils.test_error_es_connect">
-<code class="descname">test_error_es_connect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/base.html#TestElasticUtils.test_error_es_connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.base.TestElasticUtils.test_error_es_connect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the create elastic index</p>
+<dt id="metadata.elastic.test.test_base.TestElasticUtils.test_error_elastic_index">
+<code class="descname">test_error_elastic_index</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_base.html#TestElasticUtils.test_error_elastic_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_base.TestElasticUtils.test_error_elastic_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the create elastic index.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="metadata.elastic.test.base.TestElasticUtils.test_existing_elastic_index">
-<code class="descname">test_existing_elastic_index</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/base.html#TestElasticUtils.test_existing_elastic_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.base.TestElasticUtils.test_existing_elastic_index" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the create elastic index</p>
+<dt id="metadata.elastic.test.test_base.TestElasticUtils.test_error_es_connect">
+<code class="descname">test_error_es_connect</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_base.html#TestElasticUtils.test_error_es_connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_base.TestElasticUtils.test_error_es_connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the create elastic index.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="metadata.elastic.test.test_base.TestElasticUtils.test_existing_elastic_index">
+<code class="descname">test_existing_elastic_index</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_base.html#TestElasticUtils.test_existing_elastic_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_base.TestElasticUtils.test_existing_elastic_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the create elastic index.</p>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-metadata.elastic.test.elastic"></span><p>Test the elastic mapping class methods.</p>
+<span class="target" id="module-metadata.elastic.test.test_elastic"></span><p>Test the elastic mapping class methods.</p>
 <dl class="class">
-<dt id="metadata.elastic.test.elastic.TestElastic">
-<em class="property">class </em><code class="descclassname">metadata.elastic.test.elastic.</code><code class="descname">TestElastic</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/elastic.html#TestElastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic" title="Permalink to this definition">¶</a></dt>
+<dt id="metadata.elastic.test.test_elastic.TestElastic">
+<em class="property">class </em><code class="descclassname">metadata.elastic.test.test_elastic.</code><code class="descname">TestElastic</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_elastic.html#TestElastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_elastic.TestElastic" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test elastic mapping class methods.</p>
 <dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_citationcontributor">
-<code class="descname">test_elastic_mapping_citationcontributor</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.citation_contributor.CitationContributor'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_citationcontributor" title="Permalink to this definition">¶</a></dt>
+<dt id="metadata.elastic.test.test_elastic.TestElastic.test_elastic_mapping">
+<code class="descname">test_elastic_mapping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/test_elastic.html#TestElastic.test_elastic_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.test_elastic.TestElastic.test_elastic_mapping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test the elasticsearch mapping method.</p>
 <p>check to see all types are valid both content and python types.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_citationproposal">
-<code class="descname">test_elastic_mapping_citationproposal</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.citation_proposal.CitationProposal'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_citationproposal" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_citations">
-<code class="descname">test_elastic_mapping_citations</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.citations.Citations'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_citations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_contributors">
-<code class="descname">test_elastic_mapping_contributors</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.contributors.Contributors'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_contributors" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_filekeyvalue">
-<code class="descname">test_elastic_mapping_filekeyvalue</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.file_key_value.FileKeyValue'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_filekeyvalue" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_files">
-<code class="descname">test_elastic_mapping_files</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.files.Files'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_files" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_groups">
-<code class="descname">test_elastic_mapping_groups</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.groups.Groups'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_groups" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_institutionperson">
-<code class="descname">test_elastic_mapping_institutionperson</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.institution_person.InstitutionPerson'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_institutionperson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_institutions">
-<code class="descname">test_elastic_mapping_institutions</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.institutions.Institutions'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_institutions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_instrumentgroup">
-<code class="descname">test_elastic_mapping_instrumentgroup</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.instrument_group.InstrumentGroup'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_instrumentgroup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_instruments">
-<code class="descname">test_elastic_mapping_instruments</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.instruments.Instruments'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_instruments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_journals">
-<code class="descname">test_elastic_mapping_journals</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.journals.Journals'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_journals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_keys">
-<code class="descname">test_elastic_mapping_keys</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.keys.Keys'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_keys" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_keywords">
-<code class="descname">test_elastic_mapping_keywords</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.keywords.Keywords'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_keywords" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_proposalinstrument">
-<code class="descname">test_elastic_mapping_proposalinstrument</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.proposal_instrument.ProposalInstrument'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_proposalinstrument" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_proposalparticipant">
-<code class="descname">test_elastic_mapping_proposalparticipant</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.proposal_participant.ProposalParticipant'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_proposalparticipant" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_proposals">
-<code class="descname">test_elastic_mapping_proposals</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.proposals.Proposals'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_proposals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_transactionkeyvalue">
-<code class="descname">test_elastic_mapping_transactionkeyvalue</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.trans_key_value.TransactionKeyValue'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_transactionkeyvalue" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_transactions">
-<code class="descname">test_elastic_mapping_transactions</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.transactions.Transactions'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_transactions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_usergroup">
-<code class="descname">test_elastic_mapping_usergroup</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.user_group.UserGroup'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_usergroup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_users">
-<code class="descname">test_elastic_mapping_users</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.users.Users'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_users" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_values">
-<code class="descname">test_elastic_mapping_values</code><span class="sig-paren">(</span><em>orm_cls=&lt;class 'metadata.orm.values.Values'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.elastic.test.elastic.TestElastic.test_elastic_mapping_values" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="metadata.elastic.test.elastic.test_elastic_mapping">
-<code class="descclassname">metadata.elastic.test.elastic.</code><code class="descname">test_elastic_mapping</code><span class="sig-paren">(</span><em>self</em>, <em>orm_cls=&lt;class 'metadata.orm.instrument_group.InstrumentGroup'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/elastic/test/elastic.html#test_elastic_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.elastic.test.elastic.test_elastic_mapping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the elasticsearch mapping method.</p>
-<p>check to see all types are valid both content and python types.</p>
 </dd></dl>
 
 </div>
 
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="metadata.metadata.orm.html" class="btn btn-neutral float-right" title="Orm Module" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="metadata.metadata.orm.html" class="btn btn-neutral float-right" title="Orm Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="metadata.metadata.elastic.html" class="btn btn-neutral" title="Elastic Module" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="metadata.metadata.elastic.html" class="btn btn-neutral" title="Elastic Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -447,7 +327,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="_static/jquery.js"></script>

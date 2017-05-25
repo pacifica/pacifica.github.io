@@ -1,0 +1,461 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>policy.test.test_uploader &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pacifica</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>policy.test.test_uploader</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for policy.test.test_uploader</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;Test the uploader policy.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span><span class="p">,</span> <span class="n">loads</span>
+<span class="kn">from</span> <span class="nn">cherrypy.test</span> <span class="k">import</span> <span class="n">helper</span>
+<span class="kn">from</span> <span class="nn">policy.uploader.rest</span> <span class="k">import</span> <span class="n">UploaderPolicy</span>
+<span class="kn">from</span> <span class="nn">policy.test.test_common</span> <span class="k">import</span> <span class="n">CommonCPSetup</span>
+
+
+<div class="viewcode-block" id="TestUploaderPolicy"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_uploader.TestUploaderPolicy">[docs]</a><span class="k">class</span> <span class="nc">TestUploaderPolicy</span><span class="p">(</span><span class="n">helper</span><span class="o">.</span><span class="n">CPWebCase</span><span class="p">,</span> <span class="n">CommonCPSetup</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test the uploader policy service.&quot;&quot;&quot;</span>
+
+    <span class="n">PORT</span> <span class="o">=</span> <span class="mi">8181</span>
+    <span class="n">HOST</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)]</span>
+
+    <span class="n">queries</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;user_query&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">,</span> <span class="s1">&#39;first_name&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;network_id&#39;</span><span class="p">:</span> <span class="s1">&#39;dmlb2001&#39;</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;answer&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Brown Jr&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;David&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;user_query_no_where&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">,</span> <span class="s1">&#39;first_name&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{}</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;answer&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Brown Jr&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;David&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;user_query_with_proposal&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">,</span> <span class="s1">&#39;first_name&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;proposal_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1234a&#39;</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;answer&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="s1">&#39;Brown Jr&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="s1">&#39;David&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;proposal_query&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;proposals&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;proposal_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1234a&#39;</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;answer&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1234a&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Pacifica Development (active no close)&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;proposal_query_not_admin&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;proposals&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;proposal_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1234b&#39;</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;answer&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1234b&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Pacifica Development&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;proposal_query2&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;proposals&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1234a&#39;</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;answer&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1234a&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Pacifica Development (active no close)&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;proposal_query_with_instruments&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;proposals&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;instrument_id&#39;</span><span class="p">:</span> <span class="mi">54</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;answer&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1234a&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Pacifica Development (active no close)&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;proposal_query_for_user&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;proposals&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{}</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;answer&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1234a&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Pacifica Development (active no close)&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;instrument_query&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;instruments&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="mi">54</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;answer&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="mi">54</span><span class="p">,</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;NMR PROBES: Nittany Liquid Probes&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;instrument_query_from_proposal&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;instruments&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;proposal_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1234a&#39;</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;answer&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="mi">54</span><span class="p">,</span>
+                    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;NMR PROBES: Nittany Liquid Probes&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;instrument_query_from_proposal_bad&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;instruments&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;proposal_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1234a&#39;</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;answer&#39;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="TestUploaderPolicy.test_queries"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_uploader.TestUploaderPolicy.test_queries">[docs]</a>    <span class="k">def</span> <span class="nf">test_queries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test posting the queries.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">queries</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="s1">&#39;/uploader&#39;</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span> <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;query&#39;</span><span class="p">]))))],</span>
+                         <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+                         <span class="n">dumps</span><span class="p">(</span><span class="n">value</span><span class="p">[</span><span class="s1">&#39;query&#39;</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">):</span>
+                <span class="n">answer</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">akey</span><span class="p">,</span> <span class="n">avalue</span> <span class="ow">in</span> <span class="n">value</span><span class="p">[</span><span class="s1">&#39;answer&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">akey</span> <span class="ow">in</span> <span class="n">answer</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">avalue</span><span class="p">,</span> <span class="n">answer</span><span class="p">[</span><span class="n">akey</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestUploaderPolicy.test_bad_query"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_uploader.TestUploaderPolicy.test_bad_query">[docs]</a>    <span class="k">def</span> <span class="nf">test_bad_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Try to throw a bad query at the query select method.&quot;&quot;&quot;</span>
+        <span class="n">upolicy</span> <span class="o">=</span> <span class="n">UploaderPolicy</span><span class="p">()</span>
+        <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># pylint: disable=protected-access</span>
+            <span class="n">upolicy</span><span class="o">.</span><span class="n">_query_select</span><span class="p">({})</span>
+            <span class="c1"># pylint: enable=protected-access</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span>
+        <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">bad_query</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{}</span>
+            <span class="p">}</span>
+            <span class="c1"># pylint: disable=protected-access</span>
+            <span class="n">upolicy</span><span class="o">.</span><span class="n">_query_select</span><span class="p">(</span><span class="n">bad_query</span><span class="p">)</span>
+            <span class="c1"># pylint: enable=protected-access</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span>
+
+        <span class="n">bad_queries</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;abcd&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;abcd&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;columns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;network_id&#39;</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">bad_query</span> <span class="ow">in</span> <span class="n">bad_queries</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="s1">&#39;/uploader&#39;</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="o">+</span><span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">bad_query</span><span class="p">))))],</span>
+                         <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+                         <span class="n">dumps</span><span class="p">(</span><span class="n">bad_query</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;500 Internal Server Error&#39;</span><span class="p">)</span>
+            <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c1"># pragma no cover</span>
+                <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span>
+
+        <span class="c1"># pylint: disable=protected-access</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">upolicy</span><span class="o">.</span><span class="n">_valid_query</span><span class="p">({</span><span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="s1">&#39;bar&#39;</span><span class="p">}))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">upolicy</span><span class="o">.</span><span class="n">_valid_query</span><span class="p">({</span><span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;baz&#39;</span><span class="p">}))</span></div></div>
+        <span class="c1"># pylint: enable=protected-access</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

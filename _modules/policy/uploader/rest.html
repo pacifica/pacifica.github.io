@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -30,6 +32,9 @@
   
 
   
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
@@ -40,6 +45,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -80,7 +86,10 @@
           
             
             
-                <ul>
+              
+            
+            
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
@@ -96,8 +105,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../../index.html">Pacifica</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pacifica</a>
+        
       </nav>
 
 
@@ -110,19 +121,36 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-      
-    <li>policy.uploader.rest</li>
+        
+      <li>policy.uploader.rest</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -130,29 +158,101 @@
             
   <h1>Source code for policy.uploader.rest</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">The CherryPy rest object for the structure</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">policy.uploader.instrument</span> <span class="k">import</span> <span class="n">InstrumentQuery</span>
-<span class="kn">from</span> <span class="nn">policy.uploader.proposal</span> <span class="k">import</span> <span class="n">ProposalQuery</span>
+<span class="sd">&quot;&quot;&quot;The CherryPy rest object for the structure.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span>
+<span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">HTTPError</span>
+<span class="kn">from</span> <span class="nn">policy.admin</span> <span class="k">import</span> <span class="n">AdminPolicy</span>
+
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
-<div class="viewcode-block" id="UploaderPolicy"><a class="viewcode-back" href="../../../policy.policy.uploader.html#policy.uploader.rest.UploaderPolicy">[docs]</a><span class="k">class</span> <span class="nc">UploaderPolicy</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="UploaderPolicy"><a class="viewcode-back" href="../../../policy.policy.uploader.html#policy.uploader.rest.UploaderPolicy">[docs]</a><span class="k">class</span> <span class="nc">UploaderPolicy</span><span class="p">(</span><span class="n">AdminPolicy</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    CherryPy root object class</span>
+<span class="sd">    CherryPy root object class.</span>
 
 <span class="sd">    not exposed by default the base objects are exposed</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">exposed</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create local objects to allow for import to work</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span> <span class="o">=</span> <span class="n">InstrumentQuery</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">proposal</span> <span class="o">=</span> <span class="n">ProposalQuery</span><span class="p">()</span></div>
+
+    <span class="n">exposed</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_filter_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="n">result</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+<div class="viewcode-block" id="UploaderPolicy._clean_user_query_id"><a class="viewcode-back" href="../../../policy.policy.uploader.html#policy.uploader.rest.UploaderPolicy._clean_user_query_id">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_clean_user_query_id</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;determine the user_id for whatever is in the query.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+    <span class="c1"># pylint: disable=too-many-branches</span>
+    <span class="k">def</span> <span class="nf">_query_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clean_user_query_id</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="n">wants_object</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="s1">&#39;from&#39;</span><span class="p">]</span>
+        <span class="n">where_objects</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">wants_object</span> <span class="o">==</span> <span class="s1">&#39;users&#39;</span><span class="p">:</span>
+            <span class="n">user_queries</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="s1">&#39;network_id&#39;</span> <span class="ow">in</span> <span class="n">where_objects</span><span class="p">:</span>
+                <span class="n">user_queries</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;network_id&#39;</span><span class="p">:</span> <span class="n">query</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">][</span><span class="s1">&#39;network_id&#39;</span><span class="p">]})</span>
+            <span class="k">elif</span> <span class="s1">&#39;proposal_id&#39;</span> <span class="ow">in</span> <span class="n">where_objects</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">prop_user_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_users_for_prop</span><span class="p">(</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">][</span><span class="s1">&#39;proposal_id&#39;</span><span class="p">]):</span>
+                    <span class="n">user_queries</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="n">prop_user_id</span><span class="p">})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">user_queries</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">})</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">user_query</span> <span class="ow">in</span> <span class="n">user_queries</span><span class="p">:</span>
+                <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_user_info_from_kwds</span><span class="p">(</span><span class="o">**</span><span class="n">user_query</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">if</span> <span class="n">wants_object</span> <span class="o">==</span> <span class="s1">&#39;proposals&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;instrument_id&#39;</span> <span class="ow">in</span> <span class="n">where_objects</span><span class="p">:</span>
+                <span class="n">prop_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proposals_for_user_inst</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">query</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">][</span><span class="s1">&#39;instrument_id&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">query</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">]:</span>
+                <span class="n">prop_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">][</span><span class="s1">&#39;_id&#39;</span><span class="p">]]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prop_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proposals_for_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proposal_info_from_ids</span><span class="p">(</span><span class="n">prop_ids</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">wants_object</span> <span class="o">==</span> <span class="s1">&#39;instruments&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;proposal_id&#39;</span> <span class="ow">in</span> <span class="n">query</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">]:</span>
+                <span class="n">inst_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instruments_for_user_prop</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">query</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">][</span><span class="s1">&#39;proposal_id&#39;</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">query</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">]:</span>
+                <span class="n">inst_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">][</span><span class="s1">&#39;_id&#39;</span><span class="p">]]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instrument_info_from_ids</span><span class="p">(</span><span class="n">inst_ids</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Invalid Query: &#39;</span> <span class="o">+</span>
+                        <span class="s1">&#39;Not sure how to want </span><span class="si">{0}</span><span class="s1"> where </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wants_object</span><span class="p">,</span> <span class="n">query</span><span class="p">[</span><span class="s1">&#39;where&#39;</span><span class="p">]))</span>
+    <span class="c1"># pylint: enable=too-many-branches</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_valid_query</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;user&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">query</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="s1">&#39;from&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">query</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="s1">&#39;columns&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">query</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># pylint: disable=invalid-name</span>
+<div class="viewcode-block" id="UploaderPolicy.POST"><a class="viewcode-back" href="../../../policy.policy.uploader.html#policy.uploader.rest.UploaderPolicy.POST">[docs]</a>    <span class="nd">@tools</span><span class="o">.</span><span class="n">json_out</span><span class="p">()</span>
+    <span class="nd">@tools</span><span class="o">.</span><span class="n">json_in</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read in the json query and return results.&quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid_query</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="n">dumps</span><span class="p">({</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid Query.&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;error&#39;</span><span class="p">}))</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query_select</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filter_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;columns&#39;</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">results</span></div></div>
+    <span class="c1"># pylint: enable=invalid-name</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 </pre></div>
 
+           </div>
+           <div class="articleComments">
+            
            </div>
           </div>
           <footer>
@@ -187,7 +287,8 @@
             VERSION:'1.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../../_static/jquery.js"></script>

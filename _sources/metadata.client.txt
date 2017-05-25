@@ -1,9 +1,0 @@
-
-Metadata Client Module
-**************************************************************
-
-
-.. automodule:: metadata.client
-   :members:
-   :private-members:
-

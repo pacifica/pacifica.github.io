@@ -1,9 +1,0 @@
-
-Metadata Orm Contributors Module
-**************************************************************
-
-
-.. automodule:: metadata.orm.contributors
-   :members:
-   :private-members:
-

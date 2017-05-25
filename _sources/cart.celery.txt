@@ -1,9 +1,0 @@
-
-Cart Celery Module
-**************************************************************
-
-
-.. automodule:: cart.celery
-   :members:
-   :private-members:
-

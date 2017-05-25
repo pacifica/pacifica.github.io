@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ingest.orm &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Pacifica</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>ingest.orm</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ingest.orm</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;ORM for index server.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">peewee</span>
+
+<span class="n">DB</span> <span class="o">=</span> <span class="n">peewee</span><span class="o">.</span><span class="n">MySQLDatabase</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;MYSQL_ENV_MYSQL_DATABASE&#39;</span><span class="p">,</span> <span class="s1">&#39;pacifica_ingest&#39;</span><span class="p">),</span>
+                          <span class="n">host</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;MYSQL_PORT_3306_TCP_ADDR&#39;</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">),</span>
+                          <span class="n">port</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;MYSQL_PORT_3306_TCP_PORT&#39;</span><span class="p">,</span> <span class="mi">3306</span><span class="p">)),</span>
+                          <span class="n">user</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;MYSQL_ENV_MYSQL_USER&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest&#39;</span><span class="p">),</span>
+                          <span class="n">passwd</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;MYSQL_ENV_MYSQL_PASSWORD&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest&#39;</span><span class="p">))</span>
+
+
+<span class="c1"># pylint: disable=too-few-public-methods</span>
+<div class="viewcode-block" id="BaseModel"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.orm.BaseModel">[docs]</a><span class="k">class</span> <span class="nc">BaseModel</span><span class="p">(</span><span class="n">peewee</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Auto-generated by pwiz.&quot;&quot;&quot;</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Map to the database connected above.&quot;&quot;&quot;</span>
+
+        <span class="n">database</span> <span class="o">=</span> <span class="n">DB</span></div>
+
+
+<div class="viewcode-block" id="IngestState"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.orm.IngestState">[docs]</a><span class="k">class</span> <span class="nc">IngestState</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Map a python record to a mysql table.&quot;&quot;&quot;</span>
+
+    <span class="n">job_id</span> <span class="o">=</span> <span class="n">peewee</span><span class="o">.</span><span class="n">BigIntegerField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">db_column</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">peewee</span><span class="o">.</span><span class="n">CharField</span><span class="p">()</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">peewee</span><span class="o">.</span><span class="n">CharField</span><span class="p">()</span>
+    <span class="n">task_percent</span> <span class="o">=</span> <span class="n">peewee</span><span class="o">.</span><span class="n">DecimalField</span><span class="p">()</span>
+
+<div class="viewcode-block" id="IngestState.database_connect"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.orm.IngestState.database_connect">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">database_connect</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make sure database is connected.</span>
+
+<span class="sd">        Trying to connect a second</span>
+<span class="sd">        time *does* cause problems.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=no-member</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">is_closed</span><span class="p">():</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span></div>
+        <span class="c1"># pylint: enable=no-member</span>
+
+<div class="viewcode-block" id="IngestState.database_close"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.orm.IngestState.database_close">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">database_close</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Close the database connection.</span>
+
+<span class="sd">        Closing already closed database</span>
+<span class="sd">        is not a problem, so continue on.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># pylint: disable=no-member</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="c1"># pylint: enable=no-member</span>
+        <span class="k">except</span> <span class="n">peewee</span><span class="o">.</span><span class="n">ProgrammingError</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+            <span class="c1"># error for closing an already closed database so continue on</span>
+            <span class="k">return</span></div>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Map to uniqueindex table.&quot;&quot;&quot;</span>
+
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s1">&#39;ingeststate&#39;</span></div>
+<span class="c1"># pylint: enable=too-few-public-methods</span>
+
+
+<div class="viewcode-block" id="update_state"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.orm.update_state">[docs]</a><span class="k">def</span> <span class="nf">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">task_percent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Update the state of an ingest job.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">job_id</span> <span class="ow">and</span> <span class="n">job_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">IngestState</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="n">IngestState</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">job_id</span><span class="o">=</span><span class="n">job_id</span><span class="p">,</span>
+                                           <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;task_percent&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">})[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">record</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="n">task</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">task_percent</span> <span class="o">=</span> <span class="n">task_percent</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="n">IngestState</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="read_state"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.orm.read_state">[docs]</a><span class="k">def</span> <span class="nf">read_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the state of an ingest job as a json object.&quot;&quot;&quot;</span>
+    <span class="n">IngestState</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">job_id</span> <span class="ow">and</span> <span class="n">job_id</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="n">IngestState</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">job_id</span><span class="o">=</span><span class="n">job_id</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="n">IngestState</span><span class="p">()</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;DATA_ACCESS_ERROR&#39;</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">task</span> <span class="o">=</span> <span class="s1">&#39;read_state&#39;</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">task_percent</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">IngestState</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">record</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

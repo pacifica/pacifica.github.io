@@ -1,0 +1,307 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ingest.backend.tasks &mdash; Pacifica v1.0.0</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Pacifica
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Pacifica Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code.html">Pacifica API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../community.html">Pacifica Community</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Pacifica</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ingest.backend.tasks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ingest.backend.tasks</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="sd">&quot;&quot;&quot;Module that contains all the amqp tasks that support the ingest infrastructure.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="c1"># from time import sleep</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="c1"># from ingest.orm import IngestState, BaseModel, update_state, read_state</span>
+<span class="c1"># from ingest.utils import get_job_id</span>
+<span class="c1"># from ingest import tarutils</span>
+<span class="kn">from</span> <span class="nn">ingest.tarutils</span> <span class="k">import</span> <span class="n">open_tar</span>
+<span class="kn">from</span> <span class="nn">ingest.tarutils</span> <span class="k">import</span> <span class="n">MetaParser</span>
+<span class="kn">from</span> <span class="nn">ingest.tarutils</span> <span class="k">import</span> <span class="n">TarIngester</span>
+<span class="kn">from</span> <span class="nn">ingest.orm</span> <span class="k">import</span> <span class="n">update_state</span>
+<span class="kn">from</span> <span class="nn">celery</span> <span class="k">import</span> <span class="n">current_task</span>
+<span class="kn">from</span> <span class="nn">.celery_ingest</span> <span class="k">import</span> <span class="n">INGEST_APP</span>
+
+
+<span class="nd">@INGEST_APP</span><span class="o">.</span><span class="n">task</span><span class="p">(</span><span class="n">ignore_result</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">ingest</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ingest a tar bundle into the archive.&quot;&quot;&quot;</span>
+    <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;Open tar&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">tar</span> <span class="o">=</span> <span class="n">open_tar</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tar</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;Bad tarfile&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;Open tar&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;load metadata&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="n">MetaParser</span><span class="p">()</span>
+    <span class="n">meta</span><span class="o">.</span><span class="n">load_meta</span><span class="p">(</span><span class="n">tar</span><span class="p">,</span> <span class="n">job_id</span><span class="p">)</span>
+    <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;load metadata&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">ingest_obj</span> <span class="o">=</span> <span class="n">TarIngester</span><span class="p">(</span><span class="n">tar</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span>
+
+    <span class="c1"># validate policy</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="n">validate_meta</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">meta_str</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+        <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;Policy Validation&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;Policy Validation&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest files&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="n">ingest_obj</span><span class="o">.</span><span class="n">ingest</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+        <span class="c1"># rollback files</span>
+        <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest files&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest files&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest metadata&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">post_metadata</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+        <span class="c1"># rollback files</span>
+        <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest metadata&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="n">update_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest metadata&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="validate_meta"><a class="viewcode-back" href="../../../ingest.ingest.backend.html#ingest.backend.tasks.validate_meta">[docs]</a><span class="k">def</span> <span class="nf">validate_meta</span><span class="p">(</span><span class="n">meta_str</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validate metadata.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">archivei_server</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;POLICY_SERVER&#39;</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">)</span>
+        <span class="n">archivei_port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;POLICY_PORT&#39;</span><span class="p">,</span> <span class="s1">&#39;8181&#39;</span><span class="p">)</span>
+        <span class="n">archivei_url</span> <span class="o">=</span> <span class="s1">&#39;http://</span><span class="si">{0}</span><span class="s1">:</span><span class="si">{1}</span><span class="s1">/ingest&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">archivei_server</span><span class="p">,</span> <span class="n">archivei_port</span><span class="p">)</span>
+
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;content-type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+
+        <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">archivei_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">meta_str</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;success&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="c1"># pylint: disable=broad-except</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+    <span class="c1"># pylint: enable=broad-except</span>
+
+
+<span class="nd">@INGEST_APP</span><span class="o">.</span><span class="n">task</span><span class="p">(</span><span class="n">ignore_result</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">ping</span><span class="p">():</span>  <span class="c1"># pragma: no cover</span>
+    <span class="sd">&quot;&quot;&quot;Check to see if the celery task process is started.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Pinged!&#39;</span><span class="p">)</span>
+    <span class="n">current_task</span><span class="o">.</span><span class="n">update_state</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s1">&#39;PING&#39;</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Status&#39;</span><span class="p">:</span> <span class="s1">&#39;Background process is alive&#39;</span><span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;updated ping status&#39;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, David Brown.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
