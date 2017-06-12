@@ -239,7 +239,9 @@ implements this class.</p>
 <code class="descname">open</code><span class="sig-paren">(</span><em>filepath</em>, <em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/abstract/abstract_backend_archive.html#AbstractBackendArchive.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open File.</p>
 <p>Method that opens a file for the backend archive that implements
-this class Should return a file like object, most likely self.</p>
+this class Should return a file like object, most likely self.
+This method is also responsible for making sure the dirname of
+the filepath exists before trying to open.</p>
 </dd></dl>
 
 <dl class="method">
@@ -248,6 +250,14 @@ this class Should return a file like object, most likely self.</p>
 <dd><p>Read File.</p>
 <p>Method that reads an open file for the backend archive that
 implements this class and returns the contents.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.set_file_permissions">
+<code class="descname">set_file_permissions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/abstract/abstract_backend_archive.html#AbstractBackendArchive.set_file_permissions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.set_file_permissions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set permissions for File.</p>
+<p>Method that sets a files permissions for the backend archive that
+implements this class.</p>
 </dd></dl>
 
 <dl class="method">

@@ -203,17 +203,33 @@
 
 <div class="viewcode-block" id="IngestPolicy._valid_query"><a class="viewcode-back" href="../../../policy.policy.ingest.html#policy.ingest.rest.IngestPolicy._valid_query">[docs]</a>    <span class="k">def</span> <span class="nf">_valid_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Validate the metadata format.&quot;&quot;&quot;</span>
-        <span class="n">submitter_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pull_data_by_rec</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s1">&#39;Transactions.submitter&#39;</span><span class="p">)</span>
-        <span class="n">proposal_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pull_data_by_rec</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s1">&#39;Transactions.proposal&#39;</span><span class="p">)</span>
-        <span class="n">instrument_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pull_data_by_rec</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s1">&#39;Transactions.instrument&#39;</span><span class="p">)</span>
+        <span class="n">variables_to_query</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;submitter&#39;</span><span class="p">:</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;proposal&#39;</span><span class="p">:</span> <span class="s1">&#39;proposals&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;instrument&#39;</span><span class="p">:</span> <span class="s1">&#39;instruments&#39;</span>
+        <span class="p">}</span>
+        <span class="n">invalid_terms</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">valid_terms</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="n">variables_to_query</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pull_data_by_rec</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s1">&#39;Transactions.</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">variable</span><span class="p">))</span>
+            <span class="n">valid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_object_id_valid</span><span class="p">(</span><span class="n">variables_to_query</span><span class="p">[</span><span class="n">variable</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">valid</span><span class="p">:</span>
+                <span class="n">invalid_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">valid_terms</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">invalid_terms</span><span class="p">:</span>
+            <span class="c1"># all the incoming terms are valid, check for xrefs</span>
+            <span class="k">if</span> <span class="n">valid_terms</span><span class="p">[</span><span class="s1">&#39;proposal&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proposals_for_user_inst</span><span class="p">(</span>
+                    <span class="n">valid_terms</span><span class="p">[</span><span class="s1">&#39;submitter&#39;</span><span class="p">],</span> <span class="n">valid_terms</span><span class="p">[</span><span class="s1">&#39;instrument&#39;</span><span class="p">]):</span>
+                <span class="n">invalid_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;proposal_xref&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">valid_terms</span><span class="p">[</span><span class="s1">&#39;instrument&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instruments_for_user_prop</span><span class="p">(</span>
+                    <span class="n">valid_terms</span><span class="p">[</span><span class="s1">&#39;submitter&#39;</span><span class="p">],</span> <span class="n">valid_terms</span><span class="p">[</span><span class="s1">&#39;proposal&#39;</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="n">invalid_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;instrument_xref&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">invalid_terms</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;success&#39;</span><span class="p">}</span>
 
-        <span class="k">if</span> <span class="n">submitter_id</span> <span class="ow">and</span> <span class="n">proposal_id</span> <span class="ow">and</span> <span class="n">instrument_id</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">proposal_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_proposals_for_user</span><span class="p">(</span><span class="n">submitter_id</span><span class="p">):</span>
-                <span class="k">return</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="n">instrument_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instruments_for_user_prop</span><span class="p">(</span><span class="n">submitter_id</span><span class="p">,</span> <span class="n">proposal_id</span><span class="p">):</span>
-                <span class="k">return</span> <span class="kc">False</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
+        <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">412</span><span class="p">,</span> <span class="s1">&#39;Precondition Failed: Invalid values for </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">invalid_terms</span><span class="p">)))</span></div>
 
     <span class="c1"># pylint: disable=invalid-name</span>
 <div class="viewcode-block" id="IngestPolicy.POST"><a class="viewcode-back" href="../../../policy.policy.ingest.html#policy.ingest.rest.IngestPolicy.POST">[docs]</a>    <span class="nd">@tools</span><span class="o">.</span><span class="n">json_in</span><span class="p">()</span>
@@ -221,9 +237,7 @@
     <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Read in the json query and return results.&quot;&quot;&quot;</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid_query</span><span class="p">(</span><span class="n">metadata</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s1">&#39;Invalid Metadata.&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;success&#39;</span><span class="p">}</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid_query</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span></div></div>
     <span class="c1"># pylint: enable=invalid-name</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 </pre></div>

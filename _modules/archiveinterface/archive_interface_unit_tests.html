@@ -161,7 +161,9 @@
 <span class="sd">&quot;&quot;&quot;File used to unit test the pacifica archive interface.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">archiveinterface.archive_utils</span> <span class="k">import</span> <span class="n">un_abs_path</span><span class="p">,</span> <span class="n">get_http_modified_time</span><span class="p">,</span> <span class="n">read_config_value</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">stat</span> <span class="k">import</span> <span class="n">ST_MODE</span>
+<span class="kn">from</span> <span class="nn">archiveinterface.archive_utils</span> <span class="k">import</span> <span class="n">un_abs_path</span><span class="p">,</span> <span class="n">get_http_modified_time</span><span class="p">,</span> <span class="n">read_config_value</span><span class="p">,</span> <span class="n">set_config_name</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.id2filename</span> <span class="k">import</span> <span class="n">id2filename</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.archivebackends.posix.extendedfile</span> <span class="k">import</span> <span class="n">ExtendedFile</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.archivebackends.posix.posix_status</span> <span class="k">import</span> <span class="n">PosixStatus</span>
@@ -271,17 +273,7 @@
         <span class="c1"># pylint: disable=protected-access</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">my_file</span><span class="o">.</span><span class="n">_staged</span><span class="p">)</span>
         <span class="c1"># pylint: enable=protected-access</span>
-        <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="TestExtendedFile.test_posix_file_mod_time"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestExtendedFile.test_posix_file_mod_time">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_file_mod_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the correct setting of a file mod time.&quot;&quot;&quot;</span>
-        <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;/tmp/1234&#39;</span>
-        <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
-        <span class="n">my_file</span> <span class="o">=</span> <span class="n">ExtendedFile</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
-        <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="n">my_file</span><span class="o">.</span><span class="n">set_mod_time</span><span class="p">(</span><span class="mi">036</span><span class="p">)</span>
-        <span class="n">status</span> <span class="o">=</span> <span class="n">my_file</span><span class="o">.</span><span class="n">status</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">mtime</span><span class="p">,</span> <span class="mi">036</span><span class="p">)</span></div></div>
+        <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="TestPosixStatus"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixStatus">[docs]</a><span class="k">class</span> <span class="nc">TestPosixStatus</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
@@ -356,7 +348,13 @@
         <span class="k">except</span> <span class="n">ArchiveInterfaceError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;Cant remove absolute path&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
             <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span>
+
+        <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;/a/b/d&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="n">set_config_name</span><span class="p">(</span><span class="s1">&#39;test_configs/posix-id2filename.cfg&#39;</span><span class="p">)</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp&#39;</span><span class="p">)</span>
+        <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="mi">12345</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="n">set_config_name</span><span class="p">(</span><span class="s1">&#39;config.cfg&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestPosixBackendArchive.test_posix_backend_close"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_close">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_backend_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test closing a file from posix backend.&quot;&quot;&quot;</span>
@@ -380,6 +378,30 @@
         <span class="n">error</span> <span class="o">=</span> <span class="n">my_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;i am a test string&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TestPosixBackendArchive.test_posix_file_mod_time"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_file_mod_time">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_file_mod_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test the correct setting of a file mod time.&quot;&quot;&quot;</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;1234&#39;</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp/&#39;</span><span class="p">)</span>
+        <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">my_file</span><span class="o">.</span><span class="n">set_mod_time</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span>
+        <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">my_file</span><span class="o">.</span><span class="n">status</span><span class="p">()</span>
+        <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="o">.</span><span class="n">mtime</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestPosixBackendArchive.test_posix_file_permissions"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_file_permissions">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_file_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test the correct setting of a file mod time.&quot;&quot;&quot;</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;12345&#39;</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="n">PosixBackendArchive</span><span class="p">(</span><span class="s1">&#39;/tmp/&#39;</span><span class="p">)</span>
+        <span class="n">my_file</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="n">my_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">my_file</span><span class="o">.</span><span class="n">set_file_permissions</span><span class="p">()</span>
+        <span class="n">statinfo</span> <span class="o">=</span> <span class="nb">oct</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="s1">&#39;/tmp/12345&#39;</span><span class="p">)[</span><span class="n">ST_MODE</span><span class="p">])[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">statinfo</span><span class="p">,</span> <span class="s1">&#39;444&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TestPosixBackendArchive.test_posix_backend_failed_write"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_unit_tests.TestPosixBackendArchive.test_posix_backend_failed_write">[docs]</a>    <span class="k">def</span> <span class="nf">test_posix_backend_failed_write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test writing to a failed file.&quot;&quot;&quot;</span>

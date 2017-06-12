@@ -233,6 +233,7 @@
                                                       <span class="n">env</span><span class="p">[</span><span class="s1">&#39;CONTENT_LENGTH&#39;</span><span class="p">])</span>
         <span class="n">archivefile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">archivefile</span><span class="o">.</span><span class="n">set_mod_time</span><span class="p">(</span><span class="n">mod_time</span><span class="p">)</span>
+        <span class="n">archivefile</span><span class="o">.</span><span class="n">set_file_permissions</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_response</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="ArchiveInterfaceGenerator.status"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface.ArchiveInterfaceGenerator.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>

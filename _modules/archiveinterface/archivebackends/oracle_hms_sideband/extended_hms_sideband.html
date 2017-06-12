@@ -199,10 +199,6 @@
         <span class="sd">&quot;&quot;&quot;Stage a file. HMS stages a file when a read call is made.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ExtendedHmsSideband.set_mod_time"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.extended_hms_sideband.ExtendedHmsSideband.set_mod_time">[docs]</a>    <span class="k">def</span> <span class="nf">set_mod_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mod_time</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set the last modified time on the file.&quot;&quot;&quot;</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">utime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">,</span> <span class="p">(</span><span class="n">mod_time</span><span class="p">,</span> <span class="n">mod_time</span><span class="p">))</span></div>
-
 <div class="viewcode-block" id="ExtendedHmsSideband._stat_ino_sql"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.extended_hms_sideband.ExtendedHmsSideband._stat_ino_sql">[docs]</a>    <span class="k">def</span> <span class="nf">_stat_ino_sql</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return the record for specified file and directory.&quot;&quot;&quot;</span>
         <span class="n">SamInode</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
