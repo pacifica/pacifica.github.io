@@ -162,29 +162,31 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">The CherryPy rest object for the structure.</span>
 
-<span class="sd">[</span>
-<span class="sd">  {&quot;destinationTable&quot;: &quot;Transactions._id&quot;, &quot;value&quot;: 1234},</span>
-<span class="sd">  {&quot;destinationTable&quot;: &quot;Transactions.submitter&quot;, &quot;value&quot;: 34002},</span>
-<span class="sd">  {&quot;destinationTable&quot;: &quot;Transactions.proposal&quot;, &quot;value&quot;: &quot;34002&quot;},</span>
-<span class="sd">  {&quot;destinationTable&quot;: &quot;Transactions.instrument&quot;, &quot;value&quot;: 34002},</span>
-<span class="sd">  {&quot;destinationTable&quot;: &quot;TransactionKeyValue&quot;, &quot;key&quot;: &quot;Tag&quot;, &quot;value&quot;: &quot;Blah&quot;},</span>
-<span class="sd">  {&quot;destinationTable&quot;: &quot;TransactionKeyValue&quot;, &quot;key&quot;: &quot;Taggy&quot;, &quot;value&quot;: &quot;Blah&quot;},</span>
-<span class="sd">  {&quot;destinationTable&quot;: &quot;TransactionKeyValue&quot;, &quot;key&quot;: &quot;Taggier&quot;, &quot;value&quot;: &quot;Blah&quot;}</span>
-<span class="sd">  {</span>
-<span class="sd">    &quot;destinationTable&quot;: &quot;Files&quot;,</span>
-<span class="sd">    &quot;_id&quot;: 34, &quot;name&quot;: &quot;foo.txt&quot;, &quot;subdir&quot;: &quot;a/b/&quot;,</span>
-<span class="sd">    &quot;ctime&quot;: &quot;Tue Nov 29 14:09:05 PST 2016&quot;,</span>
-<span class="sd">    &quot;mtime&quot;: &quot;Tue Nov 29 14:09:05 PST 2016&quot;,</span>
-<span class="sd">    &quot;size&quot;: 128, &quot;mimetype&quot;: &quot;text/plain&quot;</span>
-<span class="sd">  },</span>
-<span class="sd">  {</span>
-<span class="sd">    &quot;destinationTable&quot;: &quot;Files&quot;,</span>
-<span class="sd">    &quot;_id&quot;: 35, &quot;name&quot;: &quot;bar.txt&quot;, &quot;subdir&quot;: &quot;a/b/&quot;,</span>
-<span class="sd">    &quot;ctime&quot;: &quot;Tue Nov 29 14:09:05 PST 2016&quot;,</span>
-<span class="sd">    &quot;mtime&quot;: &quot;Tue Nov 29 14:09:05 PST 2016&quot;,</span>
-<span class="sd">    &quot;size&quot;: 47, &quot;mimetype&quot;: &quot;text/plain&quot;</span>
-<span class="sd">  },</span>
-<span class="sd">]</span>
+<span class="sd">Below is an example post body::</span>
+
+<span class="sd">    [</span>
+<span class="sd">        {&quot;destinationTable&quot;: &quot;Transactions._id&quot;, &quot;value&quot;: 1234},</span>
+<span class="sd">        {&quot;destinationTable&quot;: &quot;Transactions.submitter&quot;, &quot;value&quot;: 34002},</span>
+<span class="sd">        {&quot;destinationTable&quot;: &quot;Transactions.proposal&quot;, &quot;value&quot;: &quot;34002&quot;},</span>
+<span class="sd">        {&quot;destinationTable&quot;: &quot;Transactions.instrument&quot;, &quot;value&quot;: 34002},</span>
+<span class="sd">        {&quot;destinationTable&quot;: &quot;TransactionKeyValue&quot;, &quot;key&quot;: &quot;Tag&quot;, &quot;value&quot;: &quot;Blah&quot;},</span>
+<span class="sd">        {&quot;destinationTable&quot;: &quot;TransactionKeyValue&quot;, &quot;key&quot;: &quot;Taggy&quot;, &quot;value&quot;: &quot;Blah&quot;},</span>
+<span class="sd">        {&quot;destinationTable&quot;: &quot;TransactionKeyValue&quot;, &quot;key&quot;: &quot;Taggier&quot;, &quot;value&quot;: &quot;Blah&quot;}</span>
+<span class="sd">        {</span>
+<span class="sd">            &quot;destinationTable&quot;: &quot;Files&quot;,</span>
+<span class="sd">            &quot;_id&quot;: 34, &quot;name&quot;: &quot;foo.txt&quot;, &quot;subdir&quot;: &quot;a/b/&quot;,</span>
+<span class="sd">            &quot;ctime&quot;: &quot;Tue Nov 29 14:09:05 PST 2016&quot;,</span>
+<span class="sd">            &quot;mtime&quot;: &quot;Tue Nov 29 14:09:05 PST 2016&quot;,</span>
+<span class="sd">            &quot;size&quot;: 128, &quot;mimetype&quot;: &quot;text/plain&quot;</span>
+<span class="sd">        },</span>
+<span class="sd">        {</span>
+<span class="sd">            &quot;destinationTable&quot;: &quot;Files&quot;,</span>
+<span class="sd">            &quot;_id&quot;: 35, &quot;name&quot;: &quot;bar.txt&quot;, &quot;subdir&quot;: &quot;a/b/&quot;,</span>
+<span class="sd">            &quot;ctime&quot;: &quot;Tue Nov 29 14:09:05 PST 2016&quot;,</span>
+<span class="sd">            &quot;mtime&quot;: &quot;Tue Nov 29 14:09:05 PST 2016&quot;,</span>
+<span class="sd">            &quot;size&quot;: 47, &quot;mimetype&quot;: &quot;text/plain&quot;</span>
+<span class="sd">        },</span>
+<span class="sd">    ]</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">text_type</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">HTTPError</span>
