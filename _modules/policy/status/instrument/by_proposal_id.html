@@ -157,10 +157,13 @@
            <div itemprop="articleBody">
             
   <h1>Source code for policy.status.instrument.by_proposal_id</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status Policy object class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status Policy object class.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span><span class="p">,</span> <span class="n">HTTPError</span>
-<span class="kn">from</span> <span class="nn">policy</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span><span class="p">,</span> <span class="n">validate_proposal</span>
+<span class="kn">from</span> <span class="nn">policy.validation</span> <span class="k">import</span> <span class="n">validate_proposal</span>
+<span class="kn">from</span> <span class="nn">policy.globals</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span>
 <span class="kn">from</span> <span class="nn">policy.status.base</span> <span class="k">import</span> <span class="n">QueryBase</span>
 
 
@@ -173,14 +176,13 @@
 <div class="viewcode-block" id="InstrumentsByProposal._get_instruments_for_proposal"><a class="viewcode-back" href="../../../../policy.policy.status.instrument.html#policy.status.instrument.by_proposal_id.InstrumentsByProposal._get_instruments_for_proposal">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_get_instruments_for_proposal</span><span class="p">(</span><span class="n">proposal_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return a list with all the instruments belonging to this proposal.&quot;&quot;&quot;</span>
-        <span class="n">md_url</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/proposalinfo/by_proposal_id/</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">md_url</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/proposalinfo/by_proposal_id/</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">METADATA_ENDPOINT</span><span class="p">,</span> <span class="n">proposal_id</span>
         <span class="p">)</span>
         <span class="n">query</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">md_url</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">query</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="s1">&#39;404 Not Found&#39;</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
+        <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="s1">&#39;404 Not Found&#39;</span><span class="p">)</span>
 
     <span class="c1"># CherryPy requires these named methods</span>
     <span class="c1"># Add HEAD (basically Get without returning body</span>
@@ -190,25 +192,25 @@
     <span class="nd">@validate_proposal</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="n">proposal_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;CherryPy GET method.&quot;&quot;&quot;</span>
-        <span class="n">proposal_info</span> <span class="o">=</span> <span class="n">InstrumentsByProposal</span><span class="o">.</span><span class="n">_get_instruments_for_proposal</span><span class="p">(</span><span class="n">proposal_id</span><span class="p">)</span>
-        <span class="n">instruments</span> <span class="o">=</span> <span class="p">{</span><span class="n">index</span><span class="p">:</span> <span class="n">info</span> <span class="k">for</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span> <span class="ow">in</span> <span class="n">proposal_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;instruments&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">instruments</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;No instruments were located for this proposal&#39;</span>
-            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="s1">&#39;404 Not Found&#39;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
-
+        <span class="n">proposal_info</span> <span class="o">=</span> <span class="n">InstrumentsByProposal</span><span class="o">.</span><span class="n">_get_instruments_for_proposal</span><span class="p">(</span>
+            <span class="n">proposal_id</span><span class="p">)</span>
+        <span class="n">instruments</span> <span class="o">=</span> <span class="p">{</span><span class="n">index</span><span class="p">:</span> <span class="n">info</span> <span class="k">for</span> <span class="p">(</span>
+            <span class="n">index</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span> <span class="ow">in</span> <span class="n">proposal_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;instruments&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
         <span class="n">cleaned_instruments</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">clean_info</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-            <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;All Available Instruments for Proposal </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proposal_id</span><span class="p">),</span>
-            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;All Instruments&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="s1">&#39;Y&#39;</span>
-        <span class="p">}</span>
-        <span class="n">cleaned_instruments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clean_info</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">instruments</span><span class="p">:</span>
+            <span class="n">clean_info</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;All Available Instruments for Proposal </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">proposal_id</span><span class="p">),</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;All Instruments&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="s1">&#39;Y&#39;</span>
+            <span class="p">}</span>
+            <span class="n">cleaned_instruments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clean_info</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="n">inst_id</span> <span class="ow">in</span> <span class="n">instruments</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="n">info</span> <span class="o">=</span> <span class="n">instruments</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">inst_id</span><span class="p">)</span>
             <span class="n">clean_info</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">inst_id</span><span class="p">,</span>
-                <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;Instrument </span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst_id</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;display_name&#39;</span><span class="p">)),</span>
+                <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;Instrument </span><span class="si">{0}</span><span class="s1">: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inst_id</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;display_name&#39;</span><span class="p">)),</span>
                 <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name_short&#39;</span><span class="p">),</span>
                 <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="s1">&#39;Y&#39;</span> <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;active&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;N&#39;</span>
             <span class="p">}</span>
@@ -218,8 +220,8 @@
             <span class="s1">&#39;total_count&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">cleaned_instruments</span><span class="p">),</span>
             <span class="s1">&#39;incomplete_results&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
             <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="n">cleaned_instruments</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="n">return_block</span></div></div>
+        <span class="p">}</span></div></div>
+        <span class="k">return</span> <span class="n">return_block</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 </pre></div>
 

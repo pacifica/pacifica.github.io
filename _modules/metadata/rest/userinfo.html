@@ -158,12 +158,13 @@
             
   <h1>Source code for metadata.rest.userinfo</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Core interface for the userinfo metadata objects to interface with CherryPy.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">DoesNotExist</span>
+<span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">HTTPError</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.user_queries.user_search</span> <span class="k">import</span> <span class="n">UserSearch</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.user_queries.user_lookup</span> <span class="k">import</span> <span class="n">UserLookup</span>
 <span class="kn">from</span> <span class="nn">metadata.orm</span> <span class="k">import</span> <span class="n">Users</span>
-<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">DoesNotExist</span>
-<span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">HTTPError</span>
 
 
 <div class="viewcode-block" id="user_exists_decorator"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.userinfo.user_exists_decorator">[docs]</a><span class="k">def</span> <span class="nf">user_exists_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
@@ -182,12 +183,11 @@
             <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span>
                 <span class="s1">&#39;404 User Does Not Exist&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;No User with ID:</span><span class="si">{0}</span><span class="s1"> exists in the system&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-            <span class="p">)</span>
-    <span class="k">return</span> <span class="n">func_wrapper</span></div>
+            <span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">func_wrapper</span>
+
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
-
-
 <div class="viewcode-block" id="UserInfoAPI"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.userinfo.UserInfoAPI">[docs]</a><span class="k">class</span> <span class="nc">UserInfoAPI</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;UserInfo API.&quot;&quot;&quot;</span>
 
@@ -195,11 +195,9 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create local objects for subtree items.&quot;&quot;&quot;</span>
-        <span class="c1"># self.by_user_id = ProposalUserSearch()</span>
-        <span class="c1"># self.search = ProposalTermSearch()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">search</span> <span class="o">=</span> <span class="n">UserSearch</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">by_id</span> <span class="o">=</span> <span class="n">UserLookup</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">by_user_id</span> <span class="o">=</span> <span class="n">UserLookup</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">by_id</span> <span class="o">=</span> <span class="n">UserLookup</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">by_user_id</span> <span class="o">=</span> <span class="n">UserLookup</span><span class="p">()</span>
 </pre></div>
 
            </div>

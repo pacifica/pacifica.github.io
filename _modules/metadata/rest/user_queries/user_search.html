@@ -157,7 +157,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for metadata.rest.user_queries.user_search</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status Usersearch object class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status Usersearch object class.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">cherrypy</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span>
@@ -187,21 +189,22 @@
                         <span class="n">where_clause_part</span> <span class="o">|=</span> <span class="n">Expression</span><span class="p">(</span>
                             <span class="n">Users</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="n">user_term</span><span class="p">)</span>
                         <span class="n">where_clause_part</span> <span class="o">|=</span> <span class="p">(</span>
-                            <span class="n">fn</span><span class="o">.</span><span class="n">TO_CHAR</span><span class="p">(</span><span class="n">Users</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;999999&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">user_term</span><span class="p">)</span>
+                            <span class="n">fn</span><span class="o">.</span><span class="n">TO_CHAR</span><span class="p">(</span><span class="n">Users</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;99999999999&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span>
+                                <span class="n">user_term</span><span class="p">)</span>
                         <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">where_clause_part</span> <span class="o">|=</span> <span class="p">(</span>
                         <span class="nb">getattr</span><span class="p">(</span><span class="n">Users</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">user_term</span><span class="p">)</span>
                     <span class="p">)</span>
             <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">where_clause_part</span><span class="p">)</span>
-        <span class="n">objs</span> <span class="o">=</span> <span class="n">Users</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">where_clause</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Users</span><span class="o">.</span><span class="n">last_name</span><span class="p">,</span> <span class="n">Users</span><span class="o">.</span><span class="n">first_name</span><span class="p">)</span>
-        <span class="c1"># print objs.sql()</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">objs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">objs</span> <span class="o">=</span> <span class="n">Users</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">where_clause</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span>
+            <span class="n">Users</span><span class="o">.</span><span class="n">last_name</span><span class="p">,</span> <span class="n">Users</span><span class="o">.</span><span class="n">first_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">objs</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;No user entries were retrieved using the terms: &#39;&quot;</span>
             <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1"> and </span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">terms</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span>
             <span class="k">raise</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span><span class="s1">&#39;404 No Valid Users Located&#39;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="p">[</span><span class="n">QueryBase</span><span class="o">.</span><span class="n">format_user_block</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">]</span></div>
+</div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">QueryBase</span><span class="o">.</span><span class="n">format_user_block</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">]</span>
 
     <span class="c1"># CherryPy requires these named methods.</span>
     <span class="c1"># pylint: disable=invalid-name, unused-argument</span>
@@ -211,15 +214,15 @@
     <span class="nd">@db_connection_decorator</span>
     <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="n">search_term</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return the requested user information for a given set of search criteria.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">search_term</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">search_term</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">search_term</span><span class="p">:</span>
             <span class="n">cherrypy</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;search request&#39;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">UserSearch</span><span class="o">.</span><span class="n">search_for_user</span><span class="p">(</span><span class="n">search_term</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">cherrypy</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;invalid request&#39;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
                 <span class="s1">&#39;400 Invalid Request Options&#39;</span><span class="p">,</span>
-                <span class="n">QueryBase</span><span class="o">.</span><span class="n">compose_help_block_message</span><span class="p">()</span>
-            <span class="p">)</span></div>
+                <span class="n">QueryBase</span><span class="o">.</span><span class="n">compose_help_block_message</span><span class="p">()</span></div>
+            <span class="p">)</span>
 </pre></div>
 
            </div>

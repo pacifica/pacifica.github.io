@@ -158,6 +158,7 @@
             
   <h1>Source code for policy.status.rest</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;The CherryPy rest object for the structure.&quot;&quot;&quot;</span>
 <span class="c1"># from policy.uploader.instrument import InstrumentQuery</span>
 <span class="kn">from</span> <span class="nn">policy.status.proposal_query</span> <span class="k">import</span> <span class="n">ProposalQuery</span>
@@ -182,8 +183,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">instruments</span> <span class="o">=</span> <span class="n">InstrumentQuery</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span> <span class="o">=</span> <span class="n">InstrumentQuery</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">proposals</span> <span class="o">=</span> <span class="n">ProposalQuery</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="n">TransactionQuery</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="n">UserQuery</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="n">TransactionQuery</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">users</span> <span class="o">=</span> <span class="n">UserQuery</span><span class="p">()</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 </pre></div>
 

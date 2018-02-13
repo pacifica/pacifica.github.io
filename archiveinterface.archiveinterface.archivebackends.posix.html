@@ -99,6 +99,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="archiveinterface.archiveinterface.html">Archiveinterface Module</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="archiveinterface.archiveinterface.archivebackends.html">Archivebackends Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="archiveinterface.archiveinterface.tests.html">Archivebackends Module</a></li>
 </ul>
 </li>
 </ul>
@@ -185,7 +186,7 @@
 <p>Extended File Object Module.</p>
 <p>Module that Extends the functionality of the base file object</p>
 <p>to import:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ExtendedFile</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ExtendedFile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">extendedfile</span> <span class="k">import</span> <span class="n">ExtendedFile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ExtendedFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
 </pre></div>
@@ -227,6 +228,12 @@ archive interface backend.</p>
 <dt id="archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive.open">
 <code class="descname">open</code><span class="sig-paren">(</span><em>filepath</em>, <em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/posix/posix_backend_archive.html#PosixBackendArchive.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive.open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open a posix file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>file_id</em>, <em>old_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/posix/posix_backend_archive.html#PosixBackendArchive.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.posix.posix_backend_archive.PosixBackendArchive.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move a posix file.</p>
 </dd></dl>
 
 <dl class="method">

@@ -175,9 +175,11 @@
 
 <div class="viewcode-block" id="TestIngestPolicy.test_queries"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_ingest.TestIngestPolicy.test_queries">[docs]</a>    <span class="k">def</span> <span class="nf">test_queries</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test posting the queries.&quot;&quot;&quot;</span>
-        <span class="n">valid_query</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_files&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest_base_query.json&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="n">valid_query</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span>
+            <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_files&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest_base_query.json&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="s1">&#39;/ingest&#39;</span><span class="p">,</span>
-                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span> <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">valid_query</span><span class="p">))))],</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span>
+                     <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">valid_query</span><span class="p">))))],</span>
                      <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
                      <span class="n">dumps</span><span class="p">(</span><span class="n">valid_query</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
@@ -191,16 +193,19 @@
         <span class="n">valid_query</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Tag&#39;</span>
         <span class="n">valid_query</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1234a&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="s1">&#39;/ingest&#39;</span><span class="p">,</span>
-                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span> <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">valid_query</span><span class="p">))))],</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span>
+                     <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">valid_query</span><span class="p">))))],</span>
                      <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
                      <span class="n">dumps</span><span class="p">(</span><span class="n">valid_query</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
 
         <span class="c1"># change the proposal to be invalid =&gt; fails</span>
-        <span class="n">invalid_query</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_files&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest_base_query.json&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="n">invalid_query</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span>
+            <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_files&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest_base_query.json&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
         <span class="n">invalid_query</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;12&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="s1">&#39;/ingest&#39;</span><span class="p">,</span>
-                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span> <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">invalid_query</span><span class="p">))))],</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span>
+                     <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">invalid_query</span><span class="p">))))],</span>
                      <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
                      <span class="n">dumps</span><span class="p">(</span><span class="n">invalid_query</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;412 Precondition Failed&#39;</span><span class="p">)</span>
@@ -209,10 +214,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;message&#39;</span> <span class="ow">in</span> <span class="n">ret_data</span><span class="p">)</span>
 
         <span class="c1"># change instrument to be invalid =&gt; fails</span>
-        <span class="n">invalid_query</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_files&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest_base_query.json&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="n">invalid_query</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span>
+            <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_files&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest_base_query.json&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
         <span class="n">invalid_query</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4321</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="s1">&#39;/ingest&#39;</span><span class="p">,</span>
-                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span> <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">invalid_query</span><span class="p">))))],</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span>
+                     <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">invalid_query</span><span class="p">))))],</span>
                      <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
                      <span class="n">dumps</span><span class="p">(</span><span class="n">invalid_query</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;412 Precondition Failed&#39;</span><span class="p">)</span>
@@ -221,12 +228,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;message&#39;</span> <span class="ow">in</span> <span class="n">ret_data</span><span class="p">)</span>
 
         <span class="c1"># change the query so that the instrument xrefs and proposal xrefs fail (but for valid base entities)</span>
-        <span class="n">invalid_query</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_files&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest_base_query.json&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
-        <span class="n">invalid_query</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">74</span>
-        <span class="n">invalid_query</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1234c&#39;</span>
-        <span class="n">invalid_query</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+        <span class="n">invalid_query</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span>
+            <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_files&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest_base_query.json&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="n">invalid_query</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">74</span>  <span class="c1"># instrument</span>
+        <span class="n">invalid_query</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;1234c</span><span class="se">\u00e9</span><span class="s1">&#39;</span>  <span class="c1"># proposal</span>
+        <span class="n">invalid_query</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>  <span class="c1"># submitter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="s1">&#39;/ingest&#39;</span><span class="p">,</span>
-                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span> <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">invalid_query</span><span class="p">))))],</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span>
+                     <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">invalid_query</span><span class="p">))))],</span>
                      <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
                      <span class="n">dumps</span><span class="p">(</span><span class="n">invalid_query</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;412 Precondition Failed&#39;</span><span class="p">)</span>
@@ -236,10 +245,11 @@
 
         <span class="k">del</span> <span class="n">valid_query</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="s1">&#39;/ingest&#39;</span><span class="p">,</span>
-                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span> <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">valid_query</span><span class="p">))))],</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span>
+                     <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">valid_query</span><span class="p">))))],</span>
                      <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
-                     <span class="n">dumps</span><span class="p">(</span><span class="n">valid_query</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;412 Precondition Failed&#39;</span><span class="p">)</span></div></div>
+                     <span class="n">dumps</span><span class="p">(</span><span class="n">valid_query</span><span class="p">))</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;412 Precondition Failed&#39;</span><span class="p">)</span>
 </pre></div>
 
            </div>

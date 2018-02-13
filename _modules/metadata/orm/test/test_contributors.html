@@ -196,14 +196,6 @@
     <span class="n">obj_cls</span> <span class="o">=</span> <span class="n">Contributors</span>
     <span class="n">obj_id</span> <span class="o">=</span> <span class="n">Contributors</span><span class="o">.</span><span class="n">id</span>
 
-<div class="viewcode-block" id="TestContributors.dependent_cls"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_contributors.TestContributors.dependent_cls">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">dependent_cls</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return dependent classes for the Contributors object.&quot;&quot;&quot;</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">Contributors</span><span class="p">]</span>
-        <span class="n">ret</span> <span class="o">+=</span> <span class="n">TestInstitutions</span><span class="o">.</span><span class="n">dependent_cls</span><span class="p">()</span>
-        <span class="n">ret</span> <span class="o">+=</span> <span class="n">TestUsers</span><span class="o">.</span><span class="n">dependent_cls</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">ret</span></div>
-
 <div class="viewcode-block" id="TestContributors.base_create_dep_objs"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_contributors.TestContributors.base_create_dep_objs">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">base_create_dep_objs</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create all objects that Files depend on.&quot;&quot;&quot;</span>
@@ -213,20 +205,20 @@
         <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">inst</span> <span class="o">=</span> <span class="n">Institutions</span><span class="p">()</span>
         <span class="n">TestInstitutions</span><span class="o">.</span><span class="n">base_create_dep_objs</span><span class="p">()</span>
-        <span class="n">inst</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">SAMPLE_INSTITUTION_HASH</span><span class="p">)</span>
-        <span class="n">inst</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="n">inst</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">SAMPLE_INSTITUTION_HASH</span><span class="p">)</span></div>
+        <span class="n">inst</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestContributors.test_contributors_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_contributors.TestContributors.test_contributors_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_contributors_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_CONTRIBUTOR_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_CONTRIBUTOR_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestContributors.test_unicode_contributors_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_contributors.TestContributors.test_unicode_contributors_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_contributors_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the unicode hash using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_CONTRIBUTOR_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the unicode hash using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_CONTRIBUTOR_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestContributors.test_contributors_json"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_contributors.TestContributors.test_contributors_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_contributors_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_CONTRIBUTOR_HASH</span><span class="p">))</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_CONTRIBUTOR_HASH</span><span class="p">))</span>
 
 <div class="viewcode-block" id="TestContributors.test_contributors_search_expr"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_contributors.TestContributors.test_contributors_search_expr">[docs]</a>    <span class="k">def</span> <span class="nf">test_contributors_search_expr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
@@ -238,16 +230,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause_search_expr</span><span class="p">(</span>
             <span class="n">SAMPLE_UNICODE_CONTRIBUTOR_HASH</span><span class="p">,</span>
             <span class="n">last_name_operator</span><span class="o">=</span><span class="s1">&#39;ILIKE&#39;</span><span class="p">,</span>
-            <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Do%&#39;</span>
-        <span class="p">)</span></div>
+            <span class="n">last_name</span><span class="o">=</span><span class="s1">&#39;Do%&#39;</span></div>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="TestContributors.test_contributors_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_contributors.TestContributors.test_contributors_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_contributors_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_CONTRIBUTOR_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_CONTRIBUTOR_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestContributors.test_unicode_contributors_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_contributors.TestContributors.test_unicode_contributors_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_contributors_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the unicode hash using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_CONTRIBUTOR_HASH</span><span class="p">)</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Test the unicode hash using base object method.&quot;&quot;&quot;</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_CONTRIBUTOR_HASH</span><span class="p">)</span>
 </pre></div>
 
            </div>

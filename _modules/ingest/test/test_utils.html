@@ -158,64 +158,24 @@
             
   <h1>Source code for ingest.test.test_utils</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Test ingest.&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">namedtuple</span>
-<span class="kn">from</span> <span class="nn">ingest.utils</span> <span class="k">import</span> <span class="n">get_job_id</span><span class="p">,</span> <span class="n">valid_request</span><span class="p">,</span> <span class="n">create_invalid_return</span><span class="p">,</span> <span class="n">create_return_params</span><span class="p">,</span> <span class="n">create_state_return</span>
+<span class="kn">import</span> <span class="nn">mock</span>
+<span class="kn">import</span> <span class="nn">peewee</span>
+<span class="kn">from</span> <span class="nn">ingest.orm</span> <span class="k">import</span> <span class="n">create_tables</span><span class="p">,</span> <span class="n">IngestState</span>
 
 
-<div class="viewcode-block" id="test_bad_form_get_job_id"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_utils.test_bad_form_get_job_id">[docs]</a><span class="k">def</span> <span class="nf">test_bad_form_get_job_id</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test the get_job_id methods.&quot;&quot;&quot;</span>
-    <span class="n">environ</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;QUERY_STRING&#39;</span><span class="p">:</span> <span class="s1">&#39;job_id=foo&#39;</span>
-    <span class="p">}</span>
-    <span class="n">chk</span> <span class="o">=</span> <span class="n">get_job_id</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">chk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
-    <span class="k">assert</span> <span class="n">chk</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span></div>
-
-
-<div class="viewcode-block" id="test_no_get_job_id"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_utils.test_no_get_job_id">[docs]</a><span class="k">def</span> <span class="nf">test_no_get_job_id</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test the get_job_id methods.&quot;&quot;&quot;</span>
-    <span class="n">environ</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;QUERY_STRING&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
-    <span class="p">}</span>
-    <span class="n">chk</span> <span class="o">=</span> <span class="n">get_job_id</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">chk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span>
-    <span class="k">assert</span> <span class="n">chk</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span></div>
-
-
-<div class="viewcode-block" id="test_valid_request"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_utils.test_valid_request">[docs]</a><span class="k">def</span> <span class="nf">test_valid_request</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test the valid request method.&quot;&quot;&quot;</span>
-    <span class="n">environ</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;QUERY_STRING&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;PATH_INFO&#39;</span><span class="p">:</span> <span class="s1">&#39;/blah&#39;</span>
-    <span class="p">}</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="n">valid_request</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="test_invalid_return"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_utils.test_invalid_return">[docs]</a><span class="k">def</span> <span class="nf">test_invalid_return</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test the invalid return method.&quot;&quot;&quot;</span>
-    <span class="n">chk</span> <span class="o">=</span> <span class="n">create_invalid_return</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">chk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;404 NOT FOUND&#39;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">chk</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
-    <span class="k">assert</span> <span class="n">chk</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Invalid&#39;</span></div>
-
-
-<div class="viewcode-block" id="test_create_return_params"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_utils.test_create_return_params">[docs]</a><span class="k">def</span> <span class="nf">test_create_return_params</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test the create return params.&quot;&quot;&quot;</span>
-    <span class="n">chk</span> <span class="o">=</span> <span class="n">create_return_params</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">chk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;200 OK&#39;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">chk</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
-    <span class="k">assert</span> <span class="n">chk</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;foo&#39;</span></div>
-
-
-<div class="viewcode-block" id="test_create_state_return"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_utils.test_create_state_return">[docs]</a><span class="k">def</span> <span class="nf">test_create_state_return</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test the create_state_return method.&quot;&quot;&quot;</span>
-    <span class="n">record</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Record&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;job_id&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;task&#39;</span><span class="p">,</span> <span class="s1">&#39;task_percent&#39;</span><span class="p">])</span>
-    <span class="n">rec</span> <span class="o">=</span> <span class="n">record</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;test state&#39;</span><span class="p">,</span> <span class="s1">&#39;test task&#39;</span><span class="p">,</span> <span class="s1">&#39;12.345&#39;</span><span class="p">)</span>
-    <span class="n">chk</span> <span class="o">=</span> <span class="n">create_state_return</span><span class="p">(</span><span class="n">rec</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">chk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;200 OK&#39;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">chk</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">chk</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">83</span></div>
+<div class="viewcode-block" id="test_bad_db_connection"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_utils.test_bad_db_connection">[docs]</a><span class="nd">@mock</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">IngestState</span><span class="p">,</span> <span class="s1">&#39;table_exists&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_bad_db_connection</span><span class="p">(</span><span class="n">mock_is_table_exists</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test a failed db connection.&quot;&quot;&quot;</span>
+    <span class="n">mock_is_table_exists</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">peewee</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">(</span>
+        <span class="n">mock</span><span class="o">.</span><span class="n">Mock</span><span class="p">(),</span> <span class="s1">&#39;Error&#39;</span><span class="p">)</span>
+    <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">create_tables</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">peewee</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">:</span>
+        <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span></div>
+    <span class="k">assert</span> <span class="n">hit_exception</span>
 </pre></div>
 
            </div>

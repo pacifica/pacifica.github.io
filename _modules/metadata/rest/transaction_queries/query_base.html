@@ -157,17 +157,26 @@
            <div itemprop="articleBody">
             
   <h1>Source code for metadata.rest.transaction_queries.query_base</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status Metadata proposalinfo base class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status Metadata proposalinfo base class.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">HTTPError</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">DoesNotExist</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">JOIN</span>
 <span class="kn">from</span> <span class="nn">metadata.orm</span> <span class="k">import</span> <span class="n">TransactionKeyValue</span><span class="p">,</span> <span class="n">Keys</span><span class="p">,</span> <span class="n">Values</span>
 <span class="kn">from</span> <span class="nn">metadata.orm</span> <span class="k">import</span> <span class="n">Files</span><span class="p">,</span> <span class="n">FileKeyValue</span><span class="p">,</span> <span class="n">Transactions</span>
 <span class="kn">from</span> <span class="nn">metadata.orm</span> <span class="k">import</span> <span class="n">Users</span><span class="p">,</span> <span class="n">Instruments</span><span class="p">,</span> <span class="n">Proposals</span>
-<span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">HTTPError</span>
 
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
 <div class="viewcode-block" id="QueryBase"><a class="viewcode-back" href="../../../../metadata.metadata.rest.transaction_queries.html#metadata.rest.transaction_queries.query_base.QueryBase">[docs]</a><span class="k">class</span> <span class="nc">QueryBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Retrieves a set of proposals for a given keyword set.&quot;&quot;&quot;</span>
+
+    <span class="n">valid_keywords</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;proposal&#39;</span><span class="p">,</span> <span class="s1">&#39;proposal_id&#39;</span><span class="p">,</span> <span class="s1">&#39;instrument&#39;</span><span class="p">,</span> <span class="s1">&#39;instrument_id&#39;</span><span class="p">,</span> <span class="s1">&#39;requesting_user&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;time_frame&#39;</span><span class="p">,</span> <span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="s1">&#39;transaction_id&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="s1">&#39;person&#39;</span><span class="p">,</span> <span class="s1">&#39;person_id&#39;</span><span class="p">,</span> <span class="s1">&#39;submitter&#39;</span><span class="p">,</span> <span class="s1">&#39;submitter_id&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;item_count&#39;</span><span class="p">,</span> <span class="s1">&#39;page&#39;</span>
+    <span class="p">]</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_get_transaction_key_values</span><span class="p">(</span><span class="n">transaction_id</span><span class="p">):</span>
@@ -263,7 +272,7 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_get_file_key_values</span><span class="p">(</span><span class="n">file_entries</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_entries</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">file_entries</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">file_entries</span>
         <span class="n">file_keys</span> <span class="o">=</span> <span class="n">FileKeyValue</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
             <span class="n">Keys</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">Values</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">FileKeyValue</span><span class="o">.</span><span class="n">file</span>
@@ -311,7 +320,7 @@
                 <span class="n">Instruments</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">transaction_entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;instrument&#39;</span><span class="p">)</span>
             <span class="p">)</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
             <span class="n">details_metadata</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;submitter_name&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="s1">&#39;submitter_name&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">submitter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">),</span>
                     <span class="n">submitter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">)</span>
                 <span class="p">),</span>
@@ -328,8 +337,8 @@
     <span class="k">def</span> <span class="nf">compose_help_block_message</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Assemble a block of relevant help text to be returned with an invalid request.&quot;&quot;&quot;</span>
         <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;You must supply a numeric transaction id &#39;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39;(like &quot;/transactioninfo/&lt;transaction_id&gt;&quot;)&#39;</span>
-        <span class="k">return</span> <span class="n">message</span></div></div>
+        <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39;(like &quot;/transactioninfo/&lt;transaction_id&gt;&quot;)&#39;</span></div></div>
+        <span class="k">return</span> <span class="n">message</span>
 </pre></div>
 
            </div>

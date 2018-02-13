@@ -158,10 +158,8 @@
             
   <h1>Source code for cart.test.test_archive</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Add Unit Tests for archive interface.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Add Unit Tests for archive interface.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span><span class="p">,</span> <span class="n">loads</span>
 <span class="kn">from</span> <span class="nn">tempfile</span> <span class="k">import</span> <span class="n">mkdtemp</span>
@@ -169,50 +167,44 @@
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">cart.archive_requests</span> <span class="k">import</span> <span class="n">ArchiveRequests</span>
 
+
 <div class="viewcode-block" id="TestArchiveRequests"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_archive.TestArchiveRequests">[docs]</a><span class="k">class</span> <span class="nc">TestArchiveRequests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Test the archive requests class</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Test the archive requests class.&quot;&quot;&quot;</span>
+
     <span class="n">endpoint_url</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8080&#39;</span>
 
 <div class="viewcode-block" id="TestArchiveRequests.test_archive_get"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_archive.TestArchiveRequests.test_archive_get">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_archive_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Test pulling a file</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">response_body</span> <span class="o">=</span> <span class="s2">&quot;This is the body of the file in the archive.&quot;</span>
-        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/1&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint_url</span><span class="p">),</span>
+        <span class="sd">&quot;&quot;&quot;Test pulling a file.&quot;&quot;&quot;</span>
+        <span class="n">response_body</span> <span class="o">=</span> <span class="s1">&#39;This is the body of the file in the archive.&#39;</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/1&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint_url</span><span class="p">),</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">response_body</span><span class="p">,</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/octet-stream&#39;</span><span class="p">)</span>
         <span class="n">temp_dir</span> <span class="o">=</span> <span class="n">mkdtemp</span><span class="p">()</span>
         <span class="n">archreq</span> <span class="o">=</span> <span class="n">ArchiveRequests</span><span class="p">()</span>
         <span class="n">hashval</span> <span class="o">=</span> <span class="s1">&#39;5bf018b3c598df19b5f4363fc55f2f89&#39;</span>
         <span class="n">hashtype</span> <span class="o">=</span> <span class="s1">&#39;md5&#39;</span>
-        <span class="n">archreq</span><span class="o">.</span><span class="n">pull_file</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/1&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">),</span> <span class="n">hashval</span><span class="p">,</span> <span class="n">hashtype</span><span class="p">)</span>
-        <span class="n">testfd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/1&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">testfd</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">response_body</span><span class="p">)</span></div>
+        <span class="n">archreq</span><span class="o">.</span><span class="n">pull_file</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/1&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">),</span> <span class="n">hashval</span><span class="p">,</span> <span class="n">hashtype</span><span class="p">)</span>
+        <span class="n">testfd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/1&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">testfd</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">response_body</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestArchiveRequests.test_archive_stage"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_archive.TestArchiveRequests.test_archive_stage">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_archive_stage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Test staging a file</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test staging a file.&quot;&quot;&quot;</span>
         <span class="n">response_body</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;File was staged&#39;</span><span class="p">,</span>
             <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span>
         <span class="p">}</span>
-        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/1&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint_url</span><span class="p">),</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/1&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint_url</span><span class="p">),</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">archreq</span> <span class="o">=</span> <span class="n">ArchiveRequests</span><span class="p">()</span>
-        <span class="n">archreq</span><span class="o">.</span><span class="n">stage_file</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">)</span></div>
+        <span class="n">archreq</span><span class="o">.</span><span class="n">stage_file</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestArchiveRequests.test_archive_status"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_archive.TestArchiveRequests.test_archive_status">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_archive_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Test pulling a file</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test pulling a file.&quot;&quot;&quot;</span>
         <span class="n">stage_file_obj</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;bytes_per_level&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
             <span class="s1">&#39;ctime&#39;</span><span class="p">:</span> <span class="s1">&#39;Sun, 06 Nov 1994 08:49:37 GMT&#39;</span><span class="p">,</span>
@@ -229,48 +221,44 @@
             <span class="s1">&#39;x-pacifica-file-storage-media&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
             <span class="s1">&#39;last-modified&#39;</span><span class="p">:</span> <span class="s1">&#39;Sun, 06 Nov 1994 08:49:37 GMT&#39;</span>
         <span class="p">}</span>
-        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">HEAD</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/1&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint_url</span><span class="p">),</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">HEAD</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/1&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint_url</span><span class="p">),</span>
                                <span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="s1">&#39;blahblah&#39;</span><span class="p">,</span>
                                <span class="n">adding_headers</span><span class="o">=</span><span class="n">adding_headers</span><span class="p">)</span>
         <span class="n">archreq</span> <span class="o">=</span> <span class="n">ArchiveRequests</span><span class="p">()</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">archreq</span><span class="o">.</span><span class="n">status_file</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">status</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">stage_file_obj</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">stage_file_obj</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestArchiveRequests.test_archive_stage_fail"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_archive.TestArchiveRequests.test_archive_stage_fail">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_archive_stage_fail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Test staging a file failure</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test staging a file failure.&quot;&quot;&quot;</span>
         <span class="n">response_body</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span>
             <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span>
         <span class="p">}</span>
-        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/1&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint_url</span><span class="p">),</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/1&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint_url</span><span class="p">),</span>
                                <span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">archreq</span> <span class="o">=</span> <span class="n">ArchiveRequests</span><span class="p">()</span>
-        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">):</span>
-            <span class="n">archreq</span><span class="o">.</span><span class="n">stage_file</span><span class="p">(</span><span class="s1">&#39;fakeFileName&#39;</span><span class="p">)</span></div>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">):</span></div>
+            <span class="n">archreq</span><span class="o">.</span><span class="n">stage_file</span><span class="p">(</span><span class="s1">&#39;fakeFileName&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestArchiveRequests.test_archive_get_bad_hash"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_archive.TestArchiveRequests.test_archive_get_bad_hash">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_archive_get_bad_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Test pulling a file with a bad hash value</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">response_body</span> <span class="o">=</span> <span class="s2">&quot;This is the body of the file in the archive.&quot;</span>
-        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/1&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint_url</span><span class="p">),</span>
+        <span class="sd">&quot;&quot;&quot;Test pulling a file with a bad hash value.&quot;&quot;&quot;</span>
+        <span class="n">response_body</span> <span class="o">=</span> <span class="s1">&#39;This is the body of the file in the archive.&#39;</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/1&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endpoint_url</span><span class="p">),</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">response_body</span><span class="p">,</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/octet-stream&#39;</span><span class="p">)</span>
         <span class="n">temp_dir</span> <span class="o">=</span> <span class="n">mkdtemp</span><span class="p">()</span>
         <span class="n">archreq</span> <span class="o">=</span> <span class="n">ArchiveRequests</span><span class="p">()</span>
         <span class="n">hashval</span> <span class="o">=</span> <span class="s1">&#39;5b&#39;</span>
         <span class="n">hashtype</span> <span class="o">=</span> <span class="s1">&#39;md5&#39;</span>
-        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
-            <span class="n">archreq</span><span class="o">.</span><span class="n">pull_file</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/1&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">),</span> <span class="n">hashval</span><span class="p">,</span> <span class="n">hashtype</span><span class="p">)</span></div></div>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span></div></div>
+            <span class="n">archreq</span><span class="o">.</span><span class="n">pull_file</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">/1&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp_dir</span><span class="p">),</span> <span class="n">hashval</span><span class="p">,</span> <span class="n">hashtype</span><span class="p">)</span>
 </pre></div>
 
            </div>

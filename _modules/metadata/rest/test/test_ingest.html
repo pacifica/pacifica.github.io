@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.rest.test.test_ingest</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Test the ORM interface IngestAPI.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span><span class="p">,</span> <span class="n">loads</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -198,8 +199,8 @@
             <span class="s1">&#39;mimetype&#39;</span><span class="p">:</span> <span class="s1">&#39;text/xml&#39;</span><span class="p">,</span>
             <span class="s1">&#39;hashtype&#39;</span><span class="p">:</span> <span class="s1">&#39;sha1&#39;</span><span class="p">,</span>
             <span class="s1">&#39;hashsum&#39;</span><span class="p">:</span> <span class="s1">&#39;da39a3ee5e6b4b0d3255bfef95601890afd80709deadbeef&#39;</span>
-        <span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">IngestAPI</span><span class="o">.</span><span class="n">validate_file_meta</span><span class="p">(</span><span class="n">bad_hash_len</span><span class="p">))</span></div>
+        <span class="p">}</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">IngestAPI</span><span class="o">.</span><span class="n">validate_file_meta</span><span class="p">(</span><span class="n">bad_hash_len</span><span class="p">))</span>
 
 <div class="viewcode-block" id="TestIngestAPI.test_ingest_api"><a class="viewcode-back" href="../../../../metadata.metadata.rest.test.html#metadata.rest.test.test_ingest.TestIngestAPI.test_ingest_api">[docs]</a>    <span class="k">def</span> <span class="nf">test_ingest_api</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the PUT (insert) method.&quot;&quot;&quot;</span>
@@ -208,9 +209,21 @@
             <span class="p">{</span><span class="s1">&#39;destinationTable&#39;</span><span class="p">:</span> <span class="s1">&#39;Transactions.submitter&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
             <span class="p">{</span><span class="s1">&#39;destinationTable&#39;</span><span class="p">:</span> <span class="s1">&#39;Transactions.proposal&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;1234a&#39;</span><span class="p">},</span>
             <span class="p">{</span><span class="s1">&#39;destinationTable&#39;</span><span class="p">:</span> <span class="s1">&#39;Transactions.instrument&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">54</span><span class="p">},</span>
-            <span class="p">{</span><span class="s1">&#39;destinationTable&#39;</span><span class="p">:</span> <span class="s1">&#39;TransactionKeyValue&#39;</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;Temp C&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;27&#39;</span><span class="p">},</span>
-            <span class="p">{</span><span class="s1">&#39;destinationTable&#39;</span><span class="p">:</span> <span class="s1">&#39;TransactionKeyValue&#39;</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;Temp F&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;27&#39;</span><span class="p">},</span>
-            <span class="p">{</span><span class="s1">&#39;destinationTable&#39;</span><span class="p">:</span> <span class="s1">&#39;TransactionKeyValue&#39;</span><span class="p">,</span> <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;Tag&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span><span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;destinationTable&#39;</span><span class="p">:</span> <span class="s1">&#39;TransactionKeyValue&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;Temp C&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;27&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;destinationTable&#39;</span><span class="p">:</span> <span class="s1">&#39;TransactionKeyValue&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;Temp F&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;27&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;destinationTable&#39;</span><span class="p">:</span> <span class="s1">&#39;TransactionKeyValue&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;Tag&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;foo&#39;</span>
+            <span class="p">},</span>
             <span class="p">{</span>
                 <span class="s1">&#39;destinationTable&#39;</span><span class="p">:</span> <span class="s1">&#39;Files&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;foo.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;subdir&#39;</span><span class="p">:</span> <span class="s1">&#39;a/b/&#39;</span><span class="p">,</span>
@@ -247,8 +260,8 @@
         <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
             <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/ingest&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">putdata</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;content-type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">})</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;traceback&#39;</span> <span class="ow">in</span> <span class="n">loads</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;ValueError&#39;</span> <span class="ow">in</span> <span class="n">loads</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s1">&#39;traceback&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;ValueError&#39;</span> <span class="ow">in</span> <span class="n">loads</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s1">&#39;traceback&#39;</span><span class="p">])</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 </pre></div>
 
            </div>

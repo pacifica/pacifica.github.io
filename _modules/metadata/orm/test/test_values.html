@@ -183,38 +183,33 @@
     <span class="n">obj_cls</span> <span class="o">=</span> <span class="n">Values</span>
     <span class="n">obj_id</span> <span class="o">=</span> <span class="n">Values</span><span class="o">.</span><span class="n">id</span>
 
-<div class="viewcode-block" id="TestValues.dependent_cls"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_values.TestValues.dependent_cls">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">dependent_cls</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return dependent classes for the Values object.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">Values</span><span class="p">]</span></div>
-
 <div class="viewcode-block" id="TestValues.test_values_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_values.TestValues.test_values_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_values_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_VALUE_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_VALUE_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestValues.test_unicode_values_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_values.TestValues.test_unicode_values_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_values_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_VALUE_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_VALUE_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestValues.test_values_json"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_values.TestValues.test_values_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_values_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_VALUE_HASH</span><span class="p">))</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_VALUE_HASH</span><span class="p">))</span>
 
 <div class="viewcode-block" id="TestValues.test_key_search_expr"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_values.TestValues.test_key_search_expr">[docs]</a>    <span class="k">def</span> <span class="nf">test_key_search_expr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause_search_expr</span><span class="p">(</span>
             <span class="n">SAMPLE_UNICODE_VALUE_HASH</span><span class="p">,</span>
             <span class="n">value_operator</span><span class="o">=</span><span class="s1">&#39;ILIKE&#39;</span><span class="p">,</span>
-            <span class="n">value</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;%é%&#39;</span>
-        <span class="p">)</span></div>
+            <span class="n">value</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;%é%&#39;</span></div>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="TestValues.test_values_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_values.TestValues.test_values_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_values_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_VALUE_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_VALUE_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestValues.test_unicode_values_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_values.TestValues.test_unicode_values_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_values_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_VALUE_HASH</span><span class="p">)</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_VALUE_HASH</span><span class="p">)</span>
 </pre></div>
 
            </div>

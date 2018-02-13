@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.orm.test.test_available_hash_list</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This module tests the specific class method from PacificaModel.</span>
 
@@ -179,16 +180,16 @@
         <span class="sd">&quot;&quot;&quot;Test the method to check primary keys with Keys.&quot;&quot;&quot;</span>
         <span class="n">check_list</span> <span class="o">=</span> <span class="n">Keys</span><span class="o">.</span><span class="n">get_primary_keys</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">check_list</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">check_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">check_list</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">check_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">check_list</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestKeysHashList.test_primary_keys_user_group"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_available_hash_list.TestKeysHashList.test_primary_keys_user_group">[docs]</a>    <span class="k">def</span> <span class="nf">test_primary_keys_user_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the primary keys method with user group.&quot;&quot;&quot;</span>
         <span class="n">check_list</span> <span class="o">=</span> <span class="n">UserGroup</span><span class="o">.</span><span class="n">get_primary_keys</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">check_list</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">check_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;person&#39;</span> <span class="ow">in</span> <span class="n">check_list</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;group&#39;</span> <span class="ow">in</span> <span class="n">check_list</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;person&#39;</span> <span class="ow">in</span> <span class="n">check_list</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;group&#39;</span> <span class="ow">in</span> <span class="n">check_list</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestKeysHashList.test_hash_list_with_keys"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_available_hash_list.TestKeysHashList.test_hash_list_with_keys">[docs]</a>    <span class="k">def</span> <span class="nf">test_hash_list_with_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test method to check the results of available hash list.&quot;&quot;&quot;</span>
@@ -220,8 +221,8 @@
                 <span class="n">obj_key_meta</span> <span class="o">=</span> <span class="n">hash_dict</span><span class="p">[</span><span class="n">hashed_key</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;index_hash&#39;</span> <span class="ow">in</span> <span class="n">obj_key_meta</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;key_list&#39;</span> <span class="ow">in</span> <span class="n">obj_key_meta</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">obj_key_meta</span><span class="p">[</span><span class="s1">&#39;key_list&#39;</span><span class="p">])</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hashed_key</span> <span class="o">==</span> <span class="n">obj_key_meta</span><span class="p">[</span><span class="s1">&#39;index_hash&#39;</span><span class="p">])</span></div></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">obj_key_meta</span><span class="p">[</span><span class="s1">&#39;key_list&#39;</span><span class="p">])</span></div></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hashed_key</span> <span class="o">==</span> <span class="n">obj_key_meta</span><span class="p">[</span><span class="s1">&#39;index_hash&#39;</span><span class="p">])</span>
 </pre></div>
 
            </div>

@@ -158,12 +158,15 @@
             
   <h1>Source code for policy.root</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;CherryPy root object class.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">policy.uploader.rest</span> <span class="k">import</span> <span class="n">UploaderPolicy</span>
 <span class="kn">from</span> <span class="nn">policy.status.rest</span> <span class="k">import</span> <span class="n">StatusPolicy</span>
 <span class="kn">from</span> <span class="nn">policy.ingest.rest</span> <span class="k">import</span> <span class="n">IngestPolicy</span>
 <span class="kn">from</span> <span class="nn">policy.reporting.rest</span> <span class="k">import</span> <span class="n">ReportingPolicy</span>
-<span class="kn">from</span> <span class="nn">policy</span> <span class="k">import</span> <span class="n">try_meta_connect</span>
+<span class="kn">from</span> <span class="nn">policy.globals</span> <span class="k">import</span> <span class="n">METADATA_STATUS_URL</span><span class="p">,</span> <span class="n">METADATA_CONNECT_ATTEMPTS</span><span class="p">,</span> <span class="n">METADATA_WAIT</span>
 
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
@@ -178,11 +181,29 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create the local objects we need.&quot;&quot;&quot;</span>
-        <span class="n">try_meta_connect</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_try_meta_connect</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">uploader</span> <span class="o">=</span> <span class="n">UploaderPolicy</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">StatusPolicy</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reporting</span> <span class="o">=</span> <span class="n">ReportingPolicy</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ingest</span> <span class="o">=</span> <span class="n">IngestPolicy</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ingest</span> <span class="o">=</span> <span class="n">IngestPolicy</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Root._try_meta_connect"><a class="viewcode-back" href="../../policy.policy.html#policy.root.Root._try_meta_connect">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_try_meta_connect</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Try to connect to the metadata service see if its there.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">METADATA_STATUS_URL</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">ret</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="s1">&#39;try_meta_connect: </span><span class="si">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span>
+        <span class="c1"># pylint: disable=broad-except</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="c1"># pylint: enable=broad-except</span>
+            <span class="k">if</span> <span class="n">attempts</span> <span class="o">&lt;</span> <span class="n">METADATA_CONNECT_ATTEMPTS</span><span class="p">:</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="n">METADATA_WAIT</span><span class="p">)</span>
+                <span class="n">attempts</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_try_meta_connect</span><span class="p">(</span><span class="n">attempts</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span></div></div>
+                <span class="k">raise</span> <span class="ne">Exception</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 </pre></div>
 

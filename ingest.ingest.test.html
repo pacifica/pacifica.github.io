@@ -184,12 +184,18 @@
 <p>Index server unit and integration tests.</p>
 <dl class="class">
 <dt id="ingest.test.test_ingest.IndexServerUnitTests">
-<em class="property">class </em><code class="descclassname">ingest.test.test_ingest.</code><code class="descname">IndexServerUnitTests</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">ingest.test.test_ingest.</code><code class="descname">IndexServerUnitTests</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests" title="Permalink to this definition">¶</a></dt>
 <dd><p>Index server unit and integration tests.</p>
 <dl class="method">
-<dt id="ingest.test.test_ingest.IndexServerUnitTests.test_get_job_id">
-<code class="descname">test_get_job_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests.test_get_job_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests.test_get_job_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse the parameters for a request from the environ dictionary.</p>
+<dt id="ingest.test.test_ingest.IndexServerUnitTests.test_down_metadata">
+<code class="descname">test_down_metadata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests.test_down_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests.test_down_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a failed upload of the metadata.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ingest.test.test_ingest.IndexServerUnitTests.test_file_ingester">
+<code class="descname">test_file_ingester</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_ingest.html#IndexServerUnitTests.test_file_ingester"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_ingest.IndexServerUnitTests.test_file_ingester" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the FileIngester class.</p>
 </dd></dl>
 
 <dl class="method">
@@ -224,22 +230,22 @@
 
 </dd></dl>
 
-<span class="target" id="module-ingest.test.test_upload"></span><p>Test ingest.</p>
-<dl class="function">
-<dt id="ingest.test.test_upload.check_upload_state">
-<code class="descclassname">ingest.test.test_upload.</code><code class="descname">check_upload_state</code><span class="sig-paren">(</span><em>job_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#check_upload_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.check_upload_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the upload state and return results.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ingest.test.test_upload.test_bad_archiveinterface_upload">
-<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_archiveinterface_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_archiveinterface_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_archiveinterface_upload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test if the archive interface is down.</p>
-</dd></dl>
-
+<span class="target" id="module-ingest.test.test_upload"></span><p>Test ingest with good uploads of good and bad data.</p>
 <dl class="function">
 <dt id="ingest.test.test_upload.test_bad_hashsum_upload">
 <code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_hashsum_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_hashsum_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_hashsum_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the metadata is down.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_upload.test_bad_job_id">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_job_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_job_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_job_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a bad job ID.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.test.test_upload.test_bad_json_upload">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_json_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_json_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_json_upload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if the metadata is down.</p>
 </dd></dl>
 
@@ -250,9 +256,9 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="ingest.test.test_upload.test_bad_policy_upload">
-<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_policy_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_policy_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_policy_upload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test if the archive interface is down.</p>
+<dt id="ingest.test.test_upload.test_bad_proposal_upload">
+<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_proposal_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_proposal_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_proposal_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the metadata is down.</p>
 </dd></dl>
 
 <dl class="function">
@@ -262,64 +268,16 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="ingest.test.test_upload.test_bad_upload">
-<code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_bad_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_bad_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_bad_upload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the upload.</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="ingest.test.test_upload.test_good_upload">
 <code class="descclassname">ingest.test.test_upload.</code><code class="descname">test_good_upload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#test_good_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.test_good_upload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test the good upload.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="ingest.test.test_upload.try_assert_job_state">
-<code class="descclassname">ingest.test.test_upload.</code><code class="descname">try_assert_job_state</code><span class="sig-paren">(</span><em>job_state</em>, <em>state</em>, <em>task</em>, <em>percent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#try_assert_job_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.try_assert_job_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>assert on the job state bits.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ingest.test.test_upload.try_good_upload">
-<code class="descclassname">ingest.test.test_upload.</code><code class="descname">try_good_upload</code><span class="sig-paren">(</span><em>tarfile</em>, <em>state</em>, <em>task</em>, <em>percent</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_upload.html#try_good_upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_upload.try_good_upload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the upload and see if the state task and percent match.</p>
-</dd></dl>
-
 <span class="target" id="module-ingest.test.test_utils"></span><p>Test ingest.</p>
 <dl class="function">
-<dt id="ingest.test.test_utils.test_bad_form_get_job_id">
-<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_bad_form_get_job_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_bad_form_get_job_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_bad_form_get_job_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the get_job_id methods.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ingest.test.test_utils.test_create_return_params">
-<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_create_return_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_create_return_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_create_return_params" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the create return params.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ingest.test.test_utils.test_create_state_return">
-<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_create_state_return</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_create_state_return"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_create_state_return" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the create_state_return method.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ingest.test.test_utils.test_invalid_return">
-<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_invalid_return</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_invalid_return"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_invalid_return" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the invalid return method.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ingest.test.test_utils.test_no_get_job_id">
-<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_no_get_job_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_no_get_job_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_no_get_job_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the get_job_id methods.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ingest.test.test_utils.test_valid_request">
-<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_valid_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_valid_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_valid_request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the valid request method.</p>
+<dt id="ingest.test.test_utils.test_bad_db_connection">
+<code class="descclassname">ingest.test.test_utils.</code><code class="descname">test_bad_db_connection</code><span class="sig-paren">(</span><em>*args</em>, <em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/test/test_utils.html#test_bad_db_connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.test.test_utils.test_bad_db_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a failed db connection.</p>
 </dd></dl>
 
 </div>

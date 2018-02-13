@@ -36,7 +36,7 @@
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
+        <link rel="up" title="archiveinterface" href="../../../archiveinterface.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -139,6 +139,8 @@
         
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../../../archiveinterface.html">archiveinterface</a> &raquo;</li>
+        
       <li>archiveinterface.archivebackends.posix.posix_status</li>
     
     
@@ -158,6 +160,7 @@
             
   <h1>Source code for archiveinterface.archivebackends.posix.posix_status</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Posix Status Module.</span>
 
 <span class="sd">Module that implements the Abstract Status class for the posix</span>
@@ -195,18 +198,18 @@
 <div class="viewcode-block" id="PosixStatus.find_file_storage_media"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.posix_status.PosixStatus.find_file_storage_media">[docs]</a>    <span class="k">def</span> <span class="nf">find_file_storage_media</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get the file storage media.  Showed always be disk for posix.&quot;&quot;&quot;</span>
         <span class="n">level_array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defined_levels</span>
-        <span class="n">disk_level</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="n">level_array</span><span class="p">[</span><span class="n">disk_level</span><span class="p">]</span></div>
+        <span class="n">disk_level</span> <span class="o">=</span> <span class="mi">0</span></div>
+        <span class="k">return</span> <span class="n">level_array</span><span class="p">[</span><span class="n">disk_level</span><span class="p">]</span>
 
 <div class="viewcode-block" id="PosixStatus.define_levels"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.posix_status.PosixStatus.define_levels">[docs]</a>    <span class="k">def</span> <span class="nf">define_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set up what each level definition means.&quot;&quot;&quot;</span>
         <span class="c1"># This defines posix integer levels.  Always disk</span>
-        <span class="n">type_per_level</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_disk</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">type_per_level</span></div>
+        <span class="n">type_per_level</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_disk</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="n">type_per_level</span>
 
 <div class="viewcode-block" id="PosixStatus.set_filepath"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.posix_status.PosixStatus.set_filepath">[docs]</a>    <span class="k">def</span> <span class="nf">set_filepath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set the filepath that the status is for.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Set the filepath that the status is for.&quot;&quot;&quot;</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span>
 </pre></div>
 
            </div>

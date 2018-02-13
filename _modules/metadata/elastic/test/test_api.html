@@ -158,12 +158,14 @@
             
   <h1>Source code for metadata.elastic.test.test_api</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Test the ElasticAPI object for managing data in ES.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span><span class="p">,</span> <span class="n">loads</span>
 <span class="kn">import</span> <span class="nn">httpretty</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.utils</span> <span class="k">import</span> <span class="n">unicode_type</span>
 <span class="kn">from</span> <span class="nn">metadata.elastic.orm</span> <span class="k">import</span> <span class="n">ElasticAPI</span>
+<span class="kn">from</span> <span class="nn">metadata.elastic.test</span> <span class="k">import</span> <span class="n">ES_CLUSTER_BODY</span>
 
 
 <div class="viewcode-block" id="TestElasticAPI"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.test_api.TestElasticAPI">[docs]</a><span class="k">class</span> <span class="nc">TestElasticAPI</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
@@ -194,6 +196,9 @@
                 <span class="p">}</span>
             <span class="p">]</span>
         <span class="p">}</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_nodes/_all/http&#39;</span><span class="p">,</span>
+                               <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">ES_CLUSTER_BODY</span><span class="p">),</span>
+                               <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">HEAD</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">POST</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_bulk&#39;</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span>
@@ -204,12 +209,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">sent_body</span><span class="p">,</span> <span class="n">unicode_type</span><span class="p">))</span>
         <span class="n">sent_body</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">sent_body</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sent_body</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">sent_body</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">obj_hash</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">sent_body</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">obj_hash</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
 
 <div class="viewcode-block" id="TestElasticAPI.test_failed_upload"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.test_api.TestElasticAPI.test_failed_upload">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_failed_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the upload class method failed upload.&quot;&quot;&quot;</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_nodes/_all/http&#39;</span><span class="p">,</span>
+                               <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">ES_CLUSTER_BODY</span><span class="p">),</span>
+                               <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">obj_hash</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="mi">127</span><span class="p">,</span>
             <span class="sa">u</span><span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;bar&#39;</span>
@@ -221,8 +229,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">ElasticAPI</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">([</span><span class="n">obj_hash</span><span class="p">])</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="s1">&#39;TransportError(500, u</span><span class="se">\&#39;\&#39;</span><span class="s1">)&#39;</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="s1">&#39;TransportError(500, u</span><span class="se">\&#39;\&#39;</span><span class="s1">)&#39;</span><span class="p">)</span>
         <span class="c1"># pylint: enable=broad-except</span>
 
 <div class="viewcode-block" id="TestElasticAPI.test_delete"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.test_api.TestElasticAPI.test_delete">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
@@ -230,15 +238,20 @@
         <span class="sd">&quot;&quot;&quot;Test the delete class method.&quot;&quot;&quot;</span>
         <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:9200/pacifica/ElasticAPI/127&#39;</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="n">ElasticAPI</span><span class="p">()</span>
+        <span class="c1"># pylint: disable=invalid-name</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="mi">127</span>
+        <span class="c1"># pylint: enable=invalid-name</span>
         <span class="n">response_body</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;deleted!&#39;</span>
         <span class="p">}</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_nodes/_all/http&#39;</span><span class="p">,</span>
+                               <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">ES_CLUSTER_BODY</span><span class="p">),</span>
+                               <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">DELETE</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
-        <span class="n">ElasticAPI</span><span class="o">.</span><span class="n">elastic_delete</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">)</span></div>
+        <span class="n">ElasticAPI</span><span class="o">.</span><span class="n">elastic_delete</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestElasticAPI.test_failed_delete"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.test_api.TestElasticAPI.test_failed_delete">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_failed_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -249,6 +262,9 @@
         <span class="n">response_body</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;error!&#39;</span>
         <span class="p">}</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_nodes/_all/http&#39;</span><span class="p">,</span>
+                               <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">ES_CLUSTER_BODY</span><span class="p">),</span>
+                               <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">DELETE</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
@@ -258,33 +274,40 @@
             <span class="n">ElasticAPI</span><span class="o">.</span><span class="n">elastic_delete</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="s1">&#39;TransportError(500, u</span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">)))</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span></div>
+                <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="s1">&#39;TransportError(500, u</span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">)))</span>
         <span class="c1"># pylint: enable=broad-except</span>
 
 <div class="viewcode-block" id="TestElasticAPI.test_elastic_mapping"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.test_api.TestElasticAPI.test_elastic_mapping">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_elastic_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the elastic_mapping class method.&quot;&quot;&quot;</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:9200/_mapping/ElasticAPI&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:9200/pacifica/_mapping/ElasticAPI&#39;</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="n">ElasticAPI</span><span class="p">()</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="mi">127</span>
         <span class="n">response_body</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;mapped!&#39;</span>
         <span class="p">}</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_nodes/_all/http&#39;</span><span class="p">,</span>
+                               <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">ES_CLUSTER_BODY</span><span class="p">),</span>
+                               <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
-        <span class="n">ElasticAPI</span><span class="o">.</span><span class="n">create_elastic_mapping</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">)</span></div>
+        <span class="n">ElasticAPI</span><span class="o">.</span><span class="n">create_elastic_mapping</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestElasticAPI.test_failed_elastic_mapping"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.test_api.TestElasticAPI.test_failed_elastic_mapping">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_failed_elastic_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the elastic mapping class method failed upload.&quot;&quot;&quot;</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:9200/_mapping/ElasticAPI&#39;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:9200/pacifica/_mapping/ElasticAPI&#39;</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="n">ElasticAPI</span><span class="p">()</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="mi">127</span>
         <span class="n">response_body</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;error!&#39;</span>
         <span class="p">}</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_nodes/_all/http&#39;</span><span class="p">,</span>
+                               <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">ES_CLUSTER_BODY</span><span class="p">),</span>
+                               <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
@@ -294,7 +317,8 @@
             <span class="n">ElasticAPI</span><span class="o">.</span><span class="n">create_elastic_mapping</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="s1">&#39;TransportError(500, u</span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">)))</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span></div></div>
+                <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="s1">&#39;TransportError(500, u</span><span class="se">\&#39;</span><span class="si">{0}</span><span class="se">\&#39;</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">)))</span>
         <span class="c1"># pylint: enable=broad-except</span>
 </pre></div>
 

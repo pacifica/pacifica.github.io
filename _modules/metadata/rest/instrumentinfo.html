@@ -158,10 +158,12 @@
             
   <h1>Source code for metadata.rest.instrumentinfo</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Core interface for the proposalinfo metadata objects to interface with CherryPy.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.instrument_queries.instrument_lookup</span> <span class="k">import</span> <span class="n">InstrumentLookup</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.instrument_queries.instrument_term_search</span> <span class="k">import</span> <span class="n">InstrumentTermSearch</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.instrument_queries.instrument_user_search</span> <span class="k">import</span> <span class="n">InstrumentUserSearch</span>
+<span class="kn">from</span> <span class="nn">metadata.rest.instrument_queries.instrument_categories</span> <span class="k">import</span> <span class="n">InstrumentCategories</span>
 
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
@@ -175,6 +177,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">search</span> <span class="o">=</span> <span class="n">InstrumentTermSearch</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">by_instrument_id</span> <span class="o">=</span> <span class="n">InstrumentLookup</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">by_user_id</span> <span class="o">=</span> <span class="n">InstrumentUserSearch</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="n">InstrumentCategories</span><span class="p">()</span>
 </pre></div>
 
            </div>

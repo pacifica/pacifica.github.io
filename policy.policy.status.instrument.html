@@ -193,13 +193,13 @@
 <dd><p>Retrieves instrument list for a given proposal.</p>
 <dl class="staticmethod">
 <dt id="policy.status.instrument.by_proposal_id.InstrumentsByProposal.GET">
-<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/status/instrument/by_proposal_id.html#InstrumentsByProposal.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.status.instrument.by_proposal_id.InstrumentsByProposal.GET" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/status/instrument/by_proposal_id.html#InstrumentsByProposal.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.status.instrument.by_proposal_id.InstrumentsByProposal.GET" title="Permalink to this definition">¶</a></dt>
 <dd><p>CherryPy GET method.</p>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="policy.status.instrument.by_proposal_id.InstrumentsByProposal._get_instruments_for_proposal">
-<em class="property">static </em><code class="descname">_get_instruments_for_proposal</code><span class="sig-paren">(</span><em>proposal_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/status/instrument/by_proposal_id.html#InstrumentsByProposal._get_instruments_for_proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.status.instrument.by_proposal_id.InstrumentsByProposal._get_instruments_for_proposal" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">_get_instruments_for_proposal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/status/instrument/by_proposal_id.html#InstrumentsByProposal._get_instruments_for_proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.status.instrument.by_proposal_id.InstrumentsByProposal._get_instruments_for_proposal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list with all the instruments belonging to this proposal.</p>
 </dd></dl>
 
@@ -212,7 +212,7 @@
 <dd><p>Retrieves a set of proposals for a given keyword set.</p>
 <dl class="method">
 <dt id="policy.status.instrument.search.InstrumentKeywordSearch.GET">
-<code class="descname">GET</code><span class="sig-paren">(</span><em>search_terms=”</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/status/instrument/search.html#InstrumentKeywordSearch.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.status.instrument.search.InstrumentKeywordSearch.GET" title="Permalink to this definition">¶</a></dt>
+<code class="descname">GET</code><span class="sig-paren">(</span><em>search_terms=''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/status/instrument/search.html#InstrumentKeywordSearch.GET"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.status.instrument.search.InstrumentKeywordSearch.GET" title="Permalink to this definition">¶</a></dt>
 <dd><p>CherryPy GET method.</p>
 </dd></dl>
 
@@ -224,13 +224,13 @@
 
 <dl class="method">
 <dt id="policy.status.instrument.search.InstrumentKeywordSearch._get_instruments_for_keywords">
-<code class="descname">_get_instruments_for_keywords</code><span class="sig-paren">(</span><em>user_id</em>, <em>search_terms=”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/status/instrument/search.html#InstrumentKeywordSearch._get_instruments_for_keywords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.status.instrument.search.InstrumentKeywordSearch._get_instruments_for_keywords" title="Permalink to this definition">¶</a></dt>
+<code class="descname">_get_instruments_for_keywords</code><span class="sig-paren">(</span><em>user_id</em>, <em>search_terms=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/status/instrument/search.html#InstrumentKeywordSearch._get_instruments_for_keywords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.status.instrument.search.InstrumentKeywordSearch._get_instruments_for_keywords" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list with all the instruments having this term.</p>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="policy.status.instrument.search.InstrumentKeywordSearch._squash_output_list">
-<em class="property">static </em><code class="descname">_squash_output_list</code><span class="sig-paren">(</span><em>inst_for_user_list</em>, <em>full_inst_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/status/instrument/search.html#InstrumentKeywordSearch._squash_output_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.status.instrument.search.InstrumentKeywordSearch._squash_output_list" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">_squash_output_list</code><span class="sig-paren">(</span><em>full_inst_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/status/instrument/search.html#InstrumentKeywordSearch._squash_output_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.status.instrument.search.InstrumentKeywordSearch._squash_output_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Filter entries in the full instrument list.</p>
 </dd></dl>
 

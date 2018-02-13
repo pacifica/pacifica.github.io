@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.rest.objectinfo</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Core interface for the uploader metadata objects to interface with CherryPy.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">cherrypy</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span>
@@ -184,8 +185,8 @@
                 <span class="n">myclass</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">myclass</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="k">return</span> <span class="n">myclass</span></div>
+</div>
+        <span class="k">return</span> <span class="n">myclass</span>
 
     <span class="c1"># CherryPy requires these named methods.</span>
     <span class="c1"># pylint: disable=invalid-name, protected-access</span>
@@ -220,8 +221,8 @@
                     <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;No object class name found&#39;</span>
                 <span class="k">raise</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">js_object</span> <span class="o">=</span> <span class="n">myclass</span><span class="o">.</span><span class="n">get_object_info</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">js_object</span></div>
+                <span class="n">js_object</span> <span class="o">=</span> <span class="n">myclass</span><span class="o">.</span><span class="n">get_object_info</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">js_object</span>
 </pre></div>
 
            </div>

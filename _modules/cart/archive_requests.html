@@ -157,27 +157,28 @@
            <div itemprop="articleBody">
             
   <h1>Source code for cart.archive_requests</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Module that is used by the cart to send requests to the</span>
-<span class="sd">archive interface</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Module that is used by the cart to send requests to the archive interface.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span>
 <span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">cart.cart_env_globals</span> <span class="k">import</span>  <span class="n">ARCHIVE_INTERFACE_URL</span>
+<span class="kn">from</span> <span class="nn">cart.cart_env_globals</span> <span class="k">import</span> <span class="n">ARCHIVE_INTERFACE_URL</span>
 
 
 <div class="viewcode-block" id="ArchiveRequests"><a class="viewcode-back" href="../../cartd.cart.html#cart.archive_requests.ArchiveRequests">[docs]</a><span class="k">class</span> <span class="nc">ArchiveRequests</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;class that supports all the requests to the archive</span>
-<span class="sd">    interface</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Class that supports all the requests to the archive interface.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor for setting the AI URL.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="n">ARCHIVE_INTERFACE_URL</span>
 
 <div class="viewcode-block" id="ArchiveRequests.pull_file"><a class="viewcode-back" href="../../cartd.cart.html#cart.archive_requests.ArchiveRequests.pull_file">[docs]</a>    <span class="k">def</span> <span class="nf">pull_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">archive_filename</span><span class="p">,</span> <span class="n">cart_filepath</span><span class="p">,</span> <span class="n">hashval</span><span class="p">,</span> <span class="n">hashtype</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Performs a request that will attempt to write</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pull file from AI.</span>
+
+<span class="sd">        Performs a request that will attempt to write</span>
 <span class="sd">        the contents of a file from the archive interface</span>
 <span class="sd">        to the specified cart filepath</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -191,20 +192,18 @@
             <span class="n">buf</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
         <span class="n">myfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">myhashval</span> <span class="o">=</span> <span class="n">myhash</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">myhashval</span> <span class="o">!=</span> <span class="n">hashval</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;File hash does not match provided hash&#39;</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">myhashval</span> <span class="o">!=</span> <span class="n">hashval</span><span class="p">:</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;File hash does not match provided hash&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ArchiveRequests.stage_file"><a class="viewcode-back" href="../../cartd.cart.html#cart.archive_requests.ArchiveRequests.stage_file">[docs]</a>    <span class="k">def</span> <span class="nf">stage_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Sends a post to the archive interface telling it to stage the file</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Send a post to the archive interface telling it to stage the file.&quot;&quot;&quot;</span>
         <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">))</span>
-        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;500&#39;</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)))</span></div>
-
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;500&#39;</span><span class="p">:</span></div>
+            <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)))</span>
 
 <div class="viewcode-block" id="ArchiveRequests._status_dict"><a class="viewcode-back" href="../../cartd.cart.html#cart.archive_requests.ArchiveRequests._status_dict">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_status_dict</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return status dictionary from http response headers&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Return status dictionary from http response headers.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-pacifica-messsage&#39;</span><span class="p">],</span>
             <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="n">file_name</span><span class="p">,</span>
@@ -212,15 +211,13 @@
             <span class="s1">&#39;ctime&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-pacifica-ctime&#39;</span><span class="p">],</span>
             <span class="s1">&#39;mtime&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;last-modified&#39;</span><span class="p">],</span>
             <span class="s1">&#39;bytes_per_level&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-pacifica-bytes-per-level&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;file_storage_media&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-pacifica-file-storage-media&#39;</span><span class="p">]</span>
-        <span class="p">}</span></div>
+            <span class="s1">&#39;file_storage_media&#39;</span><span class="p">:</span> <span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-pacifica-file-storage-media&#39;</span><span class="p">]</span></div>
+        <span class="p">}</span>
 
 <div class="viewcode-block" id="ArchiveRequests.status_file"><a class="viewcode-back" href="../../cartd.cart.html#cart.archive_requests.ArchiveRequests.status_file">[docs]</a>    <span class="k">def</span> <span class="nf">status_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Gets a status from the  archive interface via Head and</span>
-<span class="sd">        returns response &quot;&quot;&quot;</span>
-
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_status_dict</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Get a status from the  archive interface via Head and returns response.&quot;&quot;&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">))</span></div></div>
+        <span class="k">return</span> <span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_status_dict</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span>
 </pre></div>
 
            </div>

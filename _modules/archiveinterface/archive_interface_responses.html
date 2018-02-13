@@ -36,7 +36,7 @@
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
-        <link rel="up" title="Module code" href="../index.html"/> 
+        <link rel="up" title="archiveinterface" href="../archiveinterface.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -139,6 +139,8 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../archiveinterface.html">archiveinterface</a> &raquo;</li>
+        
       <li>archiveinterface.archive_interface_responses</li>
     
     
@@ -158,11 +160,14 @@
             
   <h1>Source code for archiveinterface.archive_interface_responses</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Archive interface server responses module.&quot;&quot;&quot;</span>
 
 
 <div class="viewcode-block" id="Responses"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_responses.Responses">[docs]</a><span class="k">class</span> <span class="nc">Responses</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class to support the archive interface responses.&quot;&quot;&quot;</span>
+
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)]</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Constructor for the responses object.&quot;&quot;&quot;</span>
@@ -170,52 +175,54 @@
 
 <div class="viewcode-block" id="Responses.unknown_request"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_responses.Responses.unknown_request">[docs]</a>    <span class="k">def</span> <span class="nf">unknown_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_response</span><span class="p">,</span> <span class="n">request_method</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Response for when unknown request type given.&quot;&quot;&quot;</span>
-        <span class="n">start_response</span><span class="p">(</span>
-            <span class="s1">&#39;400 Bad Request&#39;</span><span class="p">,</span>
-            <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)]</span>
-        <span class="p">)</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;400 Bad Request&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Unknown request method&#39;</span><span class="p">,</span>
             <span class="s1">&#39;request_method&#39;</span><span class="p">:</span> <span class="n">request_method</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span></div>
+        <span class="p">}</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span>
 
 <div class="viewcode-block" id="Responses.unknown_exception"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_responses.Responses.unknown_exception">[docs]</a>    <span class="k">def</span> <span class="nf">unknown_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Response when unknown exception occurs.&quot;&quot;&quot;</span>
-        <span class="n">start_response</span><span class="p">(</span>
-            <span class="s1">&#39;500 Internal Server Error&#39;</span><span class="p">,</span>
-            <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)]</span>
-        <span class="p">)</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;500 Internal Server Error&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Unknown Exception Occured&#39;</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span></div>
+        <span class="p">}</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span>
 
 <div class="viewcode-block" id="Responses.successful_put_response"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_responses.Responses.successful_put_response">[docs]</a>    <span class="k">def</span> <span class="nf">successful_put_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_response</span><span class="p">,</span> <span class="n">total_bytes</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Response on a successful put.&quot;&quot;&quot;</span>
-        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;201 Created&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)])</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;201 Created&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;File added to archive&#39;</span><span class="p">,</span>
             <span class="s1">&#39;total_bytes&#39;</span><span class="p">:</span> <span class="n">total_bytes</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span></div>
+        <span class="p">}</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span>
+
+<div class="viewcode-block" id="Responses.file_patch"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_responses.Responses.file_patch">[docs]</a>    <span class="k">def</span> <span class="nf">file_patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Response on a successful put.&quot;&quot;&quot;</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;File Moved Successfully&#39;</span>
+        <span class="p">}</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span>
 
 <div class="viewcode-block" id="Responses.archive_working_response"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_responses.Responses.archive_working_response">[docs]</a>    <span class="k">def</span> <span class="nf">archive_working_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Response when doing a get on /.&quot;&quot;&quot;</span>
-        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)])</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Pacifica Archive Interface Up and Running&#39;</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span></div>
+        <span class="p">}</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span>
 
 <div class="viewcode-block" id="Responses.file_stage"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_responses.Responses.file_stage">[docs]</a>    <span class="k">def</span> <span class="nf">file_stage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_response</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Response for when file is on the hpss system.&quot;&quot;&quot;</span>
-        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)])</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;File was staged&#39;</span><span class="p">,</span>
             <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="p">}</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span></div>
+        <span class="p">}</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span>
 
 <div class="viewcode-block" id="Responses.file_status"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_responses.Responses.file_status">[docs]</a>    <span class="k">def</span> <span class="nf">file_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_response</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Response for when file is on the hpss system.&quot;&quot;&quot;</span>
@@ -243,8 +250,14 @@
                 <span class="p">(</span><span class="s1">&#39;X-Pacifica-File-Storage-Media&#39;</span><span class="p">,</span> <span class="s1">&#39;File Not Found&#39;</span><span class="p">),</span>
                 <span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
             <span class="p">]</span>
-            <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;404 Not Found&#39;</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span></div>
+            <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;404 Not Found&#39;</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span>
+
+<div class="viewcode-block" id="Responses.json_patch_error_response"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_responses.Responses.json_patch_error_response">[docs]</a>    <span class="k">def</span> <span class="nf">json_patch_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Response for when there is a problem reading the json file.&quot;&quot;&quot;</span>
+        <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;400 Bad Request&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;JSON content could not be read&#39;</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span>
 
 <div class="viewcode-block" id="Responses.archive_exception"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.archive_interface_responses.Responses.archive_exception">[docs]</a>    <span class="k">def</span> <span class="nf">archive_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_response</span><span class="p">,</span> <span class="n">ex</span><span class="p">,</span> <span class="n">request_method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Response when unknown exception occurs.&quot;&quot;&quot;</span>
@@ -261,14 +274,9 @@
             <span class="p">]</span>
             <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;500 Internal Server Error&#39;</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">start_response</span><span class="p">(</span>
-                <span class="s1">&#39;500 Internal Server Error&#39;</span><span class="p">,</span>
-                <span class="p">[(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)]</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-            <span class="p">}</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span></div></div>
+            <span class="n">start_response</span><span class="p">(</span><span class="s1">&#39;500 Internal Server Error&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_response</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)}</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_response</span>
 </pre></div>
 
            </div>

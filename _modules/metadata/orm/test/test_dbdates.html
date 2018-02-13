@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.orm.test.test_dbdates</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Base testing module implements the temporary database to be used.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">mktime</span>
@@ -200,48 +201,44 @@
 
 <div class="viewcode-block" id="TestDBDates.dependent_cls"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.dependent_cls">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">dependent_cls</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return dependent classes for the base model object.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">PacificaModel</span><span class="p">]</span></div>
+        <span class="sd">&quot;&quot;&quot;Return dependent classes for the base model object.&quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">PacificaModel</span><span class="p">]</span>
 
 <div class="viewcode-block" id="TestDBDates.test_bad_dates_from_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.test_bad_dates_from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_bad_dates_from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test method to check the hash against zero dates.&quot;&quot;&quot;</span>
-        <span class="n">exception_str</span> <span class="o">=</span> <span class="s1">&#39;Unknown string format&#39;</span>
+        <span class="n">exception_str</span> <span class="o">=</span> <span class="s1">&#39;unknown string format&#39;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_BAD_HASH</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="n">exception_str</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">exception_str</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="s1">&#39;[&quot;foo&quot;]&#39;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="s1">&#39;json_str not dict&#39;</span><span class="p">)</span></div>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="s1">&#39;json_str not dict&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestDBDates.test_zero_dates_from_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.test_zero_dates_from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_zero_dates_from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test method to check the hash against zero dates.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_ZERO_ISO_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test method to check the hash against zero dates.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_ZERO_ISO_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestDBDates.test_zero_dates_from_json"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.test_zero_dates_from_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_zero_dates_from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test method to check the json against zero dates.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_ZERO_ISO_HASH</span><span class="p">))</span></div>
+        <span class="sd">&quot;&quot;&quot;Test method to check the json against zero dates.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_ZERO_ISO_HASH</span><span class="p">))</span>
 
 <div class="viewcode-block" id="TestDBDates.test_zero_dates_from_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.test_zero_dates_from_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_zero_dates_from_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test method to check the where clause against zero dates.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_ZERO_ISO_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test method to check the where clause against zero dates.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_ZERO_ISO_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestDBDates.test_now_dates_from_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.test_now_dates_from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_now_dates_from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test method to check the hash against now dates.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_REP_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test method to check the hash against now dates.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_REP_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestDBDates.test_now_dates_from_json"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.test_now_dates_from_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_now_dates_from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test method to check the json against now dates.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_REP_HASH</span><span class="p">))</span></div>
+        <span class="sd">&quot;&quot;&quot;Test method to check the json against now dates.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_REP_HASH</span><span class="p">))</span>
 
 <div class="viewcode-block" id="TestDBDates.test_now_dates_from_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.test_now_dates_from_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_now_dates_from_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test method to check the where clause against now dates.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_REP_HASH</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="TestDBDates.test_testbase_dependent_cls"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.test_testbase_dependent_cls">[docs]</a>    <span class="k">def</span> <span class="nf">test_testbase_dependent_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Make sure we cover the dependent class method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">TestDBDates</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dependent_cls</span><span class="p">(),</span> <span class="kc">None</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test method to check the where clause against now dates.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_REP_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestDBDates.test_dates_range"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.test_dates_range">[docs]</a>    <span class="k">def</span> <span class="nf">test_dates_range</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test date ranges using operators.&quot;&quot;&quot;</span>
@@ -249,8 +246,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">base_create_obj</span><span class="p">(</span><span class="n">PacificaModel</span><span class="p">,</span> <span class="n">SAMPLE_REP_HASH</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">base_create_obj</span><span class="p">(</span><span class="n">PacificaModel</span><span class="p">,</span> <span class="n">SAMPLE_ZERO_ISO_HASH</span><span class="p">)</span>
             <span class="n">third_obj</span> <span class="o">=</span> <span class="n">PacificaModel</span><span class="p">()</span>
-            <span class="n">date_check_max</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">+</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-            <span class="n">date_check_min</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">-</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">date_check_max</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">date_check_min</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
             <span class="n">search_expr</span> <span class="o">=</span> <span class="p">{</span>
                 <span class="s1">&#39;created&#39;</span><span class="p">:</span> <span class="n">date_check_max</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
                 <span class="s1">&#39;created_operator&#39;</span><span class="p">:</span> <span class="s1">&#39;LT&#39;</span>
@@ -264,8 +261,8 @@
                 <span class="p">],</span>
                 <span class="s1">&#39;created_operator&#39;</span><span class="p">:</span> <span class="s1">&#39;BETWEEN&#39;</span>
             <span class="p">}</span>
-            <span class="n">objs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause_search</span><span class="p">(</span><span class="n">third_obj</span><span class="p">,</span> <span class="n">search_expr</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">objs</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span></div>
+            <span class="n">objs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause_search</span><span class="p">(</span><span class="n">third_obj</span><span class="p">,</span> <span class="n">search_expr</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">objs</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestDBDates.test_null_dates_and_query"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.test_null_dates_and_query">[docs]</a>    <span class="k">def</span> <span class="nf">test_null_dates_and_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test method to check that null deleted dates work.&quot;&quot;&quot;</span>
@@ -285,15 +282,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">chk_obj_hash</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
             <span class="n">expr</span> <span class="o">=</span> <span class="n">third_obj</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">where_hash_not_null</span><span class="p">)</span>
             <span class="n">not_null_chk_obj</span> <span class="o">=</span> <span class="n">third_obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
-            <span class="n">chk_obj_hash</span> <span class="o">=</span> <span class="n">not_null_chk_obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">chk_obj_hash</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span></div>
+            <span class="n">chk_obj_hash</span> <span class="o">=</span> <span class="n">not_null_chk_obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">chk_obj_hash</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestDBDates.test_bool_translate"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_dbdates.TestDBDates.test_bool_translate">[docs]</a>    <span class="k">def</span> <span class="nf">test_bool_translate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the bool translate method.&quot;&quot;&quot;</span>
         <span class="c1"># pylint: disable=protected-access</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">PacificaModel</span><span class="o">.</span><span class="n">_bool_translate</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">PacificaModel</span><span class="o">.</span><span class="n">_bool_translate</span><span class="p">(</span><span class="s1">&#39;False&#39;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">PacificaModel</span><span class="o">.</span><span class="n">_bool_translate</span><span class="p">(</span><span class="s1">&#39;false&#39;</span><span class="p">))</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">PacificaModel</span><span class="o">.</span><span class="n">_bool_translate</span><span class="p">(</span><span class="s1">&#39;False&#39;</span><span class="p">))</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">PacificaModel</span><span class="o">.</span><span class="n">_bool_translate</span><span class="p">(</span><span class="s1">&#39;false&#39;</span><span class="p">))</span>
         <span class="c1"># pylint: enable=protected-access</span>
 </pre></div>
 

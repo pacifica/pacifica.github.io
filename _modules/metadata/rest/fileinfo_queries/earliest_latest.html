@@ -157,11 +157,13 @@
            <div itemprop="articleBody">
             
   <h1>Source code for metadata.rest.fileinfo_queries.earliest_latest</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy File Details object class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy File Details object class.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">fn</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span><span class="p">,</span> <span class="n">HTTPError</span><span class="p">,</span> <span class="n">request</span>
 <span class="kn">from</span> <span class="nn">metadata.orm</span> <span class="k">import</span> <span class="n">Files</span><span class="p">,</span> <span class="n">Transactions</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.reporting_queries.query_base</span> <span class="k">import</span> <span class="n">QueryBase</span>
-<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">fn</span>
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
 
@@ -174,7 +176,8 @@
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_get_earliest_latest</span><span class="p">(</span><span class="n">item_type</span><span class="p">,</span> <span class="n">item_list</span><span class="p">,</span> <span class="n">time_basis</span><span class="p">):</span>
         <span class="n">accepted_item_types</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-            <span class="nb">set</span><span class="p">(</span><span class="n">QueryBase</span><span class="o">.</span><span class="n">object_type_mappings</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">+</span> <span class="n">QueryBase</span><span class="o">.</span><span class="n">object_type_mappings</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+            <span class="nb">set</span><span class="p">(</span><span class="n">QueryBase</span><span class="o">.</span><span class="n">object_type_mappings</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">+</span>
+                <span class="n">QueryBase</span><span class="o">.</span><span class="n">object_type_mappings</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
         <span class="p">)</span>
         <span class="n">accepted_time_basis_types</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;submitted&#39;</span><span class="p">,</span> <span class="s1">&#39;modified&#39;</span><span class="p">,</span> <span class="s1">&#39;created&#39;</span><span class="p">,</span>
@@ -194,8 +197,7 @@
             <span class="s1">&#39;modif&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;modified&#39;</span><span class="p">,</span>
             <span class="s1">&#39;creat&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;created&#39;</span>
         <span class="p">}[</span><span class="n">short_time_basis</span><span class="p">](</span><span class="n">short_time_basis</span><span class="p">)</span>
-
-        <span class="n">search_field</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">Transactions</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_id&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item_type</span><span class="p">))</span>
+        <span class="n">search_field</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">Transactions</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item_type</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">time_basis</span> <span class="o">==</span> <span class="s1">&#39;submitted&#39;</span><span class="p">:</span>
             <span class="n">query</span> <span class="o">=</span> <span class="n">Transactions</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
                 <span class="n">fn</span><span class="o">.</span><span class="n">Min</span><span class="p">(</span><span class="n">Transactions</span><span class="o">.</span><span class="n">updated</span><span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;earliest&#39;</span><span class="p">),</span>
@@ -226,8 +228,8 @@
     <span class="nd">@tools</span><span class="o">.</span><span class="n">json_out</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">POST</span><span class="p">(</span><span class="n">item_type</span><span class="p">,</span> <span class="n">time_basis</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return file details for the list of file id&#39;s.&quot;&quot;&quot;</span>
-        <span class="n">id_list</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span>
-        <span class="k">return</span> <span class="n">EarliestLatestFiles</span><span class="o">.</span><span class="n">_get_earliest_latest</span><span class="p">(</span><span class="n">item_type</span><span class="p">,</span> <span class="n">id_list</span><span class="p">,</span> <span class="n">time_basis</span><span class="p">)</span></div></div>
+        <span class="n">id_list</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span></div></div>
+        <span class="k">return</span> <span class="n">EarliestLatestFiles</span><span class="o">.</span><span class="n">_get_earliest_latest</span><span class="p">(</span><span class="n">item_type</span><span class="p">,</span> <span class="n">id_list</span><span class="p">,</span> <span class="n">time_basis</span><span class="p">)</span>
 </pre></div>
 
            </div>

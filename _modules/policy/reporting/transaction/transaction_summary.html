@@ -157,10 +157,14 @@
            <div itemprop="articleBody">
             
   <h1>Source code for policy.reporting.transaction.transaction_summary</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status Metadata object class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status Metadata object class.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">text_type</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span><span class="p">,</span> <span class="n">request</span>
-<span class="kn">from</span> <span class="nn">policy</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span><span class="p">,</span> <span class="n">validate_user</span>
+<span class="kn">from</span> <span class="nn">policy.validation</span> <span class="k">import</span> <span class="n">validate_user</span>
+<span class="kn">from</span> <span class="nn">policy.globals</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span>
 <span class="kn">from</span> <span class="nn">policy.reporting.transaction.query_base</span> <span class="k">import</span> <span class="n">QueryBase</span>
 
 
@@ -205,7 +209,7 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_cleanup_object_stats</span><span class="p">(</span><span class="n">object_listing</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">user_info</span><span class="p">):</span>
-        <span class="n">valid_object_list</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">user_info</span><span class="p">[</span><span class="n">object_type</span> <span class="o">+</span> <span class="s1">&#39;_list&#39;</span><span class="p">])</span>
+        <span class="n">valid_object_list</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">text_type</span><span class="p">,</span> <span class="n">user_info</span><span class="p">[</span><span class="n">object_type</span> <span class="o">+</span> <span class="s1">&#39;_list&#39;</span><span class="p">])</span>
         <span class="n">clean_object_stats</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">object_id</span><span class="p">,</span> <span class="n">object_stats</span> <span class="ow">in</span> <span class="n">object_listing</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">object_id</span> <span class="ow">in</span> <span class="n">valid_object_list</span> <span class="ow">or</span> <span class="n">user_info</span><span class="p">[</span><span class="s1">&#39;emsl_employee&#39;</span><span class="p">]:</span>
@@ -229,8 +233,8 @@
         <span class="n">object_list</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span>
         <span class="n">user_id</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">TransactionSummary</span><span class="o">.</span><span class="n">_get_transaction_list_summary</span><span class="p">(</span>
-            <span class="n">time_basis</span><span class="p">,</span> <span class="n">object_list</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">user_id</span>
-        <span class="p">)</span></div></div>
+            <span class="n">time_basis</span><span class="p">,</span> <span class="n">object_list</span><span class="p">,</span> <span class="n">object_type</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">user_id</span></div></div>
+        <span class="p">)</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 </pre></div>
 

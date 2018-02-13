@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.orm.test.test_citation_keyword</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Test the citation contributor ORM object.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.test.base</span> <span class="k">import</span> <span class="n">TestBase</span>
@@ -179,14 +180,6 @@
     <span class="n">obj_cls</span> <span class="o">=</span> <span class="n">CitationKeyword</span>
     <span class="n">obj_id</span> <span class="o">=</span> <span class="n">CitationKeyword</span><span class="o">.</span><span class="n">keyword</span>
 
-<div class="viewcode-block" id="TestCitationKeyword.dependent_cls"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_citation_keyword.TestCitationKeyword.dependent_cls">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">dependent_cls</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return dependent classes for the CitationContributor object.&quot;&quot;&quot;</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">CitationKeyword</span><span class="p">]</span>
-        <span class="n">ret</span> <span class="o">+=</span> <span class="n">TestKeywords</span><span class="o">.</span><span class="n">dependent_cls</span><span class="p">()</span>
-        <span class="n">ret</span> <span class="o">+=</span> <span class="n">TestCitations</span><span class="o">.</span><span class="n">dependent_cls</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">ret</span></div>
-
 <div class="viewcode-block" id="TestCitationKeyword.base_create_dep_objs"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_citation_keyword.TestCitationKeyword.base_create_dep_objs">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">base_create_dep_objs</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create all objects that Files depend on.&quot;&quot;&quot;</span>
@@ -196,20 +189,20 @@
         <span class="n">keyword</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">cite1</span> <span class="o">=</span> <span class="n">Citations</span><span class="p">()</span>
         <span class="n">TestCitations</span><span class="o">.</span><span class="n">base_create_dep_objs</span><span class="p">()</span>
-        <span class="n">cite1</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">SAMPLE_CITATION_HASH</span><span class="p">)</span>
-        <span class="n">cite1</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="n">cite1</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">SAMPLE_CITATION_HASH</span><span class="p">)</span></div>
+        <span class="n">cite1</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCitationKeyword.test_citation_keyword_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_citation_keyword.TestCitationKeyword.test_citation_keyword_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_citation_keyword_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_CITATION_KEYWORD_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_CITATION_KEYWORD_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCitationKeyword.test_citation_keyword_json"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_citation_keyword.TestCitationKeyword.test_citation_keyword_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_citation_keyword_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_CITATION_KEYWORD_HASH</span><span class="p">))</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_CITATION_KEYWORD_HASH</span><span class="p">))</span>
 
 <div class="viewcode-block" id="TestCitationKeyword.test_citation_keyword_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_citation_keyword.TestCitationKeyword.test_citation_keyword_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_citation_keyword_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_CITATION_KEYWORD_HASH</span><span class="p">)</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_CITATION_KEYWORD_HASH</span><span class="p">)</span>
 </pre></div>
 
            </div>

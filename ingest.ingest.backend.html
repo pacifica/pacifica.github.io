@@ -190,6 +190,54 @@
 </dd></dl>
 
 <span class="target" id="module-ingest.backend.tasks"></span><p>Module that contains all the amqp tasks that support the ingest infrastructure.</p>
+<dl class="exception">
+<dt id="ingest.backend.tasks.IngestException">
+<em class="property">exception </em><code class="descclassname">ingest.backend.tasks.</code><code class="descname">IngestException</code><a class="reference internal" href="_modules/ingest/backend/tasks.html#IngestException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.backend.tasks.IngestException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ingest class exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.backend.tasks.ingest_check_tarfile">
+<code class="descclassname">ingest.backend.tasks.</code><code class="descname">ingest_check_tarfile</code><span class="sig-paren">(</span><em>job_id</em>, <em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/backend/tasks.html#ingest_check_tarfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.backend.tasks.ingest_check_tarfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the ingest tarfile and return state or set it properly.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.backend.tasks.ingest_files">
+<code class="descclassname">ingest.backend.tasks.</code><code class="descname">ingest_files</code><span class="sig-paren">(</span><em>job_id</em>, <em>ingest_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/backend/tasks.html#ingest_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.backend.tasks.ingest_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ingest the files to the archive interface.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.backend.tasks.ingest_metadata">
+<code class="descclassname">ingest.backend.tasks.</code><code class="descname">ingest_metadata</code><span class="sig-paren">(</span><em>job_id</em>, <em>meta</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/backend/tasks.html#ingest_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.backend.tasks.ingest_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ingest metadata to the metadata service.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.backend.tasks.ingest_metadata_parser">
+<code class="descclassname">ingest.backend.tasks.</code><code class="descname">ingest_metadata_parser</code><span class="sig-paren">(</span><em>job_id</em>, <em>tar</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/backend/tasks.html#ingest_metadata_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.backend.tasks.ingest_metadata_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ingest the metadata and set the state appropriately.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.backend.tasks.ingest_policy_check">
+<code class="descclassname">ingest.backend.tasks.</code><code class="descname">ingest_policy_check</code><span class="sig-paren">(</span><em>job_id</em>, <em>meta_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/backend/tasks.html#ingest_policy_check"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.backend.tasks.ingest_policy_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ingest check to validate metadata at policy.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.backend.tasks.move_files">
+<code class="descclassname">ingest.backend.tasks.</code><code class="descname">move_files</code><span class="sig-paren">(</span><em>job_id</em>, <em>meta_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/backend/tasks.html#move_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.backend.tasks.move_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move the files to the archive interface.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ingest.backend.tasks.move_metadata_parser">
+<code class="descclassname">ingest.backend.tasks.</code><code class="descname">move_metadata_parser</code><span class="sig-paren">(</span><em>job_id</em>, <em>metafile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/backend/tasks.html#move_metadata_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.backend.tasks.move_metadata_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ingest the metadata and set the state appropriately.</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="ingest.backend.tasks.validate_meta">
 <code class="descclassname">ingest.backend.tasks.</code><code class="descname">validate_meta</code><span class="sig-paren">(</span><em>meta_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ingest/backend/tasks.html#validate_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ingest.backend.tasks.validate_meta" title="Permalink to this definition">¶</a></dt>

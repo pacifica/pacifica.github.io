@@ -157,7 +157,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for metadata.rest.user_queries.query_base</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status Metadata proposalinfo base class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status Metadata proposalinfo base class.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">metadata.orm</span> <span class="k">import</span> <span class="n">UserGroup</span><span class="p">,</span> <span class="n">Proposals</span><span class="p">,</span> <span class="n">ProposalParticipant</span>
 
 
@@ -171,19 +173,24 @@
         <span class="n">proposal_xref</span> <span class="o">=</span> <span class="n">ProposalParticipant</span><span class="p">()</span>
         <span class="n">where_exp</span> <span class="o">=</span> <span class="n">proposal_xref</span><span class="o">.</span><span class="n">where_clause</span><span class="p">({</span><span class="s1">&#39;person_id&#39;</span><span class="p">:</span> <span class="n">user_entry</span><span class="o">.</span><span class="n">id</span><span class="p">})</span>
         <span class="n">proposal_person_query</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">ProposalParticipant</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">where_exp</span><span class="p">))</span>
+            <span class="n">ProposalParticipant</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">where_exp</span><span class="p">))</span><span class="o">.</span><span class="n">dicts</span><span class="p">()</span>
 
-        <span class="n">proposals</span> <span class="o">=</span> <span class="n">Proposals</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-            <span class="n">Proposals</span><span class="o">.</span><span class="n">id</span> <span class="o">&lt;&lt;</span> <span class="p">[</span><span class="n">prop</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">proposal_person_query</span><span class="p">])</span>
+        <span class="n">proposal_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">prop</span><span class="p">[</span><span class="s1">&#39;proposal&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">proposal_person_query</span><span class="p">]</span>
 
         <span class="n">clean_proposals</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">proposals</span><span class="p">:</span>
-            <span class="n">info</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
-            <span class="n">info</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;abstract&#39;</span><span class="p">)</span>
-            <span class="n">prop_id</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">id</span>
-            <span class="n">clean_proposals</span><span class="p">[</span><span class="n">prop_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">info</span>
 
-        <span class="n">display_name</span> <span class="o">=</span> <span class="s1">&#39;[EUS ID </span><span class="si">{0}</span><span class="s1">] </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1"> &amp;lt;</span><span class="si">{3}</span><span class="s1">&amp;gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="k">if</span> <span class="n">proposal_list</span><span class="p">:</span>
+            <span class="n">proposals</span> <span class="o">=</span> <span class="n">Proposals</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+                <span class="n">Proposals</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">Proposals</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">Proposals</span><span class="o">.</span><span class="n">short_name</span><span class="p">,</span>
+                <span class="n">Proposals</span><span class="o">.</span><span class="n">proposal_type</span><span class="p">,</span> <span class="n">Proposals</span><span class="o">.</span><span class="n">science_theme</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                <span class="n">Proposals</span><span class="o">.</span><span class="n">id</span> <span class="o">&lt;&lt;</span> <span class="n">proposal_list</span><span class="p">)</span><span class="o">.</span><span class="n">dicts</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">proposals</span><span class="p">:</span>
+                <span class="n">prop_id</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                <span class="n">clean_proposals</span><span class="p">[</span><span class="n">prop_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">prop</span>
+
+        <span class="n">display_name</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;[User ID </span><span class="si">{0}</span><span class="s1">] </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1"> &amp;lt;</span><span class="si">{3}</span><span class="s1">&amp;gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">user_entry</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
             <span class="n">user_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">),</span>
             <span class="n">user_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">),</span>
@@ -199,7 +206,7 @@
                 <span class="s1">&#39;email_address&#39;</span><span class="p">:</span> <span class="n">user_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email_address&#39;</span><span class="p">),</span>
                 <span class="s1">&#39;last_updated&#39;</span><span class="p">:</span> <span class="n">user_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;updated&#39;</span><span class="p">),</span>
                 <span class="s1">&#39;display_name&#39;</span><span class="p">:</span> <span class="n">display_name</span><span class="p">,</span>
-                <span class="s1">&#39;simple_display_name&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="s1">&#39;simple_display_name&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">user_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">),</span> <span class="n">user_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">)),</span>
                 <span class="s1">&#39;emsl_employee&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
                 <span class="s1">&#39;proposals&#39;</span><span class="p">:</span> <span class="n">clean_proposals</span>
@@ -209,7 +216,7 @@
                 <span class="s1">&#39;person_id&#39;</span><span class="p">:</span> <span class="n">user_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span><span class="p">),</span>
                 <span class="s1">&#39;first_name&#39;</span><span class="p">:</span> <span class="n">user_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">),</span>
                 <span class="s1">&#39;last_name&#39;</span><span class="p">:</span> <span class="n">user_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">),</span>
-                <span class="s1">&#39;display_name&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="s1">&#39;display_name&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">user_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;first_name&#39;</span><span class="p">),</span>
                     <span class="n">user_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;last_name&#39;</span><span class="p">)</span>
                 <span class="p">),</span>
@@ -218,8 +225,8 @@
             <span class="p">}</span>
 
         <span class="n">return_block</span><span class="p">[</span><span class="s1">&#39;emsl_employee&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">QueryBase</span><span class="o">.</span><span class="n">_is_admin_user</span><span class="p">(</span><span class="n">user_entry</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">return_block</span></div>
+</div>
+        <span class="k">return</span> <span class="n">return_block</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_is_admin_user</span><span class="p">(</span><span class="n">user_entry</span><span class="p">):</span>
@@ -236,8 +243,8 @@
         <span class="sd">&quot;&quot;&quot;Assemble a block of relevant help text to be returned with an invalid request.&quot;&quot;&quot;</span>
         <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;You must supply either a numeric person id (like &quot;/userinfo/&lt;person_id&gt;&quot;)&#39;</span>
         <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39; or search for one using the form &#39;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39;&quot;/userinfo/search/&lt;search_term_1&gt;+&lt;search_term_2&gt;&quot;&#39;</span>
-        <span class="k">return</span> <span class="n">message</span></div></div>
+        <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39;&quot;/userinfo/search/&lt;search_term_1&gt;+&lt;search_term_2&gt;&quot;&#39;</span></div></div>
+        <span class="k">return</span> <span class="n">message</span>
 </pre></div>
 
            </div>

@@ -158,6 +158,7 @@
             
   <h1>Source code for policy.status.proposal_query</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;CherryPy Status Policy object class.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">policy.status.proposal.by_user</span> <span class="k">import</span> <span class="n">ProposalUserSearch</span>
 <span class="kn">from</span> <span class="nn">policy.status.proposal.search</span> <span class="k">import</span> <span class="n">ProposalKeywordSearch</span>
@@ -173,8 +174,8 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create local objects for sub tree items.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">by_user_id</span> <span class="o">=</span> <span class="n">ProposalUserSearch</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">search</span> <span class="o">=</span> <span class="n">ProposalKeywordSearch</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">by_proposal_id</span> <span class="o">=</span> <span class="n">ProposalLookup</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search</span> <span class="o">=</span> <span class="n">ProposalKeywordSearch</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">by_proposal_id</span> <span class="o">=</span> <span class="n">ProposalLookup</span><span class="p">()</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 </pre></div>
 

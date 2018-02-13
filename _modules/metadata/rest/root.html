@@ -158,8 +158,10 @@
             
   <h1>Source code for metadata.rest.root</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;CherryPy root object class.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">metadata.orm</span> <span class="k">import</span> <span class="n">ORM_OBJECTS</span>
+<span class="kn">from</span> <span class="nn">metadata.elastic.elasticupdate</span> <span class="k">import</span> <span class="n">ElasticSearchUpdateAPI</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.objectinfo</span> <span class="k">import</span> <span class="n">ObjectInfoAPI</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.userinfo</span> <span class="k">import</span> <span class="n">UserInfoAPI</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.proposalinfo</span> <span class="k">import</span> <span class="n">ProposalInfoAPI</span>
@@ -168,6 +170,9 @@
 <span class="kn">from</span> <span class="nn">metadata.rest.ingest</span> <span class="k">import</span> <span class="n">IngestAPI</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.instrumentinfo</span> <span class="k">import</span> <span class="n">InstrumentInfoAPI</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.summaryinfo</span> <span class="k">import</span> <span class="n">SummaryInfoAPI</span>
+<span class="kn">from</span> <span class="nn">metadata.rest.migrationinfo</span> <span class="k">import</span> <span class="n">MigrationInfoAPI</span>
+<span class="kn">from</span> <span class="nn">metadata.rest.tkvinfo</span> <span class="k">import</span> <span class="n">TkvInfoAPI</span>
+<span class="kn">from</span> <span class="nn">metadata.rest.tkvupload</span> <span class="k">import</span> <span class="n">TkvUploadAPI</span>
 
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
@@ -181,13 +186,17 @@
     <span class="n">exposed</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">objectinfo</span> <span class="o">=</span> <span class="n">ObjectInfoAPI</span><span class="p">()</span>
+    <span class="n">elasticupdate</span> <span class="o">=</span> <span class="n">ElasticSearchUpdateAPI</span><span class="p">()</span>
     <span class="n">userinfo</span> <span class="o">=</span> <span class="n">UserInfoAPI</span><span class="p">()</span>
     <span class="n">proposalinfo</span> <span class="o">=</span> <span class="n">ProposalInfoAPI</span><span class="p">()</span>
     <span class="n">fileinfo</span> <span class="o">=</span> <span class="n">FileInfoAPI</span><span class="p">()</span>
     <span class="n">transactioninfo</span> <span class="o">=</span> <span class="n">TransactionInfoAPI</span><span class="p">()</span>
     <span class="n">instrumentinfo</span> <span class="o">=</span> <span class="n">InstrumentInfoAPI</span><span class="p">()</span>
     <span class="n">summaryinfo</span> <span class="o">=</span> <span class="n">SummaryInfoAPI</span><span class="p">()</span>
-    <span class="n">ingest</span> <span class="o">=</span> <span class="n">IngestAPI</span><span class="p">()</span></div>
+    <span class="n">ingest</span> <span class="o">=</span> <span class="n">IngestAPI</span><span class="p">()</span>
+    <span class="n">migrate</span> <span class="o">=</span> <span class="n">MigrationInfoAPI</span><span class="p">()</span>
+    <span class="n">tkvinfo</span> <span class="o">=</span> <span class="n">TkvInfoAPI</span><span class="p">()</span></div>
+    <span class="n">tkvupload</span> <span class="o">=</span> <span class="n">TkvUploadAPI</span><span class="p">()</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 
 

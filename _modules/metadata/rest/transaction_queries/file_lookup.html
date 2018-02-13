@@ -157,7 +157,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for metadata.rest.transaction_queries.file_lookup</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status File Metadata object class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status File Metadata object class.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">cherrypy</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span><span class="p">,</span> <span class="n">HTTPError</span>
@@ -187,8 +189,8 @@
             <span class="n">cherrypy</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span>
                 <span class="n">status</span><span class="o">=</span><span class="s1">&#39;400 Invalid Request Options&#39;</span><span class="p">,</span>
-                <span class="n">message</span><span class="o">=</span><span class="n">QueryBase</span><span class="o">.</span><span class="n">compose_help_block_message</span><span class="p">()</span>
-            <span class="p">)</span></div>
+                <span class="n">message</span><span class="o">=</span><span class="n">QueryBase</span><span class="o">.</span><span class="n">compose_help_block_message</span><span class="p">()</span></div>
+            <span class="p">)</span>
 </pre></div>
 
            </div>

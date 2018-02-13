@@ -158,19 +158,21 @@
             
   <h1>Source code for metadata.rest.test.test_instrumentinfo</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Test the ORM interface InstrumentInfo.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.test</span> <span class="k">import</span> <span class="n">CPCommonTest</span>
 
 
-<div class="viewcode-block" id="TestObjectInfoAPI"><a class="viewcode-back" href="../../../../metadata.metadata.rest.test.html#metadata.rest.test.test_instrumentinfo.TestObjectInfoAPI">[docs]</a><span class="k">class</span> <span class="nc">TestObjectInfoAPI</span><span class="p">(</span><span class="n">CPCommonTest</span><span class="p">):</span>
+<div class="viewcode-block" id="TestInstrumentInfoAPI"><a class="viewcode-back" href="../../../../metadata.metadata.rest.test.html#metadata.rest.test.test_instrumentinfo.TestInstrumentInfoAPI">[docs]</a><span class="k">class</span> <span class="nc">TestInstrumentInfoAPI</span><span class="p">(</span><span class="n">CPCommonTest</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test the ObjectInfoAPI class.&quot;&quot;&quot;</span>
 
     <span class="n">__test__</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_get_instrument_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instrument_id</span><span class="p">):</span>
         <span class="n">header_list</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/instrumentinfo/by_instrument_id/</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">instrument_id</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/instrumentinfo/by_instrument_id/</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">instrument_id</span><span class="p">)</span>
         <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header_list</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">req</span>
 
@@ -186,7 +188,13 @@
         <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header_list</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">req</span>
 
-<div class="viewcode-block" id="TestObjectInfoAPI.test_instrumentinfo_api"><a class="viewcode-back" href="../../../../metadata.metadata.rest.test.html#metadata.rest.test.test_instrumentinfo.TestObjectInfoAPI.test_instrumentinfo_api">[docs]</a>    <span class="k">def</span> <span class="nf">test_instrumentinfo_api</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_instrument_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">header_list</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/instrumentinfo/categories/&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">header_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">req</span>
+
+<div class="viewcode-block" id="TestInstrumentInfoAPI.test_instrumentinfo_api"><a class="viewcode-back" href="../../../../metadata.metadata.rest.test.html#metadata.rest.test.test_instrumentinfo.TestInstrumentInfoAPI.test_instrumentinfo_api">[docs]</a>    <span class="k">def</span> <span class="nf">test_instrumentinfo_api</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the GET method.&quot;&quot;&quot;</span>
         <span class="c1"># test instrument lookup with good id</span>
         <span class="n">instrument_id</span> <span class="o">=</span> <span class="mi">54</span>
@@ -208,9 +216,13 @@
         <span class="c1"># test get instruments for user</span>
         <span class="n">user_id</span> <span class="o">=</span> <span class="mi">10</span>
         <span class="n">req</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_instruments_for_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TestObjectInfoAPI.test_bad_instrumentinfo_api"><a class="viewcode-back" href="../../../../metadata.metadata.rest.test.html#metadata.rest.test.test_instrumentinfo.TestObjectInfoAPI.test_bad_instrumentinfo_api">[docs]</a>    <span class="k">def</span> <span class="nf">test_bad_instrumentinfo_api</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># test instrument category retrieval</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_instrument_categories</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TestInstrumentInfoAPI.test_bad_instrumentinfo_api"><a class="viewcode-back" href="../../../../metadata.metadata.rest.test.html#metadata.rest.test.test_instrumentinfo.TestInstrumentInfoAPI.test_bad_instrumentinfo_api">[docs]</a>    <span class="k">def</span> <span class="nf">test_bad_instrumentinfo_api</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the GET method with bad data.&quot;&quot;&quot;</span>
         <span class="c1"># test instrument lookup with nonexistant id</span>
         <span class="n">instrument_id</span> <span class="o">=</span> <span class="mi">96</span>
@@ -236,7 +248,8 @@
         <span class="c1"># test get instruments for user</span>
         <span class="n">user_id</span> <span class="o">=</span> <span class="mi">11</span>
         <span class="n">req</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_instruments_for_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">&#39;[]&#39;</span><span class="p">)</span>
 </pre></div>
 
            </div>

@@ -99,6 +99,7 @@
 <li class="toctree-l4"><a class="reference internal" href="metadata.metadata.elastic.html">Elastic Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="metadata.metadata.orm.html">Orm Module</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="metadata.metadata.rest.html">Rest Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.test.html">Metadata Test Module</a></li>
 </ul>
 </li>
 </ul>
@@ -191,8 +192,14 @@
 <dd><p>Retrieves a list of all transactions matching the search criteria.</p>
 <dl class="staticmethod">
 <dt id="metadata.rest.reporting_queries.detailed_transactions_list.DetailedTransactionList.POST">
-<em class="property">static </em><code class="descname">POST</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.reporting_queries.detailed_transactions_list.DetailedTransactionList.POST" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">POST</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.reporting_queries.detailed_transactions_list.DetailedTransactionList.POST" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to connect and close connection to database.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="metadata.rest.reporting_queries.detailed_transactions_list.DetailedTransactionList.get_transaction_list_details">
+<em class="property">static </em><code class="descname">get_transaction_list_details</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/reporting_queries/detailed_transactions_list.html#DetailedTransactionList.get_transaction_list_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.reporting_queries.detailed_transactions_list.DetailedTransactionList.get_transaction_list_details" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return complete data set on a specified transaction.</p>
 </dd></dl>
 
 </dd></dl>
@@ -211,8 +218,20 @@
 <dd><p>Retrieves a list of all transactions matching the search criteria.</p>
 <dl class="staticmethod">
 <dt id="metadata.rest.reporting_queries.summarize_by_date.SummarizeByDate.POST">
-<em class="property">static </em><code class="descname">POST</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.reporting_queries.summarize_by_date.SummarizeByDate.POST" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">POST</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.reporting_queries.summarize_by_date.SummarizeByDate.POST" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to connect and close connection to database.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="metadata.rest.reporting_queries.summarize_by_date.SummarizeByDate.local_to_utc">
+<em class="property">static </em><code class="descname">local_to_utc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/reporting_queries/summarize_by_date.html#SummarizeByDate.local_to_utc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.reporting_queries.summarize_by_date.SummarizeByDate.local_to_utc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a TZ corrected datetime object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="metadata.rest.reporting_queries.summarize_by_date.SummarizeByDate.utc_to_local">
+<em class="property">static </em><code class="descname">utc_to_local</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/reporting_queries/summarize_by_date.html#SummarizeByDate.utc_to_local"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.reporting_queries.summarize_by_date.SummarizeByDate.utc_to_local" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a TZ corrected datetime object.</p>
 </dd></dl>
 
 </dd></dl>

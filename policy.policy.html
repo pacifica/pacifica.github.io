@@ -213,6 +213,12 @@
 <em class="property">class </em><code class="descclassname">policy.admin.</code><code class="descname">AdminPolicy</code><a class="reference internal" href="_modules/policy/admin.html#AdminPolicy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.admin.AdminPolicy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enforces the admin policy.</p>
 <p>Base class for checking for admin group membership or not.</p>
+<dl class="method">
+<dt id="policy.admin.AdminPolicy._format_url">
+<code class="descname">_format_url</code><span class="sig-paren">(</span><em>url</em>, <em>**get_args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/admin.html#AdminPolicy._format_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.admin.AdminPolicy._format_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append the recursion_depth parameter to the url.</p>
+</dd></dl>
+
 </dd></dl>
 
 <span class="target" id="module-policy.root"></span><p>CherryPy root object class.</p>
@@ -221,6 +227,12 @@
 <em class="property">class </em><code class="descclassname">policy.root.</code><code class="descname">Root</code><a class="reference internal" href="_modules/policy/root.html#Root"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.root.Root" title="Permalink to this definition">¶</a></dt>
 <dd><p>CherryPy root object class.</p>
 <p>not exposed by default the base objects are exposed</p>
+<dl class="classmethod">
+<dt id="policy.root.Root._try_meta_connect">
+<em class="property">classmethod </em><code class="descname">_try_meta_connect</code><span class="sig-paren">(</span><em>attempts=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/policy/root.html#Root._try_meta_connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#policy.root.Root._try_meta_connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to connect to the metadata service see if its there.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>

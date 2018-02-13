@@ -36,7 +36,7 @@
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../index.html"/>
-        <link rel="up" title="Module code" href="../index.html"/> 
+        <link rel="up" title="archiveinterface" href="../archiveinterface.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -139,6 +139,8 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../archiveinterface.html">archiveinterface</a> &raquo;</li>
+        
       <li>archiveinterface.id2filename</li>
     
     
@@ -158,6 +160,7 @@
             
   <h1>Source code for archiveinterface.id2filename</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Module to Convert an integer id to a filepath for storage system.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
@@ -175,13 +178,13 @@
         <span class="n">directories</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0:x}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fileid</span><span class="p">)</span>
-        <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">directories</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">filepath</span></div>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">directories</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">filepath</span>
 
 
 <div class="viewcode-block" id="id2filename"><a class="viewcode-back" href="../../archiveinterface.archiveinterface.html#archiveinterface.id2filename.id2filename">[docs]</a><span class="k">def</span> <span class="nf">id2filename</span><span class="p">(</span><span class="n">fileid</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Will return the filepath associated to passed fileid.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">id2dirandfilename</span><span class="p">(</span><span class="n">fileid</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Will return the filepath associated to passed fileid.&quot;&quot;&quot;</span></div>
+    <span class="k">return</span> <span class="n">id2dirandfilename</span><span class="p">(</span><span class="n">fileid</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>

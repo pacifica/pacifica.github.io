@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.rest.summaryinfo</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Core interface for the summaryInfo metadata objects to interface with CherryPy.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.reporting_queries.summarize_by_date</span> <span class="k">import</span> <span class="n">SummarizeByDate</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.reporting_queries.detailed_transactions_list</span> <span class="k">import</span> <span class="n">DetailedTransactionList</span>
@@ -171,8 +172,8 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create local objects for subtree items.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">by_date</span> <span class="o">=</span> <span class="n">SummarizeByDate</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transaction_details</span> <span class="o">=</span> <span class="n">DetailedTransactionList</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">by_date</span> <span class="o">=</span> <span class="n">SummarizeByDate</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transaction_details</span> <span class="o">=</span> <span class="n">DetailedTransactionList</span>
 </pre></div>
 
            </div>

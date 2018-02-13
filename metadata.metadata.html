@@ -99,6 +99,7 @@
 <li class="toctree-l4"><a class="reference internal" href="metadata.metadata.elastic.html">Elastic Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="metadata.metadata.orm.html">Orm Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="metadata.metadata.rest.html">Rest Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.test.html">Metadata Test Module</a></li>
 </ul>
 </li>
 </ul>
@@ -201,6 +202,7 @@
 <li class="toctree-l2"><a class="reference internal" href="metadata.metadata.rest.user_queries.html">User Rest Module</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.metadata.test.html">Metadata Test Module</a></li>
 </ul>
 </div>
 <span class="target" id="module-metadata.client"></span><p>Metadata Client Module.</p>
@@ -241,103 +243,6 @@ set the values in set_hash</p>
 <dt id="metadata.client.PMClientError">
 <em class="property">exception </em><code class="descclassname">metadata.client.</code><code class="descname">PMClientError</code><a class="reference internal" href="_modules/metadata/client.html#PMClientError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.client.PMClientError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base Exception Error Class.</p>
-</dd></dl>
-
-<span class="target" id="module-metadata.test_client"></span><p>Test class for the client api.</p>
-<dl class="class">
-<dt id="metadata.test_client.TestClient">
-<em class="property">class </em><code class="descclassname">metadata.test_client.</code><code class="descname">TestClient</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test client class.</p>
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_create">
-<code class="descname">test_client_create</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to an unknown error.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_create_server_error">
-<code class="descname">test_client_create_server_error</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_create_server_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_create_server_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to an unknown error.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_create_unk_error">
-<code class="descname">test_client_create_unk_error</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_create_unk_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_create_unk_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to an unknown error.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_delete">
-<code class="descname">test_client_delete</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to an unknown error.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_delete_notfound">
-<code class="descname">test_client_delete_notfound</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_delete_notfound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_delete_notfound" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to an unknown error.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_delete_server_error">
-<code class="descname">test_client_delete_server_error</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_delete_server_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_delete_server_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to an unknown error.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_delete_unk_error">
-<code class="descname">test_client_delete_unk_error</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_delete_unk_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_delete_unk_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to an unknown error.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_get">
-<code class="descname">test_client_get</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client get methods.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_get_not_found">
-<code class="descname">test_client_get_not_found</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_get_not_found"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_get_not_found" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test response from the client when the object is not found.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_get_server_error">
-<code class="descname">test_client_get_server_error</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_get_server_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_get_server_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to an internal server error.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_get_unknown_error">
-<code class="descname">test_client_get_unknown_error</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_get_unknown_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_get_unknown_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to an unknown error.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_update">
-<code class="descname">test_client_update</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to an unknown error.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_update_not_found">
-<code class="descname">test_client_update_not_found</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_update_not_found"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_update_not_found" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to not finding things.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_update_server_error">
-<code class="descname">test_client_update_server_error</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_update_server_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_update_server_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to not finding things.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.test_client.TestClient.test_client_update_unk_error">
-<code class="descname">test_client_update_unk_error</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/test_client.html#TestClient.test_client_update_unk_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.test_client.TestClient.test_client_update_unk_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the client response to not finding things.</p>
-</dd></dl>
-
 </dd></dl>
 
 </div>

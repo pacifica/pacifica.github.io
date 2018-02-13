@@ -157,7 +157,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for metadata.rest.proposal_queries.query_base</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status Metadata proposalinfo base class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status Metadata proposalinfo base class.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 
 
@@ -198,24 +200,26 @@
             <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">_pe</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
             <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span>
             <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="n">year</span><span class="p">,</span>
-            <span class="s1">&#39;display_name&#39;</span><span class="p">:</span> <span class="s1">&#39;[Proposal </span><span class="si">{0}</span><span class="s1">]: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_pe</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">_pe</span><span class="o">.</span><span class="n">title</span><span class="p">),</span>
+            <span class="s1">&#39;display_name&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;[Proposal </span><span class="si">{0}</span><span class="s1">]: </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_pe</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">_pe</span><span class="o">.</span><span class="n">title</span><span class="p">),</span>
             <span class="s1">&#39;currently_active&#39;</span><span class="p">:</span> <span class="n">currently_active</span><span class="p">,</span>
             <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="n">proposal_state</span><span class="p">,</span>
             <span class="s1">&#39;start_date&#39;</span><span class="p">:</span> <span class="n">_pe</span><span class="o">.</span><span class="n">actual_start_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">_pe</span><span class="o">.</span><span class="n">actual_start_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;---&#39;</span><span class="p">,</span>
             <span class="s1">&#39;end_date&#39;</span><span class="p">:</span> <span class="n">_pe</span><span class="o">.</span><span class="n">actual_end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">_pe</span><span class="o">.</span><span class="n">actual_end_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;---&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;closed_date&#39;</span><span class="p">:</span> <span class="n">_pe</span><span class="o">.</span><span class="n">closed_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">_pe</span><span class="o">.</span><span class="n">closed_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;---&#39;</span>
+            <span class="s1">&#39;closed_date&#39;</span><span class="p">:</span> <span class="n">_pe</span><span class="o">.</span><span class="n">closed_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">_pe</span><span class="o">.</span><span class="n">closed_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;---&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;science_theme&#39;</span><span class="p">:</span> <span class="n">_pe</span><span class="o">.</span><span class="n">science_theme</span><span class="p">,</span>
+            <span class="s1">&#39;proposal_type&#39;</span><span class="p">:</span> <span class="n">_pe</span><span class="o">.</span><span class="n">proposal_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
         <span class="p">}</span>
         <span class="k">if</span> <span class="n">instruments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">return_block</span><span class="p">[</span><span class="s1">&#39;instruments&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">instruments</span>
-
-        <span class="k">return</span> <span class="n">return_block</span></div>
+</div>
+        <span class="k">return</span> <span class="n">return_block</span>
 
 <div class="viewcode-block" id="QueryBase.proposal_help_block_message"><a class="viewcode-back" href="../../../../metadata.metadata.rest.proposal_queries.html#metadata.rest.proposal_queries.query_base.QueryBase.proposal_help_block_message">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">proposal_help_block_message</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Assemble a block of relevant help text to be returned with an invalid request.&quot;&quot;&quot;</span>
         <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;You must supply either a proposal id (like &quot;/proposalinfo/&lt;proposal_id&gt;&quot;)&#39;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39; or search for one using the form &quot;/proposalinfo/search/&lt;search_term_1&gt;+&lt;search_term_2&gt;&quot;&#39;</span>
-        <span class="k">return</span> <span class="n">message</span></div></div>
+        <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39; or search for one using the form &quot;/proposalinfo/search/&lt;search_term_1&gt;+&lt;search_term_2&gt;&quot;&#39;</span></div></div>
+        <span class="k">return</span> <span class="n">message</span>
 </pre></div>
 
            </div>

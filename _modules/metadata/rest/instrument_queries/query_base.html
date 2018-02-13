@@ -157,8 +157,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for metadata.rest.instrument_queries.query_base</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status Metadata proposalinfo base class.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">re</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status Metadata proposalinfo base class.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">metadata.orm.instrument_group</span> <span class="k">import</span> <span class="n">InstrumentGroup</span>
+<span class="kn">from</span> <span class="nn">metadata.orm.groups</span> <span class="k">import</span> <span class="n">Groups</span>
 
 
 <div class="viewcode-block" id="QueryBase"><a class="viewcode-back" href="../../../../metadata.metadata.rest.instrument_queries.html#metadata.rest.instrument_queries.query_base.QueryBase">[docs]</a><span class="k">class</span> <span class="nc">QueryBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -166,29 +169,36 @@
 
 <div class="viewcode-block" id="QueryBase.format_instrument_block"><a class="viewcode-back" href="../../../../metadata.metadata.rest.instrument_queries.html#metadata.rest.instrument_queries.query_base.QueryBase.format_instrument_block">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">format_instrument_block</span><span class="p">(</span><span class="n">instrument_entry</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Construct a dictionary from a given proposal instance in the metadata stack.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Construct a dictionary from a given instrument instance in the metadata stack.&quot;&quot;&quot;</span>
         <span class="n">_ie</span> <span class="o">=</span> <span class="n">instrument_entry</span>
-        <span class="n">name_components</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(.+):\s*(.+)&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">_ie</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-        <span class="n">category</span> <span class="o">=</span> <span class="n">name_components</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">name_components</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;Miscellaneous&#39;</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">name_components</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="n">name_components</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">_ie</span><span class="o">.</span><span class="n">name</span>
-        <span class="n">display_name</span> <span class="o">=</span> <span class="s1">&#39;[</span><span class="si">{0}</span><span class="s1"> / ID:</span><span class="si">{1}</span><span class="s1">] </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">g_names</span> <span class="o">=</span> <span class="n">Groups</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
+            <span class="n">Groups</span><span class="o">.</span><span class="n">name</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">InstrumentGroup</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">InstrumentGroup</span><span class="o">.</span><span class="n">instrument</span> <span class="o">==</span> <span class="n">_ie</span><span class="o">.</span><span class="n">id</span>
+        <span class="p">)</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="n">g_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">g_names</span> <span class="k">else</span> <span class="s1">&#39;Miscellaneous&#39;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">_ie</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">display_name</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;[</span><span class="si">{0}</span><span class="s1"> / ID:</span><span class="si">{1}</span><span class="s1">] </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">category</span><span class="p">,</span> <span class="n">_ie</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">name</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">_ie</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
             <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="n">category</span><span class="p">,</span>
+            <span class="s1">&#39;groups&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">g_names</span><span class="p">],</span>
             <span class="s1">&#39;display_name&#39;</span><span class="p">:</span> <span class="n">display_name</span><span class="p">,</span>
             <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
             <span class="s1">&#39;name_short&#39;</span><span class="p">:</span> <span class="n">_ie</span><span class="o">.</span><span class="n">name_short</span><span class="p">,</span>
-            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="n">_ie</span><span class="o">.</span><span class="n">active</span>
-        <span class="p">}</span></div>
+            <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="n">_ie</span><span class="o">.</span><span class="n">active</span></div>
+        <span class="p">}</span>
 
 <div class="viewcode-block" id="QueryBase.instrument_help_block_message"><a class="viewcode-back" href="../../../../metadata.metadata.rest.instrument_queries.html#metadata.rest.instrument_queries.query_base.QueryBase.instrument_help_block_message">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">instrument_help_block_message</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Assemble a block of relevant help text to be returned with an invalid request.&quot;&quot;&quot;</span>
         <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;You must supply either a instrument id (like &quot;/instrumentinfo/&lt;instrument_id&gt;&quot;)&#39;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39; or search for one using the form &quot;/instrumentinfo/search/&lt;search_term_1&gt;+&lt;search_term_2&gt;&quot;&#39;</span>
-        <span class="k">return</span> <span class="n">message</span></div></div>
+        <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39; or search for one using the form &quot;/instrumentinfo/search/&lt;search_term_1&gt;+&lt;search_term_2&gt;&quot;&#39;</span></div></div>
+        <span class="k">return</span> <span class="n">message</span>
 </pre></div>
 
            </div>

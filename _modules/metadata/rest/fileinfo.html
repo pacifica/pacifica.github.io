@@ -157,7 +157,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for metadata.rest.fileinfo</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Core interface for the fileinfo metadataobjects.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Core interface for the fileinfo metadataobjects.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.fileinfo_queries.file_details</span> <span class="k">import</span> <span class="n">FileDetailsLookup</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.fileinfo_queries.earliest_latest</span> <span class="k">import</span> <span class="n">EarliestLatestFiles</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.fileinfo_queries.files_with_tkv</span> <span class="k">import</span> <span class="n">FilesWithTransactionKeyValue</span>
@@ -172,8 +174,8 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create local objects for subtree items.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file_details</span> <span class="o">=</span> <span class="n">FileDetailsLookup</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">files_for_keyvalue</span> <span class="o">=</span> <span class="n">FilesWithTransactionKeyValue</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">earliest_latest</span> <span class="o">=</span> <span class="n">EarliestLatestFiles</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files_for_keyvalue</span> <span class="o">=</span> <span class="n">FilesWithTransactionKeyValue</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">earliest_latest</span> <span class="o">=</span> <span class="n">EarliestLatestFiles</span><span class="p">()</span>
 </pre></div>
 
            </div>

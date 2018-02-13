@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.rest.orm</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Core interface for each ORM object to interface with CherryPy.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">dumps</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">request</span><span class="p">,</span> <span class="n">HTTPError</span>
@@ -170,34 +171,69 @@
 <div class="viewcode-block" id="CherryPyAPI"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI">[docs]</a><span class="k">class</span> <span class="nc">CherryPyAPI</span><span class="p">(</span><span class="n">PacificaModel</span><span class="p">,</span> <span class="n">ElasticAPI</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Core CherryPy interface for all orm objects.&quot;&quot;&quot;</span>
 
+    <span class="n">es_recursive_flags</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;recursion_depth&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">&#39;recursion_limit&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="s1">&#39;recursion_exclude&#39;</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">}</span>
     <span class="n">exposed</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="CherryPyAPI._select"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._select">[docs]</a>    <span class="k">def</span> <span class="nf">_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Internal select method.&quot;&quot;&quot;</span>
         <span class="n">primary_keys</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">copy_flags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">es_recursive_flags</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_recursion_depth</span><span class="p">(</span><span class="n">copy_flags</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_recursion_limit</span><span class="p">(</span><span class="n">copy_flags</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_primary_keys</span><span class="p">():</span>
             <span class="n">primary_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
         <span class="n">objs</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
                 <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
                 <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="o">*</span><span class="n">primary_keys</span><span class="p">))</span>
         <span class="k">if</span> <span class="s1">&#39;page_number&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="s1">&#39;items_per_page&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="n">objs</span> <span class="o">=</span> <span class="n">objs</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;page_number&#39;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;items_per_page&#39;</span><span class="p">]))</span>
-        <span class="k">return</span> <span class="n">dumps</span><span class="p">([</span><span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">])</span></div>
+            <span class="n">objs</span> <span class="o">=</span> <span class="n">objs</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span>
+                <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;page_number&#39;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;items_per_page&#39;</span><span class="p">]))</span></div>
+        <span class="k">return</span> <span class="n">dumps</span><span class="p">([</span><span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">(</span><span class="o">**</span><span class="n">copy_flags</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">])</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_set_recursion_limit</span><span class="p">(</span><span class="n">flags</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">recursion_limit</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;recursion_limit&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
+        <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;recursion_limit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recursion_limit</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_set_recursion_depth</span><span class="p">(</span><span class="n">flags</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">recursion_depth</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;recursion_depth&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">recursion_depth</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Recursion depth must be in the range of 0-&gt;2.&#39;</span><span class="p">)</span>
+        <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;recursion_depth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recursion_depth</span>
+
+<div class="viewcode-block" id="CherryPyAPI._update_dep_objs"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._update_dep_objs">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_update_dep_objs</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">updated_objs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update the dependent objs of obj and append to updated_objs.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">cls_foreignkeys</span><span class="p">():</span></div>
+            <span class="n">updated_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span>
 
 <div class="viewcode-block" id="CherryPyAPI._update"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._update">[docs]</a>    <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_json</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Internal update method for an object.&quot;&quot;&quot;</span>
         <span class="n">update_hash</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">update_json</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;updated&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">update_hash</span><span class="p">:</span>
-            <span class="n">update_hash</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">()</span>
+        <span class="n">update_hash</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_hash</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s1">&#39;updated&#39;</span><span class="p">,</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">())</span>
         <span class="n">did_something</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">updated_objs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)):</span>
             <span class="n">did_something</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_dep_objs</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">updated_objs</span><span class="p">)</span>
             <span class="n">obj</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">update_hash</span><span class="p">)</span>
             <span class="n">obj</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_dep_objs</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">updated_objs</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">did_something</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s2">&quot;Get args didn&#39;t select any objects.&quot;</span><span class="p">)</span>
-        <span class="n">complete_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="n">complete_objs</span><span class="p">)</span></div>
+        <span class="n">complete_objs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">es_recursive_flags</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="n">complete_objs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">updated_objs</span><span class="p">:</span></div>
+            <span class="n">obj</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">([</span><span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">es_recursive_flags</span><span class="p">)])</span>
 
 <div class="viewcode-block" id="CherryPyAPI._set_or_create"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._set_or_create">[docs]</a>    <span class="k">def</span> <span class="nf">_set_or_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">insert_json</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set or create the object if it doesn&#39;t already exist.&quot;&quot;&quot;</span>
@@ -210,20 +246,21 @@
                 <span class="n">obj_hash</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj_hash</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span><span class="p">)</span>
             <span class="n">obj</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="o">**</span><span class="n">obj_hash</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">created</span><span class="p">:</span>
-                <span class="n">complete_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="n">complete_objs</span><span class="p">)</span></div>
+                <span class="n">complete_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">to_hash</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">es_recursive_flags</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="n">complete_objs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CherryPyAPI._insert"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI._insert">[docs]</a>    <span class="k">def</span> <span class="nf">_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">insert_json</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Insert object from json into the system.&quot;&quot;&quot;</span>
         <span class="n">objs</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">insert_json</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">objs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">objs</span><span class="p">:</span>
             <span class="c1"># nothing to upload</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">objs</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">objs</span><span class="p">]</span>
         <span class="n">bad_id_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">check_for_key_existence</span><span class="p">(</span><span class="n">objs</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bad_id_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Could not insert records [ID: </span><span class="si">{0}</span><span class="s1">] due to duplicated ID values. &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bad_id_list</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">bad_id_list</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Could not insert records [ID: </span><span class="si">{0}</span><span class="s1">] due to duplicated ID values. &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bad_id_list</span><span class="p">))</span>
             <span class="n">message</span> <span class="o">+=</span> <span class="s1">&#39;Remove or change the duplicated id values&#39;</span>
             <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
 
@@ -231,18 +268,21 @@
             <span class="sd">&quot;&quot;&quot;Fix the dates for insert.&quot;&quot;&quot;</span>
             <span class="k">for</span> <span class="n">date_key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">,</span> <span class="s1">&#39;updated&#39;</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">]:</span>
                 <span class="k">if</span> <span class="n">date_key</span> <span class="ow">in</span> <span class="n">orig_obj</span><span class="p">:</span>
-                    <span class="n">es_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime_converts</span><span class="p">(</span><span class="n">orig_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">])</span>
+                    <span class="n">es_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime_converts</span><span class="p">(</span>
+                        <span class="n">orig_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">])</span>
             <span class="k">for</span> <span class="n">date_key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">,</span> <span class="s1">&#39;updated&#39;</span><span class="p">]:</span>
                 <span class="k">if</span> <span class="n">date_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">orig_obj</span><span class="p">:</span>
-                    <span class="n">es_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime_converts</span><span class="p">(</span><span class="n">datetime_now_nomicrosecond</span><span class="p">())</span>
+                    <span class="n">es_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">db_obj</span><span class="p">[</span><span class="n">date_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime_converts</span><span class="p">(</span>
+                        <span class="n">datetime_now_nomicrosecond</span><span class="p">())</span>
             <span class="k">if</span> <span class="s1">&#39;deleted&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">orig_obj</span><span class="p">:</span>
                 <span class="n">db_obj</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">es_obj</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">clean_objs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clean_for_bulk_upload</span><span class="p">(</span><span class="n">objs</span><span class="p">,</span> <span class="n">fix_dates</span><span class="p">)</span>
         <span class="n">es_objs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">insert_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">insert_many</span><span class="p">(</span><span class="n">clean_objs</span><span class="p">[</span><span class="s1">&#39;upload_objs&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+        <span class="n">insert_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">insert_many</span><span class="p">(</span>
+            <span class="n">clean_objs</span><span class="p">[</span><span class="s1">&#39;upload_objs&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">insert_query</span><span class="o">.</span><span class="n">execute</span><span class="p">():</span>
-            <span class="n">es_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">to_hash</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="n">es_objs</span><span class="p">)</span></div>
+            <span class="n">es_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">to_hash</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">es_recursive_flags</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elastic_upload</span><span class="p">(</span><span class="n">es_objs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CherryPyAPI.check_for_key_existence"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.orm.CherryPyAPI.check_for_key_existence">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">check_for_key_existence</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">object_list</span><span class="p">):</span>
@@ -256,8 +296,8 @@
                     <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cls_instance</span><span class="o">.</span><span class="n">where_clause</span><span class="p">({</span><span class="s1">&#39;_id&#39;</span><span class="p">:</span> <span class="n">item_id</span><span class="p">}))</span>
                     <span class="n">bad_id_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
                 <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">:</span>
-                    <span class="n">obj</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bad_id_list</span><span class="p">]</span></div>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bad_id_list</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">_clean_for_bulk_upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_hashes</span><span class="p">,</span> <span class="n">fix_dates</span><span class="p">):</span>
         <span class="n">model_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">get_object_info</span><span class="p">()</span>
@@ -266,12 +306,12 @@
             <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-            <span class="n">new_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
-            <span class="n">es_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
+            <span class="n">new_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_hash</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">es_recursive_flags</span><span class="p">)</span>
+            <span class="n">es_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_hash</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">es_recursive_flags</span><span class="p">)</span>
             <span class="n">fix_dates</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">new_obj</span><span class="p">,</span> <span class="n">es_obj</span><span class="p">)</span>
             <span class="n">clean_objs</span><span class="p">[</span><span class="s1">&#39;es_objs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">es_obj</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;related_models&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">model_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;related_models&#39;</span><span class="p">):</span>
                 <span class="n">rel_models</span> <span class="o">=</span> <span class="n">model_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;related_models&#39;</span><span class="p">)</span>
                 <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span> <span class="ow">in</span> <span class="n">rel_models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="c1"># replace incoming lookup table names with</span>
@@ -281,6 +321,9 @@
                         <span class="n">new_obj</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_obj</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">db_col</span><span class="p">)</span>
             <span class="k">if</span> <span class="s1">&#39;_id&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">new_obj</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">model_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;related_names&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">new_obj</span><span class="p">:</span>
+                        <span class="k">del</span> <span class="n">new_obj</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span>
             <span class="n">new_obj</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span><span class="p">)</span>
             <span class="n">clean_objs</span><span class="p">[</span><span class="s1">&#39;upload_objs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_obj</span><span class="p">)</span>
 
@@ -290,8 +333,8 @@
         <span class="sd">&quot;&quot;&quot;Internal delete object method.&quot;&quot;&quot;</span>
         <span class="n">update_hash</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;deleted&#39;</span><span class="p">:</span> <span class="n">datetime_now_nomicrosecond</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-        <span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">update_hash</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="p">}</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">update_hash</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="c1"># CherryPy requires these named methods</span>
     <span class="c1"># Add HEAD (basically Get without returning body</span>
@@ -332,8 +375,8 @@
 
 <span class="sd">        Gets a single object based on kwargs, sets the deleted flag and saves</span>
 <span class="sd">        the object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_delete</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="c1"># pylint: enable=invalid-name</span>
 </pre></div>

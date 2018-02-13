@@ -99,6 +99,7 @@
 <li class="toctree-l4"><a class="reference internal" href="metadata.metadata.elastic.html">Elastic Module</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Orm Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="metadata.metadata.rest.html">Rest Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.test.html">Metadata Test Module</a></li>
 </ul>
 </li>
 </ul>
@@ -227,10 +228,22 @@ and deleting these objects in from a web service layer.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.base.PacificaModel.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.base.PacificaModel.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">PacificaModelDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.base.PacificaModel._bool_translate">
-<em class="property">static </em><code class="descname">_bool_translate</code><span class="sig-paren">(</span><em>thing</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel._bool_translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel._bool_translate" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">_bool_translate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel._bool_translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel._bool_translate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Translate the thing into a boolean.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.base.PacificaModel._where_attr_clause">
+<em class="property">classmethod </em><code class="descname">_where_attr_clause</code><span class="sig-paren">(</span><em>where_clause</em>, <em>kwargs</em>, <em>keys</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel._where_attr_clause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel._where_attr_clause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grab keys and operators out of kwargs and return where clause.</p>
 </dd></dl>
 
 <dl class="classmethod">
@@ -241,16 +254,34 @@ and deleting these objects in from a web service layer.</p>
 for any object in the database.</p>
 </dd></dl>
 
+<dl class="classmethod">
+<dt id="metadata.orm.base.PacificaModel.cls_foreignkey_rel_mods">
+<em class="property">classmethod </em><code class="descname">cls_foreignkey_rel_mods</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.cls_foreignkey_rel_mods"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.cls_foreignkey_rel_mods" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a collection of related models for a given foreignkey.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.base.PacificaModel.cls_foreignkeys">
+<em class="property">classmethod </em><code class="descname">cls_foreignkeys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.cls_foreignkeys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.cls_foreignkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide the foreign keys of the class as a list of attrs.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="metadata.orm.base.PacificaModel.cls_revforeignkeys">
+<em class="property">classmethod </em><code class="descname">cls_revforeignkeys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.cls_revforeignkeys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.cls_revforeignkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide the rev foreign keys of the class as a list of attrs.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="metadata.orm.base.PacificaModel.from_hash">
 <code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.from_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the hash objects into object fields if they are present.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="metadata.orm.base.PacificaModel.from_json">
-<code class="descname">from_json</code><span class="sig-paren">(</span><em>json_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.from_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.from_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert the json string into the current object.</p>
+<dl class="staticmethod">
+<dt id="metadata.orm.base.PacificaModel.get_append_item">
+<em class="property">static </em><code class="descname">get_append_item</code><span class="sig-paren">(</span><em>fk_item_name</em>, <em>fk_obj_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.get_append_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.get_append_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the proper item to append to the newly built object.</p>
 </dd></dl>
 
 <dl class="classmethod">
@@ -273,14 +304,8 @@ for any object in the database.</p>
 
 <dl class="method">
 <dt id="metadata.orm.base.PacificaModel.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the base object fields into serializable attributes in a hash.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="metadata.orm.base.PacificaModel.to_json">
-<code class="descname">to_json</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/base.html#PacificaModel.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.base.PacificaModel.to_json" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert the object into a json object.</p>
 </dd></dl>
 
 <dl class="method">
@@ -328,9 +353,15 @@ for any object in the database.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.citation_contributor.CitationContributor.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.citation_contributor.CitationContributor.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">CitationContributorDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.citation_contributor.CitationContributor.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_contributor.html#CitationContributor.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_contributor.CitationContributor.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_contributor.html#CitationContributor.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_contributor.CitationContributor.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -342,7 +373,7 @@ for any object in the database.</p>
 
 <dl class="method">
 <dt id="metadata.orm.citation_contributor.CitationContributor.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_contributor.html#CitationContributor.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_contributor.CitationContributor.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_contributor.html#CitationContributor.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_contributor.CitationContributor.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -382,9 +413,15 @@ for any object in the database.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.citation_proposal.CitationProposal.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.citation_proposal.CitationProposal.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">CitationProposalDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.citation_proposal.CitationProposal.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_proposal.html#CitationProposal.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_proposal.CitationProposal.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_proposal.html#CitationProposal.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_proposal.CitationProposal.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -396,7 +433,7 @@ for any object in the database.</p>
 
 <dl class="method">
 <dt id="metadata.orm.citation_proposal.CitationProposal.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_proposal.html#CitationProposal.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_proposal.CitationProposal.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citation_proposal.html#CitationProposal.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citation_proposal.CitationProposal.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -470,9 +507,15 @@ citation</td>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.citations.Citations.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.citations.Citations.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">CitationsDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.citations.Citations.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citations.html#Citations.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citations.Citations.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citations.html#Citations.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citations.Citations.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -484,7 +527,7 @@ citation</td>
 
 <dl class="method">
 <dt id="metadata.orm.citations.Citations.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citations.html#Citations.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citations.Citations.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/citations.html#Citations.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.citations.Citations.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the citation fields to a serializable hash.</p>
 </dd></dl>
 
@@ -545,9 +588,15 @@ above</td>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.contributors.Contributors.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.contributors.Contributors.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ContributorsDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.contributors.Contributors.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/contributors.html#Contributors.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.contributors.Contributors.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/contributors.html#Contributors.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.contributors.Contributors.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -559,7 +608,7 @@ above</td>
 
 <dl class="method">
 <dt id="metadata.orm.contributors.Contributors.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/contributors.html#Contributors.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.contributors.Contributors.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/contributors.html#Contributors.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.contributors.Contributors.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object fields into a serializable hash.</p>
 </dd></dl>
 
@@ -602,9 +651,15 @@ above</td>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.file_key_value.FileKeyValue.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.file_key_value.FileKeyValue.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">FileKeyValueDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.file_key_value.FileKeyValue.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/file_key_value.html#FileKeyValue.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.file_key_value.FileKeyValue.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/file_key_value.html#FileKeyValue.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.file_key_value.FileKeyValue.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -616,7 +671,7 @@ above</td>
 
 <dl class="method">
 <dt id="metadata.orm.file_key_value.FileKeyValue.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/file_key_value.html#FileKeyValue.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.file_key_value.FileKeyValue.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/file_key_value.html#FileKeyValue.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.file_key_value.FileKeyValue.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -639,8 +694,8 @@ it came from.</p>
 <dt>Attributes:</dt>
 <dd><table border="1" class="first last docutils">
 <colgroup>
-<col width="23%" />
-<col width="77%" />
+<col width="26%" />
+<col width="74%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
@@ -675,16 +730,25 @@ it came from.</p>
 <tr class="row-even"><td>mimetype</td>
 <td>mimetype of the file, if any</td>
 </tr>
-<tr class="row-odd"><td>encoding</td>
+<tr class="row-odd"><td>suspense_date</td>
+<td>date the proposal is made available</td>
+</tr>
+<tr class="row-even"><td>encoding</td>
 <td>encoding in the file name or subdir field</td>
 </tr>
 </tbody>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.files.Files.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.files.Files.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">FilesDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.files.Files.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/files.html#Files.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.files.Files.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/files.html#Files.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.files.Files.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -696,7 +760,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.files.Files.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/files.html#Files.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.files.Files.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/files.html#Files.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.files.Files.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -739,9 +803,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.groups.Groups.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.groups.Groups.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">GroupsDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.groups.Groups.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/groups.html#Groups.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.groups.Groups.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/groups.html#Groups.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.groups.Groups.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -753,7 +823,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.groups.Groups.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/groups.html#Groups.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.groups.Groups.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/groups.html#Groups.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.groups.Groups.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -793,9 +863,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.institution_person.InstitutionPerson.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.institution_person.InstitutionPerson.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">InstitutionPersonDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.institution_person.InstitutionPerson.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institution_person.html#InstitutionPerson.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institution_person.InstitutionPerson.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institution_person.html#InstitutionPerson.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institution_person.InstitutionPerson.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -807,7 +883,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.institution_person.InstitutionPerson.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institution_person.html#InstitutionPerson.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institution_person.InstitutionPerson.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institution_person.html#InstitutionPerson.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institution_person.InstitutionPerson.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -853,9 +929,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.institutions.Institutions.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.institutions.Institutions.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">InstitutionsDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.institutions.Institutions.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institutions.html#Institutions.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institutions.Institutions.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institutions.html#Institutions.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institutions.Institutions.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -867,7 +949,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.institutions.Institutions.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institutions.html#Institutions.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institutions.Institutions.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/institutions.html#Institutions.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.institutions.Institutions.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -907,9 +989,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.instrument_custodian.InstrumentCustodian.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.instrument_custodian.InstrumentCustodian.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentCustodianDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.instrument_custodian.InstrumentCustodian.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_custodian.html#InstrumentCustodian.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_custodian.InstrumentCustodian.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_custodian.html#InstrumentCustodian.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_custodian.InstrumentCustodian.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -921,7 +1009,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.instrument_custodian.InstrumentCustodian.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_custodian.html#InstrumentCustodian.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_custodian.InstrumentCustodian.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_custodian.html#InstrumentCustodian.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_custodian.InstrumentCustodian.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -961,9 +1049,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.instrument_group.InstrumentGroup.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.instrument_group.InstrumentGroup.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentGroupDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.instrument_group.InstrumentGroup.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_group.html#InstrumentGroup.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_group.InstrumentGroup.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_group.html#InstrumentGroup.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_group.InstrumentGroup.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -975,7 +1069,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.instrument_group.InstrumentGroup.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_group.html#InstrumentGroup.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_group.InstrumentGroup.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instrument_group.html#InstrumentGroup.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instrument_group.InstrumentGroup.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1024,9 +1118,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.instruments.Instruments.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.instruments.Instruments.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentsDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.instruments.Instruments.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instruments.html#Instruments.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instruments.Instruments.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instruments.html#Instruments.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instruments.Instruments.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -1038,7 +1138,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.instruments.Instruments.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instruments.html#Instruments.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instruments.Instruments.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/instruments.html#Instruments.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.instruments.Instruments.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1084,9 +1184,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.journals.Journals.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.journals.Journals.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">JournalsDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.journals.Journals.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/journals.html#Journals.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.journals.Journals.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/journals.html#Journals.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.journals.Journals.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -1098,7 +1204,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.journals.Journals.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/journals.html#Journals.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.journals.Journals.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/journals.html#Journals.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.journals.Journals.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1138,9 +1244,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.keys.Keys.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.keys.Keys.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">KeysDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.keys.Keys.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keys.html#Keys.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keys.Keys.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keys.html#Keys.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keys.Keys.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -1152,7 +1264,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.keys.Keys.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keys.html#Keys.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keys.Keys.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keys.html#Keys.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keys.Keys.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1195,9 +1307,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.keywords.Keywords.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.keywords.Keywords.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">KeywordsDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.keywords.Keywords.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keywords.html#Keywords.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keywords.Keywords.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keywords.html#Keywords.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keywords.Keywords.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -1209,7 +1327,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.keywords.Keywords.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keywords.html#Keywords.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keywords.Keywords.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/keywords.html#Keywords.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.keywords.Keywords.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1249,9 +1367,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.proposal_instrument.ProposalInstrument.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.proposal_instrument.ProposalInstrument.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ProposalInstrumentDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.proposal_instrument.ProposalInstrument.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_instrument.html#ProposalInstrument.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_instrument.ProposalInstrument.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_instrument.html#ProposalInstrument.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_instrument.ProposalInstrument.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -1263,7 +1387,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.proposal_instrument.ProposalInstrument.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_instrument.html#ProposalInstrument.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_instrument.ProposalInstrument.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_instrument.html#ProposalInstrument.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_instrument.ProposalInstrument.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1303,9 +1427,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.proposal_participant.ProposalParticipant.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.proposal_participant.ProposalParticipant.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ProposalParticipantDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.proposal_participant.ProposalParticipant.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_participant.html#ProposalParticipant.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_participant.ProposalParticipant.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_participant.html#ProposalParticipant.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_participant.ProposalParticipant.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -1317,7 +1447,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.proposal_participant.ProposalParticipant.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_participant.html#ProposalParticipant.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_participant.ProposalParticipant.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposal_participant.html#ProposalParticipant.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposal_participant.ProposalParticipant.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1374,16 +1504,25 @@ it came from.</p>
 <tr class="row-even"><td>closed_date</td>
 <td>date the proposal was terminated</td>
 </tr>
-<tr class="row-odd"><td>encoding</td>
+<tr class="row-odd"><td>suspense_date</td>
+<td>date the proposal is made available</td>
+</tr>
+<tr class="row-even"><td>encoding</td>
 <td>encoding of the other text attrs</td>
 </tr>
 </tbody>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.proposals.Proposals.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.proposals.Proposals.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ProposalsDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.proposals.Proposals.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposals.html#Proposals.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposals.Proposals.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposals.html#Proposals.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposals.Proposals.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -1395,7 +1534,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.proposals.Proposals.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposals.html#Proposals.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposals.Proposals.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/proposals.html#Proposals.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.proposals.Proposals.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1438,9 +1577,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.trans_key_value.TransactionKeyValue.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.trans_key_value.TransactionKeyValue.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">TransactionKeyValueDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.trans_key_value.TransactionKeyValue.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/trans_key_value.html#TransactionKeyValue.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.trans_key_value.TransactionKeyValue.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/trans_key_value.html#TransactionKeyValue.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.trans_key_value.TransactionKeyValue.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -1452,7 +1597,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.trans_key_value.TransactionKeyValue.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/trans_key_value.html#TransactionKeyValue.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.trans_key_value.TransactionKeyValue.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/trans_key_value.html#TransactionKeyValue.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.trans_key_value.TransactionKeyValue.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1491,13 +1636,22 @@ it came from.</p>
 <tr class="row-even"><td>proposal</td>
 <td>Proposal the transaction is for</td>
 </tr>
+<tr class="row-odd"><td>suspense_date</td>
+<td>date the transaction is available</td>
+</tr>
 </tbody>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.transactions.Transactions.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.transactions.Transactions.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">TransactionsDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.transactions.Transactions.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/transactions.html#Transactions.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.transactions.Transactions.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/transactions.html#Transactions.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.transactions.Transactions.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -1509,7 +1663,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.transactions.Transactions.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/transactions.html#Transactions.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.transactions.Transactions.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/transactions.html#Transactions.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.transactions.Transactions.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1549,6 +1703,18 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.user_group.UserGroup.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.user_group.UserGroup.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">UserGroupDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="metadata.orm.user_group.UserGroup.elastic_mapping_builder">
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/user_group.html#UserGroup.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.user_group.UserGroup.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the elasticsearch mapping bits.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="metadata.orm.user_group.UserGroup.from_hash">
 <code class="descname">from_hash</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/user_group.html#UserGroup.from_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.user_group.UserGroup.from_hash" title="Permalink to this definition">¶</a></dt>
@@ -1557,7 +1723,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.user_group.UserGroup.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/user_group.html#UserGroup.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.user_group.UserGroup.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/user_group.html#UserGroup.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.user_group.UserGroup.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1609,15 +1775,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
-<dl class="staticmethod">
-<dt id="metadata.orm.users.Users._where_clause_if_available">
-<em class="property">static </em><code class="descname">_where_clause_if_available</code><span class="sig-paren">(</span><em>where_clause</em>, <em>key</em>, <em>kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/users.html#Users._where_clause_if_available"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.users.Users._where_clause_if_available" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the where clause if the key is in the kwargs.</p>
+<dl class="attribute">
+<dt id="metadata.orm.users.Users.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.users.Users.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">UsersDoesNotExist</span></code></p>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="metadata.orm.users.Users.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/users.html#Users.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.users.Users.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/users.html#Users.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.users.Users.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -1629,7 +1795,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.users.Users.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/users.html#Users.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.users.Users.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/users.html#Users.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.users.Users.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 
@@ -1719,9 +1885,15 @@ it came from.</p>
 </table>
 </dd>
 </dl>
+<dl class="attribute">
+<dt id="metadata.orm.values.Values.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#metadata.orm.values.Values.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">ValuesDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="staticmethod">
 <dt id="metadata.orm.values.Values.elastic_mapping_builder">
-<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/values.html#Values.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.values.Values.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">elastic_mapping_builder</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/values.html#Values.elastic_mapping_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.values.Values.elastic_mapping_builder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build the elasticsearch mapping bits.</p>
 </dd></dl>
 
@@ -1733,7 +1905,7 @@ it came from.</p>
 
 <dl class="method">
 <dt id="metadata.orm.values.Values.to_hash">
-<code class="descname">to_hash</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/values.html#Values.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.values.Values.to_hash" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_hash</code><span class="sig-paren">(</span><em>**flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/orm/values.html#Values.to_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.orm.values.Values.to_hash" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the object to a hash.</p>
 </dd></dl>
 

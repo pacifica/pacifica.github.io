@@ -179,13 +179,14 @@
         <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/reporting/transaction_details/</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span>
             <span class="n">url</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span> <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">transaction_list</span><span class="p">))))],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span>
+            <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">transaction_list</span><span class="p">))))],</span>
             <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
             <span class="n">dumps</span><span class="p">(</span><span class="n">transaction_list</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
-        <span class="n">ret_data</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">ret_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span></div>
+        <span class="n">ret_data</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">ret_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestReportingPolicy.test_transaction_summary"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_reporting.TestReportingPolicy.test_transaction_summary">[docs]</a>    <span class="k">def</span> <span class="nf">test_transaction_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return upload summary results.&quot;&quot;&quot;</span>
@@ -216,8 +217,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span> <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">object_list</span><span class="p">))))],</span>
             <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
             <span class="n">dumps</span><span class="p">(</span><span class="n">object_list</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span></div>
+        <span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
         <span class="c1"># self.assertStatus(&#39;200 OK&#39;)</span>
         <span class="c1"># self.assertTrue(loads(self.body) is None)</span>
 
@@ -228,12 +229,13 @@
         <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/reporting/transaction_details/</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span>
             <span class="n">url</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span> <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">transaction_list</span><span class="p">))))],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">+</span>
+            <span class="p">[(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">transaction_list</span><span class="p">))))],</span>
             <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
             <span class="n">dumps</span><span class="p">(</span><span class="n">transaction_list</span><span class="p">)</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">))</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">))</span>
 </pre></div>
 
            </div>

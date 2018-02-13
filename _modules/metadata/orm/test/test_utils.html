@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.orm.test.test_utils</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Test the metadata.orm.utils methods.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">date</span>
@@ -170,8 +171,8 @@
 <div class="viewcode-block" id="TestUtils.test_index_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_utils.TestUtils.test_index_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_index_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the index hash method with some static knowns.&quot;&quot;&quot;</span>
         <span class="n">in_data</span> <span class="o">=</span> <span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="mi">456</span><span class="p">)</span>
-        <span class="n">chk_data</span> <span class="o">=</span> <span class="s1">&#39;e10adc3949ba59abbe56e057f20f883e&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">index_hash</span><span class="p">(</span><span class="o">*</span><span class="n">in_data</span><span class="p">),</span> <span class="n">chk_data</span><span class="p">)</span></div>
+        <span class="n">chk_data</span> <span class="o">=</span> <span class="s1">&#39;e10adc3949ba59abbe56e057f20f883e&#39;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">index_hash</span><span class="p">(</span><span class="o">*</span><span class="n">in_data</span><span class="p">),</span> <span class="n">chk_data</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestUtils.test_datetime_converts"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_utils.TestUtils.test_datetime_converts">[docs]</a>    <span class="k">def</span> <span class="nf">test_datetime_converts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -188,7 +189,9 @@
         <span class="n">uni_date</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;2016-07-05T09:22:12&#39;</span>
         <span class="n">str_date</span> <span class="o">=</span> <span class="s1">&#39;2016-07-05T09:22:12&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">datetime_converts</span><span class="p">(</span><span class="n">uni_date</span><span class="p">),</span> <span class="n">chk_date</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">datetime_converts</span><span class="p">(</span><span class="n">str_date</span><span class="p">),</span> <span class="n">chk_date</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">datetime_converts</span><span class="p">(</span><span class="n">str_date</span><span class="p">),</span> <span class="n">chk_date</span><span class="p">)</span>
+        <span class="c1"># error state something it can&#39;t deal with</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">datetime_converts</span><span class="p">({}),</span> <span class="kc">None</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestUtils.test_date_converts"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_utils.TestUtils.test_date_converts">[docs]</a>    <span class="k">def</span> <span class="nf">test_date_converts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -205,7 +208,9 @@
         <span class="n">uni_date</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;2016-07-05&#39;</span>
         <span class="n">str_date</span> <span class="o">=</span> <span class="s1">&#39;2016-07-05&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">date_converts</span><span class="p">(</span><span class="n">uni_date</span><span class="p">),</span> <span class="n">chk_date</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">date_converts</span><span class="p">(</span><span class="n">str_date</span><span class="p">),</span> <span class="n">chk_date</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">date_converts</span><span class="p">(</span><span class="n">str_date</span><span class="p">),</span> <span class="n">chk_date</span><span class="p">)</span>
+        <span class="c1"># error state something it can&#39;t deal with</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">date_converts</span><span class="p">({}),</span> <span class="kc">None</span><span class="p">)</span>
 </pre></div>
 
            </div>

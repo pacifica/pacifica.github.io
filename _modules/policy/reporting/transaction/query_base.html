@@ -157,9 +157,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for policy.reporting.transaction.query_base</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status Metadata proposalinfo base class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status Metadata proposalinfo base class.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">policy</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span>
+<span class="kn">from</span> <span class="nn">policy.globals</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span>
 
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
@@ -201,16 +203,16 @@
             <span class="n">url</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/instrumentinfo/by_user_id/</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">METADATA_ENDPOINT</span><span class="p">,</span> <span class="n">user_id</span><span class="p">),</span> <span class="n">header_list</span><span class="o">=</span><span class="n">header_list</span><span class="p">)</span>
         <span class="n">user_info</span><span class="p">[</span><span class="s1">&#39;proposal_list&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prop_list</span>
         <span class="n">user_info</span><span class="p">[</span><span class="s1">&#39;instrument_list&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inst_list</span>
-
-        <span class="k">return</span> <span class="n">user_info</span></div>
+</div>
+        <span class="k">return</span> <span class="n">user_info</span>
 
 <div class="viewcode-block" id="QueryBase._merge_two_dicts"><a class="viewcode-back" href="../../../../policy.policy.reporting.transaction.html#policy.reporting.transaction.query_base.QueryBase._merge_two_dicts">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_merge_two_dicts</span><span class="p">(</span><span class="n">dict_a</span><span class="p">,</span> <span class="n">dict_b</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Given two dicts, merge them into a new dict as a shallow copy.&quot;&quot;&quot;</span>
         <span class="n">dict_out</span> <span class="o">=</span> <span class="n">dict_a</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">dict_b</span><span class="p">:</span>
-            <span class="n">dict_out</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dict_b</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">dict_out</span></div></div>
+            <span class="n">dict_out</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dict_b</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">dict_out</span>
 </pre></div>
 
            </div>

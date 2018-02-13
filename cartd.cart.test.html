@@ -180,111 +180,117 @@
             
   <div class="section" id="module-cart.test.cart_end_to_end_tests">
 <span id="cartd-project-tests"></span><h1>Cartd Project Tests<a class="headerlink" href="#module-cart.test.cart_end_to_end_tests" title="Permalink to this headline">¶</a></h1>
-<p>File that will tests the requests and coverage of the server and the tasks</p>
+<p>File that will tests the requests and coverage of the server and the tasks.</p>
 <dl class="class">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd">
-<em class="property">class </em><code class="descclassname">cart.test.cart_end_to_end_tests.</code><code class="descname">TestCartEndToEnd</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contains all the tests for the end to end cart testing</p>
+<em class="property">class </em><code class="descclassname">cart.test.cart_end_to_end_tests.</code><code class="descname">TestCartEndToEnd</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains all the tests for the end to end cart testing.</p>
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.setUp">
 <code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.setUp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make the tasks not asynchronise for testing</p>
+<dd><p>Make the tasks not asynchronise for testing.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.setup_good_cart">
+<code class="descname">setup_good_cart</code><span class="sig-paren">(</span><em>cart_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.setup_good_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.setup_good_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup a test good cart.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_cart_deleted_date">
 <code class="descname">test_cart_deleted_date</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_cart_deleted_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_cart_deleted_date" title="Permalink to this definition">¶</a></dt>
-<dd><p>test getting bundle ready with a file in staging state</p>
+<dd><p>Test getting bundle ready with a file in staging state.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_delete_cart">
-<code class="descname">test_delete_cart</code><span class="sig-paren">(</span><em>cart_id=‘39’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_delete_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_delete_cart" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the deletion of a cart</p>
+<code class="descname">test_delete_cart</code><span class="sig-paren">(</span><em>cart_id='39'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_delete_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_delete_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the deletion of a cart.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_delete_invalid_cart">
-<code class="descname">test_delete_invalid_cart</code><span class="sig-paren">(</span><em>cart_id=‘393’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_delete_invalid_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_delete_invalid_cart" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the deletion of a invalid cart</p>
+<code class="descname">test_delete_invalid_cart</code><span class="sig-paren">(</span><em>cart_id='393'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_delete_invalid_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_delete_invalid_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the deletion of a invalid cart.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_get_cart">
-<code class="descname">test_get_cart</code><span class="sig-paren">(</span><em>cart_id=‘38’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_get_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_get_cart" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the getting of a cart</p>
+<code class="descname">test_get_cart</code><span class="sig-paren">(</span><em>cart_id='38'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_get_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_get_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the getting of a cart.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_get_noncart">
-<code class="descname">test_get_noncart</code><span class="sig-paren">(</span><em>cart_id=‘86’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_get_noncart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_get_noncart" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the getting of a cart</p>
+<code class="descname">test_get_noncart</code><span class="sig-paren">(</span><em>cart_id='86'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_get_noncart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_get_noncart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the getting of a cart.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_post_cart">
-<code class="descname">test_post_cart</code><span class="sig-paren">(</span><em>cart_id=‘36’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_post_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_post_cart" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the creation of a cart</p>
+<code class="descname">test_post_cart</code><span class="sig-paren">(</span><em>cart_id='36'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_post_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_post_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the creation of a cart.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_post_cart_bad_hash">
-<code class="descname">test_post_cart_bad_hash</code><span class="sig-paren">(</span><em>cart_id=‘1136’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_post_cart_bad_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_post_cart_bad_hash" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the creation of a cart with bad hash</p>
+<code class="descname">test_post_cart_bad_hash</code><span class="sig-paren">(</span><em>cart_id='1136'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_post_cart_bad_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_post_cart_bad_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the creation of a cart with bad hash.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_prep_bundle_error">
 <code class="descname">test_prep_bundle_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_prep_bundle_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_prep_bundle_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>test getting bundle ready with a file in error state</p>
+<dd><p>Test getting bundle ready with a file in error state.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_prep_bundle_staging">
 <code class="descname">test_prep_bundle_staging</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_prep_bundle_staging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_prep_bundle_staging" title="Permalink to this definition">¶</a></dt>
-<dd><p>test getting bundle ready with a file in staging state</p>
+<dd><p>Test getting bundle ready with a file in staging state.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_prepare_bundle">
 <code class="descname">test_prepare_bundle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_prepare_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_prepare_bundle" title="Permalink to this definition">¶</a></dt>
-<dd><p>test getting bundle files ready</p>
+<dd><p>Test getting bundle files ready.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_pull_invalid_file">
 <code class="descname">test_pull_invalid_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_pull_invalid_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_pull_invalid_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>test pulling a file id that doesnt exist</p>
+<dd><p>Test pulling a file id that doesnt exist.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_stage_files">
 <code class="descname">test_stage_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_stage_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_stage_files" title="Permalink to this definition">¶</a></dt>
-<dd><p>test getting bundle files ready</p>
+<dd><p>Test getting bundle files ready.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_status_cart">
-<code class="descname">test_status_cart</code><span class="sig-paren">(</span><em>cart_id=‘37’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_status_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_status_cart" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the status of a cart</p>
+<code class="descname">test_status_cart</code><span class="sig-paren">(</span><em>cart_id='37'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_status_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_status_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the status of a cart.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_status_cart_error">
 <code class="descname">test_status_cart_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_status_cart_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_status_cart_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the status of a cart with error</p>
+<dd><p>Test the status of a cart with error.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_status_cart_notfound">
 <code class="descname">test_status_cart_notfound</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_status_cart_notfound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_status_cart_notfound" title="Permalink to this definition">¶</a></dt>
-<dd><p>test the status of a cart with cart not found</p>
+<dd><p>Test the status of a cart with cart not found.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_tar_invalid_cart">
 <code class="descname">test_tar_invalid_cart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#TestCartEndToEnd.test_tar_invalid_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_tar_invalid_cart" title="Permalink to this definition">¶</a></dt>
-<dd><p>test pulling a file id that doesnt exist</p>
+<dd><p>Test pulling a file id that doesnt exist.</p>
 </dd></dl>
 
 </dd></dl>
@@ -292,207 +298,353 @@
 <dl class="function">
 <dt id="cart.test.cart_end_to_end_tests.cart_json_helper">
 <code class="descclassname">cart.test.cart_end_to_end_tests.</code><code class="descname">cart_json_helper</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/cart_end_to_end_tests.html#cart_json_helper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.cart_end_to_end_tests.cart_json_helper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Helper that returns a cart json text string</p>
+<dd><p>Helper that returns a cart json text string.</p>
 </dd></dl>
 
 <span class="target" id="module-cart.test.test_archive"></span><p>Add Unit Tests for archive interface.</p>
 <dl class="class">
 <dt id="cart.test.test_archive.TestArchiveRequests">
-<em class="property">class </em><code class="descclassname">cart.test.test_archive.</code><code class="descname">TestArchiveRequests</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test the archive requests class</p>
+<em class="property">class </em><code class="descclassname">cart.test.test_archive.</code><code class="descname">TestArchiveRequests</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the archive requests class.</p>
 <dl class="method">
 <dt id="cart.test.test_archive.TestArchiveRequests.test_archive_get">
-<code class="descname">test_archive_get</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests.test_archive_get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests.test_archive_get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test pulling a file</p>
+<code class="descname">test_archive_get</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests.test_archive_get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests.test_archive_get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test pulling a file.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_archive.TestArchiveRequests.test_archive_get_bad_hash">
-<code class="descname">test_archive_get_bad_hash</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests.test_archive_get_bad_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests.test_archive_get_bad_hash" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test pulling a file with a bad hash value</p>
+<code class="descname">test_archive_get_bad_hash</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests.test_archive_get_bad_hash"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests.test_archive_get_bad_hash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test pulling a file with a bad hash value.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_archive.TestArchiveRequests.test_archive_stage">
-<code class="descname">test_archive_stage</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests.test_archive_stage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests.test_archive_stage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test staging a file</p>
+<code class="descname">test_archive_stage</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests.test_archive_stage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests.test_archive_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test staging a file.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_archive.TestArchiveRequests.test_archive_stage_fail">
-<code class="descname">test_archive_stage_fail</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests.test_archive_stage_fail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests.test_archive_stage_fail" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test staging a file failure</p>
+<code class="descname">test_archive_stage_fail</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests.test_archive_stage_fail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests.test_archive_stage_fail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test staging a file failure.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_archive.TestArchiveRequests.test_archive_status">
-<code class="descname">test_archive_status</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests.test_archive_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests.test_archive_status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Test pulling a file</p>
+<code class="descname">test_archive_status</code><span class="sig-paren">(</span><em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_archive.html#TestArchiveRequests.test_archive_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_archive.TestArchiveRequests.test_archive_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test pulling a file.</p>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-cart.test.test_cart_interface"></span><p>File used to unit test the pacifica_cart</p>
+<span class="target" id="module-cart.test.test_cart_interface"></span><p>File used to unit test the pacifica_cart.</p>
 <dl class="class">
 <dt id="cart.test.test_cart_interface.TestCartInterface">
-<em class="property">class </em><code class="descclassname">cart.test.test_cart_interface.</code><code class="descname">TestCartInterface</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contains all the tests for the Cart Interface</p>
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.setUp">
-<code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.setUp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new sqlite3 db</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.tearDown">
-<code class="descname">tearDown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.tearDown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.tearDown" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete the sqlite3 db</p>
+<em class="property">class </em><code class="descclassname">cart.test.test_cart_interface.</code><code class="descname">TestCartInterface</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contain all the tests for the Cart Interface.</p>
+<dl class="staticmethod">
+<dt id="cart.test.test_cart_interface.TestCartInterface.setup_server">
+<em class="property">static </em><code class="descname">setup_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.setup_server"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.setup_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start all the services.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_cart_interface.TestCartInterface.test_cart_int_delete">
 <code class="descname">test_cart_int_delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_cart_int_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_cart_int_delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface delete</p>
+<dd><p>Testing the cart interface delete.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_cart_interface.TestCartInterface.test_cart_int_get">
 <code class="descname">test_cart_int_get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_cart_int_get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_cart_int_get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface get method</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.test_cart_int_get_no_file_fd">
-<code class="descname">test_cart_int_get_no_file_fd</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_cart_int_get_no_file_fd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_cart_int_get_no_file_fd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface get method w/o file_wrapper</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.test_cart_int_stage_invalid_uid">
-<code class="descname">test_cart_int_stage_invalid_uid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_cart_int_stage_invalid_uid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_cart_int_stage_invalid_uid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface stage invalid cart uid</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.test_cart_int_stage_ioerror">
-<code class="descname">test_cart_int_stage_ioerror</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_cart_int_stage_ioerror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_cart_int_stage_ioerror" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface stage</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.test_cart_int_stage_nojson">
-<code class="descname">test_cart_int_stage_nojson</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_cart_int_stage_nojson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_cart_int_stage_nojson" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface stage bad json input</p>
+<dd><p>Testing the cart interface get method w/o file_wrapper.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_cart_interface.TestCartInterface.test_delete_invalid_uid">
 <code class="descname">test_delete_invalid_uid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_delete_invalid_uid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_delete_invalid_uid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface delete with invalid uid</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.test_fix_cart_uid">
-<code class="descname">test_fix_cart_uid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_fix_cart_uid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_fix_cart_uid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the create filepath cleanup</p>
+<dd><p>Testing the cart interface delete with invalid uid.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_cart_interface.TestCartInterface.test_invalid_cart_uid">
 <code class="descname">test_invalid_cart_uid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_invalid_cart_uid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_invalid_cart_uid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface get against not valid cart uid</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.test_is_valid_uid">
-<code class="descname">test_is_valid_uid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_is_valid_uid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_is_valid_uid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing if the passed guids are valid</p>
+<dd><p>Testing the cart interface get against not valid cart uid.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_cart_interface.TestCartInterface.test_not_ready_cart">
 <code class="descname">test_not_ready_cart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_not_ready_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_not_ready_cart" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface get against not ready cart</p>
+<dd><p>Testing the cart interface get against not ready cart.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_cart_interface.TestCartInterface.test_not_valid_cart">
 <code class="descname">test_not_valid_cart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_not_valid_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_not_valid_cart" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface get against not ready cart</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.test_pacifica_cartinterface">
-<code class="descname">test_pacifica_cartinterface</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_pacifica_cartinterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_pacifica_cartinterface" title="Permalink to this definition">¶</a></dt>
-<dd><p>test pacifica cart interface</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.test_pacifica_ci_bad_request">
-<code class="descname">test_pacifica_ci_bad_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_pacifica_ci_bad_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_pacifica_ci_bad_request" title="Permalink to this definition">¶</a></dt>
-<dd><p>test pacifica cart interface bad request method</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.test_pacifica_ci_throw_error">
-<code class="descname">test_pacifica_ci_throw_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_pacifica_ci_throw_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_pacifica_ci_throw_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>test pacifica cart interface throw exception</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="cart.test.test_cart_interface.TestCartInterface.test_read_cart_ioerrror">
-<code class="descname">test_read_cart_ioerrror</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_read_cart_ioerrror"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_read_cart_ioerrror" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface get against not ready cart</p>
+<dd><p>Testing the cart interface get against not ready cart.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_cart_interface.TestCartInterface.test_status_invalid_uid">
 <code class="descname">test_status_invalid_uid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_interface.html#TestCartInterface.test_status_invalid_uid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_interface.TestCartInterface.test_status_invalid_uid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Testing the cart interface status</p>
+<dd><p>Testing the cart interface status.</p>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-cart.test.test_cart_orm"></span><p>This tests some of the cart orm class</p>
+<span class="target" id="module-cart.test.test_cart_orm"></span><p>This tests some of the cart orm class.</p>
 <dl class="class">
 <dt id="cart.test.test_cart_orm.TestCartOrm">
-<em class="property">class </em><code class="descclassname">cart.test.test_cart_orm.</code><code class="descname">TestCartOrm</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_orm.html#TestCartOrm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_orm.TestCartOrm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contains the cart orm tests</p>
+<em class="property">class </em><code class="descclassname">cart.test.test_cart_orm.</code><code class="descname">TestCartOrm</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_orm.html#TestCartOrm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_orm.TestCartOrm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains the cart orm tests.</p>
 <dl class="method">
 <dt id="cart.test.test_cart_orm.TestCartOrm.setUp">
 <code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_orm.html#TestCartOrm.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_orm.TestCartOrm.setUp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new sqlite3 db</p>
+<dd><p>Create a new sqlite3 db.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_cart_orm.TestCartOrm.tearDown">
 <code class="descname">tearDown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_orm.html#TestCartOrm.tearDown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_orm.TestCartOrm.tearDown" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete the sqlite3 db</p>
+<dd><p>Delete the sqlite3 db.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_cart_orm.TestCartOrm.test_cart_orm_db_setup">
 <code class="descname">test_cart_orm_db_setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_orm.html#TestCartOrm.test_cart_orm_db_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_orm.TestCartOrm.test_cart_orm_db_setup" title="Permalink to this definition">¶</a></dt>
-<dd><p>call database_setup</p>
+<dd><p>Call database_setup.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="cart.test.test_cart_orm.TestCartOrm.test_cart_orm_db_setup_error">
 <code class="descname">test_cart_orm_db_setup_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_orm.html#TestCartOrm.test_cart_orm_db_setup_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_orm.TestCartOrm.test_cart_orm_db_setup_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>call database_setup</p>
+<dd><p>Call database_setup.</p>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-cart.test.test_env_globals"></span><p>File used to unit test the pacifica_cart</p>
+<span class="target" id="module-cart.test.test_cart_tasks"></span><p>File used to unit test the pacifica_cart tasks.</p>
+<dl class="class">
+<dt id="cart.test.test_cart_tasks.TestCartTasks">
+<em class="property">class </em><code class="descclassname">cart.test.test_cart_tasks.</code><code class="descname">TestCartTasks</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains tests for tasks that dont need all services stood up.</p>
+<dl class="staticmethod">
+<dt id="cart.test.test_cart_tasks.TestCartTasks.setUp">
+<em class="property">static </em><code class="descname">setUp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks.setUp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks.setUp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup the environment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_tasks.TestCartTasks.test_bad_file_ids">
+<code class="descname">test_bad_file_ids</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks.test_bad_file_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks.test_bad_file_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a error return from a file not ready to pull.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_tasks.TestCartTasks.test_bad_pull">
+<code class="descname">test_bad_pull</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks.test_bad_pull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks.test_bad_pull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the bad pull of a archive file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_tasks.TestCartTasks.test_bad_pull_value">
+<code class="descname">test_bad_pull_value</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks.test_bad_pull_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks.test_bad_pull_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a error return from a file not ready to pull.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_tasks.TestCartTasks.test_bad_ready_to_pull">
+<code class="descname">test_bad_ready_to_pull</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks.test_bad_ready_to_pull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks.test_bad_ready_to_pull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a error return from a file not ready to pull.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_tasks.TestCartTasks.test_bad_size_needed">
+<code class="descname">test_bad_size_needed</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks.test_bad_size_needed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks.test_bad_size_needed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a error in check_file_size_needed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_tasks.TestCartTasks.test_bad_stage">
+<code class="descname">test_bad_stage</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks.test_bad_stage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks.test_bad_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the bad stage of a archive file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_tasks.TestCartTasks.test_bad_status">
+<code class="descname">test_bad_status</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks.test_bad_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks.test_bad_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the bad status of a archive file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_tasks.TestCartTasks.test_stage_bad_file_id">
+<code class="descname">test_stage_bad_file_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks.test_stage_bad_file_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks.test_stage_bad_file_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a error return from a file not ready to pull.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_tasks.TestCartTasks.test_stage_cart_deleted">
+<code class="descname">test_stage_cart_deleted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks.test_stage_cart_deleted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks.test_stage_cart_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a error return from a file not ready to pull.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_tasks.TestCartTasks.test_status_cart_deleted">
+<code class="descname">test_status_cart_deleted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#TestCartTasks.test_status_cart_deleted"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.TestCartTasks.test_status_cart_deleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a error return from a file not ready to pull.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="cart.test.test_cart_tasks.fake_database_close">
+<code class="descclassname">cart.test.test_cart_tasks.</code><code class="descname">fake_database_close</code><span class="sig-paren">(</span><em>cls</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#fake_database_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.fake_database_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dont actually close.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cart.test.test_cart_tasks.fake_database_connect">
+<code class="descclassname">cart.test.test_cart_tasks.</code><code class="descname">fake_database_connect</code><span class="sig-paren">(</span><em>cls</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_tasks.html#fake_database_connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_tasks.fake_database_connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dont error with connect.</p>
+</dd></dl>
+
+<span class="target" id="module-cart.test.test_cart_utils"></span><p>File used to unit test the pacifica_cart.</p>
+<dl class="class">
+<dt id="cart.test.test_cart_utils.TestCartUtils">
+<em class="property">class </em><code class="descclassname">cart.test.test_cart_utils.</code><code class="descname">TestCartUtils</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains all the tests for the CartUtils class.</p>
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_bad_available_cart">
+<code class="descname">test_bad_available_cart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_bad_available_cart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_bad_available_cart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test getting a cart that doesnt exist.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_bad_cart_status">
+<code class="descname">test_bad_cart_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_bad_cart_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_bad_cart_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test getting a status of a cart that doesnt exist.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_bad_create_download_path">
+<code class="descname">test_bad_create_download_path</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_bad_create_download_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_bad_create_download_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the creation of the download path for a cart file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_bad_makedirs">
+<code class="descname">test_bad_makedirs</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_bad_makedirs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_bad_makedirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test a error return from a file not ready to pull.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_bad_stage">
+<code class="descname">test_bad_stage</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_bad_stage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_bad_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the bad stage of a archive file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_cart_no_hash_passed">
+<code class="descname">test_cart_no_hash_passed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_cart_no_hash_passed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_cart_no_hash_passed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test error with cart with no hash passed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_check_file_not_ready_pull">
+<code class="descname">test_check_file_not_ready_pull</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_check_file_not_ready_pull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_check_file_not_ready_pull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that checks to see if a file is not ready to pull by checking the archive response.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_check_file_ready_pull">
+<code class="descname">test_check_file_ready_pull</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_check_file_ready_pull"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_check_file_ready_pull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that checks to see if a file is ready to pull by checking the archive response.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_check_file_size_needed">
+<code class="descname">test_check_file_size_needed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_check_file_size_needed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_check_file_size_needed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that the file size returned from the archive is parsed right.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_check_space_bad_path">
+<code class="descname">test_check_space_bad_path</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_check_space_bad_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_check_space_bad_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that the error when a bad path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_check_space_requirements">
+<code class="descname">test_check_space_requirements</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_check_space_requirements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_check_space_requirements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that there is enough space on the volume for the file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_create_bundle_directories">
+<code class="descname">test_create_bundle_directories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_create_bundle_directories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_create_bundle_directories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the  creation of directories where files will be saved.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_create_download_path">
+<code class="descname">test_create_download_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_create_download_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_create_download_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the creation of the download path for a cart file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_delete_cart_bundle">
+<code class="descname">test_delete_cart_bundle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_delete_cart_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_delete_cart_bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that trys to delete a cart bundle.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_delete_cart_bundle_fail">
+<code class="descname">test_delete_cart_bundle_fail</code><span class="sig-paren">(</span><em>**keywargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_delete_cart_bundle_fail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_delete_cart_bundle_fail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that trys to delete a cart bundle but fails.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_fix_absolute_path">
+<code class="descname">test_fix_absolute_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_fix_absolute_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_fix_absolute_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the correct creation of paths by removing absolute paths.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_get_path_size">
+<code class="descname">test_get_path_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_get_path_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_get_path_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test to see if the path size of a directory is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_lru_cart_delete">
+<code class="descname">test_lru_cart_delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_lru_cart_delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_lru_cart_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that trys to delete a cart.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_set_file_status">
+<code class="descname">test_set_file_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_set_file_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_set_file_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test that trys to set a specific files status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cart.test.test_cart_utils.TestCartUtils.test_status_details_fail">
+<code class="descname">test_status_details_fail</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_cart_utils.html#TestCartUtils.test_status_details_fail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_cart_utils.TestCartUtils.test_status_details_fail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test status details fail.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-cart.test.test_env_globals"></span><p>File used to unit test the pacifica_cart.</p>
 <dl class="class">
 <dt id="cart.test.test_env_globals.TestEnvGlobals">
-<em class="property">class </em><code class="descclassname">cart.test.test_env_globals.</code><code class="descname">TestEnvGlobals</code><span class="sig-paren">(</span><em>methodName=’runTest’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_env_globals.html#TestEnvGlobals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_env_globals.TestEnvGlobals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contains the tests for the global config module</p>
+<em class="property">class </em><code class="descclassname">cart.test.test_env_globals.</code><code class="descname">TestEnvGlobals</code><span class="sig-paren">(</span><em>methodName='runTest'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_env_globals.html#TestEnvGlobals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_env_globals.TestEnvGlobals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contain the tests for the global config module.</p>
 <dl class="method">
 <dt id="cart.test.test_env_globals.TestEnvGlobals.test_set_logging">
 <code class="descname">test_set_logging</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cart/test/test_env_globals.html#TestEnvGlobals.test_set_logging"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cart.test.test_env_globals.TestEnvGlobals.test_set_logging" title="Permalink to this definition">¶</a></dt>
-<dd><p>test that logging gets set for debugging</p>
+<dd><p>Test that logging gets set for debugging.</p>
 </dd></dl>
 
 </dd></dl>

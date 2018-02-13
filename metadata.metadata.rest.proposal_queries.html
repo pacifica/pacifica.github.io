@@ -99,6 +99,7 @@
 <li class="toctree-l4"><a class="reference internal" href="metadata.metadata.elastic.html">Elastic Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="metadata.metadata.orm.html">Orm Module</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="metadata.metadata.rest.html">Rest Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.test.html">Metadata Test Module</a></li>
 </ul>
 </li>
 </ul>
@@ -191,13 +192,13 @@
 <dd><p>Retrieves a set of proposals for a given keyword set.</p>
 <dl class="staticmethod">
 <dt id="metadata.rest.proposal_queries.proposal_lookup.ProposalLookup.GET">
-<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_lookup.ProposalLookup.GET" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_lookup.ProposalLookup.GET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to connect and close connection to database.</p>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="metadata.rest.proposal_queries.proposal_lookup.ProposalLookup._get_proposal_details">
-<em class="property">static </em><code class="descname">_get_proposal_details</code><span class="sig-paren">(</span><em>proposal_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/proposal_queries/proposal_lookup.html#ProposalLookup._get_proposal_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_lookup.ProposalLookup._get_proposal_details" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">_get_proposal_details</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/proposal_queries/proposal_lookup.html#ProposalLookup._get_proposal_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_lookup.ProposalLookup._get_proposal_details" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted dictionary containing the details of a given Proposal entry.</p>
 </dd></dl>
 
@@ -210,13 +211,13 @@
 <dd><p>ProposalTermSearch API.</p>
 <dl class="staticmethod">
 <dt id="metadata.rest.proposal_queries.proposal_term_search.ProposalTermSearch.GET">
-<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_term_search.ProposalTermSearch.GET" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_term_search.ProposalTermSearch.GET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to connect and close connection to database.</p>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="metadata.rest.proposal_queries.proposal_term_search.ProposalTermSearch.search_for_proposal">
-<em class="property">static </em><code class="descname">search_for_proposal</code><span class="sig-paren">(</span><em>search_term</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/proposal_queries/proposal_term_search.html#ProposalTermSearch.search_for_proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_term_search.ProposalTermSearch.search_for_proposal" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">search_for_proposal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/proposal_queries/proposal_term_search.html#ProposalTermSearch.search_for_proposal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_term_search.ProposalTermSearch.search_for_proposal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a dictionary containing information about a given proposal.</p>
 </dd></dl>
 
@@ -229,13 +230,13 @@
 <dd><p>ProposalUserSearch API.</p>
 <dl class="staticmethod">
 <dt id="metadata.rest.proposal_queries.proposal_user_search.ProposalUserSearch.GET">
-<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_user_search.ProposalUserSearch.GET" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_user_search.ProposalUserSearch.GET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to connect and close connection to database.</p>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="metadata.rest.proposal_queries.proposal_user_search.ProposalUserSearch.get_proposals_for_user">
-<em class="property">static </em><code class="descname">get_proposals_for_user</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_user_search.ProposalUserSearch.get_proposals_for_user" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">get_proposals_for_user</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.proposal_queries.proposal_user_search.ProposalUserSearch.get_proposals_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to check for user existence.</p>
 </dd></dl>
 
@@ -248,7 +249,7 @@
 <dd><p>Retrieves a set of proposals for a given keyword set.</p>
 <dl class="staticmethod">
 <dt id="metadata.rest.proposal_queries.query_base.QueryBase.format_proposal_block">
-<em class="property">static </em><code class="descname">format_proposal_block</code><span class="sig-paren">(</span><em>proposal_entry</em>, <em>instruments=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/proposal_queries/query_base.html#QueryBase.format_proposal_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.proposal_queries.query_base.QueryBase.format_proposal_block" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">format_proposal_block</code><span class="sig-paren">(</span><em>instruments=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/proposal_queries/query_base.html#QueryBase.format_proposal_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.proposal_queries.query_base.QueryBase.format_proposal_block" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct a dictionary from a given proposal instance in the metadata stack.</p>
 </dd></dl>
 

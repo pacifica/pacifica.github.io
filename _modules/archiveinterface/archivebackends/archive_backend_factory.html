@@ -36,7 +36,7 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
+        <link rel="up" title="archiveinterface" href="../../archiveinterface.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -139,6 +139,8 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../../archiveinterface.html">archiveinterface</a> &raquo;</li>
+        
       <li>archiveinterface.archivebackends.archive_backend_factory</li>
     
     
@@ -158,6 +160,7 @@
             
   <h1>Source code for archiveinterface.archivebackends.archive_backend_factory</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Factory for returning a Archive backend.</span>
 
 <span class="sd">New Backends must be added to the</span>
@@ -182,8 +185,8 @@
         <span class="k">if</span> <span class="n">backend_class</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">backend_class</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
-            <span class="s1">&#39;The requested Archive Backend has not been implemented&#39;</span>
-        <span class="p">)</span></div>
+            <span class="s1">&#39;The requested Archive Backend has not been implemented&#39;</span></div>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="ArchiveBackendFactory.load_backend_archive"><a class="viewcode-back" href="../../../archiveinterface.archiveinterface.archivebackends.html#archiveinterface.archivebackends.archive_backend_factory.ArchiveBackendFactory.load_backend_archive">[docs]</a>    <span class="k">def</span> <span class="nf">load_backend_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method for loading in the correct backend type.</span>
@@ -200,8 +203,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">share_classes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;posix&#39;</span><span class="p">:</span> <span class="n">PosixBackendArchive</span><span class="p">}</span>
         <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;hmssideband&#39;</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive</span> \
-                <span class="kn">import</span> <span class="nn">HmsSidebandBackendArchive</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">share_classes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;hmssideband&#39;</span><span class="p">:</span> <span class="n">HmsSidebandBackendArchive</span><span class="p">}</span></div></div>
+                <span class="kn">import</span> <span class="nn">HmsSidebandBackendArchive</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">share_classes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;hmssideband&#39;</span><span class="p">:</span> <span class="n">HmsSidebandBackendArchive</span><span class="p">}</span>
 </pre></div>
 
            </div>

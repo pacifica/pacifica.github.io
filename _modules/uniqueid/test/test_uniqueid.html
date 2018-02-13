@@ -158,14 +158,13 @@
             
   <h1>Source code for uniqueid.test.test_uniqueid</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Index server unit and integration tests.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
 <span class="kn">from</span> <span class="nn">playhouse.test_utils</span> <span class="k">import</span> <span class="n">test_database</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">SqliteDatabase</span>
 <span class="kn">from</span> <span class="nn">uniqueid.orm</span> <span class="k">import</span> <span class="n">UniqueIndex</span><span class="p">,</span> <span class="n">update_index</span>
-<span class="kn">from</span> <span class="nn">uniqueid.utils</span> <span class="k">import</span> <span class="n">range_and_mode</span><span class="p">,</span> <span class="n">create_invalid_return</span><span class="p">,</span>\
-                               <span class="n">create_valid_return</span><span class="p">,</span> <span class="n">valid_request</span>
 
 
 <div class="viewcode-block" id="IndexServerUnitTests"><a class="viewcode-back" href="../../../uniqueid.uniqueid.test.html#uniqueid.test.test_uniqueid.IndexServerUnitTests">[docs]</a><span class="k">class</span> <span class="nc">IndexServerUnitTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
@@ -202,71 +201,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">index_range</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
             <span class="n">index</span><span class="p">,</span> <span class="n">index_range</span> <span class="o">=</span> <span class="n">update_index</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;new&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">index_range</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="IndexServerUnitTests.test_range_and_mode"><a class="viewcode-back" href="../../../uniqueid.uniqueid.test.html#uniqueid.test.test_uniqueid.IndexServerUnitTests.test_range_and_mode">[docs]</a>    <span class="k">def</span> <span class="nf">test_range_and_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test parsing of environ dictionary.&quot;&quot;&quot;</span>
-        <span class="n">environ</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;QUERY_STRING&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;range=10&amp;mode=file&#39;</span>
-        <span class="n">id_range</span><span class="p">,</span> <span class="n">id_mode</span> <span class="o">=</span> <span class="n">range_and_mode</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">id_range</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">id_mode</span><span class="p">,</span> <span class="s1">&#39;file&#39;</span><span class="p">)</span>
-
-        <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;QUERY_STRING&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;rage=10&amp;mode=file&#39;</span>
-        <span class="n">id_range</span><span class="p">,</span> <span class="n">id_mode</span> <span class="o">=</span> <span class="n">range_and_mode</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">id_range</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">id_mode</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-
-        <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;QUERY_STRING&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="n">id_range</span><span class="p">,</span> <span class="n">id_mode</span> <span class="o">=</span> <span class="n">range_and_mode</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">id_range</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">id_mode</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-
-        <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;BEERY_STRING&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;range=10&amp;mode=file&#39;</span>
-        <span class="n">id_range</span><span class="p">,</span> <span class="n">id_mode</span> <span class="o">=</span> <span class="n">range_and_mode</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">id_range</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">id_mode</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="IndexServerUnitTests.test_valid_request"><a class="viewcode-back" href="../../../uniqueid.uniqueid.test.html#uniqueid.test.test_uniqueid.IndexServerUnitTests.test_valid_request">[docs]</a>    <span class="k">def</span> <span class="nf">test_valid_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Catch and handle bogus requests (ex. faveicon).&quot;&quot;&quot;</span>
-        <span class="n">environ</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/getid&#39;</span>
-        <span class="n">val</span> <span class="o">=</span> <span class="n">valid_request</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-
-        <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;/favicon&#39;</span>
-        <span class="n">val</span> <span class="o">=</span> <span class="n">valid_request</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="IndexServerUnitTests.test_create_invalid_return"><a class="viewcode-back" href="../../../uniqueid.uniqueid.test.html#uniqueid.test.test_uniqueid.IndexServerUnitTests.test_create_invalid_return">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_invalid_return</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Catch and handle bogus requests (ex. faveicon).&quot;&quot;&quot;</span>
-        <span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">,</span> <span class="n">response_body</span> <span class="o">=</span> <span class="n">create_invalid_return</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;404 NOT FOUND&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response_body</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response_headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response_headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response_headers</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Length&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response_headers</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="IndexServerUnitTests.test_create_valid_return"><a class="viewcode-back" href="../../../uniqueid.uniqueid.test.html#uniqueid.test.test_uniqueid.IndexServerUnitTests.test_create_valid_return">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_valid_return</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Catch and handle bogus requests (ex. faveicon).&quot;&quot;&quot;</span>
-        <span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">,</span> <span class="n">response_body</span> <span class="o">=</span> <span class="n">create_valid_return</span><span class="p">(</span><span class="mi">333</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response_body</span><span class="p">,</span> <span class="s1">&#39;{&quot;endIndex&quot;: 342, &quot;startIndex&quot;: 333}&#39;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response_headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response_headers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response_headers</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Content-Length&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">response_headers</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;36&#39;</span><span class="p">)</span></div></div>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>  <span class="c1"># pragma no cover</span>
-    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;test complete&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">index_range</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
            </div>

@@ -193,7 +193,9 @@
         <span class="c1"># Test with no instruments to return</span>
         <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/instrument/by_proposal_id/1238&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;404 Not Found&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
+        <span class="n">answer</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">)),</span> <span class="mi">0</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestStatusPolicy.test_files_for_transaction"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_status.TestStatusPolicy.test_files_for_transaction">[docs]</a>    <span class="k">def</span> <span class="nf">test_files_for_transaction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return file listing for a transaction.&quot;&quot;&quot;</span>
@@ -203,7 +205,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
         <span class="n">answer</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answer</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertListEqual</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">dumps</span><span class="p">([</span><span class="s1">&#39;103&#39;</span><span class="p">,</span> <span class="s1">&#39;104&#39;</span><span class="p">]))))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertListEqual</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">answer</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span></div>
+                             <span class="nb">sorted</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">dumps</span><span class="p">([</span><span class="s1">&#39;103&#39;</span><span class="p">,</span> <span class="s1">&#39;104&#39;</span><span class="p">]))))</span>
 
 <div class="viewcode-block" id="TestStatusPolicy.test_transaction_for_id"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_status.TestStatusPolicy.test_transaction_for_id">[docs]</a>    <span class="k">def</span> <span class="nf">test_transaction_for_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return transaction info for a given id.&quot;&quot;&quot;</span>
@@ -217,22 +220,23 @@
         <span class="n">bad_transaction_id</span> <span class="o">=</span> <span class="s1">&#39;bob&#39;</span>
         <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/transactions/by_id/</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bad_transaction_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;400 Invalid Request&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertInBody</span><span class="p">(</span><span class="s1">&#39;Provide an appropriate transaction_id&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;400 Invalid Request&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInBody</span><span class="p">(</span><span class="s1">&#39;Provide an appropriate transaction_id&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestStatusPolicy.test_transaction_search"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_status.TestStatusPolicy.test_transaction_search">[docs]</a>    <span class="k">def</span> <span class="nf">test_transaction_search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return proposals for a specified user.&quot;&quot;&quot;</span>
         <span class="n">transaction_id</span> <span class="o">=</span> <span class="mi">68</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/transactions/search?transaction=</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">transaction_id</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span></div>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/transactions/search?transaction=</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">transaction_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestStatusPolicy.test_user_query"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_status.TestStatusPolicy.test_user_query">[docs]</a>    <span class="k">def</span> <span class="nf">test_user_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test user details retrieval.&quot;&quot;&quot;</span>
         <span class="n">user_id</span> <span class="o">=</span> <span class="mi">10</span>
         <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/users/by_id/</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestStatusPolicy.test_user_search"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_status.TestStatusPolicy.test_user_search">[docs]</a>    <span class="k">def</span> <span class="nf">test_user_search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test user search functionality.&quot;&quot;&quot;</span>
@@ -244,8 +248,8 @@
 
         <span class="n">search_term</span> <span class="o">=</span> <span class="s1">&#39;dmlb2004&#39;</span>
         <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/users/search/</span><span class="si">{0}</span><span class="s1">/simple&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestStatusPolicy.test_proposals_by_user"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_status.TestStatusPolicy.test_proposals_by_user">[docs]</a>    <span class="k">def</span> <span class="nf">test_proposals_by_user</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return proposals for a specified user.&quot;&quot;&quot;</span>
@@ -254,13 +258,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
         <span class="n">answer</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answer</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answer</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
 
         <span class="n">user_id</span> <span class="o">=</span> <span class="mi">13</span>
         <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/proposals/by_user_id/</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertInBody</span><span class="p">(</span><span class="s1">&#39;404 User Does Not Exist&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInBody</span><span class="p">(</span><span class="s1">&#39;404 User Does Not Exist&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestStatusPolicy.test_proposal_lookup"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_status.TestStatusPolicy.test_proposal_lookup">[docs]</a>    <span class="k">def</span> <span class="nf">test_proposal_lookup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return an appropriate proposal for a specified proposal_id.&quot;&quot;&quot;</span>
@@ -269,31 +273,36 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
         <span class="n">answer</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answer</span><span class="p">[</span><span class="s1">&#39;instruments&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">answer</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">proposal_id</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answer</span><span class="p">[</span><span class="s1">&#39;instruments&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">answer</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">proposal_id</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestStatusPolicy.test_instrument_search"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_status.TestStatusPolicy.test_instrument_search">[docs]</a>    <span class="k">def</span> <span class="nf">test_instrument_search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return appropriate instruments for a set of search criteria.&quot;&quot;&quot;</span>
         <span class="n">search_terms</span> <span class="o">=</span> <span class="s1">&#39;nmr&#39;</span>
         <span class="n">user_id</span> <span class="o">=</span> <span class="mi">10</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/instrument/search/</span><span class="si">{0}</span><span class="s1">?user=</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">search_terms</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/instrument/search/</span><span class="si">{0}</span><span class="s1">?user=</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">search_terms</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
 
         <span class="n">user_id</span> <span class="o">=</span> <span class="mi">12</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/instrument/search/</span><span class="si">{0}</span><span class="s1">?user=</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">search_terms</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/instrument/search/</span><span class="si">{0}</span><span class="s1">?user=</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">search_terms</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertBody</span><span class="p">(</span><span class="s1">&#39;[]&#39;</span><span class="p">)</span>
 
         <span class="n">user_id</span> <span class="o">=</span> <span class="mi">100</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/instrument/search/</span><span class="si">{0}</span><span class="s1">?user=</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">search_terms</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/instrument/search/</span><span class="si">{0}</span><span class="s1">?user=</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">search_terms</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
 
         <span class="n">search_terms</span> <span class="o">=</span> <span class="s1">&#39;flux+capacitor&#39;</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/instrument/search/</span><span class="si">{0}</span><span class="s1">?user=</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">search_terms</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span></div>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/instrument/search/</span><span class="si">{0}</span><span class="s1">?user=</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">search_terms</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="mi">404</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestStatusPolicy.test_proposal_search"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_status.TestStatusPolicy.test_proposal_search">[docs]</a>    <span class="k">def</span> <span class="nf">test_proposal_search</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return appropriate proposals for a search term and user id.&quot;&quot;&quot;</span>
@@ -311,7 +320,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
         <span class="n">answer</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answer</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answer</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
 
         <span class="n">search_term</span> <span class="o">=</span> <span class="s1">&#39;pacifica&#39;</span>
         <span class="n">user_id</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># non admin user</span>
@@ -345,9 +354,10 @@
 
         <span class="n">user_id</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># admin user</span>
         <span class="n">search_term</span> <span class="o">=</span> <span class="s1">&#39;nmr&#39;</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/instrument/search/</span><span class="si">{0}</span><span class="s1">?user=</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">search_term</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span></div></div>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;/status/instrument/search/</span><span class="si">{0}</span><span class="s1">?user=</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">search_term</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">getPage</span><span class="p">(</span><span class="n">url</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertStatus</span><span class="p">(</span><span class="s1">&#39;200 OK&#39;</span><span class="p">)</span>
 </pre></div>
 
            </div>

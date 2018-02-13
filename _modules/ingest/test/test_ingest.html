@@ -157,61 +157,80 @@
            <div itemprop="articleBody">
             
   <h1>Source code for ingest.test.test_ingest</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Index server unit and integration tests.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Index server unit and integration tests.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
-<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">call</span>
-<span class="kn">from</span> <span class="nn">tempfile</span> <span class="k">import</span> <span class="n">NamedTemporaryFile</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="k">import</span> <span class="n">mkstemp</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">ingest.orm</span> <span class="k">import</span> <span class="n">IngestState</span><span class="p">,</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">update_state</span><span class="p">,</span> <span class="n">read_state</span>
-<span class="kn">from</span> <span class="nn">ingest.utils</span> <span class="k">import</span> <span class="n">get_unique_id</span><span class="p">,</span> <span class="n">get_job_id</span>
+<span class="kn">from</span> <span class="nn">ingest.utils</span> <span class="k">import</span> <span class="n">get_unique_id</span>
 <span class="kn">from</span> <span class="nn">ingest.tarutils</span> <span class="k">import</span> <span class="n">open_tar</span>
 <span class="kn">from</span> <span class="nn">ingest.tarutils</span> <span class="k">import</span> <span class="n">MetaParser</span>
 <span class="kn">from</span> <span class="nn">ingest.tarutils</span> <span class="k">import</span> <span class="n">TarIngester</span>
+<span class="kn">from</span> <span class="nn">ingest.tarutils</span> <span class="k">import</span> <span class="n">FileIngester</span>
 <span class="kn">from</span> <span class="nn">ingest.backend.tasks</span> <span class="k">import</span> <span class="n">ingest</span>
 <span class="kn">from</span> <span class="nn">playhouse.test_utils</span> <span class="k">import</span> <span class="n">test_database</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">SqliteDatabase</span>
 
 
-<span class="n">TEMP_DB</span> <span class="o">=</span> <span class="n">NamedTemporaryFile</span><span class="p">()</span>
-<span class="n">TEST_DB</span> <span class="o">=</span> <span class="n">SqliteDatabase</span><span class="p">(</span><span class="n">TEMP_DB</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-
-
 <div class="viewcode-block" id="IndexServerUnitTests"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_ingest.IndexServerUnitTests">[docs]</a><span class="k">class</span> <span class="nc">IndexServerUnitTests</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Index server unit and integration tests.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IndexServerUnitTests.test_file_ingester"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_ingest.IndexServerUnitTests.test_file_ingester">[docs]</a>    <span class="k">def</span> <span class="nf">test_file_ingester</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test the FileIngester class.&quot;&quot;&quot;</span>
+        <span class="n">FileIngester</span><span class="p">(</span><span class="s1">&#39;sha1&#39;</span><span class="p">,</span> <span class="s1">&#39;fakehashsum&#39;</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
+        <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">FileIngester</span><span class="p">(</span><span class="s1">&#39;badfunc&#39;</span><span class="p">,</span> <span class="s1">&#39;fakehashsum&#39;</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span>
 
 <div class="viewcode-block" id="IndexServerUnitTests.test_load_meta"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_ingest.IndexServerUnitTests.test_load_meta">[docs]</a>    <span class="k">def</span> <span class="nf">test_load_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test sucking metadata from uploader and configuring it in a dictionary suitable to blob to meta ingest.&quot;&quot;&quot;</span>
         <span class="n">tar</span> <span class="o">=</span> <span class="n">open_tar</span><span class="p">(</span><span class="s1">&#39;test_data/good.tar&#39;</span><span class="p">)</span>
 
         <span class="n">meta</span> <span class="o">=</span> <span class="n">MetaParser</span><span class="p">()</span>
-        <span class="n">meta</span><span class="o">.</span><span class="n">load_meta</span><span class="p">(</span><span class="n">tar</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span></div>
+        <span class="n">meta</span><span class="o">.</span><span class="n">load_meta</span><span class="p">(</span><span class="n">tar</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span>
 
 <div class="viewcode-block" id="IndexServerUnitTests.test_tasks"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_ingest.IndexServerUnitTests.test_tasks">[docs]</a>    <span class="k">def</span> <span class="nf">test_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the ingest task.&quot;&quot;&quot;</span>
         <span class="n">job_id</span> <span class="o">=</span> <span class="n">get_unique_id</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;upload_job&#39;</span><span class="p">)</span>
 
-        <span class="n">ingest</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;test_data/good.tar&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span></div>
+        <span class="n">ingest</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;test_data/good.tar&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span>
 
 <div class="viewcode-block" id="IndexServerUnitTests.test_post_metadata"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_ingest.IndexServerUnitTests.test_post_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test sucking metadata from uploader and configuring it in a dictionary suitable to blob to meta ingest.&quot;&quot;&quot;</span>
         <span class="n">tar</span> <span class="o">=</span> <span class="n">open_tar</span><span class="p">(</span><span class="s1">&#39;test_data/good.tar&#39;</span><span class="p">)</span>
         <span class="n">meta</span> <span class="o">=</span> <span class="n">MetaParser</span><span class="p">()</span>
         <span class="n">meta</span><span class="o">.</span><span class="n">load_meta</span><span class="p">(</span><span class="n">tar</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">success</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">post_metadata</span><span class="p">()</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">post_metadata</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>
         <span class="n">tar</span> <span class="o">=</span> <span class="n">open_tar</span><span class="p">(</span><span class="s1">&#39;test_data/bad-mimetype.tar&#39;</span><span class="p">)</span>
         <span class="n">meta</span> <span class="o">=</span> <span class="n">MetaParser</span><span class="p">()</span>
         <span class="n">meta</span><span class="o">.</span><span class="n">load_meta</span><span class="p">(</span><span class="n">tar</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="n">success</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">post_metadata</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
-        <span class="n">call</span><span class="p">([</span><span class="s1">&#39;docker-compose&#39;</span><span class="p">,</span> <span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;metadataserver&#39;</span><span class="p">])</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">post_metadata</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">success</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IndexServerUnitTests.test_down_metadata"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_ingest.IndexServerUnitTests.test_down_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">test_down_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test a failed upload of the metadata.&quot;&quot;&quot;</span>
         <span class="n">tar</span> <span class="o">=</span> <span class="n">open_tar</span><span class="p">(</span><span class="s1">&#39;test_data/good.tar&#39;</span><span class="p">)</span>
         <span class="n">meta</span> <span class="o">=</span> <span class="n">MetaParser</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">bad_put</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>  <span class="c1"># pylint: disable=unused-argument</span>
+            <span class="sd">&quot;&quot;&quot;bad put to the metadata server.&quot;&quot;&quot;</span>
+            <span class="k">raise</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">()</span>
+        <span class="n">meta</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">put</span> <span class="o">=</span> <span class="n">bad_put</span>
         <span class="n">meta</span><span class="o">.</span><span class="n">load_meta</span><span class="p">(</span><span class="n">tar</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">success</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">post_metadata</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">success</span><span class="p">)</span>
-        <span class="n">call</span><span class="p">([</span><span class="s1">&#39;docker-compose&#39;</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;metadataserver&#39;</span><span class="p">])</span></div>
+        <span class="n">success</span><span class="p">,</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">post_metadata</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">success</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>
 
 <div class="viewcode-block" id="IndexServerUnitTests.test_ingest_tar"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_ingest.IndexServerUnitTests.test_ingest_tar">[docs]</a>    <span class="k">def</span> <span class="nf">test_ingest_tar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test moving individual files to the archive files are validated inline with the upload.&quot;&quot;&quot;</span>
@@ -225,12 +244,14 @@
         <span class="c1"># if not valid:</span>
         <span class="c1">#     rollback()</span>
         <span class="c1"># success = MetaUpload()</span>
-        <span class="n">tingest</span><span class="o">.</span><span class="n">ingest</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">tingest</span><span class="p">)</span></div>
+        <span class="n">tingest</span><span class="o">.</span><span class="n">ingest</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">tingest</span><span class="p">)</span>
 
 <div class="viewcode-block" id="IndexServerUnitTests.test_update_state"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_ingest.IndexServerUnitTests.test_update_state">[docs]</a>    <span class="k">def</span> <span class="nf">test_update_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test return and update of unique index.&quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">TEST_DB</span><span class="p">,</span> <span class="p">(</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">IngestState</span><span class="p">)):</span>
+        <span class="n">rwfd</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">mkstemp</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">rwfd</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="n">SqliteDatabase</span><span class="p">(</span><span class="n">fname</span><span class="p">),</span> <span class="p">(</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">IngestState</span><span class="p">)):</span>
             <span class="n">test_object</span> <span class="o">=</span> <span class="n">IngestState</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">job_id</span><span class="o">=</span><span class="mi">999</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">&#39;ERROR&#39;</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s1">&#39;unbundling&#39;</span><span class="p">,</span>
                                              <span class="n">task_percent</span><span class="o">=</span><span class="mf">42.3</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">test_object</span><span class="o">.</span><span class="n">job_id</span><span class="p">,</span> <span class="mi">999</span><span class="p">)</span>
@@ -243,13 +264,8 @@
             <span class="n">record</span> <span class="o">=</span> <span class="n">read_state</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="s1">&#39;DATA_ACCESS_ERROR&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">task</span><span class="p">,</span> <span class="s1">&#39;read_state&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">task_percent</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="IndexServerUnitTests.test_get_job_id"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_ingest.IndexServerUnitTests.test_get_job_id">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_job_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Parse the parameters for a request from the environ dictionary.&quot;&quot;&quot;</span>
-        <span class="n">environ</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;QUERY_STRING&#39;</span><span class="p">:</span> <span class="s1">&#39;job_id=100&#39;</span><span class="p">}</span>
-        <span class="n">job_id</span> <span class="o">=</span> <span class="n">get_job_id</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">job_id</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">task_percent</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div></div>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
 </pre></div>
 
            </div>

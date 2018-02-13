@@ -158,6 +158,7 @@
             
   <h1>Source code for uniqueid.test.test_server</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Unique ID unit and integration tests.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
@@ -170,8 +171,8 @@
     <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:8051/getid?range=</span><span class="si">{range}</span><span class="s1">&amp;mode=</span><span class="si">{mode}</span><span class="s1">&#39;</span>
 
 <div class="viewcode-block" id="TestUniqueID._url"><a class="viewcode-back" href="../../../uniqueid.uniqueid.test.html#uniqueid.test.test_server.TestUniqueID._url">[docs]</a>    <span class="k">def</span> <span class="nf">_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_range</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the parsed url.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="n">id_range</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Return the parsed url.&quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="n">id_range</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestUniqueID.test_working_stuff"><a class="viewcode-back" href="../../../uniqueid.uniqueid.test.html#uniqueid.test.test_server.TestUniqueID.test_working_stuff">[docs]</a>    <span class="k">def</span> <span class="nf">test_working_stuff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the good working bits.&quot;&quot;&quot;</span>
@@ -190,10 +191,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="s1">&#39;endIndex&#39;</span><span class="p">],</span> <span class="mi">12</span><span class="p">)</span>
 
         <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_url</span><span class="p">(</span><span class="s1">&#39;blah&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 
-        <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8051/blah&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span></div></div>
+        <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8051/blah&#39;</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
 </pre></div>
 
            </div>

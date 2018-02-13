@@ -157,136 +157,141 @@
            <div itemprop="articleBody">
             
   <h1>Source code for cart.test.cart_end_to_end_tests</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;File that will tests the requests and coverage of the server and the tasks&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;File that will tests the requests and coverage of the server and the tasks.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">call</span>
+<span class="kn">from</span> <span class="nn">urllib3.util.retry</span> <span class="k">import</span> <span class="n">Retry</span>
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">requests.packages.urllib3.util.retry</span> <span class="k">import</span> <span class="n">Retry</span>
 <span class="kn">from</span> <span class="nn">requests.adapters</span> <span class="k">import</span> <span class="n">HTTPAdapter</span>
 <span class="kn">from</span> <span class="nn">cart.celery</span> <span class="k">import</span> <span class="n">CART_APP</span>
 <span class="kn">from</span> <span class="nn">cart.cart_orm</span> <span class="k">import</span> <span class="n">Cart</span><span class="p">,</span> <span class="n">File</span>
 <span class="kn">from</span> <span class="nn">cart.cart_utils</span> <span class="k">import</span> <span class="n">Cartutils</span>
 <span class="kn">from</span> <span class="nn">cart.tasks</span> <span class="k">import</span> <span class="n">get_files_locally</span><span class="p">,</span> <span class="n">pull_file</span><span class="p">,</span> <span class="n">stage_files</span>
 
+
 <div class="viewcode-block" id="cart_json_helper"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.cart_json_helper">[docs]</a><span class="k">def</span> <span class="nf">cart_json_helper</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Helper that returns a cart json text string&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;{&quot;fileids&quot;: [{&quot;id&quot;:&quot;foo.txt&quot;, &quot;path&quot;:&quot;1/2/3/foo.txt&quot;, &quot;hashtype&quot;:&quot;md5&quot;,&#39;</span> <span class="o">+</span>
-            <span class="s1">&#39; &quot;hashsum&quot;:&quot;ac59bb32dac432674dd6e620a6b35ff3&quot;},&#39;</span> <span class="o">+</span>
-            <span class="s1">&#39;{&quot;id&quot;:&quot;bar.csv&quot;, &quot;path&quot;:&quot;1/2/3/bar.csv&quot;, &quot;hashtype&quot;:&quot;md5&quot;,&#39;</span> <span class="o">+</span>
-            <span class="s1">&#39; &quot;hashsum&quot;:&quot;ef39aa7f8df8bdc8b8d4d81f4e0ef566&quot;},&#39;</span> <span class="o">+</span>
-            <span class="s1">&#39;{&quot;id&quot;:&quot;baz.ini&quot;, &quot;path&quot;:&quot;2/3/4/baz.ini&quot;, &quot;hashtype&quot;:&quot;md5&quot;,&#39;</span> <span class="o">+</span>
-            <span class="s1">&#39; &quot;hashsum&quot;:&quot;b0c21625a5ef364864191e5907d7afb4&quot;}]}&#39;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Helper that returns a cart json text string.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+        <span class="s1">&#39;fileids&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;foo.txt&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;1/2/3/foo.txt&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;hashtype&#39;</span><span class="p">:</span> <span class="s1">&#39;md5&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;hashsum&#39;</span><span class="p">:</span> <span class="s1">&#39;ac59bb32dac432674dd6e620a6b35ff3&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;bar.csv&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;1/2/3/bar.csv&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;hashtype&#39;</span><span class="p">:</span> <span class="s1">&#39;md5&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;hashsum&#39;</span><span class="p">:</span> <span class="s1">&#39;ef39aa7f8df8bdc8b8d4d81f4e0ef566&#39;</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;baz.ini&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;2/3/4/baz.ini&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;hashtype&#39;</span><span class="p">:</span> <span class="s1">&#39;md5&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;hashsum&#39;</span><span class="p">:</span> <span class="s1">&#39;b0c21625a5ef364864191e5907d7afb4&#39;</span>
+            <span class="p">}</span>
+        <span class="p">]</span></div>
+    <span class="p">})</span>
+
 
 <div class="viewcode-block" id="TestCartEndToEnd"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd">[docs]</a><span class="k">class</span> <span class="nc">TestCartEndToEnd</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Contains all the tests for the end to end cart testing</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Contains all the tests for the end to end cart testing.&quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="TestCartEndToEnd.setUp"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Make the tasks not asynchronise for testing&quot;&quot;&quot;</span>
-        <span class="n">CART_APP</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">CELERY_ALWAYS_EAGER</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Make the tasks not asynchronise for testing.&quot;&quot;&quot;</span>
+        <span class="n">CART_APP</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">CELERY_ALWAYS_EAGER</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">backoff_factor</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">session</span>
+
+<div class="viewcode-block" id="TestCartEndToEnd.setup_good_cart"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.setup_good_cart">[docs]</a>    <span class="k">def</span> <span class="nf">setup_good_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cart_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Setup a test good cart.&quot;&quot;&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s1">&#39;http://127.0.0.1:8081/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cart_id</span><span class="p">),</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">cart_json_helper</span><span class="p">(),</span>
+            <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span>
+                         <span class="s1">&#39;Setup good cart for test failed.&#39;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">resp</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_post_cart"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_post_cart">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cart_id</span><span class="o">=</span><span class="s1">&#39;36&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the creation of a cart&quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cart.json&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cartfile</span><span class="p">:</span>
-            <span class="n">cartfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cart_json_helper</span><span class="p">())</span>
-
-        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">backoff_factor</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
-
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/&#39;</span> <span class="o">+</span> <span class="n">cart_id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cart.json&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;/tmp/cart.json&#39;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s1">&#39;/tmp/cart.json&#39;</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Cart Processing has begun&#39;</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the creation of a cart.&quot;&quot;&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_good_cart</span><span class="p">(</span><span class="n">cart_id</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Cart Processing has begun&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_status_cart"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_status_cart">[docs]</a>    <span class="k">def</span> <span class="nf">test_status_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cart_id</span><span class="o">=</span><span class="s1">&#39;37&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the status of a cart&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test the status of a cart.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_post_cart</span><span class="p">(</span><span class="n">cart_id</span><span class="p">)</span>
 
-        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">backoff_factor</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
-
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">resp</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/&#39;</span> <span class="o">+</span> <span class="n">cart_id</span><span class="p">)</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">head</span><span class="p">(</span>
+                <span class="s1">&#39;http://127.0.0.1:8081/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cart_id</span><span class="p">))</span>
             <span class="n">resp_status</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;X-Pacifica-Status&#39;</span><span class="p">]</span>
             <span class="n">resp_message</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;X-Pacifica-Message&#39;</span><span class="p">]</span>
             <span class="n">resp_code</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span>
             <span class="k">if</span> <span class="n">resp_code</span> <span class="o">==</span> <span class="mi">204</span> <span class="ow">and</span> <span class="n">resp_status</span> <span class="o">!=</span> <span class="s1">&#39;staging&#39;</span><span class="p">:</span>
                 <span class="k">break</span>
-            <span class="k">if</span> <span class="n">resp_code</span> <span class="o">==</span> <span class="mi">500</span><span class="p">:</span> <span class="c1"># pragma: no cover</span>
+            <span class="k">if</span> <span class="n">resp_code</span> <span class="o">==</span> <span class="mi">500</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">resp_message</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
                 <span class="k">break</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_status</span><span class="p">,</span> <span class="s1">&#39;ready&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_message</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_status</span><span class="p">,</span> <span class="s1">&#39;ready&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_message</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_get_cart"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_get_cart">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cart_id</span><span class="o">=</span><span class="s1">&#39;38&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the getting of a cart&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test the getting of a cart.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_status_cart</span><span class="p">(</span><span class="n">cart_id</span><span class="p">)</span>
 
-        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">backoff_factor</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
-
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/&#39;</span> <span class="o">+</span> <span class="n">cart_id</span> <span class="o">+</span> <span class="s1">&#39;?filename=&#39;</span> <span class="o">+</span> <span class="n">cart_id</span><span class="p">)</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s1">&#39;http://127.0.0.1:8081/</span><span class="si">{}</span><span class="s1">?filename=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cart_id</span><span class="p">,</span> <span class="n">cart_id</span><span class="p">))</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cart_id</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fdesc</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
                 <span class="n">fdesc</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">cart_id</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="n">call</span><span class="p">([</span><span class="s2">&quot;tar&quot;</span><span class="p">,</span> <span class="s2">&quot;-x&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="n">cart_id</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">cart_id</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">cart_id</span> <span class="o">+</span> <span class="s1">&#39;/1/2/3/foo.txt&#39;</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cart_id</span> <span class="o">+</span> <span class="s1">&#39;/1/2/3/foo.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;Writing content for first file&#39;</span><span class="p">)</span></div>
-
+        <span class="n">saved_tar</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">cart_id</span><span class="p">)</span>
+        <span class="n">tar_members</span> <span class="o">=</span> <span class="n">saved_tar</span><span class="o">.</span><span class="n">getnames</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;38/1/2/3/foo.txt&#39;</span> <span class="ow">in</span> <span class="n">tar_members</span><span class="p">,</span>
+                        <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> should have foo.txt in it&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tar_members</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">saved_tar</span><span class="o">.</span><span class="n">extractfile</span><span class="p">(</span>
+            <span class="n">saved_tar</span><span class="o">.</span><span class="n">getmember</span><span class="p">(</span><span class="s1">&#39;38/1/2/3/foo.txt&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;Writing content for first file&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_get_noncart"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_get_noncart">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_noncart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cart_id</span><span class="o">=</span><span class="s1">&#39;86&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the getting of a cart&quot;&quot;&quot;</span>
-
-        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">backoff_factor</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
-
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/&#39;</span> <span class="o">+</span> <span class="n">cart_id</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="n">resp_code</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;The cart does not exist or has already been deleted&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the getting of a cart.&quot;&quot;&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cart_id</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+            <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;The cart does not exist or has already been deleted&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_delete_cart"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_delete_cart">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cart_id</span><span class="o">=</span><span class="s1">&#39;39&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the deletion of a cart&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test the deletion of a cart.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_status_cart</span><span class="p">(</span><span class="n">cart_id</span><span class="p">)</span>
 
-        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">backoff_factor</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
-
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/&#39;</span> <span class="o">+</span> <span class="n">cart_id</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Cart Deleted Successfully&#39;</span><span class="p">)</span></div>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cart_id</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Cart Deleted Successfully&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_delete_invalid_cart"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_delete_invalid_cart">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_invalid_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cart_id</span><span class="o">=</span><span class="s1">&#39;393&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the deletion of a invalid cart&quot;&quot;&quot;</span>
-
-        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">backoff_factor</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
-
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/&#39;</span> <span class="o">+</span> <span class="n">cart_id</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;The cart does not exist or has already been deleted&#39;</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the deletion of a invalid cart.&quot;&quot;&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cart_id</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Not Found&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_prepare_bundle"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_prepare_bundle">[docs]</a>    <span class="k">def</span> <span class="nf">test_prepare_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test getting bundle files ready&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test getting bundle files ready.&quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cart_json_helper</span><span class="p">())</span>
         <span class="n">file_ids</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;fileids&#39;</span><span class="p">]</span>
         <span class="n">Cart</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
@@ -301,11 +306,11 @@
         <span class="k">while</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;staging&#39;</span><span class="p">:</span>
             <span class="n">mycart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">cartid</span><span class="p">)</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">mycart</span><span class="o">.</span><span class="n">status</span>
-        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;ready&#39;</span><span class="p">)</span></div>
+        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;ready&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_prep_bundle_error"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_prep_bundle_error">[docs]</a>    <span class="k">def</span> <span class="nf">test_prep_bundle_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test getting bundle ready with a file in error state&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test getting bundle ready with a file in error state.&quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cart_json_helper</span><span class="p">())</span>
         <span class="n">file_ids</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;fileids&#39;</span><span class="p">]</span>
         <span class="n">Cart</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
@@ -323,11 +328,11 @@
         <span class="k">while</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;staging&#39;</span><span class="p">:</span>
             <span class="n">mycart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">cartid</span><span class="p">)</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">mycart</span><span class="o">.</span><span class="n">status</span>
-        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span></div>
+        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_prep_bundle_staging"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_prep_bundle_staging">[docs]</a>    <span class="k">def</span> <span class="nf">test_prep_bundle_staging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test getting bundle ready with a file in staging state&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test getting bundle ready with a file in staging state.&quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cart_json_helper</span><span class="p">())</span>
         <span class="n">file_ids</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;fileids&#39;</span><span class="p">]</span>
         <span class="n">Cart</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
@@ -339,34 +344,35 @@
         <span class="k">for</span> <span class="n">cart_file</span> <span class="ow">in</span> <span class="n">File</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">File</span><span class="o">.</span><span class="n">cart</span> <span class="o">==</span> <span class="n">mycart</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
             <span class="n">cart_file</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;staging&#39;</span>
             <span class="n">cart_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-        <span class="n">cart_utils</span><span class="o">.</span><span class="n">prepare_bundle</span><span class="p">(</span><span class="n">mycart</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="c1">#hitting more coverage, set files to staged</span>
+        <span class="c1"># hitting more coverage, set files to staged</span>
+        <span class="n">cart_utils</span><span class="o">.</span><span class="n">prepare_bundle</span><span class="p">(</span><span class="n">mycart</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">cart_file</span> <span class="ow">in</span> <span class="n">File</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">File</span><span class="o">.</span><span class="n">cart</span> <span class="o">==</span> <span class="n">mycart</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
             <span class="n">cart_file</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;staged&#39;</span>
             <span class="n">cart_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-        <span class="n">cart_utils</span><span class="o">.</span><span class="n">prepare_bundle</span><span class="p">(</span><span class="n">mycart</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="c1">#call again after file update</span>
+        <span class="n">cart_utils</span><span class="o">.</span><span class="n">prepare_bundle</span><span class="p">(</span><span class="n">mycart</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>  <span class="c1"># call again after file update</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">mycart</span><span class="o">.</span><span class="n">status</span>
         <span class="n">cartid</span> <span class="o">=</span> <span class="n">mycart</span><span class="o">.</span><span class="n">id</span>
         <span class="k">while</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;staging&#39;</span><span class="p">:</span>
             <span class="n">mycart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">cartid</span><span class="p">)</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">mycart</span><span class="o">.</span><span class="n">status</span>
-        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;ready&#39;</span><span class="p">)</span></div>
+        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;ready&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_pull_invalid_file"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_pull_invalid_file">[docs]</a>    <span class="k">def</span> <span class="nf">test_pull_invalid_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test pulling a file id that doesnt exist&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test pulling a file id that doesnt exist.&quot;&quot;&quot;</span>
         <span class="n">pull_file</span><span class="p">(</span><span class="s1">&#39;8765&#39;</span><span class="p">,</span> <span class="s1">&#39;some/bad/path&#39;</span><span class="p">,</span> <span class="s1">&#39;1111&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="c1">#no action happens on invalid file, so no assertion to check</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+        <span class="c1"># no action happens on invalid file, so no assertion to check</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_tar_invalid_cart"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_tar_invalid_cart">[docs]</a>    <span class="k">def</span> <span class="nf">test_tar_invalid_cart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test pulling a file id that doesnt exist&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test pulling a file id that doesnt exist.&quot;&quot;&quot;</span>
         <span class="n">cart_utils</span> <span class="o">=</span> <span class="n">Cartutils</span><span class="p">()</span>
         <span class="n">cart_utils</span><span class="o">.</span><span class="n">tar_files</span><span class="p">(</span><span class="s1">&#39;8765&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="c1">#no action happens on invalid cart to tar, so no assertion to check</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+        <span class="c1"># no action happens on invalid cart to tar, so no assertion to check</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_cart_deleted_date"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_cart_deleted_date">[docs]</a>    <span class="k">def</span> <span class="nf">test_cart_deleted_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test getting bundle ready with a file in staging state&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test getting bundle ready with a file in staging state.&quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cart_json_helper</span><span class="p">())</span>
         <span class="n">file_ids</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;fileids&#39;</span><span class="p">]</span>
         <span class="n">Cart</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
@@ -380,61 +386,60 @@
         <span class="n">mycart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">mycart</span><span class="o">.</span><span class="n">status</span>
         <span class="k">for</span> <span class="n">cart_file</span> <span class="ow">in</span> <span class="n">File</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">File</span><span class="o">.</span><span class="n">cart</span> <span class="o">==</span> <span class="n">mycart</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
-            <span class="n">pull_file</span><span class="p">(</span><span class="n">cart_file</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;/tmp/some/Path&#39;</span><span class="p">,</span> <span class="s1">&#39;1111&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">)</span></div>
+            <span class="n">pull_file</span><span class="p">(</span><span class="n">cart_file</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;tmp&#39;</span><span class="p">,</span> <span class="s1">&#39;some&#39;</span><span class="p">,</span> <span class="s1">&#39;Path&#39;</span><span class="p">)),</span> <span class="s1">&#39;1111&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_status_cart_notfound"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_status_cart_notfound">[docs]</a>    <span class="k">def</span> <span class="nf">test_status_cart_notfound</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the status of a cart with cart not found&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test the status of a cart with cart not found.&quot;&quot;&quot;</span>
         <span class="n">cart_id</span> <span class="o">=</span> <span class="s1">&#39;97&#39;</span>
-        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">backoff_factor</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
-
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/&#39;</span> <span class="o">+</span> <span class="n">cart_id</span><span class="p">)</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cart_id</span><span class="p">))</span>
         <span class="n">resp_status</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;X-Pacifica-Status&#39;</span><span class="p">]</span>
         <span class="n">resp_message</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;X-Pacifica-Message&#39;</span><span class="p">]</span>
         <span class="n">resp_code</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_message</span><span class="p">,</span> <span class="s1">&#39;No cart with uid 97 found&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_message</span><span class="p">,</span> <span class="s1">&#39;No cart with uid 97 found&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_code</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_status_cart_error"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_status_cart_error">[docs]</a>    <span class="k">def</span> <span class="nf">test_status_cart_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the status of a cart with error&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test the status of a cart with error.&quot;&quot;&quot;</span>
         <span class="n">cart_id</span> <span class="o">=</span> <span class="s1">&#39;98&#39;</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cart.json&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">cartfile</span><span class="p">:</span>
-            <span class="n">cartfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;{&quot;fileids&quot;: [{&quot;id&quot;:&quot;mytest.txt&quot;, &quot;path&quot;:&quot;1/2/3/mytest.txt&quot;,&#39;</span> <span class="o">+</span>
-                           <span class="s1">&#39;&quot;hashtype&quot;:&quot;md5&quot;, &quot;hashsum&quot;:&quot;&quot;}]}&#39;</span><span class="p">)</span>
+        <span class="n">bad_cart_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;fileids&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;mytest.txt&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;1/2/3/mytest.txt&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;hashtype&#39;</span><span class="p">:</span> <span class="s1">&#39;md5&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;hashsum&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
 
-        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">backoff_factor</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
-
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/&#39;</span> <span class="o">+</span> <span class="n">cart_id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cart.json&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;/tmp/cart.json&#39;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s1">&#39;/tmp/cart.json&#39;</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Cart Processing has begun&#39;</span><span class="p">)</span>
-
-        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">backoff_factor</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s1">&#39;http://127.0.0.1:8081/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cart_id</span><span class="p">),</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">bad_cart_data</span><span class="p">),</span>
+            <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Cart Processing has begun&#39;</span><span class="p">)</span>
 
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">resp</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/&#39;</span> <span class="o">+</span> <span class="n">cart_id</span><span class="p">)</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">head</span><span class="p">(</span>
+                <span class="s1">&#39;http://127.0.0.1:8081/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cart_id</span><span class="p">))</span>
             <span class="n">resp_status</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;X-Pacifica-Status&#39;</span><span class="p">]</span>
             <span class="n">resp_code</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">resp_code</span> <span class="o">==</span> <span class="mi">204</span> <span class="ow">and</span> <span class="n">resp_status</span> <span class="o">!=</span> <span class="s1">&#39;staging&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">resp_code</span> <span class="o">==</span> <span class="mi">500</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_code</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_code</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_stage_files"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_stage_files">[docs]</a>    <span class="k">def</span> <span class="nf">test_stage_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test getting bundle files ready&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test getting bundle files ready.&quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">cart_json_helper</span><span class="p">())</span>
         <span class="n">file_ids</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;fileids&#39;</span><span class="p">]</span>
         <span class="n">Cart</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
@@ -449,40 +454,54 @@
         <span class="k">while</span> <span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;staging&#39;</span><span class="p">:</span>
             <span class="n">mycart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">cartid</span><span class="p">)</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">mycart</span><span class="o">.</span><span class="n">status</span>
-        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;ready&#39;</span><span class="p">)</span></div>
+        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s1">&#39;ready&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartEndToEnd.test_post_cart_bad_hash"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.cart_end_to_end_tests.TestCartEndToEnd.test_post_cart_bad_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_post_cart_bad_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cart_id</span><span class="o">=</span><span class="s1">&#39;1136&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test the creation of a cart with bad hash&quot;&quot;&quot;</span>
-        <span class="n">cartfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cart.json&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span>
-        <span class="n">cartfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;{&quot;fileids&quot;: [{&quot;id&quot;:&quot;foo.txt&quot;, &quot;path&quot;:&quot;1/2/3/foo.txt&quot;, &quot;hashtype&quot;:&quot;md5&quot;,&#39;</span> <span class="o">+</span>
-                       <span class="s1">&#39; &quot;hashsum&quot;:&quot;ac59bb32&quot;},&#39;</span> <span class="o">+</span>
-                       <span class="s1">&#39;{&quot;id&quot;:&quot;bar.csv&quot;, &quot;path&quot;:&quot;1/2/3/bar.csv&quot;, &quot;hashtype&quot;:&quot;md5&quot;,&#39;</span> <span class="o">+</span>
-                       <span class="s1">&#39; &quot;hashsum&quot;:&quot;ef39aa7f8df8bdc8b8d4d81f4e0ef566&quot;},&#39;</span> <span class="o">+</span>
-                       <span class="s1">&#39;{&quot;id&quot;:&quot;baz.ini&quot;, &quot;path&quot;:&quot;2/3/4/baz.ini&quot;, &quot;hashtype&quot;:&quot;md5&quot;,&#39;</span> <span class="o">+</span>
-                       <span class="s1">&#39; &quot;hashsum&quot;:&quot;b0c21625a5ef364864191e5907d7afb4&quot;}]}&#39;</span><span class="p">)</span>
-        <span class="n">cartfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-        <span class="n">retries</span> <span class="o">=</span> <span class="n">Retry</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">backoff_factor</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-        <span class="n">session</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;http://&#39;</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="n">retries</span><span class="p">))</span>
-
-        <span class="n">resp</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/&#39;</span> <span class="o">+</span> <span class="n">cart_id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/tmp/cart.json&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;/tmp/cart.json&#39;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Cart Processing has begun&#39;</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;Test the creation of a cart with bad hash.&quot;&quot;&quot;</span>
+        <span class="n">bad_cart_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;fileids&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;foo.txt&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;1/2/3/foo.txt&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;hashtype&#39;</span><span class="p">:</span> <span class="s1">&#39;md5&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;hashsum&#39;</span><span class="p">:</span> <span class="s1">&#39;ac59bb32&#39;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;bar.csv&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;1/2/3/bar.csv&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;hashtype&#39;</span><span class="p">:</span> <span class="s1">&#39;md5&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;hashsum&#39;</span><span class="p">:</span> <span class="s1">&#39;ef39aa7f8df8bdc8b8d4d81f4e0ef566&#39;</span>
+                <span class="p">},</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;baz.ini&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;2/3/4/baz.ini&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;hashtype&#39;</span><span class="p">:</span> <span class="s1">&#39;md5&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;hashsum&#39;</span><span class="p">:</span> <span class="s1">&#39;b0c21625a5ef364864191e5907d7afb4&#39;</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+            <span class="s1">&#39;http://127.0.0.1:8081/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cart_id</span><span class="p">),</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">bad_cart_data</span><span class="p">),</span>
+            <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="s1">&#39;Cart Processing has begun&#39;</span><span class="p">)</span>
 
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">resp</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8081/&#39;</span> <span class="o">+</span> <span class="n">cart_id</span><span class="p">)</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">head</span><span class="p">(</span>
+                <span class="s1">&#39;http://127.0.0.1:8081/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cart_id</span><span class="p">))</span>
             <span class="n">resp_status</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;X-Pacifica-Status&#39;</span><span class="p">]</span>
             <span class="n">resp_code</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span>
-            <span class="k">if</span> <span class="n">resp_code</span> <span class="o">==</span> <span class="mi">204</span> <span class="ow">and</span> <span class="n">resp_status</span> <span class="o">!=</span> <span class="s1">&#39;staging&#39;</span><span class="p">:</span> <span class="c1"># pragma: no cover</span>
+            <span class="k">if</span> <span class="n">resp_code</span> <span class="o">==</span> <span class="mi">204</span> <span class="ow">and</span> <span class="n">resp_status</span> <span class="o">!=</span> <span class="s1">&#39;staging&#39;</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
                 <span class="k">break</span>
             <span class="k">if</span> <span class="n">resp_code</span> <span class="o">==</span> <span class="mi">500</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span></div></div>
+</div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">resp_status</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span>
 </pre></div>
 
            </div>

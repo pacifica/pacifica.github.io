@@ -157,9 +157,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for cart.cart_utils</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Module that has the utility functionality for</span>
-<span class="sd">the cart</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Module that has the utility functionality for the cart.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -172,12 +172,11 @@
 <span class="kn">from</span> <span class="nn">cart.cart_env_globals</span> <span class="k">import</span> <span class="n">VOLUME_PATH</span><span class="p">,</span> <span class="n">LRU_BUFFER_TIME</span>
 
 
-
 <div class="viewcode-block" id="Cartutils"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils">[docs]</a><span class="k">class</span> <span class="nc">Cartutils</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class used to provide utility functions for the</span>
-<span class="sd">    cart to use.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Class used to provide utility functions for the cart to use.&quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Default constructor setting environment variable defaults.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_vol_path</span> <span class="o">=</span> <span class="n">VOLUME_PATH</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lru_buff</span> <span class="o">=</span> <span class="n">LRU_BUFFER_TIME</span>
 
@@ -188,28 +187,25 @@
     <span class="c1">###########################################################################</span>
 <div class="viewcode-block" id="Cartutils.fix_absolute_path"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.fix_absolute_path">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">fix_absolute_path</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Removes / from front of path&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Remove / from front of path.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isabs</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-            <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-        <span class="k">return</span> <span class="n">filepath</span></div>
-
+            <span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span></div>
+        <span class="k">return</span> <span class="n">filepath</span>
 
 <div class="viewcode-block" id="Cartutils.create_bundle_directories"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.create_bundle_directories">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">create_bundle_directories</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Creates all the directories in the given path</span>
-<span class="sd">        if they do not already exist.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Create all the directories in the given path if they do not already exist.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="mo">0o777</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
-            <span class="c1">#dont worry about error if the directory already exists</span>
-            <span class="c1">#other errors are a problem however so push them up</span>
-            <span class="k">if</span> <span class="n">exception</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">exception</span></div>
+            <span class="c1"># dont worry about error if the directory already exists</span>
+            <span class="c1"># other errors are a problem however so push them up</span>
+            <span class="k">if</span> <span class="n">exception</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span></div>
+                <span class="k">raise</span> <span class="n">exception</span>
 
 <div class="viewcode-block" id="Cartutils.create_download_path"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.create_download_path">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_download_path</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">,</span> <span class="n">abs_cart_file_path</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Create the directories that the file will be pulled to&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Create the directories that the file will be pulled to.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">cart_file_dirs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">abs_cart_file_path</span><span class="p">)</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">create_bundle_directories</span><span class="p">(</span><span class="n">cart_file_dirs</span><span class="p">)</span>
@@ -220,9 +216,8 @@
             <span class="n">mycart</span><span class="o">.</span><span class="n">updated_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
             <span class="n">mycart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="k">return</span> <span class="kc">True</span></div>
-
+</div>
+        <span class="k">return</span> <span class="kc">True</span>
 
     <span class="c1">###########################################################################</span>
     <span class="c1">#</span>
@@ -233,8 +228,7 @@
 
 <div class="viewcode-block" id="Cartutils.check_file_size_needed"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.check_file_size_needed">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">check_file_size_needed</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Checks response (should be from Archive Interface head request)</span>
-<span class="sd">         for file size &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Check response (should be from Archive Interface head request) for file size.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">decoded</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
             <span class="n">filesize</span> <span class="o">=</span> <span class="n">decoded</span><span class="p">[</span><span class="s1">&#39;filesize&#39;</span><span class="p">]</span>
@@ -246,19 +240,19 @@
 <span class="s2">            Archive is: &quot;&quot;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
             <span class="n">cart_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
             <span class="n">mycart</span><span class="o">.</span><span class="n">updated_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-            <span class="n">mycart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+            <span class="n">mycart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 
+<div class="viewcode-block" id="Cartutils.check_space_requirements"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.check_space_requirements">[docs]</a>    <span class="k">def</span> <span class="nf">check_space_requirements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">,</span> <span class="n">size_needed</span><span class="p">,</span> <span class="n">deleted_flag</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check to make sure there is enough space available on disk for the file to be downloaded.</span>
 
-<div class="viewcode-block" id="Cartutils.check_space_requirements"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.check_space_requirements">[docs]</a>    <span class="k">def</span> <span class="nf">check_space_requirements</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">,</span> <span class="n">size_needed</span><span class="p">,</span> <span class="n">deleted_flag</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Checks to make sure there is enough space available on disk</span>
-<span class="sd">        for the file to be downloaded</span>
 <span class="sd">        Note it will recursively call itself if there isnt enough</span>
 <span class="sd">        space. It will delete a cart first, then call  itself</span>
-<span class="sd">        until either there is enough space or there is no carts to delete&quot;&quot;&quot;</span>
+<span class="sd">        until either there is enough space or there is no carts to delete</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="c1">#available space is in bytes</span>
+            <span class="c1"># available space is in bytes</span>
             <span class="n">available_space</span> <span class="o">=</span> <span class="n">long</span><span class="p">(</span><span class="n">psutil</span><span class="o">.</span><span class="n">disk_usage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vol_path</span><span class="p">)</span><span class="o">.</span><span class="n">free</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">psutil</span><span class="o">.</span><span class="n">Error</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="n">cart_file</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
@@ -281,33 +275,35 @@
             <span class="n">mycart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="c1">#there is enough space so return true</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="c1"># there is enough space so return true</span></div>
+        <span class="k">return</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="Cartutils.get_path_size"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.get_path_size">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_path_size</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns the size of a specific directory, including</span>
-<span class="sd">        all subdirectories and files</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Return the size of a specific directory, including all subdirectories and files.&quot;&quot;&quot;</span>
         <span class="n">total_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
             <span class="n">itempath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">itempath</span><span class="p">):</span>
                 <span class="n">total_size</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">itempath</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">itempath</span><span class="p">):</span>
-                <span class="n">total_size</span> <span class="o">+=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_path_size</span><span class="p">(</span><span class="n">itempath</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">total_size</span></div>
-
+                <span class="n">total_size</span> <span class="o">+=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_path_size</span><span class="p">(</span><span class="n">itempath</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">total_size</span>
 
     <span class="c1">###########################################################################</span>
     <span class="c1">#</span>
     <span class="c1"># Helper methods that parse the Archive Interface Responses</span>
     <span class="c1">#</span>
     <span class="c1">###########################################################################</span>
+
 <div class="viewcode-block" id="Cartutils.check_file_ready_pull"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.check_file_ready_pull">[docs]</a>    <span class="k">def</span> <span class="nf">check_file_ready_pull</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Checks response (should be from Archive Interface head request)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check file ready state.</span>
+
+<span class="sd">        Check response (should be from Archive Interface head request)</span>
 <span class="sd">        for bytes per level then returns True or False based on if the file</span>
-<span class="sd">        is at level 1 (downloadable)&quot;&quot;&quot;</span>
+<span class="sd">        is at level 1 (downloadable)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">size_needed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_file_size_needed</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">)</span>
         <span class="n">mod_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_file_modified_time</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
@@ -323,30 +319,39 @@
 <span class="s2">            Archive is: &quot;&quot;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
             <span class="n">cart_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
             <span class="n">mycart</span><span class="o">.</span><span class="n">updated_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-            <span class="n">mycart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+            <span class="n">mycart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 
 <div class="viewcode-block" id="Cartutils.check_status_details"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.check_status_details">[docs]</a>    <span class="k">def</span> <span class="nf">check_status_details</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mycart</span><span class="p">,</span> <span class="n">cart_file</span><span class="p">,</span> <span class="n">size_needed</span><span class="p">,</span> <span class="n">mod_time</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Checks to see if data from the status response is all correct and</span>
-<span class="sd">        ready to for the file to be pulled&quot;&quot;&quot;</span>
-        <span class="c1">#Return from function if the values couldnt be parsed (-1 return)</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check to see if status response is correct.</span>
+
+<span class="sd">        Data from the status response is all correct and</span>
+<span class="sd">        ready to for the file to be pulled.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Return from function if the values couldnt be parsed (-1 return)</span>
         <span class="k">if</span> <span class="n">size_needed</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">mod_time</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="c1">#set up saving path and return dictionary</span>
+        <span class="c1"># set up saving path and return dictionary</span>
         <span class="n">abs_cart_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="n">VOLUME_PATH</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">mycart</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="n">mycart</span><span class="o">.</span><span class="n">cart_uid</span><span class="p">,</span> <span class="n">cart_file</span><span class="o">.</span><span class="n">bundle_path</span><span class="p">)</span>
-        <span class="n">path_created</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_download_path</span><span class="p">(</span><span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">,</span> <span class="n">abs_cart_file_path</span><span class="p">)</span>
-        <span class="c1">#Check size here and make sure enough space is available.</span>
-        <span class="n">enough_space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_space_requirements</span><span class="p">(</span><span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">,</span> <span class="n">size_needed</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">path_created</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_download_path</span><span class="p">(</span>
+            <span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">,</span> <span class="n">abs_cart_file_path</span><span class="p">)</span>
+        <span class="c1"># Check size here and make sure enough space is available.</span>
+        <span class="n">enough_space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_space_requirements</span><span class="p">(</span>
+            <span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">,</span> <span class="n">size_needed</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">path_created</span> <span class="ow">and</span> <span class="n">enough_space</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;modtime&#39;</span><span class="p">:</span> <span class="n">mod_time</span><span class="p">,</span> <span class="s1">&#39;filepath&#39;</span><span class="p">:</span> <span class="n">abs_cart_file_path</span><span class="p">,</span>
-                    <span class="s1">&#39;path_created&#39;</span><span class="p">:</span> <span class="n">path_created</span><span class="p">,</span> <span class="s1">&#39;enough_space&#39;</span><span class="p">:</span> <span class="n">enough_space</span><span class="p">}</span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+                    <span class="s1">&#39;path_created&#39;</span><span class="p">:</span> <span class="n">path_created</span><span class="p">,</span> <span class="s1">&#39;enough_space&#39;</span><span class="p">:</span> <span class="n">enough_space</span><span class="p">}</span></div>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 
 <div class="viewcode-block" id="Cartutils.check_file_modified_time"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.check_file_modified_time">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">check_file_modified_time</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">cart_file</span><span class="p">,</span> <span class="n">mycart</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Checks response (should be from Archive Interface head request)</span>
-<span class="sd">         for file modified time &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check response for file modified time.</span>
+
+<span class="sd">        Should be from Archive Interface head request</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">decoded</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
             <span class="n">mod_time</span> <span class="o">=</span> <span class="n">decoded</span><span class="p">[</span><span class="s1">&#39;mtime&#39;</span><span class="p">]</span>
@@ -358,30 +363,31 @@
 <span class="s2">            Archive is: &quot;&quot;&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
             <span class="n">cart_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
             <span class="n">mycart</span><span class="o">.</span><span class="n">updated_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-            <span class="n">mycart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
-
-
+            <span class="n">mycart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="c1">###########################################################################</span>
     <span class="c1">#</span>
     <span class="c1"># Helper methods used to delete carts</span>
     <span class="c1">#</span>
     <span class="c1">###########################################################################</span>
+
 <div class="viewcode-block" id="Cartutils.remove_cart"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.remove_cart">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">remove_cart</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">uid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Call when a DELETE request comes in. Verifies there is a cart</span>
-<span class="sd">        to delete then removes it</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call when a DELETE request comes in.</span>
+
+<span class="sd">        Verifies there is a cart to delete then removes it.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">deleted_flag</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">iterator</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">#used to verify at least one cart deleted</span>
+        <span class="n">iterator</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># used to verify at least one cart deleted</span>
         <span class="n">Cart</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
         <span class="n">carts</span> <span class="o">=</span> <span class="p">(</span><span class="n">Cart</span>
                  <span class="o">.</span><span class="n">select</span><span class="p">()</span>
                  <span class="o">.</span><span class="n">where</span><span class="p">(</span>
                      <span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">cart_uid</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">uid</span><span class="p">))</span> <span class="o">&amp;</span>
                      <span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">deleted_date</span><span class="o">.</span><span class="n">is_null</span><span class="p">(</span><span class="kc">True</span><span class="p">))))</span>
-        <span class="k">for</span> <span class="n">cart</span> <span class="ow">in</span>  <span class="n">carts</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">cart</span> <span class="ow">in</span> <span class="n">carts</span><span class="p">:</span>
             <span class="n">iterator</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">success</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">delete_cart_bundle</span><span class="p">(</span><span class="n">cart</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
@@ -390,13 +396,16 @@
         <span class="k">if</span> <span class="n">deleted_flag</span> <span class="ow">and</span> <span class="n">iterator</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="s1">&#39;Cart Deleted Successfully&#39;</span>
         <span class="k">elif</span> <span class="n">deleted_flag</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span> <span class="c1">#already deleted</span>
-        <span class="k">return</span> <span class="kc">None</span> <span class="c1">#unknown error</span></div>
+            <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># already deleted</span></div>
+        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># unknown error</span>
 
 <div class="viewcode-block" id="Cartutils.delete_cart_bundle"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.delete_cart_bundle">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">delete_cart_bundle</span><span class="p">(</span><span class="n">cart</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; Gets the path to where a carts file are and</span>
-<span class="sd">        attempts to delete the file tree&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the path to where a carts file are.</span>
+
+<span class="sd">        Also attempt to delete the file tree.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">path_to_files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">VOLUME_PATH</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">cart</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">path_to_files</span><span class="p">)</span>
@@ -404,13 +413,15 @@
             <span class="n">cart</span><span class="o">.</span><span class="n">deleted_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
             <span class="n">cart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span></div>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span></div>
+            <span class="k">return</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="Cartutils.lru_cart_delete"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.lru_cart_delete">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">lru_cart_delete</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">mycart</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Delete the least recently used cart that isnt this one.</span>
-<span class="sd">        Only delete one cart per call</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete the least recently used cart that isnt this one.</span>
+
+<span class="sd">        Only delete one cart per call.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">lru_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span>
@@ -425,19 +436,18 @@
                         <span class="o">.</span><span class="n">get</span><span class="p">())</span>
             <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">delete_cart_bundle</span><span class="p">(</span><span class="n">del_cart</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">:</span>
-            <span class="c1">#case if no cart exists that can be deleted</span>
-            <span class="k">return</span> <span class="kc">False</span></div>
-
-
+            <span class="c1"># case if no cart exists that can be deleted</span></div>
+            <span class="k">return</span> <span class="kc">False</span>
 
     <span class="c1">###########################################################################</span>
     <span class="c1">#</span>
     <span class="c1"># Cart Interface helpers for returning status/download paths</span>
     <span class="c1">#</span>
     <span class="c1">###########################################################################</span>
+
 <div class="viewcode-block" id="Cartutils.cart_status"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.cart_status">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">cart_status</span><span class="p">(</span><span class="n">uid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get the status of a specified cart&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Get the status of a specified cart.&quot;&quot;&quot;</span>
         <span class="n">Cart</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
         <span class="n">status</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">try</span><span class="p">:</span>
@@ -449,21 +459,24 @@
                       <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">creation_date</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span>
                       <span class="o">.</span><span class="n">get</span><span class="p">())</span>
         <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">:</span>
-            <span class="c1">#case if no record exists yet in database</span>
+            <span class="c1"># case if no record exists yet in database</span>
             <span class="n">mycart</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">status</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;No cart with uid &#39;</span> <span class="o">+</span> <span class="n">uid</span> <span class="o">+</span> <span class="s1">&#39; found&#39;</span><span class="p">]</span>
 
         <span class="k">if</span> <span class="n">mycart</span><span class="p">:</span>
-            <span class="c1">#send the status and any available error text</span>
+            <span class="c1"># send the status and any available error text</span>
             <span class="n">status</span> <span class="o">=</span> <span class="p">[</span><span class="n">mycart</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">mycart</span><span class="o">.</span><span class="n">error</span><span class="p">]</span>
 
-        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">status</span></div>
+        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">status</span>
 
 <div class="viewcode-block" id="Cartutils.available_cart"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.available_cart">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">available_cart</span><span class="p">(</span><span class="n">uid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Checks if the asked for cart tar is available</span>
-<span class="sd">           returns the path to tar if yes, false if not. None if no cart&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the asked for cart tar is available.</span>
+
+<span class="sd">        Returns the path to tar if yes, false if not. None if no cart.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">Cart</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
         <span class="n">cart_bundle_path</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">try</span><span class="p">:</span>
@@ -475,35 +488,34 @@
                       <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">creation_date</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span>
                       <span class="o">.</span><span class="n">get</span><span class="p">())</span>
         <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">:</span>
-            <span class="c1">#case if no record exists yet in database</span>
+            <span class="c1"># case if no record exists yet in database</span>
             <span class="n">mycart</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">cart_bundle_path</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="n">mycart</span> <span class="ow">and</span> <span class="n">mycart</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;ready&#39;</span><span class="p">:</span>
             <span class="n">cart_bundle_path</span> <span class="o">=</span> <span class="n">mycart</span><span class="o">.</span><span class="n">bundle_path</span>
-        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">cart_bundle_path</span></div>
-
+        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">cart_bundle_path</span>
 
     <span class="c1">###########################################################################</span>
     <span class="c1">#</span>
     <span class="c1"># Helpers that update a carts files and a cart/file error</span>
     <span class="c1">#</span>
     <span class="c1">###########################################################################</span>
+
 <div class="viewcode-block" id="Cartutils.set_file_status"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.set_file_status">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">set_file_status</span><span class="p">(</span><span class="n">cart_file</span><span class="p">,</span> <span class="n">cart</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Sets the status and/or error for a cart&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Set the status and/or error for a cart.&quot;&quot;&quot;</span>
         <span class="n">cart_file</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">error</span><span class="p">:</span>
             <span class="n">cart_file</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="n">cart_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-        <span class="n">cart</span><span class="o">.</span><span class="n">updated_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-        <span class="n">cart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
-
+        <span class="n">cart</span><span class="o">.</span><span class="n">updated_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span></div>
+        <span class="n">cart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Cartutils.update_cart_files"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.update_cart_files">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">update_cart_files</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cart</span><span class="p">,</span> <span class="n">file_ids</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Update the files associated to a cart&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Update the files associated to a cart.&quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">Cart</span><span class="o">.</span><span class="n">atomic</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">f_id</span> <span class="ow">in</span> <span class="n">file_ids</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
@@ -515,48 +527,52 @@
                     <span class="n">cart</span><span class="o">.</span><span class="n">updated_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
                     <span class="n">cart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
                 <span class="k">except</span> <span class="p">(</span><span class="ne">NameError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">ex</span> <span class="c1">#return error so that the cart can be updated</span>
-            <span class="k">return</span> <span class="kc">None</span></div>
-
+                    <span class="k">return</span> <span class="n">ex</span>  <span class="c1"># return error so that the cart can be updated</span></div>
+            <span class="k">return</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Cartutils.prepare_bundle"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.prepare_bundle">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">prepare_bundle</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cartid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Checks to see if all the files are staged locally</span>
-<span class="sd">        before calling the bundling action.  If not will call</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check to see if all the files are staged locally.</span>
+
+<span class="sd">        Before calling the bundling action.  If not will call</span>
 <span class="sd">        itself to continue the waiting process</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">Cart</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
         <span class="n">bundle_flag</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="n">c_file</span> <span class="ow">in</span> <span class="n">File</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">File</span><span class="o">.</span><span class="n">cart</span> <span class="o">==</span> <span class="n">cartid</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">c_file</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;error&#39;</span><span class="p">:</span>
-                <span class="c1">#error pulling file so set cart error and return</span>
+                <span class="c1"># error pulling file so set cart error and return</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">mycart</span> <span class="o">=</span> <span class="n">Cart</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">cartid</span><span class="p">)</span>
                     <span class="n">mycart</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
-                    <span class="n">mycart</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="s1">&#39;Failed to pull file(s)&#39;</span>
+                    <span class="n">mycart</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="s1">&#39;Failed to pull file(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">c_file</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
                     <span class="n">mycart</span><span class="o">.</span><span class="n">updated_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
                     <span class="n">mycart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
                     <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
                     <span class="k">return</span>
-                <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">:</span> <span class="c1"># pragma: no cover</span>
-                    <span class="c1">#case if record no longer exists</span>
-                    <span class="c1">#creating this case in unit testing requires deletion and creation</span>
-                    <span class="c1">#occuring nearly simultaneously, as such cant create unit test</span>
+                <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+                    <span class="c1"># case if record no longer exists</span>
+                    <span class="c1"># creating this case in unit testing requires deletion and creation</span>
+                    <span class="c1"># occuring nearly simultaneously, as such cant create unit test</span>
                     <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
                     <span class="k">return</span>
 
             <span class="k">elif</span> <span class="n">c_file</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s1">&#39;staged&#39;</span><span class="p">:</span>
                 <span class="n">bundle_flag</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="bp">cls</span><span class="o">.</span><span class="n">tar_files</span><span class="p">(</span><span class="n">cartid</span><span class="p">,</span> <span class="n">bundle_flag</span><span class="p">)</span>
-        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span></div>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">tar_files</span><span class="p">(</span><span class="n">cartid</span><span class="p">,</span> <span class="n">bundle_flag</span><span class="p">)</span></div>
+        <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Cartutils.tar_files"><a class="viewcode-back" href="../../cartd.cart.html#cart.cart_utils.Cartutils.tar_files">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">tar_files</span><span class="p">(</span><span class="n">cartid</span><span class="p">,</span> <span class="n">bundle_flag</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Start to bundle all the files together</span>
-<span class="sd">        Due to streaming the tar we dont need to try and bundle</span>
-<span class="sd">        everything together&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Start to bundle all the files together.</span>
 
+<span class="sd">        Due to streaming the tar we dont need to try and bundle</span>
+<span class="sd">        everything together</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">bundle_flag</span><span class="p">:</span>
             <span class="n">Cart</span><span class="o">.</span><span class="n">database_connect</span><span class="p">()</span>
             <span class="k">try</span><span class="p">:</span>
@@ -568,11 +584,11 @@
                 <span class="n">mycart</span><span class="o">.</span><span class="n">updated_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
                 <span class="n">mycart</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
             <span class="k">except</span> <span class="n">DoesNotExist</span><span class="p">:</span>
-                <span class="c1">#case if record no longer exists</span>
+                <span class="c1"># case if record no longer exists</span>
                 <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
                 <span class="k">return</span>
-
-            <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span></div></div>
+</div></div>
+            <span class="n">Cart</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
 </pre></div>
 
            </div>

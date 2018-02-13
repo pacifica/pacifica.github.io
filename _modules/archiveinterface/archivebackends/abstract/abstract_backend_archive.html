@@ -36,7 +36,7 @@
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
+        <link rel="up" title="archiveinterface" href="../../../archiveinterface.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -139,6 +139,8 @@
         
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../../../archiveinterface.html">archiveinterface</a> &raquo;</li>
+        
       <li>archiveinterface.archivebackends.abstract.abstract_backend_archive</li>
     
     
@@ -158,6 +160,7 @@
             
   <h1>Source code for archiveinterface.archivebackends.abstract.abstract_backend_archive</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Abstract Backend Module.</span>
 
 <span class="sd">Module that has the Abstract class for Archive Backends</span>
@@ -186,8 +189,8 @@
 <span class="sd">        this class Should return a file like object, most likely self.</span>
 <span class="sd">        This method is also responsible for making sure the dirname of</span>
 <span class="sd">        the filepath exists before trying to open.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">pass</span>
 
 <div class="viewcode-block" id="AbstractBackendArchive.close"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.close">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -195,8 +198,8 @@
 
 <span class="sd">        Method that closes an open file for the backend archive that</span>
 <span class="sd">        implements this class.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">pass</span>
 
 <div class="viewcode-block" id="AbstractBackendArchive.read"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.read">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">):</span>
@@ -204,8 +207,8 @@
 
 <span class="sd">        Method that reads an open file for the backend archive that</span>
 <span class="sd">        implements this class and returns the contents.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">pass</span>
 
 <div class="viewcode-block" id="AbstractBackendArchive.write"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.write">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">):</span>
@@ -213,8 +216,8 @@
 
 <span class="sd">        Method that writes an open file for the backend archive that</span>
 <span class="sd">        implements this class.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">pass</span>
 
 <div class="viewcode-block" id="AbstractBackendArchive.stage"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.stage">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">stage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -223,8 +226,8 @@
 <span class="sd">        Method that stages a file for the the backend that implements</span>
 <span class="sd">        this class Stage moves a file to an appropriate location to be</span>
 <span class="sd">        downloaded.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">pass</span>
 
 <div class="viewcode-block" id="AbstractBackendArchive.status"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.status">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -233,8 +236,8 @@
 <span class="sd">        Method that gets the status of a file in the archive</span>
 <span class="sd">        Needs to return an implemented object of the abstract_status_class</span>
 <span class="sd">        The abstract_status_class should be implemented for each backend type.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">pass</span>
 
 <div class="viewcode-block" id="AbstractBackendArchive.set_mod_time"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.set_mod_time">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">set_mod_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mod_time</span><span class="p">):</span>
@@ -242,8 +245,8 @@
 
 <span class="sd">        Method that sets a files mod time for the backend archive that</span>
 <span class="sd">        implements this class.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">pass</span>
 
 <div class="viewcode-block" id="AbstractBackendArchive.set_file_permissions"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.set_file_permissions">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">set_file_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -251,8 +254,13 @@
 
 <span class="sd">        Method that sets a files permissions for the backend archive that</span>
 <span class="sd">        implements this class.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="AbstractBackendArchive.patch"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.abstract.html#archiveinterface.archivebackends.abstract.abstract_backend_archive.AbstractBackendArchive.patch">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">old_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Move a file.&quot;&quot;&quot;</span></div></div>
+        <span class="k">pass</span>
 </pre></div>
 
            </div>

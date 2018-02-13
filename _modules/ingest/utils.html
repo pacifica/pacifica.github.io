@@ -158,62 +158,25 @@
             
   <h1>Source code for ingest.utils</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Testable utilities for ingest.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">urlparse</span> <span class="k">import</span> <span class="n">parse_qs</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="c1"># pylint: disable=bare-except</span>
-<span class="c1"># pylint: disable=broad-except</span>
 
-
-<div class="viewcode-block" id="get_job_id"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.utils.get_job_id">[docs]</a><span class="k">def</span> <span class="nf">get_job_id</span><span class="p">(</span><span class="n">environ</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Parse the parameters for a request from the environ dictionary.&quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="n">parse_qs</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;QUERY_STRING&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
-            <span class="n">job_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;job_id&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
-            <span class="k">return</span> <span class="n">job_id</span>
-        <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="valid_request"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.utils.valid_request">[docs]</a><span class="k">def</span> <span class="nf">valid_request</span><span class="p">(</span><span class="n">environ</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Catch and handle bogus requests (ex. faveicon).&quot;&quot;&quot;</span>
-    <span class="n">info</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PATH_INFO&#39;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">info</span> <span class="o">==</span> <span class="s1">&#39;/get_state&#39;</span></div>
-
-
-<div class="viewcode-block" id="create_invalid_return"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.utils.create_invalid_return">[docs]</a><span class="k">def</span> <span class="nf">create_invalid_return</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Create an error message.&quot;&quot;&quot;</span>
-    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;404 NOT FOUND&#39;</span>
-    <span class="n">response_body</span> <span class="o">=</span> <span class="s1">&#39;Invalid&#39;</span>
-    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">response_body</span><span class="p">)))</span>
-    <span class="p">]</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">,</span> <span class="n">response_body</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="create_return_params"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.utils.create_return_params">[docs]</a><span class="k">def</span> <span class="nf">create_return_params</span><span class="p">(</span><span class="n">response_body</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create return parameters.&quot;&quot;&quot;</span>
-    <span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;200 OK&#39;</span>
-    <span class="n">response_headers</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s1">&#39;Content-Length&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">response_body</span><span class="p">)))</span>
-    <span class="p">]</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">response_headers</span><span class="p">,</span> <span class="n">response_body</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="create_state_return"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.utils.create_state_return">[docs]</a><span class="k">def</span> <span class="nf">create_state_return</span><span class="p">(</span><span class="n">record</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create the dictionary containing the start and stop index packs the message components.&quot;&quot;&quot;</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;job_id&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">job_id</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">task</span><span class="p">,</span>
-             <span class="s1">&#39;task_percent&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">task_percent</span><span class="p">)}</span>
-    <span class="n">response_body</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">create_return_params</span><span class="p">(</span><span class="n">response_body</span><span class="p">)</span></div>
+<div class="viewcode-block" id="create_state_response"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.utils.create_state_response">[docs]</a><span class="k">def</span> <span class="nf">create_state_response</span><span class="p">(</span><span class="n">record</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create the state response body from a record.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;job_id&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">job_id</span><span class="p">,</span>
+        <span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+        <span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="n">record</span><span class="o">.</span><span class="n">task</span><span class="p">,</span>
+        <span class="s1">&#39;task_percent&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">task_percent</span><span class="p">),</span>
+        <span class="s1">&#39;updated&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">updated</span><span class="p">),</span>
+        <span class="s1">&#39;created&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">created</span><span class="p">),</span>
+        <span class="s1">&#39;exception&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">exception</span><span class="p">)</span></div>
+    <span class="p">}</span>
 
 
 <div class="viewcode-block" id="get_unique_id"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.utils.get_unique_id">[docs]</a><span class="k">def</span> <span class="nf">get_unique_id</span><span class="p">(</span><span class="n">id_range</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
@@ -221,36 +184,15 @@
     <span class="n">uniqueid_server</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;UNIQUEID_SERVER&#39;</span><span class="p">,</span> <span class="s1">&#39;127.0.0.1&#39;</span><span class="p">)</span>
     <span class="n">uniqueid_port</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;UNIQUEID_PORT&#39;</span><span class="p">,</span> <span class="s1">&#39;8051&#39;</span><span class="p">)</span>
 
-    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://</span><span class="si">{0}</span><span class="s1">:</span><span class="si">{1}</span><span class="s1">/getid?range=</span><span class="si">{2}</span><span class="s1">&amp;mode=</span><span class="si">{3}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uniqueid_server</span><span class="p">,</span> <span class="n">uniqueid_port</span><span class="p">,</span> <span class="n">id_range</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://</span><span class="si">{0}</span><span class="s1">:</span><span class="si">{1}</span><span class="s1">/getid?range=</span><span class="si">{2}</span><span class="s1">&amp;mode=</span><span class="si">{3}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">uniqueid_server</span><span class="p">,</span> <span class="n">uniqueid_port</span><span class="p">,</span> <span class="n">id_range</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
 
     <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="n">body</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">text</span>
     <span class="n">info</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
     <span class="n">unique_id</span> <span class="o">=</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;startIndex&#39;</span><span class="p">]</span>
-
-    <span class="k">return</span> <span class="n">unique_id</span></div>
-
-
-<div class="viewcode-block" id="receive"><a class="viewcode-back" href="../../ingest.ingest.html#ingest.utils.receive">[docs]</a><span class="k">def</span> <span class="nf">receive</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">job_id</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Receive the tar file and save it locally.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;REQUEST_METHOD&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;POST&#39;</span><span class="p">:</span>
-        <span class="n">root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;VOLUME_PATH&#39;</span><span class="p">,</span> <span class="s1">&#39;/tmp&#39;</span><span class="p">)</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">job_id</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.tar&#39;</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="n">file_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span>
-        <span class="n">block_size</span> <span class="o">=</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span>
-        <span class="n">content_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CONTENT_LENGTH&#39;</span><span class="p">])</span>
-        <span class="k">while</span> <span class="n">content_length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="c1"># this needs a file larger than 1M to be part of the tar...</span>
-            <span class="k">if</span> <span class="n">content_length</span> <span class="o">&gt;</span> <span class="n">block_size</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
-                <span class="n">buf</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.input&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">block_size</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">buf</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;wsgi.input&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">content_length</span><span class="p">)</span>
-
-            <span class="n">file_out</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
-            <span class="n">content_length</span> <span class="o">-=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
-        <span class="n">file_out</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">name</span></div>
+</div>
+    <span class="k">return</span> <span class="n">unique_id</span>
 </pre></div>
 
            </div>

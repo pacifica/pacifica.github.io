@@ -179,6 +179,7 @@
     <span class="s1">&#39;hashsum&#39;</span><span class="p">:</span> <span class="s1">&#39;d8ff327b2f643130b431ae7c1f1b1e191bc419af&#39;</span><span class="p">,</span>
     <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
     <span class="s1">&#39;transaction_id&#39;</span><span class="p">:</span> <span class="n">SAMPLE_TRANSACTION_HASH</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;suspense_date&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
     <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;UTF8&#39;</span>
 <span class="p">}</span>
 
@@ -193,6 +194,7 @@
     <span class="s1">&#39;hashsum&#39;</span><span class="p">:</span> <span class="s1">&#39;d8ff327b2f643130b431ae7c1f1b1e191bc419af&#39;</span><span class="p">,</span>
     <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">1234</span><span class="p">,</span>
     <span class="s1">&#39;transaction_id&#39;</span><span class="p">:</span> <span class="n">SAMPLE_TRANSACTION_HASH</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;suspense_date&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
     <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;UTF8&#39;</span>
 <span class="p">}</span>
 
@@ -203,30 +205,25 @@
     <span class="n">obj_cls</span> <span class="o">=</span> <span class="n">Files</span>
     <span class="n">obj_id</span> <span class="o">=</span> <span class="n">Files</span><span class="o">.</span><span class="n">id</span>
 
-<div class="viewcode-block" id="TestFiles.dependent_cls"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_files.TestFiles.dependent_cls">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">dependent_cls</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return dependent classes for the Files object.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">TestTransactions</span><span class="o">.</span><span class="n">dependent_cls</span><span class="p">()</span> <span class="o">+</span> <span class="p">[</span><span class="n">Files</span><span class="p">]</span></div>
-
 <div class="viewcode-block" id="TestFiles.base_create_dep_objs"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_files.TestFiles.base_create_dep_objs">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">base_create_dep_objs</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create all objects that Files depend on.&quot;&quot;&quot;</span>
         <span class="n">trans</span> <span class="o">=</span> <span class="n">Transactions</span><span class="p">()</span>
         <span class="n">TestTransactions</span><span class="o">.</span><span class="n">base_create_dep_objs</span><span class="p">()</span>
-        <span class="n">trans</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">SAMPLE_TRANSACTION_HASH</span><span class="p">)</span>
-        <span class="n">trans</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="n">trans</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">SAMPLE_TRANSACTION_HASH</span><span class="p">)</span></div>
+        <span class="n">trans</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">force_insert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestFiles.test_unicode_files_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_files.TestFiles.test_unicode_files_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_files_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the unicode hash using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_FILE_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the unicode hash using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_FILE_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestFiles.test_files_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_files.TestFiles.test_files_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_files_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_FILE_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_FILE_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestFiles.test_files_json"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_files.TestFiles.test_files_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_files_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_FILE_HASH</span><span class="p">))</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_FILE_HASH</span><span class="p">))</span>
 
 <div class="viewcode-block" id="TestFiles.test_files_search_expr"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_files.TestFiles.test_files_search_expr">[docs]</a>    <span class="k">def</span> <span class="nf">test_files_search_expr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
@@ -235,20 +232,20 @@
             <span class="n">name_operator</span><span class="o">=</span><span class="s1">&#39;ILIKE&#39;</span><span class="p">,</span>
             <span class="n">name</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;%é%&#39;</span>
         <span class="p">)</span>
-        <span class="n">date_time_chk</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">-</span><span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">date_time_chk</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause_search_expr</span><span class="p">(</span>
             <span class="n">SAMPLE_FILE_HASH</span><span class="p">,</span>
             <span class="n">mtime_operator</span><span class="o">=</span><span class="s1">&#39;GT&#39;</span><span class="p">,</span>
-            <span class="n">mtime</span><span class="o">=</span><span class="n">date_time_chk</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
-        <span class="p">)</span></div>
+            <span class="n">mtime</span><span class="o">=</span><span class="n">date_time_chk</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">microsecond</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span></div>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="TestFiles.test_files_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_files.TestFiles.test_files_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_files_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_FILE_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_FILE_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestFiles.test_unicode_files_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_files.TestFiles.test_unicode_files_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_files_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_FILE_HASH</span><span class="p">)</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_FILE_HASH</span><span class="p">)</span>
 </pre></div>
 
            </div>

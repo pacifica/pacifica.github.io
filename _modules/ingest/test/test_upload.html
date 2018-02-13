@@ -158,97 +158,47 @@
             
   <h1>Source code for ingest.test.test_upload</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
-<span class="sd">&quot;&quot;&quot;Test ingest.&quot;&quot;&quot;</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Test ingest with good uploads of good and bad data.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
-<span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">call</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
-<span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">loads</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">ingest.test</span> <span class="k">import</span> <span class="n">try_good_upload</span>
 
 
-<div class="viewcode-block" id="check_upload_state"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.check_upload_state">[docs]</a><span class="k">def</span> <span class="nf">check_upload_state</span><span class="p">(</span><span class="n">job_id</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get the upload state and return results.&quot;&quot;&quot;</span>
-    <span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-    <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8066/get_state?job_id=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">job_id</span><span class="p">))</span>
-    <span class="k">assert</span> <span class="n">req</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
-    <span class="n">job_state</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">job_state</span></div>
-
-
-<div class="viewcode-block" id="try_assert_job_state"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.try_assert_job_state">[docs]</a><span class="k">def</span> <span class="nf">try_assert_job_state</span><span class="p">(</span><span class="n">job_state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">percent</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;assert on the job state bits.&quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="n">job_state</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">state</span>
-    <span class="k">assert</span> <span class="n">job_state</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">task</span>
-    <span class="k">assert</span> <span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">job_state</span><span class="p">[</span><span class="s1">&#39;task_percent&#39;</span><span class="p">]))</span> <span class="o">==</span> <span class="n">percent</span></div>
-
-
-<div class="viewcode-block" id="test_bad_upload"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.test_bad_upload">[docs]</a><span class="k">def</span> <span class="nf">test_bad_upload</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test the upload.&quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;test_data/bad-proposal.tar&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">filefd</span><span class="p">:</span>
-        <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-            <span class="s1">&#39;http://127.0.0.1:8066/upload&#39;</span><span class="p">,</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">filefd</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
-                <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/octet-stream&#39;</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-        <span class="k">assert</span> <span class="n">req</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
-        <span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">job_state</span> <span class="o">=</span> <span class="n">check_upload_state</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s1">&#39;job_id&#39;</span><span class="p">])</span>
-        <span class="n">try_assert_job_state</span><span class="p">(</span><span class="n">job_state</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;Policy Validation&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="try_good_upload"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.try_good_upload">[docs]</a><span class="k">def</span> <span class="nf">try_good_upload</span><span class="p">(</span><span class="n">tarfile</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">percent</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Test the upload and see if the state task and percent match.&quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;test_data/</span><span class="si">{}</span><span class="s1">.tar&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tarfile</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">filefd</span><span class="p">:</span>
-        <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
-            <span class="s1">&#39;http://127.0.0.1:8066/upload&#39;</span><span class="p">,</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">filefd</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
-                <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/octet-stream&#39;</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-        <span class="k">assert</span> <span class="n">req</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
-        <span class="n">job_state</span> <span class="o">=</span> <span class="n">check_upload_state</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s1">&#39;job_id&#39;</span><span class="p">])</span>
-        <span class="n">try_assert_job_state</span><span class="p">(</span><span class="n">job_state</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">percent</span><span class="p">)</span></div>
+<div class="viewcode-block" id="test_bad_job_id"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.test_bad_job_id">[docs]</a><span class="k">def</span> <span class="nf">test_bad_job_id</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test a bad job ID.&quot;&quot;&quot;</span>
+    <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;http://127.0.0.1:8066/get_state?job_id=12345&#39;</span><span class="p">)</span></div>
+    <span class="k">assert</span> <span class="n">req</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span>
 
 
 <div class="viewcode-block" id="test_good_upload"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.test_good_upload">[docs]</a><span class="k">def</span> <span class="nf">test_good_upload</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test the good upload.&quot;&quot;&quot;</span>
-    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;good&#39;</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest metadata&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Test the good upload.&quot;&quot;&quot;</span></div>
+    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;good&#39;</span><span class="p">,</span> <span class="s1">&#39;OK&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest metadata&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
 
-<span class="c1"># this is a long name but descriptive.</span>
-<span class="c1"># pylint: disable=invalid-name</span>
-<div class="viewcode-block" id="test_bad_archiveinterface_upload"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.test_bad_archiveinterface_upload">[docs]</a><span class="k">def</span> <span class="nf">test_bad_archiveinterface_upload</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test if the archive interface is down.&quot;&quot;&quot;</span>
-    <span class="n">call</span><span class="p">([</span><span class="s1">&#39;docker-compose&#39;</span><span class="p">,</span> <span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;archiveinterface&#39;</span><span class="p">])</span>
-    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;good&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest files&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">call</span><span class="p">([</span><span class="s1">&#39;docker-compose&#39;</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;archiveinterface&#39;</span><span class="p">])</span></div>
-<span class="c1"># pylint: enable=invalid-name</span>
-
-
-<div class="viewcode-block" id="test_bad_policy_upload"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.test_bad_policy_upload">[docs]</a><span class="k">def</span> <span class="nf">test_bad_policy_upload</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test if the archive interface is down.&quot;&quot;&quot;</span>
-    <span class="n">call</span><span class="p">([</span><span class="s1">&#39;docker-compose&#39;</span><span class="p">,</span> <span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;policyserver&#39;</span><span class="p">])</span>
-    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;good&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;Policy Validation&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">call</span><span class="p">([</span><span class="s1">&#39;docker-compose&#39;</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;policyserver&#39;</span><span class="p">])</span>
-    <span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
+<div class="viewcode-block" id="test_bad_proposal_upload"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.test_bad_proposal_upload">[docs]</a><span class="k">def</span> <span class="nf">test_bad_proposal_upload</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test if the metadata is down.&quot;&quot;&quot;</span></div>
+    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;bad-proposal&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;Policy Validation&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="test_bad_hashsum_upload"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.test_bad_hashsum_upload">[docs]</a><span class="k">def</span> <span class="nf">test_bad_hashsum_upload</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test if the metadata is down.&quot;&quot;&quot;</span>
-    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;bad-hashsum&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest files&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Test if the metadata is down.&quot;&quot;&quot;</span></div>
+    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;bad-hashsum&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest files&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="test_bad_metadata_upload"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.test_bad_metadata_upload">[docs]</a><span class="k">def</span> <span class="nf">test_bad_metadata_upload</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test if the metadata is down.&quot;&quot;&quot;</span>
-    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;bad-mimetype&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest metadata&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Test if the metadata is down.&quot;&quot;&quot;</span></div>
+    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;bad-mimetype&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest metadata&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="test_bad_json_upload"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.test_bad_json_upload">[docs]</a><span class="k">def</span> <span class="nf">test_bad_json_upload</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test if the metadata is down.&quot;&quot;&quot;</span></div>
+    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;bad-json&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;load metadata&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="test_bad_tarfile_upload"><a class="viewcode-back" href="../../../ingest.ingest.test.html#ingest.test.test_upload.test_bad_tarfile_upload">[docs]</a><span class="k">def</span> <span class="nf">test_bad_tarfile_upload</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Test if the metadata is down.&quot;&quot;&quot;</span>
-    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;bad-tarfile&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;Bad tarfile&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Test if the metadata is down.&quot;&quot;&quot;</span></div>
+    <span class="n">try_good_upload</span><span class="p">(</span><span class="s1">&#39;bad-tarfile&#39;</span><span class="p">,</span> <span class="s1">&#39;FAILED&#39;</span><span class="p">,</span> <span class="s1">&#39;open tar&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 
            </div>

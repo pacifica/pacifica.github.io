@@ -174,15 +174,17 @@
     <span class="k">def</span> <span class="nf">test_failed_admin_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;override this to test valid query.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TestIngest</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">test_failed_admin_id</span><span class="p">()</span>
-        <span class="n">valid_query</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_files&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest_base_query.json&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="n">valid_query</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span>
+            <span class="nb">open</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;test_files&#39;</span><span class="p">,</span> <span class="s1">&#39;ingest_base_query.json&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
         <span class="n">ipolicy</span> <span class="o">=</span> <span class="n">IngestPolicy</span><span class="p">()</span>
         <span class="c1"># pylint: disable=no-member</span>
         <span class="c1"># pylint: disable=protected-access</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">ipolicy</span><span class="o">.</span><span class="n">_valid_query</span><span class="p">(</span><span class="n">valid_query</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
         <span class="n">valid_query</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">ipolicy</span><span class="o">.</span><span class="n">_valid_query</span><span class="p">(</span><span class="n">valid_query</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span></div></div>
+        <span class="n">valid_query</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;1234b</span><span class="se">\u00e9</span><span class="s1">&#39;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ipolicy</span><span class="o">.</span><span class="n">_valid_query</span><span class="p">(</span><span class="n">valid_query</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
         <span class="c1"># pylint: enable=protected-access</span>
         <span class="c1"># pylint: enable=no-member</span>
 </pre></div>

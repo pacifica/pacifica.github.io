@@ -36,7 +36,7 @@
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
+        <link rel="up" title="archiveinterface" href="../../../archiveinterface.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -139,6 +139,8 @@
         
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../../../archiveinterface.html">archiveinterface</a> &raquo;</li>
+        
       <li>archiveinterface.archivebackends.posix.extendedfile</li>
     
     
@@ -158,6 +160,7 @@
             
   <h1>Source code for archiveinterface.archivebackends.posix.extendedfile</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Extended File Object Module.</span>
 
 <span class="sd">Module that Extends the functionality of the base file object</span>
@@ -189,12 +192,12 @@
         <span class="n">filesize</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">)</span>
         <span class="n">status</span> <span class="o">=</span> <span class="n">PosixStatus</span><span class="p">(</span><span class="n">mtime</span><span class="p">,</span> <span class="n">ctime</span><span class="p">,</span> <span class="n">bytes_per_level</span><span class="p">,</span> <span class="n">filesize</span><span class="p">)</span>
         <span class="n">status</span><span class="o">.</span><span class="n">set_filepath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">status</span></div>
+</div>
+        <span class="k">return</span> <span class="n">status</span>
 
 <div class="viewcode-block" id="ExtendedFile.stage"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.posix.html#archiveinterface.archivebackends.posix.extendedfile.ExtendedFile.stage">[docs]</a>    <span class="k">def</span> <span class="nf">stage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Stage a file. Since POSIX, essentially a no op.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_staged</span> <span class="o">=</span> <span class="kc">True</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Stage a file. Since POSIX, essentially a no op.&quot;&quot;&quot;</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_staged</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 
            </div>

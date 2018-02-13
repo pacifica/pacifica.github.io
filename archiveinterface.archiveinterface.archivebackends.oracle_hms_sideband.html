@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
         <link rel="up" title="Archivebackends Module" href="archiveinterface.archiveinterface.archivebackends.html"/>
-        <link rel="next" title="Ingest Project" href="ingest.html"/>
+        <link rel="next" title="Archivebackends Module" href="archiveinterface.archiveinterface.tests.html"/>
         <link rel="prev" title="Archivebackends Posix Module" href="archiveinterface.archiveinterface.archivebackends.posix.html"/> 
 
   
@@ -99,6 +99,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="archiveinterface.html">Archiveinterface Project</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="archiveinterface.archiveinterface.html">Archiveinterface Module</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="archiveinterface.archiveinterface.archivebackends.html">Archivebackends Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="archiveinterface.archiveinterface.tests.html">Archivebackends Module</a></li>
 </ul>
 </li>
 </ul>
@@ -189,7 +190,7 @@
 <dd><p>Extending default file stuct to support additional methods.</p>
 <dl class="staticmethod">
 <dt id="archiveinterface.archivebackends.oracle_hms_sideband.extended_hms_sideband.ExtendedHmsSideband._make_status_dictionary">
-<em class="property">static </em><code class="descname">_make_status_dictionary</code><span class="sig-paren">(</span><em>result</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/oracle_hms_sideband/extended_hms_sideband.html#ExtendedHmsSideband._make_status_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.extended_hms_sideband.ExtendedHmsSideband._make_status_dictionary" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">_make_status_dictionary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/oracle_hms_sideband/extended_hms_sideband.html#ExtendedHmsSideband._make_status_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.extended_hms_sideband.ExtendedHmsSideband._make_status_dictionary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Break the query results into a dictionary.</p>
 </dd></dl>
 
@@ -232,6 +233,12 @@ archive interface backend.</p>
 <dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.open">
 <code class="descname">open</code><span class="sig-paren">(</span><em>filepath</em>, <em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/oracle_hms_sideband/hms_sideband_backend_archive.html#HmsSidebandBackendArchive.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open a hms sideband file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>file_id</em>, <em>old_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/oracle_hms_sideband/hms_sideband_backend_archive.html#HmsSidebandBackendArchive.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move a hms file.</p>
 </dd></dl>
 
 <dl class="method">
@@ -284,6 +291,12 @@ archive interface backend.</p>
 <em class="property">class </em><code class="descclassname">archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.</code><code class="descname">BaseModel</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/oracle_hms_sideband/hms_sideband_orm.html#BaseModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.BaseModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class models inherit from.</p>
 <p>Has Connection pieces.</p>
+<dl class="attribute">
+<dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.BaseModel.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.BaseModel.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModelDoesNotExist</span></code></p>
+</dd></dl>
+
 <dl class="classmethod">
 <dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.BaseModel.database_close">
 <em class="property">classmethod </em><code class="descname">database_close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/oracle_hms_sideband/hms_sideband_orm.html#BaseModel.database_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.BaseModel.database_close" title="Permalink to this definition">¶</a></dt>
@@ -309,30 +322,60 @@ archive interface backend.</p>
 <dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamArchive">
 <em class="property">class </em><code class="descclassname">archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.</code><code class="descname">SamArchive</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/oracle_hms_sideband/hms_sideband_orm.html#SamArchive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamArchive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Model for sam_archive table in the sideband database.</p>
+<dl class="attribute">
+<dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamArchive.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamArchive.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">SamArchiveDoesNotExist</span></code></p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamFile">
 <em class="property">class </em><code class="descclassname">archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.</code><code class="descname">SamFile</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/oracle_hms_sideband/hms_sideband_orm.html#SamFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Model for sam_file table in the sideband database.</p>
+<dl class="attribute">
+<dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamFile.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamFile.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">SamFileDoesNotExist</span></code></p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamInode">
 <em class="property">class </em><code class="descclassname">archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.</code><code class="descname">SamInode</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/oracle_hms_sideband/hms_sideband_orm.html#SamInode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamInode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Model for sam_inode table in the sideband database.</p>
+<dl class="attribute">
+<dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamInode.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamInode.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">SamInodeDoesNotExist</span></code></p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamPath">
 <em class="property">class </em><code class="descclassname">archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.</code><code class="descname">SamPath</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/oracle_hms_sideband/hms_sideband_orm.html#SamPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamPath" title="Permalink to this definition">¶</a></dt>
 <dd><p>Model for sam_path table in the sideband database.</p>
+<dl class="attribute">
+<dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamPath.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamPath.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">SamPathDoesNotExist</span></code></p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamVersion">
 <em class="property">class </em><code class="descclassname">archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.</code><code class="descname">SamVersion</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/archiveinterface/archivebackends/oracle_hms_sideband/hms_sideband_orm.html#SamVersion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamVersion" title="Permalink to this definition">¶</a></dt>
 <dd><p>Model for sam_version table in the sideband database.</p>
+<dl class="attribute">
+<dt id="archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamVersion.DoesNotExist">
+<code class="descname">DoesNotExist</code><a class="headerlink" href="#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_orm.SamVersion.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">SamVersionDoesNotExist</span></code></p>
+</dd></dl>
+
 </dd></dl>
 
 <span class="target" id="module-archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_status"></span><p>Module that implements the Abstract Status class.</p>
@@ -375,7 +418,7 @@ archive interface backend.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ingest.html" class="btn btn-neutral float-right" title="Ingest Project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="archiveinterface.archiveinterface.tests.html" class="btn btn-neutral float-right" title="Archivebackends Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="archiveinterface.archiveinterface.archivebackends.posix.html" class="btn btn-neutral" title="Archivebackends Posix Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

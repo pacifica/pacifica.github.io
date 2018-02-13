@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.rest.test.test_transactioninfo</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Test the ORM interface TransactionInfo.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">loads</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
@@ -193,12 +194,14 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
         <span class="n">req_json</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">req_json</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">req_json</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># test search with single return with details</span>
         <span class="n">search_terms</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;proposal&#39;</span><span class="p">:</span> <span class="s1">&#39;1234a&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="n">end_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;item_count&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="s1">&#39;page&#39;</span><span class="p">:</span> <span class="mi">1</span>
         <span class="p">}</span>
         <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="n">url</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/transactioninfo/search/details&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">),</span>
@@ -206,7 +209,8 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
         <span class="n">req_json</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req_json</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="n">transaction_id</span><span class="p">)][</span><span class="s1">&#39;status&#39;</span><span class="p">][</span><span class="s1">&#39;trans_id&#39;</span><span class="p">],</span> <span class="n">transaction_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req_json</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span>
+            <span class="n">transaction_id</span><span class="p">)][</span><span class="s1">&#39;status&#39;</span><span class="p">][</span><span class="s1">&#39;trans_id&#39;</span><span class="p">],</span> <span class="n">transaction_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">req_json</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># test date search with multiple return with details</span>
@@ -222,7 +226,8 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
         <span class="n">req_json</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req_json</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="n">transaction_id</span><span class="p">)][</span><span class="s1">&#39;status&#39;</span><span class="p">][</span><span class="s1">&#39;trans_id&#39;</span><span class="p">],</span> <span class="n">transaction_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req_json</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span>
+            <span class="n">transaction_id</span><span class="p">)][</span><span class="s1">&#39;status&#39;</span><span class="p">][</span><span class="s1">&#39;trans_id&#39;</span><span class="p">],</span> <span class="n">transaction_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">req_json</span><span class="p">[</span><span class="s1">&#39;transactions&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># test search with single return with simple</span>
@@ -264,7 +269,11 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
         <span class="n">req_json</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req_json</span><span class="p">[</span><span class="s1">&#39;latest_transaction_id&#39;</span><span class="p">],</span> <span class="mi">68</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req_json</span><span class="p">[</span><span class="s1">&#39;latest_transaction_id&#39;</span><span class="p">],</span> <span class="mi">69</span><span class="p">)</span>
+
+        <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">url</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/transactioninfo/multisearch?instrument_group_id=</span><span class="si">{1}</span><span class="s1">&amp;proposal_id=1234a&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="mi">1001</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestTransactionInfoAPI.test_bad_transactioninfo_api"><a class="viewcode-back" href="../../../../metadata.metadata.rest.test.html#metadata.rest.test.test_transactioninfo.TestTransactionInfoAPI.test_bad_transactioninfo_api">[docs]</a>    <span class="k">def</span> <span class="nf">test_bad_transactioninfo_api</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the GET method with bad data.&quot;&quot;&quot;</span>
@@ -292,8 +301,8 @@
         <span class="c1"># test with no search terms</span>
         <span class="n">req</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
             <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/transactioninfo/search/details&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;Invalid Request Options&#39;</span> <span class="ow">in</span> <span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;Invalid Request Options&#39;</span> <span class="ow">in</span> <span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 </pre></div>
 
            </div>

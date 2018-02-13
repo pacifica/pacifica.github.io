@@ -157,10 +157,13 @@
            <div itemprop="articleBody">
             
   <h1>Source code for policy.status.transaction.files</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status Policy object class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status Policy object class.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span>
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">policy</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span><span class="p">,</span> <span class="n">validate_transaction</span>
+<span class="kn">from</span> <span class="nn">policy.validation</span> <span class="k">import</span> <span class="n">validate_transaction</span>
+<span class="kn">from</span> <span class="nn">policy.globals</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span>
 
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
@@ -172,8 +175,9 @@
 <div class="viewcode-block" id="FileLookup._get_file_list"><a class="viewcode-back" href="../../../../policy.policy.status.transaction.html#policy.status.transaction.files.FileLookup._get_file_list">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_get_file_list</span><span class="p">(</span><span class="n">transaction_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return files for the specified transaction entry.&quot;&quot;&quot;</span>
-        <span class="n">filelist_url</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/transactioninfo/files/</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">METADATA_ENDPOINT</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">filelist_url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
+        <span class="n">filelist_url</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/transactioninfo/files/</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">METADATA_ENDPOINT</span><span class="p">,</span> <span class="n">transaction_id</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">filelist_url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
     <span class="c1"># CherryPy requires these named methods</span>
     <span class="c1"># Add HEAD (basically Get without returning body</span>
@@ -182,8 +186,8 @@
     <span class="nd">@tools</span><span class="o">.</span><span class="n">json_out</span><span class="p">()</span>
     <span class="nd">@validate_transaction</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="n">transaction_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;CherryPy GET method.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">FileLookup</span><span class="o">.</span><span class="n">_get_file_list</span><span class="p">(</span><span class="n">transaction_id</span><span class="p">)</span></div></div>
+        <span class="sd">&quot;&quot;&quot;CherryPy GET method.&quot;&quot;&quot;</span></div></div>
+        <span class="k">return</span> <span class="n">FileLookup</span><span class="o">.</span><span class="n">_get_file_list</span><span class="p">(</span><span class="n">transaction_id</span><span class="p">)</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 </pre></div>
 

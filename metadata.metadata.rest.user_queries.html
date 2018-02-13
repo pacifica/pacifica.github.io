@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="index.html"/>
         <link rel="up" title="Rest Module" href="metadata.metadata.rest.html"/>
-        <link rel="next" title="Cartd Project" href="cartd.html"/>
+        <link rel="next" title="Metadata Test Module" href="metadata.metadata.test.html"/>
         <link rel="prev" title="Transaction Rest Module" href="metadata.metadata.rest.transaction_queries.html"/> 
 
   
@@ -99,6 +99,7 @@
 <li class="toctree-l4"><a class="reference internal" href="metadata.metadata.elastic.html">Elastic Module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="metadata.metadata.orm.html">Orm Module</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="metadata.metadata.rest.html">Rest Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="metadata.metadata.test.html">Metadata Test Module</a></li>
 </ul>
 </li>
 </ul>
@@ -197,7 +198,7 @@
 
 <dl class="staticmethod">
 <dt id="metadata.rest.user_queries.query_base.QueryBase.format_user_block">
-<em class="property">static </em><code class="descname">format_user_block</code><span class="sig-paren">(</span><em>user_entry</em>, <em>option=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/user_queries/query_base.html#QueryBase.format_user_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.user_queries.query_base.QueryBase.format_user_block" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">format_user_block</code><span class="sig-paren">(</span><em>option=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/user_queries/query_base.html#QueryBase.format_user_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.user_queries.query_base.QueryBase.format_user_block" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct a dictionary from a given user instance in the metadata stack.</p>
 </dd></dl>
 
@@ -210,13 +211,13 @@
 <dd><p>Retrieves detailed info for a given user.</p>
 <dl class="staticmethod">
 <dt id="metadata.rest.user_queries.user_lookup.UserLookup.GET">
-<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.user_queries.user_lookup.UserLookup.GET" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.user_queries.user_lookup.UserLookup.GET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to connect and close connection to database.</p>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="metadata.rest.user_queries.user_lookup.UserLookup.get_user_info_block">
-<em class="property">static </em><code class="descname">get_user_info_block</code><span class="sig-paren">(</span><em>person_id</em>, <em>option=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/user_queries/user_lookup.html#UserLookup.get_user_info_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.user_queries.user_lookup.UserLookup.get_user_info_block" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">get_user_info_block</code><span class="sig-paren">(</span><em>option=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/user_queries/user_lookup.html#UserLookup.get_user_info_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.user_queries.user_lookup.UserLookup.get_user_info_block" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a formatted dictionary containing the details of a given user entry.</p>
 </dd></dl>
 
@@ -229,13 +230,13 @@
 <dd><p>Retrieves detailed info for a given user.</p>
 <dl class="staticmethod">
 <dt id="metadata.rest.user_queries.user_search.UserSearch.GET">
-<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.user_queries.user_search.UserSearch.GET" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">GET</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#metadata.rest.user_queries.user_search.UserSearch.GET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper to connect and close connection to database.</p>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="metadata.rest.user_queries.user_search.UserSearch.search_for_user">
-<em class="property">static </em><code class="descname">search_for_user</code><span class="sig-paren">(</span><em>search_term</em>, <em>option</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/user_queries/user_search.html#UserSearch.search_for_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.user_queries.user_search.UserSearch.search_for_user" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">search_for_user</code><span class="sig-paren">(</span><em>option</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metadata/rest/user_queries/user_search.html#UserSearch.search_for_user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#metadata.rest.user_queries.user_search.UserSearch.search_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a dictionary containing information about a given user.</p>
 </dd></dl>
 
@@ -253,7 +254,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="cartd.html" class="btn btn-neutral float-right" title="Cartd Project" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="metadata.metadata.test.html" class="btn btn-neutral float-right" title="Metadata Test Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="metadata.metadata.rest.transaction_queries.html" class="btn btn-neutral" title="Transaction Rest Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

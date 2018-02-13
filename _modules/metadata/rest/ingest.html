@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.rest.ingest</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Core interface for the ingest of metadata objects.</span>
 
@@ -220,9 +221,9 @@
         <span class="p">]</span>
         <span class="n">validated</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="n">valid_prefixes</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">==</span> <span class="n">mimetype</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="n">validated</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="n">validated</span></div>
+            <span class="k">if</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">==</span> <span class="n">mimetype</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">validated</span> <span class="o">=</span> <span class="kc">True</span></div>
+        <span class="k">return</span> <span class="n">validated</span>
 
 <div class="viewcode-block" id="IngestAPI.validate_hash_data"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.ingest.IngestAPI.validate_hash_data">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">validate_hash_data</span><span class="p">(</span><span class="n">hashtype</span><span class="p">,</span> <span class="n">hashsum</span><span class="p">):</span>
@@ -236,8 +237,8 @@
         <span class="n">hashd</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">hashlib</span><span class="p">,</span> <span class="n">hashtype</span><span class="p">)()</span>
         <span class="n">hashd</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s1">&#39;blah&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hashsum</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hashd</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+            <span class="k">return</span> <span class="kc">False</span></div>
+        <span class="k">return</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="IngestAPI.validate_file_meta"><a class="viewcode-back" href="../../../metadata.metadata.rest.html#metadata.rest.ingest.IngestAPI.validate_file_meta">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">validate_file_meta</span><span class="p">(</span><span class="n">file_meta</span><span class="p">):</span>
@@ -245,8 +246,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">IngestAPI</span><span class="o">.</span><span class="n">validate_mime_type</span><span class="p">(</span><span class="n">file_meta</span><span class="p">[</span><span class="s1">&#39;mimetype&#39;</span><span class="p">]):</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">IngestAPI</span><span class="o">.</span><span class="n">validate_hash_data</span><span class="p">(</span><span class="n">file_meta</span><span class="p">[</span><span class="s1">&#39;hashtype&#39;</span><span class="p">],</span> <span class="n">file_meta</span><span class="p">[</span><span class="s1">&#39;hashsum&#39;</span><span class="p">]):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+            <span class="k">return</span> <span class="kc">False</span></div>
+        <span class="k">return</span> <span class="kc">True</span>
 
     <span class="c1"># CherryPy requires these named methods.</span>
     <span class="c1"># pylint: disable=invalid-name</span>
@@ -284,7 +285,8 @@
                     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
                         <span class="n">ret</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">part</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">IngestAPI</span><span class="o">.</span><span class="n">validate_file_meta</span><span class="p">(</span><span class="n">ret</span><span class="p">):</span>
-                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid metadata for file </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]))</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="s1">&#39;Invalid metadata for file </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]))</span>
                     <span class="k">yield</span> <span class="n">ret</span>
 
         <span class="k">def</span> <span class="nf">generate_tkvs</span><span class="p">(</span><span class="n">json</span><span class="p">):</span>
@@ -355,8 +357,8 @@
         <span class="n">TransactionKeyValue</span><span class="p">()</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">generate_tkvs</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">)))</span>
         <span class="n">Files</span><span class="p">()</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">extract_files</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">)))</span>
         <span class="n">FileKeyValue</span><span class="p">()</span><span class="o">.</span><span class="n">_insert</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">generate_fkvs</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">)))</span>
-        <span class="c1"># pylint: enable=protected-access</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;success&#39;</span><span class="p">}</span></div>
+        <span class="c1"># pylint: enable=protected-access</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;success&#39;</span><span class="p">}</span>
 </pre></div>
 
            </div>

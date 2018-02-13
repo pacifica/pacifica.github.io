@@ -157,7 +157,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for metadata.rest.fileinfo_queries.files_with_tkv</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy File Details object class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy File Details object class.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">DoesNotExist</span><span class="p">,</span> <span class="n">fn</span>
 <span class="kn">from</span> <span class="nn">metadata.orm</span> <span class="k">import</span> <span class="n">Files</span><span class="p">,</span> <span class="n">TransactionKeyValue</span><span class="p">,</span> <span class="n">Keys</span><span class="p">,</span> <span class="n">Values</span>
@@ -180,7 +182,10 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">k</span> <span class="o">=</span> <span class="n">Keys</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">Lower</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
             <span class="n">val</span> <span class="o">=</span> <span class="n">Values</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">Values</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Values</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-            <span class="n">tkv_where_clause</span> <span class="o">=</span> <span class="n">TransactionKeyValue</span><span class="p">()</span><span class="o">.</span><span class="n">where_clause</span><span class="p">({</span><span class="s1">&#39;key_id&#39;</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s1">&#39;value_id&#39;</span><span class="p">:</span> <span class="n">val</span><span class="p">})</span>
+            <span class="c1"># pylint: disable=protected-access</span>
+            <span class="n">tkv_where_clause</span> <span class="o">=</span> <span class="n">TransactionKeyValue</span><span class="p">()</span><span class="o">.</span><span class="n">where_clause</span><span class="p">(</span>
+                <span class="p">{</span><span class="s1">&#39;key_id&#39;</span><span class="p">:</span> <span class="n">k</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="s1">&#39;value_id&#39;</span><span class="p">:</span> <span class="n">val</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]})</span>
+            <span class="c1"># pylint: enable=protected-access</span>
             <span class="n">tkv_list</span> <span class="o">=</span> <span class="n">TransactionKeyValue</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">tkv_where_clause</span><span class="p">)</span>
             <span class="n">transaction_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">transaction_id</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tkv_list</span><span class="p">]</span>
             <span class="n">files_query</span> <span class="o">=</span> <span class="n">Files</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Files</span><span class="o">.</span><span class="n">transaction</span> <span class="o">&lt;&lt;</span> <span class="n">transaction_list</span><span class="p">)</span>
@@ -198,8 +203,8 @@
     <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return file details for the given key/value combo.&quot;&quot;&quot;</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">FilesWithTransactionKeyValue</span><span class="o">.</span><span class="n">_get_files_for_kv_pair</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">unquote</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">FilesWithTransactionKeyValue</span><span class="o">.</span><span class="n">_get_files_for_kv_pair</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </pre></div>
 
            </div>

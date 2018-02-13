@@ -157,27 +157,27 @@
            <div itemprop="articleBody">
             
   <h1>Source code for cart.test.test_env_globals</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">File used to unit test the pacifica_cart</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;File used to unit test the pacifica_cart.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
+
 <div class="viewcode-block" id="TestEnvGlobals"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_env_globals.TestEnvGlobals">[docs]</a><span class="k">class</span> <span class="nc">TestEnvGlobals</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Contains the tests for the global config module</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Contain the tests for the global config module.&quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="TestEnvGlobals.test_set_logging"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_env_globals.TestEnvGlobals.test_set_logging">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_logging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test that logging gets set for debugging&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Test that logging gets set for debugging.&quot;&quot;&quot;</span>
         <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DATABASE_LOGGING&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;True&#39;</span>
         <span class="kn">import</span> <span class="nn">importlib</span>
         <span class="c1"># first delete the module from the loaded modules</span>
         <span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s1">&#39;cart.cart_env_globals&#39;</span><span class="p">]</span>
         <span class="c1"># then we import the module</span>
         <span class="n">mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;cart.cart_env_globals&#39;</span><span class="p">)</span>
-        <span class="c1"># make sure the LOGGER attribute in the module exists</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">&#39;LOGGER&#39;</span><span class="p">))</span></div></div>
+        <span class="c1"># make sure the LOGGER attribute in the module exists</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">&#39;LOGGER&#39;</span><span class="p">))</span>
 </pre></div>
 
            </div>

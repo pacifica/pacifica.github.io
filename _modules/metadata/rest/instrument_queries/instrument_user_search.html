@@ -157,8 +157,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for metadata.rest.instrument_queries.instrument_user_search</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status Metadata object class.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">cherrypy</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status Metadata object class.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span>
 <span class="kn">from</span> <span class="nn">metadata.orm</span> <span class="k">import</span> <span class="n">Instruments</span><span class="p">,</span> <span class="n">ProposalParticipant</span><span class="p">,</span> <span class="n">ProposalInstrument</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.instrument_queries.query_base</span> <span class="k">import</span> <span class="n">QueryBase</span>
@@ -185,12 +186,8 @@
                                  <span class="n">on</span><span class="o">=</span><span class="p">(</span><span class="n">ProposalInstrument</span><span class="o">.</span><span class="n">instrument</span> <span class="o">==</span> <span class="n">Instruments</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
                            <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ProposalParticipant</span><span class="p">,</span>
                                  <span class="n">on</span><span class="o">=</span><span class="p">(</span><span class="n">ProposalParticipant</span><span class="o">.</span><span class="n">proposal</span> <span class="o">==</span> <span class="n">ProposalInstrument</span><span class="o">.</span><span class="n">proposal</span><span class="p">))</span>
-                           <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">where_clause</span><span class="p">))</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">instrument_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;No instrument entries were retrieved the requested user&#39;</span>
-            <span class="k">raise</span> <span class="n">cherrypy</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">(</span>
-                <span class="s1">&#39;404 No Valid Instruments Located&#39;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
-
+                           <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">where_clause</span><span class="p">)</span>
+                           <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Instruments</span><span class="o">.</span><span class="n">display_name</span><span class="p">))</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">QueryBase</span><span class="o">.</span><span class="n">format_instrument_block</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">instrument_list</span><span class="p">]</span>
 
     <span class="c1"># pylint: disable=invalid-name</span>
@@ -200,8 +197,9 @@
     <span class="nd">@db_connection_decorator</span>
     <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return a set of instruments for a given user.&quot;&quot;&quot;</span>
-        <span class="n">inst_list</span> <span class="o">=</span> <span class="n">InstrumentUserSearch</span><span class="o">.</span><span class="n">get_instruments_for_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">inst_list</span></div>
+        <span class="n">inst_list</span> <span class="o">=</span> <span class="n">InstrumentUserSearch</span><span class="o">.</span><span class="n">get_instruments_for_user</span><span class="p">(</span>
+            <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">inst_list</span>
 </pre></div>
 
            </div>

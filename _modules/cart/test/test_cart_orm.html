@@ -158,9 +158,8 @@
             
   <h1>Source code for cart.test.test_cart_orm</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This tests some of the cart orm class</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;This tests some of the cart orm class.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">unittest</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">tempfile</span> <span class="k">import</span> <span class="n">mkstemp</span>
@@ -170,30 +169,34 @@
 <span class="kn">from</span> <span class="nn">cart.cart_orm</span> <span class="k">import</span> <span class="n">database_setup</span><span class="p">,</span> <span class="n">Cart</span><span class="p">,</span> <span class="n">File</span>
 <span class="kn">import</span> <span class="nn">cart.cart_orm</span>
 
+
 <div class="viewcode-block" id="TestCartOrm"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_orm.TestCartOrm">[docs]</a><span class="k">class</span> <span class="nc">TestCartOrm</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Contains the cart orm tests</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Contains the cart orm tests.&quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="TestCartOrm.setUp"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_orm.TestCartOrm.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create a new sqlite3 db&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db_path</span> <span class="o">=</span> <span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.sqlite3&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span> <span class="o">=</span> <span class="n">SqliteDatabase</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db_path</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Create a new sqlite3 db.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db_path</span> <span class="o">=</span> <span class="n">mkstemp</span><span class="p">(</span><span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.orm.sqlite3&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span> <span class="o">=</span> <span class="n">SqliteDatabase</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db_path</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestCartOrm.tearDown"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_orm.TestCartOrm.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Delete the sqlite3 db&quot;&quot;&quot;</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db_path</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Delete the sqlite3 db.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db_path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+            <span class="c1"># if this fails we don&#39;t really care...</span></div>
+            <span class="k">pass</span>
 
 <div class="viewcode-block" id="TestCartOrm.test_cart_orm_db_setup"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_orm.TestCartOrm.test_cart_orm_db_setup">[docs]</a>    <span class="k">def</span> <span class="nf">test_cart_orm_db_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;call database_setup&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Call database_setup.&quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">),</span> <span class="n">create_tables</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-            <span class="n">database_setup</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">table_exists</span><span class="p">())</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">File</span><span class="o">.</span><span class="n">table_exists</span><span class="p">())</span></div>
+            <span class="n">database_setup</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">Cart</span><span class="o">.</span><span class="n">table_exists</span><span class="p">())</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">File</span><span class="o">.</span><span class="n">table_exists</span><span class="p">())</span>
 
 <div class="viewcode-block" id="TestCartOrm.test_cart_orm_db_setup_error"><a class="viewcode-back" href="../../../cartd.cart.test.html#cart.test.test_cart_orm.TestCartOrm.test_cart_orm_db_setup_error">[docs]</a>    <span class="k">def</span> <span class="nf">test_cart_orm_db_setup_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;call database_setup&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Call database_setup.&quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="nf">fake_database_connect</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-            <span class="sd">&quot;&quot;&quot;throw error during connect&quot;&quot;&quot;</span>
+            <span class="sd">&quot;&quot;&quot;Throw error during connect.&quot;&quot;&quot;</span>
             <span class="bp">cls</span><span class="o">.</span><span class="n">throw_error</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">raise</span> <span class="n">OperationalError</span><span class="p">(</span><span class="s1">&#39;Failing&#39;</span><span class="p">)</span>
         <span class="n">cart</span><span class="o">.</span><span class="n">cart_orm</span><span class="o">.</span><span class="n">CartBase</span><span class="o">.</span><span class="n">orig_database_connect</span> <span class="o">=</span> <span class="n">cart</span><span class="o">.</span><span class="n">cart_orm</span><span class="o">.</span><span class="n">CartBase</span><span class="o">.</span><span class="n">database_connect</span>
@@ -201,8 +204,8 @@
             <span class="n">MethodType</span><span class="p">(</span><span class="n">fake_database_connect</span><span class="p">,</span> <span class="n">cart</span><span class="o">.</span><span class="n">cart_orm</span><span class="o">.</span><span class="n">CartBase</span><span class="p">)</span>
         <span class="n">cart</span><span class="o">.</span><span class="n">cart_orm</span><span class="o">.</span><span class="n">CartBase</span><span class="o">.</span><span class="n">throw_error</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">with</span> <span class="n">test_database</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sqlite_db</span><span class="p">,</span> <span class="p">(</span><span class="n">Cart</span><span class="p">,</span> <span class="n">File</span><span class="p">),</span> <span class="n">create_tables</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-            <span class="n">database_setup</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">cart</span><span class="o">.</span><span class="n">cart_orm</span><span class="o">.</span><span class="n">CartBase</span><span class="o">.</span><span class="n">throw_error</span><span class="p">)</span></div></div>
+            <span class="n">database_setup</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">cart</span><span class="o">.</span><span class="n">cart_orm</span><span class="o">.</span><span class="n">CartBase</span><span class="o">.</span><span class="n">throw_error</span><span class="p">)</span>
 </pre></div>
 
            </div>

@@ -158,9 +158,10 @@
             
   <h1>Source code for metadata.elastic.orm</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Elastic search core class to convert db object.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">elasticsearch</span> <span class="k">import</span> <span class="n">Elasticsearch</span><span class="p">,</span> <span class="n">helpers</span>
-<span class="kn">from</span> <span class="nn">metadata.elastic</span> <span class="k">import</span> <span class="n">ELASTIC_ENDPOINT</span><span class="p">,</span> <span class="n">ELASTIC_INDEX</span>
+<span class="kn">from</span> <span class="nn">metadata.elastic</span> <span class="k">import</span> <span class="n">ELASTIC_ENDPOINT</span><span class="p">,</span> <span class="n">ELASTIC_INDEX</span><span class="p">,</span> <span class="n">ES_CLIENT_ARGS</span>
 
 
 <div class="viewcode-block" id="ElasticAPI"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI">[docs]</a><span class="k">class</span> <span class="nc">ElasticAPI</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -171,13 +172,13 @@
         <span class="sd">&quot;&quot;&quot;Delete the object for the class in elastic search.&quot;&quot;&quot;</span>
         <span class="n">class_name</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">obj_id</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">id</span>
-        <span class="n">esclient</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">([</span><span class="n">ELASTIC_ENDPOINT</span><span class="p">])</span>
-        <span class="n">esclient</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ELASTIC_INDEX</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">obj_id</span><span class="p">)</span></div>
+        <span class="n">esclient</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">([</span><span class="n">ELASTIC_ENDPOINT</span><span class="p">],</span> <span class="o">**</span><span class="n">ES_CLIENT_ARGS</span><span class="p">)</span></div>
+        <span class="n">esclient</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">ELASTIC_INDEX</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">obj_id</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ElasticAPI.elastic_upload"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.elastic_upload">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">elastic_upload</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">objs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Upload the object for the class to elastic search.&quot;&quot;&quot;</span>
-        <span class="n">esclient</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">([</span><span class="n">ELASTIC_ENDPOINT</span><span class="p">])</span>
+        <span class="n">esclient</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">([</span><span class="n">ELASTIC_ENDPOINT</span><span class="p">],</span> <span class="o">**</span><span class="n">ES_CLIENT_ARGS</span><span class="p">)</span>
         <span class="n">class_name</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">clean_oper</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
@@ -192,8 +193,8 @@
             <span class="n">oper</span><span class="p">[</span><span class="s1">&#39;_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ELASTIC_INDEX</span>
             <span class="n">oper</span><span class="p">[</span><span class="s1">&#39;_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_name</span>
             <span class="n">oper</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;_id&#39;</span><span class="p">)</span>
-            <span class="n">clean_oper</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oper</span><span class="p">)</span>
-        <span class="n">helpers</span><span class="o">.</span><span class="n">bulk</span><span class="p">(</span><span class="n">esclient</span><span class="p">,</span> <span class="n">clean_oper</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+            <span class="n">clean_oper</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">oper</span><span class="p">)</span></div>
+        <span class="n">helpers</span><span class="o">.</span><span class="n">bulk</span><span class="p">(</span><span class="n">esclient</span><span class="p">,</span> <span class="n">clean_oper</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ElasticAPI.create_elastic_mapping"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.create_elastic_mapping">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">create_elastic_mapping</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
@@ -206,14 +207,15 @@
 <span class="sd">        { body }</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">class_name</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="n">esclient</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">([</span><span class="n">ELASTIC_ENDPOINT</span><span class="p">])</span>
-        <span class="n">esclient</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">put_mapping</span><span class="p">(</span><span class="n">class_name</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">elastic_mapping</span><span class="p">())</span></div>
+        <span class="n">esclient</span> <span class="o">=</span> <span class="n">Elasticsearch</span><span class="p">([</span><span class="n">ELASTIC_ENDPOINT</span><span class="p">],</span> <span class="o">**</span><span class="n">ES_CLIENT_ARGS</span><span class="p">)</span>
+        <span class="n">esclient</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">put_mapping</span><span class="p">(</span></div>
+            <span class="n">class_name</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">elastic_mapping</span><span class="p">(),</span> <span class="n">ELASTIC_INDEX</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ElasticAPI.elastic_mapping_builder"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.elastic_mapping_builder">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Build elastic mapping properties hash from object.&quot;&quot;&quot;</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="o">=</span> \
-            <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s2">&quot;yyyy-mm-dd&#39;T&#39;HH:mm:ss&quot;</span><span class="p">}</span></div>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="o">=</span> \</div>
+            <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="s2">&quot;yyyy-mm-dd&#39;T&#39;HH:mm:ss&quot;</span><span class="p">}</span>
 
 <div class="viewcode-block" id="ElasticAPI.elastic_mapping"><a class="viewcode-back" href="../../../metadata.metadata.elastic.html#metadata.elastic.orm.ElasticAPI.elastic_mapping">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">elastic_mapping</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
@@ -221,8 +223,8 @@
         <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">cls</span><span class="o">.</span><span class="n">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
-        <span class="k">return</span> <span class="n">ret</span></div></div>
+        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span></div></div>
+        <span class="k">return</span> <span class="n">ret</span>
 </pre></div>
 
            </div>

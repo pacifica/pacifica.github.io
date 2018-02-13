@@ -187,22 +187,17 @@
     <span class="n">obj_cls</span> <span class="o">=</span> <span class="n">Institutions</span>
     <span class="n">obj_id</span> <span class="o">=</span> <span class="n">Institutions</span><span class="o">.</span><span class="n">id</span>
 
-<div class="viewcode-block" id="TestInstitutions.dependent_cls"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_institutions.TestInstitutions.dependent_cls">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">dependent_cls</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return dependent classes for the Institutions object.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">Institutions</span><span class="p">]</span></div>
-
 <div class="viewcode-block" id="TestInstitutions.test_institutions_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_institutions.TestInstitutions.test_institutions_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_institutions_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_INSTITUTION_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_INSTITUTION_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestInstitutions.test_unicode_institutions_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_institutions.TestInstitutions.test_unicode_institutions_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_institutions_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_INSTITUTION_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_INSTITUTION_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestInstitutions.test_institutions_json"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_institutions.TestInstitutions.test_institutions_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_institutions_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_INSTITUTION_HASH</span><span class="p">))</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_INSTITUTION_HASH</span><span class="p">))</span>
 
 <div class="viewcode-block" id="TestInstitutions.test_institutions_search_expr"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_institutions.TestInstitutions.test_institutions_search_expr">[docs]</a>    <span class="k">def</span> <span class="nf">test_institutions_search_expr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
@@ -214,16 +209,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause_search_expr</span><span class="p">(</span>
             <span class="n">SAMPLE_INSTITUTION_HASH</span><span class="p">,</span>
             <span class="n">name_operator</span><span class="o">=</span><span class="s1">&#39;ILIKE&#39;</span><span class="p">,</span>
-            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ST%&#39;</span>
-        <span class="p">)</span></div>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ST%&#39;</span></div>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="TestInstitutions.test_institutions_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_institutions.TestInstitutions.test_institutions_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_institutions_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_INSTITUTION_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_INSTITUTION_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestInstitutions.test_unicode_institutions_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_institutions.TestInstitutions.test_unicode_institutions_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_institutions_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_INSTITUTION_HASH</span><span class="p">)</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_INSTITUTION_HASH</span><span class="p">)</span>
 </pre></div>
 
            </div>

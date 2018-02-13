@@ -158,11 +158,13 @@
             
   <h1>Source code for metadata.elastic.test.test_base</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;This module tests the metadata.elastic module bits.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span>
 <span class="kn">import</span> <span class="nn">httpretty</span>
 <span class="kn">from</span> <span class="nn">metadata.elastic</span> <span class="k">import</span> <span class="n">create_elastic_index</span><span class="p">,</span> <span class="n">try_es_connect</span>
+<span class="kn">from</span> <span class="nn">metadata.elastic.test</span> <span class="k">import</span> <span class="n">ES_CLUSTER_BODY</span>
 
 
 <div class="viewcode-block" id="TestElasticUtils"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.test_base.TestElasticUtils">[docs]</a><span class="k">class</span> <span class="nc">TestElasticUtils</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
@@ -174,11 +176,14 @@
         <span class="n">response_body</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;created!&#39;</span>
         <span class="p">}</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_nodes/_all/http&#39;</span><span class="p">,</span>
+                               <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">ES_CLUSTER_BODY</span><span class="p">),</span>
+                               <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/pacifica&#39;</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
-        <span class="n">create_elastic_index</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">)</span></div>
+        <span class="n">create_elastic_index</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestElasticUtils.test_create_elastic_index"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.test_base.TestElasticUtils.test_create_elastic_index">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_create_elastic_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -187,14 +192,17 @@
         <span class="n">created_body</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;Created!&#39;</span>
         <span class="p">}</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_nodes/_all/http&#39;</span><span class="p">,</span>
+                               <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">ES_CLUSTER_BODY</span><span class="p">),</span>
+                               <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/pacifica&#39;</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">PUT</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/pacifica&#39;</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">created_body</span><span class="p">),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
-        <span class="n">create_elastic_index</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">)</span></div>
+        <span class="n">create_elastic_index</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestElasticUtils.test_error_elastic_index"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.test_base.TestElasticUtils.test_error_elastic_index">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_error_elastic_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -204,6 +212,9 @@
         <span class="n">created_body</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;status&#39;</span><span class="p">:</span> <span class="s1">&#39;ERROR&#39;</span>
         <span class="p">}</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_nodes/_all/http&#39;</span><span class="p">,</span>
+                               <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">ES_CLUSTER_BODY</span><span class="p">),</span>
+                               <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/pacifica&#39;</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
@@ -218,36 +229,43 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="s1">&#39;TransportError(500, u</span><span class="se">\&#39;</span><span class="s1">{&quot;status&quot;: &quot;ERROR&quot;}</span><span class="se">\&#39;</span><span class="s1">)&#39;</span><span class="p">)</span>
-        <span class="c1"># pylint: enable=broad-except</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="s1">&#39;TransportError(500, u</span><span class="se">\&#39;</span><span class="s1">{&quot;status&quot;: &quot;ERROR&quot;}</span><span class="se">\&#39;</span><span class="s1">)&#39;</span><span class="p">)</span>
+        <span class="c1"># pylint: enable=broad-except</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestElasticUtils.test_elastic_connect"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.test_base.TestElasticUtils.test_elastic_connect">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_elastic_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the create elastic index.&quot;&quot;&quot;</span>
         <span class="n">response_body</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_nodes/_all/http&#39;</span><span class="p">,</span>
+                               <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">ES_CLUSTER_BODY</span><span class="p">),</span>
+                               <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/&#39;</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">(</span><span class="n">response_body</span><span class="p">),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
-        <span class="n">try_es_connect</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;GET&#39;</span><span class="p">)</span></div>
+        <span class="n">try_es_connect</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;GET&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestElasticUtils.test_error_es_connect"><a class="viewcode-back" href="../../../../metadata.metadata.elastic.test.html#metadata.elastic.test.test_base.TestElasticUtils.test_error_es_connect">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_error_es_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the create elastic index.&quot;&quot;&quot;</span>
         <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/_nodes/_all/http&#39;</span><span class="p">,</span>
+                               <span class="n">body</span><span class="o">=</span><span class="s1">&#39;Trying to connect&#39;</span><span class="p">,</span>
+                               <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="s1">&#39;http://127.0.0.1:9200/&#39;</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="s1">&#39;Trying to connect&#39;</span><span class="p">,</span>
                                <span class="n">status</span><span class="o">=</span><span class="mi">404</span><span class="p">)</span>
         <span class="c1"># pylint: disable=broad-except</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">try_es_connect</span><span class="p">()</span>
+            <span class="n">try_es_connect</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
             <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;GET&#39;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">),</span> <span class="s1">&#39;TransportError(404, u</span><span class="se">\&#39;</span><span class="s1">Trying to connect</span><span class="se">\&#39;</span><span class="s1">)&#39;</span><span class="p">)</span>
-        <span class="c1"># pylint: enable=broad-except</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="s1">&#39;Trying to connect&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">))</span>
+        <span class="c1"># pylint: enable=broad-except</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span>
 </pre></div>
 
            </div>

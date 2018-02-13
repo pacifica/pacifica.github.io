@@ -158,10 +158,12 @@
             
   <h1>Source code for policy.status.user.lookup</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;CherryPy Status Policy object class.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span>
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">policy</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span><span class="p">,</span> <span class="n">validate_user</span>
+<span class="kn">from</span> <span class="nn">policy.validation</span> <span class="k">import</span> <span class="n">validate_user</span>
+<span class="kn">from</span> <span class="nn">policy.globals</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span>
 
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
@@ -175,8 +177,8 @@
         <span class="sd">&quot;&quot;&quot;Return detailed info about a given user.&quot;&quot;&quot;</span>
         <span class="n">lookup_url</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">/userinfo/by_id/</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">METADATA_ENDPOINT</span><span class="p">,</span> <span class="n">user_id</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">lookup_url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
+        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">lookup_url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 
     <span class="c1"># CherryPy requires these named methods</span>
     <span class="c1"># Add HEAD (basically Get without returning body</span>
@@ -185,8 +187,8 @@
     <span class="nd">@tools</span><span class="o">.</span><span class="n">json_out</span><span class="p">()</span>
     <span class="nd">@validate_user</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;CherryPy GET method.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">UserLookup</span><span class="o">.</span><span class="n">_get_user_info</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span></div></div>
+        <span class="sd">&quot;&quot;&quot;CherryPy GET method.&quot;&quot;&quot;</span></div></div>
+        <span class="k">return</span> <span class="n">UserLookup</span><span class="o">.</span><span class="n">_get_user_info</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 </pre></div>
 

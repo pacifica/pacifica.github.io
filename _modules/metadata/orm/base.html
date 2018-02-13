@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.orm.base</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Pacifica Metadata ORM Base Class.</span>
 
@@ -174,10 +175,11 @@
 <span class="sd">and deleting these objects in from a web service layer.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">getenv</span>
-<span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span><span class="p">,</span> <span class="n">loads</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">dateutil</span> <span class="k">import</span> <span class="n">parser</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">PostgresqlDatabase</span> <span class="k">as</span> <span class="n">pgdb</span>
-<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">Expression</span><span class="p">,</span> <span class="n">OP</span><span class="p">,</span> <span class="n">PrimaryKeyField</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">CompositeKey</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">Clause</span>
-
+<span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">Expression</span><span class="p">,</span> <span class="n">OP</span><span class="p">,</span> <span class="n">PrimaryKeyField</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">CompositeKey</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">Clause</span><span class="p">,</span> <span class="n">ReverseRelationDescriptor</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">text_type</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.utils</span> <span class="k">import</span> <span class="n">index_hash</span><span class="p">,</span> <span class="n">ExtendDateTimeField</span>
 <span class="kn">from</span> <span class="nn">metadata.orm.utils</span> <span class="k">import</span> <span class="n">datetime_converts</span><span class="p">,</span> <span class="n">date_converts</span><span class="p">,</span> <span class="n">datetime_now_nomicrosecond</span>
 
@@ -204,8 +206,8 @@
                 <span class="n">ret</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">DB</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">ret</span>
-    <span class="k">return</span> <span class="n">func_wrapper</span></div>
+        <span class="k">return</span> <span class="n">ret</span></div>
+    <span class="k">return</span> <span class="n">func_wrapper</span>
 
 
 <div class="viewcode-block" id="PacificaModel"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel">[docs]</a><span class="k">class</span> <span class="nc">PacificaModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
@@ -228,9 +230,11 @@
     <span class="c1"># pylint: disable=invalid-name</span>
     <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKeyField</span><span class="p">()</span>
     <span class="c1"># pylint: enable=invalid-name</span>
-    <span class="n">created</span> <span class="o">=</span> <span class="n">ExtendDateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime_now_nomicrosecond</span><span class="p">)</span>
-    <span class="n">updated</span> <span class="o">=</span> <span class="n">ExtendDateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime_now_nomicrosecond</span><span class="p">)</span>
-    <span class="n">deleted</span> <span class="o">=</span> <span class="n">ExtendDateTimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">ExtendDateTimeField</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">datetime_now_nomicrosecond</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">updated</span> <span class="o">=</span> <span class="n">ExtendDateTimeField</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">datetime_now_nomicrosecond</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">deleted</span> <span class="o">=</span> <span class="n">ExtendDateTimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># pylint: disable=too-few-public-methods</span>
     <span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -252,46 +256,100 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_only_if</span><span class="p">(</span><span class="n">time_part</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">time_part</span><span class="p">,</span>
                           <span class="k">lambda</span><span class="p">:</span> <span class="n">datetime_converts</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="n">time_part</span><span class="p">]))</span>
 
-<div class="viewcode-block" id="PacificaModel.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PacificaModel.cls_foreignkeys"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.cls_foreignkeys">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">cls_foreignkeys</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Provide the foreign keys of the class as a list of attrs.&quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=no-member</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">rel</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="c1"># pylint: enable=no-member</span>
+
+<div class="viewcode-block" id="PacificaModel.cls_foreignkey_rel_mods"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.cls_foreignkey_rel_mods">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">cls_foreignkey_rel_mods</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a collection of related models for a given foreignkey.&quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=no-member</span></div>
+        <span class="k">return</span> <span class="p">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">rel</span><span class="p">[</span><span class="n">fk</span><span class="p">]</span><span class="o">.</span><span class="n">rel_model</span><span class="p">:</span> <span class="n">fk</span> <span class="k">for</span> <span class="n">fk</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">rel</span><span class="p">}</span>
+        <span class="c1"># pylint: enable=no-member</span>
+
+<div class="viewcode-block" id="PacificaModel.cls_revforeignkeys"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.cls_revforeignkeys">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">cls_revforeignkeys</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Provide the rev foreign keys of the class as a list of attrs.&quot;&quot;&quot;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">ReverseRelationDescriptor</span><span class="p">):</span>
+                <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ret</span>
+
+<div class="viewcode-block" id="PacificaModel.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">flags</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Convert the base object fields into serializable attributes in a hash.&quot;&quot;&quot;</span>
+        <span class="n">recursion_depth</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;recursion_depth&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">recursion_limit</span> <span class="o">=</span> <span class="n">flags</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;recursion_limit&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">created</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">updated</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deleted</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span>
         <span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">deleted</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">index_hash</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;created&#39;</span><span class="p">],</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">],</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">obj</span></div>
+        <span class="k">if</span> <span class="n">recursion_depth</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cls_revforeignkeys</span><span class="p">())</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">flags</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;recursion_exclude&#39;</span><span class="p">,</span> <span class="p">[])):</span>
+                <span class="n">list_count</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">list_count</span> <span class="o">&gt;</span> <span class="n">recursion_limit</span><span class="p">:</span>
+                    <span class="n">obj</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">elif</span> <span class="n">list_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">obj</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_object</span><span class="p">(</span><span class="n">attr</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">obj</span>
+
+    <span class="k">def</span> <span class="nf">_build_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="p">{</span><span class="n">attr</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="n">fk_obj_list</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">obj_ref</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">fk_obj_list</span><span class="p">:</span>
+                <span class="n">fk_item_name</span><span class="p">,</span> <span class="n">fk_obj_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_fk_obj_list</span><span class="p">(</span><span class="n">obj_ref</span><span class="p">)</span>
+            <span class="n">obj</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_append_item</span><span class="p">(</span>
+                <span class="n">obj_ref</span><span class="p">,</span> <span class="n">fk_item_name</span><span class="p">,</span> <span class="n">fk_obj_list</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">obj</span>
+
+<div class="viewcode-block" id="PacificaModel.get_append_item"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.get_append_item">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_append_item</span><span class="p">(</span><span class="n">obj_ref</span><span class="p">,</span> <span class="n">fk_item_name</span><span class="p">,</span> <span class="n">fk_obj_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate the proper item to append to the newly built object.&quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=protected-access</span>
+        <span class="k">if</span> <span class="s1">&#39;key&#39;</span> <span class="ow">in</span> <span class="n">fk_obj_list</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;value&#39;</span> <span class="ow">in</span> <span class="n">fk_obj_list</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">append_item</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;key_id&#39;</span><span class="p">:</span> <span class="n">obj_ref</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;value_id&#39;</span><span class="p">:</span> <span class="n">obj_ref</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">append_item</span> <span class="o">=</span> <span class="n">obj_ref</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">fk_item_name</span><span class="p">]</span>
+        <span class="c1"># pylint: enable=protected-access</span></div>
+        <span class="k">return</span> <span class="n">append_item</span>
+
+    <span class="k">def</span> <span class="nf">_generate_fk_obj_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_ref</span><span class="p">):</span>
+        <span class="n">fk_obj_list</span> <span class="o">=</span> <span class="n">obj_ref</span><span class="o">.</span><span class="n">cls_foreignkey_rel_mods</span><span class="p">()</span>
+        <span class="n">valid_fk_obj_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="nb">set</span><span class="p">(</span><span class="n">fk_obj_list</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_fk_obj_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">fk_item_name</span> <span class="o">=</span> <span class="n">fk_obj_list</span><span class="p">[</span><span class="n">valid_fk_obj_list</span><span class="o">.</span><span class="n">pop</span><span class="p">()]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fk_item_name</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span>
+        <span class="k">return</span> <span class="n">fk_item_name</span><span class="p">,</span> <span class="n">fk_obj_list</span>
 
 <div class="viewcode-block" id="PacificaModel.from_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Convert the hash objects into object fields if they are present.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_datetime_part</span><span class="p">(</span><span class="s1">&#39;created&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_set_datetime_part</span><span class="p">(</span><span class="s1">&#39;updated&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_set_datetime_part</span><span class="p">(</span><span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="PacificaModel.from_json"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.from_json">[docs]</a>    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Convert the json string into the current object.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">json_str</span><span class="p">),</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;json_str not dict&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">from_hash</span><span class="p">(</span><span class="n">loads</span><span class="p">(</span><span class="n">json_str</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="PacificaModel.to_json"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.to_json">[docs]</a>    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Convert the object into a json object.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_hash</span><span class="p">())</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_datetime_part</span><span class="p">(</span><span class="s1">&#39;updated&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_datetime_part</span><span class="p">(</span><span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PacificaModel._bool_translate"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel._bool_translate">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_bool_translate</span><span class="p">(</span><span class="n">thing</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Translate the thing into a boolean.&quot;&quot;&quot;</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">thing</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">thing</span> <span class="o">==</span> <span class="s1">&#39;False&#39;</span><span class="p">:</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">elif</span> <span class="n">thing</span> <span class="o">==</span> <span class="s1">&#39;false&#39;</span><span class="p">:</span>
-            <span class="n">ret</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="n">ret</span></div>
+        <span class="sd">&quot;&quot;&quot;Translate the thing into a boolean.&quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="kc">False</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">thing</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;false&#39;</span> <span class="k">else</span> <span class="nb">bool</span><span class="p">(</span><span class="n">thing</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_date_operator_compare</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">dt_converts</span><span class="o">=</span><span class="n">datetime_converts</span><span class="p">):</span>
         <span class="k">if</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_operator&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">date</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="n">date_oper</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">OP</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_operator&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">date</span><span class="p">)]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+            <span class="n">date_oper</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+                <span class="n">OP</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_operator&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">date</span><span class="p">)]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">date_oper</span> <span class="o">=</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span>
         <span class="k">if</span> <span class="n">date_oper</span> <span class="o">==</span> <span class="n">OP</span><span class="o">.</span><span class="n">BETWEEN</span><span class="p">:</span>
@@ -304,29 +362,44 @@
 
 <div class="viewcode-block" id="PacificaModel.where_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;PeeWee specific extension meant to be passed to a PeeWee get or select.&quot;&quot;&quot;</span>
-        <span class="n">my_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
         <span class="n">where_clause</span> <span class="o">=</span> <span class="n">Expression</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;deleted&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span>
-                    <span class="nb">getattr</span><span class="p">(</span><span class="n">my_class</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">),</span> <span class="n">OP</span><span class="o">.</span><span class="n">IS</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">),</span> <span class="n">OP</span><span class="o">.</span><span class="n">IS</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">date_obj</span> <span class="o">=</span> <span class="n">datetime_converts</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;deleted&#39;</span><span class="p">])</span>
                 <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span>
-                    <span class="nb">getattr</span><span class="p">(</span><span class="n">my_class</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">),</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="n">date_obj</span><span class="p">)</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">),</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="n">date_obj</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;updated&#39;</span><span class="p">,</span> <span class="s1">&#39;created&#39;</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-                <span class="c1"># pylint: disable=protected-access</span>
-                <span class="n">date_obj</span><span class="p">,</span> <span class="n">date_oper</span> <span class="o">=</span> <span class="n">my_class</span><span class="o">.</span><span class="n">_date_operator_compare</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
-                <span class="c1"># pylint: enable=protected-access</span>
+                <span class="n">date_obj</span><span class="p">,</span> <span class="n">date_oper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_date_operator_compare</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
                 <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span>
-                    <span class="nb">getattr</span><span class="p">(</span><span class="n">my_class</span><span class="p">,</span> <span class="n">date</span><span class="p">),</span> <span class="n">date_oper</span><span class="p">,</span> <span class="n">date_obj</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">where_clause</span></div>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">date</span><span class="p">),</span> <span class="n">date_oper</span><span class="p">,</span> <span class="n">date_obj</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">where_clause</span>
+
+<div class="viewcode-block" id="PacificaModel._where_attr_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel._where_attr_clause">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_where_attr_clause</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">where_clause</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Grab keys and operators out of kwargs and return where clause.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="n">key_oper</span> <span class="o">=</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span>
+                <span class="k">if</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_operator&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                    <span class="n">key_oper</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+                        <span class="n">OP</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_operator&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+                <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span> <span class="n">key_oper</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div>
+        <span class="k">return</span> <span class="n">where_clause</span>
 
 <div class="viewcode-block" id="PacificaModel.last_change_date"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.last_change_date">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">last_change_date</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Find the last changed date for the object.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">Max</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">updated</span><span class="p">))</span><span class="o">.</span><span class="n">scalar</span><span class="p">()</span></div>
+        <span class="n">last_change_date</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="n">Max</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">updated</span><span class="p">))</span><span class="o">.</span><span class="n">scalar</span><span class="p">()</span>
+        <span class="n">last_change_string</span> <span class="o">=</span> <span class="n">last_change_date</span> \
+            <span class="k">if</span> <span class="n">last_change_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s1">&#39;1970-01-01 00:00:00&#39;</span>
+        <span class="n">last_change_string</span> <span class="o">=</span> <span class="n">last_change_date</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> \
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">last_change_date</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">)</span> <span class="k">else</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">last_change_string</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">text_type</span><span class="p">(</span><span class="n">last_change_string</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PacificaModel.available_hash_list"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.available_hash_list">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">available_hash_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
@@ -347,27 +420,22 @@
                 <span class="s1">&#39;key_list&#39;</span><span class="p">:</span> <span class="n">obj</span><span class="p">,</span>
                 <span class="s1">&#39;index_hash&#39;</span><span class="p">:</span> <span class="n">inst_key</span>
             <span class="p">}</span>
-            <span class="n">hash_dict</span><span class="p">[</span><span class="n">inst_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span>
-        <span class="k">return</span> <span class="n">hash_list</span><span class="p">,</span> <span class="n">hash_dict</span></div>
+            <span class="n">hash_dict</span><span class="p">[</span><span class="n">inst_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">entry</span></div>
+        <span class="k">return</span> <span class="n">hash_list</span><span class="p">,</span> <span class="n">hash_dict</span>
 
 <div class="viewcode-block" id="PacificaModel.get_primary_keys"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.get_primary_keys">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_primary_keys</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return the primary keys for the object.&quot;&quot;&quot;</span>
         <span class="c1"># pylint: disable=no-member</span>
         <span class="n">primary_key</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">primary_key</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">primary_key</span><span class="p">,</span> <span class="n">CompositeKey</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">rel</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">primary_key</span><span class="p">,</span> <span class="n">CompositeKey</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">rel</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">primary_key</span><span class="o">.</span><span class="n">field_names</span><span class="p">)</span>
-        <span class="c1"># pylint: enable=no-member</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[</span><span class="n">primary_key</span><span class="o">.</span><span class="n">name</span><span class="p">]</span></div>
+        <span class="c1"># pylint: enable=no-member</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">primary_key</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
 
 <div class="viewcode-block" id="PacificaModel.get_object_info"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.base.PacificaModel.get_object_info">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">get_object_info</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get model and field information about the model class.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">last_change_date</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">last_changed</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">last_change_date</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">last_changed</span> <span class="o">=</span> <span class="s1">&#39;1970-01-01 00:00:00&#39;</span>
         <span class="n">related_model_info</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># pylint: disable=no-member</span>
         <span class="k">for</span> <span class="n">rel_mod_name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">rel</span><span class="p">:</span>
@@ -385,15 +453,16 @@
                 <span class="p">}</span>
         <span class="n">js_object</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">&#39;callable_name&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">2</span><span class="p">],</span>
-            <span class="s1">&#39;last_changed_date&#39;</span><span class="p">:</span> <span class="n">last_changed</span><span class="p">,</span>
+            <span class="s1">&#39;last_changed_date&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">last_change_date</span><span class="p">(),</span>
             <span class="s1">&#39;primary_keys&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_primary_keys</span><span class="p">(),</span>
             <span class="s1">&#39;field_list&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">sorted_field_names</span><span class="p">,</span>
-            <span class="s1">&#39;foreign_keys&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_meta</span><span class="o">.</span><span class="n">rel</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+            <span class="s1">&#39;foreign_keys&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">cls_foreignkeys</span><span class="p">(),</span>
             <span class="s1">&#39;related_models&#39;</span><span class="p">:</span> <span class="n">related_model_info</span><span class="p">,</span>
+            <span class="s1">&#39;related_names&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">cls_revforeignkeys</span><span class="p">(),</span>
             <span class="s1">&#39;record_count&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
         <span class="p">}</span>
-        <span class="c1"># pylint: enable=no-member</span>
-        <span class="k">return</span> <span class="n">js_object</span></div></div>
+        <span class="c1"># pylint: enable=no-member</span></div></div>
+        <span class="k">return</span> <span class="n">js_object</span>
 </pre></div>
 
            </div>

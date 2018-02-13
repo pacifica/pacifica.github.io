@@ -36,7 +36,7 @@
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
+        <link rel="up" title="archiveinterface" href="../../../archiveinterface.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -139,6 +139,8 @@
         
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../../../archiveinterface.html">archiveinterface</a> &raquo;</li>
+        
       <li>archiveinterface.archivebackends.hpss.hpss_status</li>
     
     
@@ -158,6 +160,7 @@
             
   <h1>Source code for archiveinterface.archivebackends.hpss.hpss_status</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;HPSS Status Module.</span>
 
 <span class="sd">Module that implements the Abstract Status class for the hpss</span>
@@ -199,8 +202,8 @@
             <span class="k">if</span> <span class="n">num_bytes</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">filesize</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
-
-        <span class="k">return</span> <span class="n">level_array</span><span class="p">[</span><span class="n">level</span><span class="p">]</span></div>
+</div>
+        <span class="k">return</span> <span class="n">level_array</span><span class="p">[</span><span class="n">level</span><span class="p">]</span>
 
 <div class="viewcode-block" id="HpssStatus.define_levels"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.hpss.html#archiveinterface.archivebackends.hpss.hpss_status.HpssStatus.define_levels">[docs]</a>    <span class="k">def</span> <span class="nf">define_levels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set up what each level definition means.&quot;&quot;&quot;</span>
@@ -208,12 +211,12 @@
         <span class="c1"># handle error if on level 4 or 5 since those are suppose to be null</span>
         <span class="c1"># UPDATE LEVEL NAMES AS NEEDED</span>
         <span class="n">type_per_level</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_disk</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tape</span><span class="p">,</span>
-                          <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">type_per_level</span></div>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="n">type_per_level</span>
 
 <div class="viewcode-block" id="HpssStatus.set_filepath"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.hpss.html#archiveinterface.archivebackends.hpss.hpss_status.HpssStatus.set_filepath">[docs]</a>    <span class="k">def</span> <span class="nf">set_filepath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set the filepath that the status is for.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Set the filepath that the status is for.&quot;&quot;&quot;</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span>
 </pre></div>
 
            </div>

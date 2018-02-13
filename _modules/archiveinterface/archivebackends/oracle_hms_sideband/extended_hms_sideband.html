@@ -36,7 +36,7 @@
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
+        <link rel="up" title="archiveinterface" href="../../../archiveinterface.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -139,6 +139,8 @@
         
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../../../archiveinterface.html">archiveinterface</a> &raquo;</li>
+        
       <li>archiveinterface.archivebackends.oracle_hms_sideband.extended_hms_sideband</li>
     
     
@@ -158,6 +160,7 @@
             
   <h1>Source code for archiveinterface.archivebackends.oracle_hms_sideband.extended_hms_sideband</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Module that allows for the extension of the hms sideband archive.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_status</span> <span class="k">import</span> <span class="p">(</span>
@@ -192,12 +195,12 @@
             <span class="n">filesize</span> <span class="o">=</span> <span class="n">stat_record</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">HmsSidebandStatus</span><span class="p">(</span><span class="n">mtime</span><span class="p">,</span> <span class="n">ctime</span><span class="p">,</span> <span class="n">bytes_per_level</span><span class="p">,</span> <span class="n">filesize</span><span class="p">)</span>
             <span class="n">status</span><span class="o">.</span><span class="n">set_filepath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_path</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">status</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+            <span class="k">return</span> <span class="n">status</span></div>
+        <span class="k">return</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="ExtendedHmsSideband.stage"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.extended_hms_sideband.ExtendedHmsSideband.stage">[docs]</a>    <span class="k">def</span> <span class="nf">stage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Stage a file. HMS stages a file when a read call is made.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
+        <span class="sd">&quot;&quot;&quot;Stage a file. HMS stages a file when a read call is made.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
 <div class="viewcode-block" id="ExtendedHmsSideband._stat_ino_sql"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.extended_hms_sideband.ExtendedHmsSideband._stat_ino_sql">[docs]</a>    <span class="k">def</span> <span class="nf">_stat_ino_sql</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return the record for specified file and directory.&quot;&quot;&quot;</span>
@@ -212,15 +215,15 @@
         <span class="n">SamInode</span><span class="o">.</span><span class="n">database_close</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_status_dictionary</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_status_dictionary</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="ExtendedHmsSideband._make_status_dictionary"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.extended_hms_sideband.ExtendedHmsSideband._make_status_dictionary">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_make_status_dictionary</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Break the query results into a dictionary.&quot;&quot;&quot;</span>
         <span class="n">status</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ino&#39;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">ino</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="s1">&#39;ctime&#39;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">create_time</span><span class="p">,</span>
-                  <span class="s1">&#39;mtime&#39;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">modify_time</span><span class="p">,</span> <span class="s1">&#39;online&#39;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">online</span><span class="p">}</span>
-        <span class="k">return</span> <span class="n">status</span></div></div>
+                  <span class="s1">&#39;mtime&#39;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">modify_time</span><span class="p">,</span> <span class="s1">&#39;online&#39;</span><span class="p">:</span> <span class="n">result</span><span class="o">.</span><span class="n">online</span><span class="p">}</span></div></div>
+        <span class="k">return</span> <span class="n">status</span>
 </pre></div>
 
            </div>

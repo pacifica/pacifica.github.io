@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.orm.groups</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Contains model for groups.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">peewee</span> <span class="k">import</span> <span class="n">CharField</span><span class="p">,</span> <span class="n">BooleanField</span><span class="p">,</span> <span class="n">Expression</span><span class="p">,</span> <span class="n">OP</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.orm</span> <span class="k">import</span> <span class="n">CherryPyAPI</span>
@@ -188,17 +189,19 @@
     <span class="k">def</span> <span class="nf">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Build the elasticsearch mapping bits.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Groups</span><span class="p">,</span> <span class="n">Groups</span><span class="p">)</span><span class="o">.</span><span class="n">elastic_mapping_builder</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">}</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;is_admin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;boolean&#39;</span><span class="p">}</span></div>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> \
+            <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;keyword&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;keyword&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore_above&#39;</span><span class="p">:</span> <span class="mi">256</span><span class="p">}}}</span></div>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;is_admin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;boolean&#39;</span><span class="p">}</span>
 
-<div class="viewcode-block" id="Groups.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.groups.Groups.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Groups.to_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.groups.Groups.to_hash">[docs]</a>    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">flags</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Convert the object to a hash.&quot;&quot;&quot;</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Groups</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Groups</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">to_hash</span><span class="p">(</span><span class="o">**</span><span class="n">flags</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">unicode_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
-        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;is_admin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">obj</span></div>
+        <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;is_admin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">obj</span>
 
 <div class="viewcode-block" id="Groups.from_hash"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.groups.Groups.from_hash">[docs]</a>    <span class="k">def</span> <span class="nf">from_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Convert the hash into the object.&quot;&quot;&quot;</span>
@@ -211,18 +214,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">unicode_type</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
         <span class="k">if</span> <span class="s1">&#39;encoding&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;encoding&#39;</span><span class="p">])</span>
-        <span class="k">if</span> <span class="s1">&#39;is_admin&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bool_translate</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;is_admin&#39;</span><span class="p">])</span></div>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_where_attr_clause</span><span class="p">(</span><span class="n">where_clause</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;is_admin&#39;</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-                <span class="n">key_oper</span> <span class="o">=</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span>
-                <span class="k">if</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_operator&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-                    <span class="n">key_oper</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">OP</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">_operator&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
-                <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">Groups</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span> <span class="n">key_oper</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">where_clause</span>
+        <span class="k">if</span> <span class="s1">&#39;is_admin&#39;</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">:</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">is_admin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bool_translate</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;is_admin&#39;</span><span class="p">])</span>
 
 <div class="viewcode-block" id="Groups.where_clause"><a class="viewcode-back" href="../../../metadata.metadata.orm.html#metadata.orm.groups.Groups.where_clause">[docs]</a>    <span class="k">def</span> <span class="nf">where_clause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;PeeWee specific where clause used for search.&quot;&quot;&quot;</span>
@@ -231,7 +224,11 @@
             <span class="n">where_clause</span> <span class="o">&amp;=</span> <span class="n">Expression</span><span class="p">(</span><span class="n">Groups</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">OP</span><span class="o">.</span><span class="n">EQ</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">])</span>
         <span class="k">if</span> <span class="s1">&#39;is_admin&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;is_admin&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bool_translate</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;is_admin&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_where_attr_clause</span><span class="p">(</span><span class="n">where_clause</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_where_attr_clause</span><span class="p">(</span>
+            <span class="n">where_clause</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="p">,</span>
+            <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;is_admin&#39;</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">]</span></div></div>
+        <span class="p">)</span>
 </pre></div>
 
            </div>

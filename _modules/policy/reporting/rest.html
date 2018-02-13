@@ -158,6 +158,7 @@
             
   <h1>Source code for policy.reporting.rest</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;The CherryPy rest object for the structure.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">policy.reporting.transaction.transaction_summary</span> <span class="k">import</span> <span class="n">TransactionSummary</span>
 <span class="kn">from</span> <span class="nn">policy.reporting.transaction.transaction_details</span> <span class="k">import</span> <span class="n">TransactionDetails</span>
@@ -176,8 +177,8 @@
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create local objects to allow for import to work.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transaction_summary</span> <span class="o">=</span> <span class="n">TransactionSummary</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transaction_details</span> <span class="o">=</span> <span class="n">TransactionDetails</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transaction_summary</span> <span class="o">=</span> <span class="n">TransactionSummary</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transaction_details</span> <span class="o">=</span> <span class="n">TransactionDetails</span><span class="p">()</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 </pre></div>
 

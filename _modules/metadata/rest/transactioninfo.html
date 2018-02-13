@@ -158,11 +158,13 @@
             
   <h1>Source code for metadata.rest.transactioninfo</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Core interface for transactioninfo metadata objects to interface with CherryPy.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.transaction_queries.transaction_lookup</span> <span class="k">import</span> <span class="n">TransactionLookup</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.transaction_queries.transaction_search</span> <span class="k">import</span> <span class="n">TransactionSearch</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.transaction_queries.transaction_last</span> <span class="k">import</span> <span class="n">TransactionLast</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.transaction_queries.file_lookup</span> <span class="k">import</span> <span class="n">FileLookup</span>
+<span class="kn">from</span> <span class="nn">metadata.rest.transaction_queries.transactions_multi_search</span> <span class="k">import</span> <span class="n">TransactionsMultiSearch</span>
 
 
 <span class="c1"># pylint: disable=too-few-public-methods</span>
@@ -177,6 +179,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">search</span> <span class="o">=</span> <span class="n">TransactionSearch</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">files</span> <span class="o">=</span> <span class="n">FileLookup</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">TransactionLast</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multisearch</span> <span class="o">=</span> <span class="n">TransactionsMultiSearch</span><span class="p">()</span>
 </pre></div>
 
            </div>

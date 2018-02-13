@@ -36,7 +36,7 @@
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
     <link rel="top" title="Pacifica v1.0.0" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
+        <link rel="up" title="archiveinterface" href="../../../archiveinterface.html"/> 
 
   
   <script src="../../../../_static/js/modernizr.min.js"></script>
@@ -139,6 +139,8 @@
         
           <li><a href="../../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../../../archiveinterface.html">archiveinterface</a> &raquo;</li>
+        
       <li>archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive</li>
     
     
@@ -158,12 +160,14 @@
             
   <h1>Source code for archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;HMS Sideband Backend Archive Module.</span>
 
 <span class="sd">Module that implements the abstract_backend_archive class for a HMS Sideband</span>
 <span class="sd">backend.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.archive_utils</span> <span class="k">import</span> <span class="n">un_abs_path</span><span class="p">,</span> <span class="n">read_config_value</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.archive_interface_error</span> <span class="k">import</span> <span class="n">ArchiveInterfaceError</span>
 <span class="kn">from</span> <span class="nn">archiveinterface.archivebackends.oracle_hms_sideband.extended_hms_sideband</span> <span class="k">import</span> <span class="p">(</span>
@@ -175,8 +179,8 @@
 
 <div class="viewcode-block" id="path_info_munge"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.path_info_munge">[docs]</a><span class="k">def</span> <span class="nf">path_info_munge</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Munge the path for this filetype.&quot;&quot;&quot;</span>
-    <span class="n">return_path</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="n">id2filename</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">filepath</span><span class="p">)))</span>
-    <span class="k">return</span> <span class="n">return_path</span></div>
+    <span class="n">return_path</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="n">id2filename</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">filepath</span><span class="p">)))</span></div>
+    <span class="k">return</span> <span class="n">return_path</span>
 
 
 <div class="viewcode-block" id="HmsSidebandBackendArchive"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive">[docs]</a><span class="k">class</span> <span class="nc">HmsSidebandBackendArchive</span><span class="p">(</span><span class="n">AbstractBackendArchive</span><span class="p">):</span>
@@ -194,7 +198,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_fpath</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># since the database prefix may be different then the system the file is mounted on</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sam_qfs_prefix</span> <span class="o">=</span> <span class="n">read_config_value</span><span class="p">(</span><span class="s1">&#39;hms_sideband&#39;</span><span class="p">,</span> <span class="s1">&#39;sam_qfs_prefix&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sam_qfs_prefix</span> <span class="o">=</span> <span class="n">read_config_value</span><span class="p">(</span>
+            <span class="s1">&#39;hms_sideband&#39;</span><span class="p">,</span> <span class="s1">&#39;sam_qfs_prefix&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HmsSidebandBackendArchive.open"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Open a hms sideband file.&quot;&quot;&quot;</span>
@@ -210,15 +215,17 @@
             <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="p">,</span> <span class="n">path_info_munge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fpath</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span> <span class="o">=</span> <span class="n">filename</span>
             <span class="c1"># path database refers to, rather then just the file system mount path</span>
-            <span class="n">sam_qfs_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sam_qfs_prefix</span><span class="p">,</span> <span class="n">path_info_munge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fpath</span><span class="p">))</span>
-            <span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sam_qfs_path</span><span class="p">)</span>
+            <span class="n">sam_qfs_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_sam_qfs_prefix</span><span class="p">,</span> <span class="n">path_info_munge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fpath</span><span class="p">))</span>
+            <span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="mi">0755</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">ExtendedHmsSideband</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">sam_qfs_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="n">ExtendedHmsSideband</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">sam_qfs_path</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t open HMS Sideband file with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
+            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t open HMS Sideband file with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HmsSidebandBackendArchive.close"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Close a HMS Sideband file.&quot;&quot;&quot;</span>
@@ -227,8 +234,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_file</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t close HMS Sideband file with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
+            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t close HMS Sideband file with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HmsSidebandBackendArchive.read"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blocksize</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Read a HMS Sideband file.&quot;&quot;&quot;</span>
@@ -236,8 +243,8 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">blocksize</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t read HMS SIdeband file with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
+            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t read HMS SIdeband file with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HmsSidebandBackendArchive.write"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Write a HMS Sideband file to the archive.&quot;&quot;&quot;</span>
@@ -245,8 +252,8 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t write HMS Sideband file with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
+            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t write HMS Sideband file with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HmsSidebandBackendArchive.set_mod_time"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.set_mod_time">[docs]</a>    <span class="k">def</span> <span class="nf">set_mod_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mod_time</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set the mod time on a HMS file.&quot;&quot;&quot;</span>
@@ -254,8 +261,9 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">:</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">utime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">,</span> <span class="p">(</span><span class="n">mod_time</span><span class="p">,</span> <span class="n">mod_time</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t set HMS Sideband file mod time with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
+            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t set HMS Sideband file mod time with error: &quot;</span> <span class="o">+</span> \
+                <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HmsSidebandBackendArchive.set_file_permissions"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.set_file_permissions">[docs]</a>    <span class="k">def</span> <span class="nf">set_file_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set the file permissions for a posix file.&quot;&quot;&quot;</span>
@@ -263,8 +271,9 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">:</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_filepath</span><span class="p">,</span> <span class="mi">0444</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t set HMS Sideband file permissions with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
+            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t set HMS Sideband file permissions with error: &quot;</span> <span class="o">+</span> \
+                <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HmsSidebandBackendArchive.stage"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.stage">[docs]</a>    <span class="k">def</span> <span class="nf">stage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Stage a HMS Sideband file.&quot;&quot;&quot;</span>
@@ -272,8 +281,8 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">stage</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t stage HMS Sideband file with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div>
+            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t stage HMS Sideband file with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HmsSidebandBackendArchive.status"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get the status of a HMS Sideband file.&quot;&quot;&quot;</span>
@@ -281,8 +290,23 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_file</span><span class="o">.</span><span class="n">status</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
-            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t get HMS Sideband file status with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span></div></div>
+            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t get HMS Sideband file status with error: &quot;</span> <span class="o">+</span> \
+                <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HmsSidebandBackendArchive.patch"><a class="viewcode-back" href="../../../../archiveinterface.archiveinterface.archivebackends.oracle_hms_sideband.html#archiveinterface.archivebackends.oracle_hms_sideband.hms_sideband_backend_archive.HmsSidebandBackendArchive.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">old_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Move a hms file.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fpath</span> <span class="o">=</span> <span class="n">un_abs_path</span><span class="p">(</span><span class="n">file_id</span><span class="p">)</span>
+            <span class="n">new_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefix</span><span class="p">,</span> <span class="n">path_info_munge</span><span class="p">(</span><span class="n">fpath</span><span class="p">))</span>
+            <span class="n">new_directories</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">new_filepath</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">new_directories</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">new_directories</span><span class="p">)</span>
+
+            <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">old_path</span><span class="p">,</span> <span class="n">new_filepath</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot;Can&#39;t move posix file with error: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span></div></div>
+            <span class="k">raise</span> <span class="n">ArchiveInterfaceError</span><span class="p">(</span><span class="n">err_str</span><span class="p">)</span>
 </pre></div>
 
            </div>

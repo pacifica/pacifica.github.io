@@ -158,11 +158,13 @@
             
   <h1>Source code for policy.test.test_connect</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Test the connections to external service.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">dumps</span>
 <span class="kn">import</span> <span class="nn">httpretty</span>
-<span class="kn">from</span> <span class="nn">policy</span> <span class="k">import</span> <span class="n">METADATA_STATUS_URL</span><span class="p">,</span> <span class="n">try_meta_connect</span>
+<span class="kn">from</span> <span class="nn">policy.globals</span> <span class="k">import</span> <span class="n">METADATA_STATUS_URL</span>
+<span class="kn">from</span> <span class="nn">policy.root</span> <span class="k">import</span> <span class="n">Root</span>
 
 
 <div class="viewcode-block" id="TestMetaConnect"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_connect.TestMetaConnect">[docs]</a><span class="k">class</span> <span class="nc">TestMetaConnect</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
@@ -174,8 +176,10 @@
         <span class="n">httpretty</span><span class="o">.</span><span class="n">register_uri</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">GET</span><span class="p">,</span> <span class="n">METADATA_STATUS_URL</span><span class="p">,</span>
                                <span class="n">body</span><span class="o">=</span><span class="n">dumps</span><span class="p">([]),</span>
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
-        <span class="n">try_meta_connect</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;GET&#39;</span><span class="p">)</span></div>
+        <span class="c1"># pylint: disable=protected-access</span>
+        <span class="n">Root</span><span class="o">.</span><span class="n">_try_meta_connect</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># pylint: enable=protected-access</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;GET&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestMetaConnect.test_meta_connect_failure"><a class="viewcode-back" href="../../../policy.policy.test.html#policy.test.test_connect.TestMetaConnect.test_meta_connect_failure">[docs]</a>    <span class="nd">@httpretty</span><span class="o">.</span><span class="n">activate</span>
     <span class="k">def</span> <span class="nf">test_meta_connect_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -186,13 +190,15 @@
                                <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/json&#39;</span><span class="p">)</span>
         <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">try_meta_connect</span><span class="p">(</span><span class="mi">39</span><span class="p">)</span>
+            <span class="c1"># pylint: disable=protected-access</span>
+            <span class="n">Root</span><span class="o">.</span><span class="n">_try_meta_connect</span><span class="p">(</span><span class="mi">39</span><span class="p">)</span>
+            <span class="c1"># pylint: enable=protected-access</span>
         <span class="c1"># pylint: disable=broad-except</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">hit_exception</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="c1"># pylint: enable=broad-except</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;GET&#39;</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">hit_exception</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">httpretty</span><span class="o">.</span><span class="n">last_request</span><span class="p">()</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="s1">&#39;GET&#39;</span><span class="p">)</span>
 </pre></div>
 
            </div>

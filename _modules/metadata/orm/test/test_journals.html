@@ -186,22 +186,17 @@
     <span class="n">obj_cls</span> <span class="o">=</span> <span class="n">Journals</span>
     <span class="n">obj_id</span> <span class="o">=</span> <span class="n">Journals</span><span class="o">.</span><span class="n">id</span>
 
-<div class="viewcode-block" id="TestJournals.dependent_cls"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_journals.TestJournals.dependent_cls">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">dependent_cls</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return dependent classes for the Journals object.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">Journals</span><span class="p">]</span></div>
-
 <div class="viewcode-block" id="TestJournals.test_journal_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_journals.TestJournals.test_journal_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_journal_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_JOURNAL_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_JOURNAL_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestJournals.test_unicode_journal_hash"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_journals.TestJournals.test_unicode_journal_hash">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_journal_hash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_JOURNAL_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_hash</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_JOURNAL_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestJournals.test_journal_json"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_journals.TestJournals.test_journal_json">[docs]</a>    <span class="k">def</span> <span class="nf">test_journal_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_JOURNAL_HASH</span><span class="p">))</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_test_json</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">SAMPLE_JOURNAL_HASH</span><span class="p">))</span>
 
 <div class="viewcode-block" id="TestJournals.test_journals_search_expr"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_journals.TestJournals.test_journals_search_expr">[docs]</a>    <span class="k">def</span> <span class="nf">test_journals_search_expr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
@@ -213,16 +208,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause_search_expr</span><span class="p">(</span>
             <span class="n">SAMPLE_JOURNAL_HASH</span><span class="p">,</span>
             <span class="n">impact_factor_operator</span><span class="o">=</span><span class="s1">&#39;GT&#39;</span><span class="p">,</span>
-            <span class="n">impact_factor</span><span class="o">=</span><span class="mf">9.5</span>
-        <span class="p">)</span></div>
+            <span class="n">impact_factor</span><span class="o">=</span><span class="mf">9.5</span></div>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="TestJournals.test_journal_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_journals.TestJournals.test_journal_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_journal_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_JOURNAL_HASH</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_JOURNAL_HASH</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TestJournals.test_unicode_journal_where"><a class="viewcode-back" href="../../../../metadata.metadata.orm.test.html#metadata.orm.test.test_journals.TestJournals.test_unicode_journal_where">[docs]</a>    <span class="k">def</span> <span class="nf">test_unicode_journal_where</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_JOURNAL_HASH</span><span class="p">)</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Test the hash portion using base object method.&quot;&quot;&quot;</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_where_clause</span><span class="p">(</span><span class="n">SAMPLE_UNICODE_JOURNAL_HASH</span><span class="p">)</span>
 </pre></div>
 
            </div>

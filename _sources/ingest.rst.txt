@@ -19,8 +19,3 @@ Contents:
    :members:
    :private-members:
 
-
-.. automodule:: settings
-   :members:
-   :private-members:
-

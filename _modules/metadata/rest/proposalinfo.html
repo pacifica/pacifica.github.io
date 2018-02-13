@@ -158,6 +158,7 @@
             
   <h1>Source code for metadata.rest.proposalinfo</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;Core interface for the proposalinfo metadata objects to interface with CherryPy.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.proposal_queries.proposal_lookup</span> <span class="k">import</span> <span class="n">ProposalLookup</span>
 <span class="kn">from</span> <span class="nn">metadata.rest.proposal_queries.proposal_term_search</span> <span class="k">import</span> <span class="n">ProposalTermSearch</span>
@@ -173,8 +174,8 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create local objects for subtree items.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">by_user_id</span> <span class="o">=</span> <span class="n">ProposalUserSearch</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">search</span> <span class="o">=</span> <span class="n">ProposalTermSearch</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">by_proposal_id</span> <span class="o">=</span> <span class="n">ProposalLookup</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search</span> <span class="o">=</span> <span class="n">ProposalTermSearch</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">by_proposal_id</span> <span class="o">=</span> <span class="n">ProposalLookup</span><span class="p">()</span>
 </pre></div>
 
            </div>

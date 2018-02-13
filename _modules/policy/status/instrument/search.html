@@ -157,11 +157,13 @@
            <div itemprop="articleBody">
             
   <h1>Source code for policy.status.instrument.search</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy Status Policy object class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy Status Policy object class.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="k">import</span> <span class="n">loads</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span><span class="p">,</span> <span class="n">HTTPError</span>
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">policy</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span>
+<span class="kn">from</span> <span class="nn">policy.globals</span> <span class="k">import</span> <span class="n">METADATA_ENDPOINT</span>
 <span class="kn">from</span> <span class="nn">policy.status.base</span> <span class="k">import</span> <span class="n">QueryBase</span>
 
 
@@ -181,8 +183,8 @@
         <span class="k">if</span> <span class="n">inst_query</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
             <span class="n">inst_response</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">inst_query</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clean_up_instrument_list</span><span class="p">(</span><span class="n">inst_response</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="n">inst_query</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span></div>
+        <span class="k">else</span><span class="p">:</span></div>
+            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="n">inst_query</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
 
 <div class="viewcode-block" id="InstrumentKeywordSearch._clean_up_instrument_list"><a class="viewcode-back" href="../../../../policy.policy.status.instrument.html#policy.status.instrument.search.InstrumentKeywordSearch._clean_up_instrument_list">[docs]</a>    <span class="k">def</span> <span class="nf">_clean_up_instrument_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inst_response</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Clear out entries that done belong to this user.&quot;&quot;&quot;</span>
@@ -193,23 +195,21 @@
                 <span class="n">METADATA_ENDPOINT</span><span class="p">,</span> <span class="n">user_id</span>
             <span class="p">)</span>
             <span class="n">query</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">inst_for_user_url</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-                <span class="n">response</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-                <span class="n">output_list</span> <span class="o">=</span> <span class="n">InstrumentKeywordSearch</span><span class="o">.</span><span class="n">_squash_output_list</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">inst_response</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">output_list</span> <span class="o">=</span> <span class="n">InstrumentKeywordSearch</span><span class="o">.</span><span class="n">_squash_output_list</span><span class="p">(</span>
+                <span class="n">response</span><span class="p">,</span> <span class="n">inst_response</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">output_list</span> <span class="o">=</span> <span class="n">inst_response</span>
-
-        <span class="k">return</span> <span class="n">output_list</span></div>
+</div>
+        <span class="k">return</span> <span class="n">output_list</span>
 
 <div class="viewcode-block" id="InstrumentKeywordSearch._squash_output_list"><a class="viewcode-back" href="../../../../policy.policy.status.instrument.html#policy.status.instrument.search.InstrumentKeywordSearch._squash_output_list">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_squash_output_list</span><span class="p">(</span><span class="n">inst_for_user_list</span><span class="p">,</span> <span class="n">full_inst_list</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Filter entries in the full instrument list.&quot;&quot;&quot;</span>
         <span class="n">inst_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inst_for_user_list</span><span class="p">]</span>
         <span class="n">output_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">full_inst_list</span> <span class="k">if</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">inst_list</span><span class="p">]</span>
-
-        <span class="k">return</span> <span class="n">output_list</span></div>
+</div>
+        <span class="k">return</span> <span class="n">output_list</span>
 
     <span class="c1"># CherryPy requires these named methods</span>
     <span class="c1"># Add HEAD (basically Get without returning body</span>
@@ -217,8 +217,8 @@
 <div class="viewcode-block" id="InstrumentKeywordSearch.GET"><a class="viewcode-back" href="../../../../policy.policy.status.instrument.html#policy.status.instrument.search.InstrumentKeywordSearch.GET">[docs]</a>    <span class="nd">@tools</span><span class="o">.</span><span class="n">json_out</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">GET</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_terms</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;CherryPy GET method.&quot;&quot;&quot;</span>
-        <span class="n">user_id</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;user&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_instruments_for_keywords</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">search_terms</span><span class="p">)</span></div></div>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;user&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="k">else</span> <span class="kc">None</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_instruments_for_keywords</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">search_terms</span><span class="p">)</span>
 <span class="c1"># pylint: enable=too-few-public-methods</span>
 </pre></div>
 

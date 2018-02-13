@@ -157,7 +157,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for metadata.rest.fileinfo_queries.file_details</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;CherryPy File Details object class.&quot;&quot;&quot;</span>
+<span></span><span class="ch">#!/usr/bin/python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;CherryPy File Details object class.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">cherrypy</span> <span class="k">import</span> <span class="n">tools</span><span class="p">,</span> <span class="n">HTTPError</span><span class="p">,</span> <span class="n">request</span>
 <span class="kn">from</span> <span class="nn">metadata.orm</span> <span class="k">import</span> <span class="n">Files</span>
 
@@ -172,7 +174,8 @@
     <span class="k">def</span> <span class="nf">_get_file_details</span><span class="p">(</span><span class="n">file_list</span><span class="p">):</span>
         <span class="n">query</span> <span class="o">=</span> <span class="n">Files</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Files</span><span class="o">.</span><span class="n">id</span> <span class="o">&lt;&lt;</span> <span class="n">file_list</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;No files from the list </span><span class="si">{0}</span><span class="s1"> were located&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_list</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;No files from the list </span><span class="si">{0}</span><span class="s1"> were located&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">file_list</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="s1">&#39;404 Not Found&#39;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[{</span>
             <span class="s1">&#39;file_id&#39;</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
@@ -189,8 +192,8 @@
     <span class="nd">@tools</span><span class="o">.</span><span class="n">json_out</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">POST</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Return file details for the list of file id&#39;s.&quot;&quot;&quot;</span>
-        <span class="n">file_list</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span>
-        <span class="k">return</span> <span class="n">FileDetailsLookup</span><span class="o">.</span><span class="n">_get_file_details</span><span class="p">(</span><span class="n">file_list</span><span class="p">)</span></div></div>
+        <span class="n">file_list</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span></div></div>
+        <span class="k">return</span> <span class="n">FileDetailsLookup</span><span class="o">.</span><span class="n">_get_file_details</span><span class="p">(</span><span class="n">file_list</span><span class="p">)</span>
 </pre></div>
 
            </div>
