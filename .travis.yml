@@ -1,0 +1,12 @@
+language: python
+cache: pip
+stages:
+- lint
+jobs:
+  include:
+  - stage: lint
+    python: 3.6
+    script:
+    - 'html_lint.py *.html'
+install:
+- pip install html-linter
